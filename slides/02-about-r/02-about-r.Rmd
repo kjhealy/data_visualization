@@ -14,6 +14,7 @@ output:
       highlightStyle: default
       highlightLines: true
       countIncrementalSlides: false
+      slideNumberFormat: "%current%"
       ratio: "16:9"
       navigation:
         scroll: false
@@ -22,14 +23,14 @@ editor_options:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(warning = FALSE, message = FALSE, 
-                      fig.retina = 3, fig.align = "center")
+## Graphics options and theme-matching
+source("../R/ragg_and_theme.R")
 ```
 
 ```{r packages-data, include=FALSE}
 library(flipbookr)
-library(cowplot)
-ggplot2::theme_set(theme_cowplot())
+#library(cowplot)
+#ggplot2::theme_set(theme_cowplot())
 
 ```
 
@@ -69,25 +70,25 @@ class: title title-1
 
 # Where we want to end up
 
-.center[![:scale 90% "PDF out"](img/lorem-covid-latex.png)]  
+.center[![:scale 90% "PDF out"](img/02_lorem_covid_latex.png)]  
 
 ---
 
 # Where we want to end up
 
-.center[![:scale 45% "HTML out"](img/lorem-covid-html.png)]  
+.center[![:scale 45% "HTML out"](img/02_lorem_covid_html.png)]  
 
 ---
 
 # Where we want to end up
 
-.center[![:scale 100% "Word out"](img/lorem-covid-word.png)]  
+.center[![:scale 100% "Word out"](img/02_lorem_covid_word.png)]  
 
 ---
 
 # How to get there?
 
-.pull-left[![:scale 35% "R script"](img/covid-r-script.png)] 
+.pull-left[![:scale 35% "R script"](img/02_covid_r_script.png)] 
 
 .pull-right[
 
@@ -102,37 +103,37 @@ class: title title-1
 # We can make this ...
 
 
-.center[![:scale 50% "Out"](img/lorem-ipsum-goal.png)]  
+.center[![:scale 50% "Out"](img/02_lorem_ipsum_goal.png)]  
 
 ---
 
 # ... by writing this
 
-.center[![:scale 50% "Out"](img/lorem-ipsum-raw.png)]  
+.center[![:scale 50% "Out"](img/02_lorem_ipsum_raw.png)]  
 
 ---
 
 # The code gets replaced by its output
 
 
-.pull-left[![:scale 100% "Out"](img/lorem-ipsum-raw.png)]
+.pull-left[![:scale 100% "Out"](img/02_lorem_ipsum_raw.png)]
 
-.pull-right[![:scale 100% "Out"](img/lorem-ipsum-goal.png)]
+.pull-right[![:scale 100% "Out"](img/02_lorem_ipsum_goal.png)]
 
 ---
 
 layout: false
 class: main-title main-title-inv
 
-.center[![:scale 90% "Covid example"](img/lorem-covid-markdown.png)]  
+.center[![:scale 90% "Covid example"](img/02_lorem_covid_markdown.png)]  
 
 ---
 
-.center[![:scale 90% "Covid example annotated"](img/lorem-covid-markdown-annotated.png)]  
+.center[![:scale 90% "Covid example annotated"](img/02_lorem_covid_markdown_annotated.png)]  
 
 ---
 
-.pull-left[![:scale 66% "Covid example output"](img/lorem-covid-html-full.png)]  
+.pull-left[![:scale 66% "Covid example output"](img/02_lorem_covid_html_full.png)]  
 
 
 --
@@ -144,7 +145,7 @@ class: main-title main-title-inv
 ]
 ---
 
-.pull-left[![:scale 44% "RMD out"](img/knit-rmd-tall.png)]  
+.pull-left[![:scale 44% "RMD out"](img/02_knit_rmd_tall.png)]  
 
 
 .pull-right[- When learning these workflows, stick with the defaults at the beginning. Later, you can customize the look of the output in all kinds of ways.]
@@ -191,7 +192,7 @@ class: main-title main-title-inv
 
 ---
 
-.center[![:scale 90% "Samuel Beckett"](img/beckett-fail-better.png)]
+.center[![:scale 90% "Samuel Beckett"](img/02_beckett_fail_better.png)]
 
 ---
 
@@ -221,13 +222,29 @@ We'll return to this message about Conflicts later.
 
 # Tidyverse components
 
-.center[![:scale 100% "Tidyverse loading"](img/tidyverse-first.png)]
+.pull-left[
 
----
+- .kjh-green[**`library`**]`(tidyverse)`
+- `Loading tidyverse: ggplot2`
+- `Loading tidyverse: tibble`
+- `Loading tidyverse: tidyr`
+- `Loading tidyverse: readr`
+- `Loading tidyverse: purrr`
+- `Loading tidyverse: dplyr`
+]
 
-# Tidyverse components
+--
 
-.center[![:scale 100% "Tidyverse loading 2"](img/tidyverse-first-captioned.png)]
+.pull-right[
+- Call the package and ...
+- `<|` **Draw graphs**
+- `<|` **Nicer data tables**
+- `<|` **Tidy your data**
+- `<|` **Get data into R**
+- `<|` **Fancy Iteration**
+- `<|` **Action verbs for tables**
+
+]
 
 ---
 
@@ -332,10 +349,11 @@ log10(100)
 
 Logical equality and inequality (yielding a .kjh-green[`TRUE`] or .kjh-red[`FALSE`] result) is done with `==` and `!=`. Other logical operators include `<`, `>`, `<=`, `>=`, and `!` for negation.
 
-```{r 02-about-r-9}
+.medium[
 
+```{r 02-about-r-9}
 ## A logical test
-2 == 2
+2 == 2 # Write `=` twice
 ```
 
 ```{r 02-about-r-10, eval = FALSE}
@@ -346,11 +364,10 @@ Logical equality and inequality (yielding a .kjh-green[`TRUE`] or .kjh-red[`FALS
 ```
 
 ```{r 02-about-r-11}
-3 != 7
+3 != 7 # Write `!` and then `=` to make `!=`
 ```
-
+]
 ---
-
 # .kjh-red[Watch out!]
 
 Here's a gotcha. You might think you could write `3 < 5 & 7` and have it be interpreted as "Three is less than five and also less than seven [True or False?]":
@@ -440,7 +457,7 @@ Welcome to floating point math!
 
 # Logic and floating point arithmetic
 
-When you do binary math on repeating numbers and convert back to decimals you get tiny leftovers, and this can mess up _logical_ comparisons of equality. The `all.equal()` function exists for this purpose.
+When you do binary math on repeating numbers and convert back to decimals you get tiny leftovers, and this can mess up _logical_ comparisons of equality. The .kjh-green[**`all.equal()`**] function exists for this purpose.
 
 --
 
@@ -550,13 +567,13 @@ your_numbers <- c(5, 31, 71, 1, 3, 21, 6, 52)
 
 --
 
-The `c()` function _combines_ or _concatenates_ things
+The .kjh-green[**`c()`**] function _combines_ or _concatenates_ things
 
 ???
 
 The core thing we do in R is _create objects_ by _assigning a thing to a name_. That thing is usually the output of some _function_. There are a lot of built-in functions.
 
-We can create an object with the `c()` function and the *assignment operator*, `<-`. The `c()` function concatenates things together.
+We can create an object with the .kjh-green[**`c()`**] function and the *assignment operator*, `<-`. 
 
 
 ---
@@ -599,7 +616,7 @@ I'm going to use "`<-`" for assigment throughout. Just be consistent either way.
 
 # Assignment with .kjh-green[`=`]
 
-.center[![:scale 100%](img/gordon_assignment.png)]
+.center[![:scale 100%](img/02_gordon_assignment.png)]
 
 ???
 
@@ -790,7 +807,7 @@ Nested functions are evaluated from the inside out.
 
 ---
 
-# Use the pipe operator: .kjh-yellow[%>%]
+# Use the pipe operator: .kjh-pink[**`%>%`**]
 
 .SMALL[Instead of nesting functions in parentheses, we can use the _pipe operator_:]
 
@@ -801,7 +818,7 @@ c(1:20) %>% mean() %>% summary() %>% names() %>%  length()
 
 --
 
-.SMALL[Read this operator as "_.kjh-green[**and then**]_"]
+.SMALL[Read this operator as "_.kjh-pink[**and then**]_"]
 
 --
 
@@ -818,9 +835,9 @@ c(1:20) %>%
 
 ---
 
-# Piped operations make code more .kjh-green[readable]
+# Pipelines make code more .kjh-green[readable]
 
-Not great, Bob:
+- Not great, Bob:
 
 ```r
   serve(stir(pour_in_pan(whisk(crack_eggs(get_from_fridge(eggs), into = "bowl"), len = 40), temp = "med-high")))
@@ -828,12 +845,13 @@ Not great, Bob:
 
 --
 
-Notice how the first thing you read is the last operation performed.
+- Notice how the first thing you read is the last operation performed.
 
 --
 
 Really not much better:
 
+.medium[
 ```r
 serve(
   stir(
@@ -847,13 +865,14 @@ serve(
   )
 )
 ```
-
+]
 ---
 
-# Piped operations make code more .kjh-green[readable]
+# Pipelines make code more .kjh-green[readable]
 
-Much nicer:
+- Much nicer:
 
+.medium[
 ```r
 eggs %>% 
   get_from_fridge() %>% 
@@ -864,28 +883,28 @@ eggs %>%
   serve()
 
 ```
-
+]
 --
 
-We'll still use nested parentheses quite a bit, often in the context of a function working inside a pipeline. But it's good not to have too many levels of nesting.
+- We'll still use nested parentheses quite a bit, often in the context of a function working inside a pipeline. But it's good not to have too many levels of nesting.
 
 ---
 
 
-# Now showing at an R near you: .kjh-yellow[|>]
+# Now showing at an R near you: .kjh-pink[`|>`]
 
-The pipe operator **`%>%`** is not part of Base R. It was introduced in a package called `magrittr`. 
-
---
-
-It's been so successful, a version of it has been incorporated into Base R.
+- The pipe operator .kjh-pink[**`%>%`**] is not part of Base R. It was introduced in a package called `magrittr`. 
 
 --
 
-It is denoted by **`|>`**. But! It does not _quite_ replace **`%>%`** in every case.\* 
+- It's been so successful, a version of it has been incorporated into Base R.
+
+--
+
+- It is denoted by .kjh-pink[**`|>`**]. Type .kjh-green[`|`] and then .kjh-green[`>`] to write it. It mostly but does not _quite_ replace .kjh-pink[**`%>%`**] in every case.\* 
 
 
-The magrittr pipe will continue to work as shown in these slides.
+- The magrittr pipe will continue to work as shown in these slides.
 
 .footnote.tiny[.kjh-darkgrey[\*With the new pipe, you can only pass an object to the _first_ argument in a function. This is fine for most tidyverse pipelines, where the first argument is usually (implicitly) the data. But it does mean that most Base R functions will continue not to be easily piped, as most of them do not follow the convention of passing the current data as the first argument]]
 
@@ -895,7 +914,7 @@ The magrittr pipe will continue to work as shown in these slides.
 
 --
 
-Packages are loaded into your working environment using the `library()` function.
+Packages are loaded into your working environment using the .kjh-green[**`library()`**] function.
 
 --
 
@@ -945,10 +964,10 @@ penguins
 
 ```{r 02-about-r-45, message = FALSE, echo = FALSE}
 gtsummary::theme_gtsummary_journal(journal = "jama")
-gtsummary::theme_gtsummary_compact()
+#gtsummary::theme_gtsummary_compact()
 ```
 
-.small[
+.less-medium[
 ```{r 02-about-r-46}
 ## A little glimpse of what we'll do soon
 penguins %>% 
@@ -961,7 +980,7 @@ penguins %>%
 
 # Remember this warning about conflicts?
 
-![:scale 80% "Conflicts"](img/function-masking.png)
+![:scale 80% "Conflicts"](img/02_function_masking.png)
 
 Notice how some functions in different packages have the same names.
 
@@ -1066,7 +1085,7 @@ names(my_smry)
 
 .pull-left.tiny.kjh-darkgrey[
 
-[![:scale 80% "Vectors 1"](img/summary-tree-atomic.png)]  
+[![:scale 80% "Vectors 1"](img/02_summary_tree_atomic.png)]  
 
 - From Hadley Wickham, _Advanced R_
 
@@ -1100,7 +1119,7 @@ is.logical(my_lgl)
 
 .pull-left.tiny.kjh-darkgrey[
 
-[![:scale 90% "Vectors 2"](img/summary-tree-s3.png)]  
+[![:scale 90% "Vectors 2"](img/02_summary_tree_s3.png)]  
 
 - From Hadley Wickham, _Advanced R_
 
@@ -1206,7 +1225,7 @@ Again the object inspector is helpful here
 
 .pull-left[
 
-- Base R's trusty `data.frame`
+- Base R's trusty .kjh-lblue[**`data.frame`**]
 
 .SMALL[
 ```{r titanic1}
@@ -1230,7 +1249,7 @@ titanic$percent
 
 .pull-right[
 
-- The Tidyverse's enhanced `tibble`
+- The Tidyverse's enhanced .kjh-lblue[**`tibble`**]
 
 .SMALL[
 ```{r titanic3}
@@ -1346,12 +1365,12 @@ Note that you get a _warning_ here. It'll still do it, though! Don't ignore warn
 
 - The IDE tries its best to help you. Learn to attend to what it is trying to say.
 
-.left[![:scale 70% "Error 1"](img/error_object_length_warning.png)]  
+.left[![:scale 70% "Error 1"](img/02_error_object_length_warning.png)]  
 
 --
 
-.left[![:scale 60% "Error 2"](img/error_missing_comma.png)]  
+.left[![:scale 60% "Error 2"](img/02_error_missing_comma.png)]  
 
 --
 
-.left[![:scale 60% "Error 3"](img/error_extra_paren.png)]  
+.left[![:scale 60% "Error 3"](img/02_error_extra_paren.png)]  

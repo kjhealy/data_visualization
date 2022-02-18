@@ -32,9 +32,10 @@ $colors-light: (
 Typography
 */
 .remark-slide-content {
-    font-size: 36px;  /* Base font size */
+    font-size: 32px;  /* Base font size */
     padding: 1em 1em 1em 1em;
     background-color: #F6F6F6;
+    color: #333333;
 }
 
 .remark-slide-content p {
@@ -52,6 +53,8 @@ Typography
 
 .huge {
     font-size: 2.2em;
+    font-weight: 800;
+
 }
 
 .large {
@@ -72,7 +75,7 @@ Typography
 
 .SMALL {
     /* CURSE YOU LATEX */
-    font-size: 0.8em;
+    font-size: 0.9em;
 }
 
 .small {
@@ -290,6 +293,8 @@ Wider pull left/right
 .pull-left-wide {
     float: left;
     width: 65%;
+    padding: 0 2.5% 0 0;
+    margin: 0 0 0 0;
 }
 
 .pull-left-narrow {
@@ -300,6 +305,8 @@ Wider pull left/right
 .pull-right-wide {
     float: right;
     width: 65%;
+    padding: 0 0 0 2.5%;
+    margin: 0 0 0 0;
 }
 
 .pull-right-narrow {
@@ -324,6 +331,8 @@ Slides with title bars at the top
 .title h1 {
     margin-top: -85px;
     margin-bottom: 50px;
+    font-size: 2em;
+    font-weight: 500;
 }
 
 // Change the color of the top bar. This generates the following CSS:
@@ -546,6 +555,11 @@ ul {
   list-style-type: none;
 }
 
+li {
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
+}
+
 pre {
   margin-top: 0.35em;
   margin-bottom: 0.35em;
@@ -585,6 +599,12 @@ pre {
 }
 
 
-.kjh-green {
+/*.kjh-green {
   color: #53D52A;
 }
+*/
+
+.kjh-green {
+  color: #1BB71C;
+}
+

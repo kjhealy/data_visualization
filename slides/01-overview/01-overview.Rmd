@@ -14,6 +14,7 @@ output:
       highlightStyle: default
       highlightLines: true
       countIncrementalSlides: false
+      slideNumberFormat: "%current%"
       ratio: "16:9"
       navigation:
         scroll: false
@@ -22,14 +23,14 @@ editor_options:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(warning = FALSE, message = FALSE, 
-                      fig.retina = 3, fig.align = "center")
+## Graphics options and theme-matching
+source("../R/ragg_and_theme.R")
 ```
 
 ```{r packages-data, include=FALSE}
 library(flipbookr)
-library(cowplot)
-ggplot2::theme_set(theme_cowplot())
+#library(cowplot)
+#ggplot2::theme_set(theme_cowplot())
 
 ```
 
@@ -76,7 +77,7 @@ class: title title-1
 
 --
 
-## .kjh-blue[Use the Zoom chat to ask questions, or raise a hand with ![:scale 5%](img/zoom_raise_hand.png)]
+## .kjh-blue[Use the Zoom chat to ask questions, or raise a hand with ![:scale 5%](img/01_stock_zoom_raise_hand.png)]
 
 ???
 
@@ -88,7 +89,7 @@ class: title title-1
 
 <br />
 
-## <figure alt="Slack logo" title="Slack logo">![:scale 90%](img/slack_logo.png)</figure>
+## <figure alt="Slack logo" title="Slack logo">![:scale 90%](img/01_stock_slack_logo.png)</figure>
 
 ???
 
@@ -139,7 +140,7 @@ class: title title-1
 # Wrangling data is frustrating
 
 .center[
-  <img src="img/sad-mac.jpg" alt="Sad Mac" title="Sad Mac" width="1500%">
+  <img src="img/01_stock_sad_mac.jpg" alt="Sad Mac" title="Sad Mac" width="1500%">
 ]
 
 
@@ -149,7 +150,7 @@ class: title title-1
 
 .pull-left.center[
 <figure>
-  <img src="img/happy_people_computer_2.png" alt="Fun data wrangling" title="Fun data wrangling" width="100%">
+  <img src="img/01_stock_happy_people_computer_2.png" alt="Fun data wrangling" title="Fun data wrangling" width="100%">
 </figure>
 ]
 
@@ -167,7 +168,7 @@ class: title title-1
 
 .pull-left[
 <figure>
-  <img src="img/happy_woman_computer_2.png" alt="Fun data wrangling 2" title="Fun data wrangling 2" width="100%">
+  <img src="img/01_stock_happy_woman_computer_2.png" alt="Fun data wrangling 2" title="Fun data wrangling 2" width="100%">
 </figure>
 ]
 
@@ -202,7 +203,7 @@ class: title title-1
 
 .pull-left[
 <figure>
-  <img src="img/plaintext-cover-us-letter.png" alt="The plain person's guide" title="The plain person's guide" width="75%">
+  <img src="img/01_plaintext_cover_us_letter.png" alt="The plain person's guide" title="The plain person's guide" width="75%">
 </figure>
 ]
 
@@ -230,7 +231,7 @@ class: title title-1
 
 .pull-left.center[
 <figure>
-  <img src="img/phone_and_tablet.png" alt="iPhone and iPad" title="iPhone and iPad" width="80%">
+  <img src="img/01_stock_phone_and_tablet.png" alt="iPhone and iPad" title="iPhone and iPad" width="80%">
 </figure>
 ]
 
@@ -262,7 +263,7 @@ class: title title-1
 +
 .pull-left[
 <figure>
-  <img src="img/mac_and_imac.png" alt="iPhone and iPad" title="iPhone and iPad" width="70%">
+  <img src="img/01_stock_mac_and_imac.png" alt="iPhone and iPad" title="iPhone and iPad" width="70%">
 </figure>
 ]
 
@@ -292,7 +293,7 @@ class: title title-1
 
 .pull-left[
 <figure>
-  <img src="img/mac_and_imac.png" alt="iPhone and iPad" title="iPhone and iPad" width="70%">
+  <img src="img/01_stock_mac_and_imac.png" alt="iPhone and iPad" title="iPhone and iPad" width="70%">
 </figure>
 ]
 
@@ -429,27 +430,27 @@ class: title title-1
 
 ---
 
-.left[![:scale 30%](img/Rlogo.png)]
+.left[![:scale 30%](img/01_stock_rlogo.png)]
 
-.right[![:scale 50%](img/rstudio-logo.png)]
+.right[![:scale 50%](img/01_rstudio_logo.png)]
 
 ---
 
 # RStudio is an IDE for R
 
-.center[![:scale 100% "Mercedes AMG Dash"](img/benz-amg-cabin.jpg)]
+.center[![:scale 100% "Mercedes AMG Dash"](img/01_ide_benz_amg_cabin.jpg)]
 
 ---
 
 # A kitchen is an IDE for Meals
 
-.center[![:scale 70% "Kitchen"](img/jp-pouring-oil1920.jpg)]
+.center[![:scale 70% "Kitchen"](img/01_ide_jp_pouring_oil1920.jpg)]
 
 ---
 
 # R & RStudio
 
-.center[![:scale 60% "rstudio-1.png"](img/rstudio-1.png)]
+.center[![:scale 60% "rstudio-1.png"](img/01_rstudio_1.png)]
 
 ???
 
@@ -459,13 +460,13 @@ SWITCH TO MAC HERE
 
 # R & RStudio
 
-.center[![:scale 50% "rstudio-1.png"](img/rstudio-conceptual-1.png)]
+.center[![:scale 50% "rstudio-1.png"](img/01_rstudio_conceptual_1.png)]
 
 ---
 
 # R & RStudio
 
-.center[![:scale 50% "rstudio-3.png"](img/rstudio-conceptual-2.png)]
+.center[![:scale 50% "rstudio-3.png"](img/01_rstudio_conceptual_2.png)]
 
 ---
 
@@ -477,34 +478,34 @@ SWITCH TO MAC HERE
 
 # R & RStudio
 
-.center[![:scale 70% "rstudio-5.png"](img/rstudio-conceptual-5.png)]
+.center[![:scale 70% "rstudio-5.png"](img/01_rstudio_conceptual_5.png)]
 
 ---
 
 # R & RStudio
 
-.center[![:scale 70% "rstudio-6.png"](img/rstudio-conceptual-6.png)]
+.center[![:scale 70% "rstudio-6.png"](img/01_rstudio_conceptual_6.png)]
 
 ---
 
 # R & RStudio
 
-.center[![:scale 70% "rstudio-7.png"](img/rstudio-conceptual-7.png)]
+.center[![:scale 70% "rstudio-7.png"](img/01_rstudio_conceptual_7.png)]
 
 ---
 
 # R & RStudio
 
-.center[![:scale 80% "rstudio-3.png"](img/rstudio-conceptual-3.png)]
+.center[![:scale 80% "rstudio-3.png"](img/01_rstudio_conceptual_3.png)]
 
 ---
 
 # Your code is what's real in your project
 
-.center[![:scale 45% "Do not restore"](img/rstudio_dont_restore.png)]
+.center[![:scale 45% "Do not restore"](img/01_rstudio_dont_restore.png)]
 
 ---
 
 # Consider not showing your output inline
 
-.center[![:scale 45% "Uncheck inline"](img/rstudio_uncheck_inline.png)]
+.center[![:scale 45% "Uncheck inline"](img/01_rstudio_uncheck_inline.png)]
