@@ -1,5 +1,5 @@
 ---
-title: "Data Visualization - 1. Overview"
+title: "Data Visualization - 1. Looking at Data"
 author: "Kieran Healy"
 date: "`r Sys.Date()`"
 output:
@@ -43,7 +43,7 @@ xaringanExtra::use_clipboard()
 
 class: center middle main-title section-title-1
 
-# Data Visualization with .kjh-orange[R] and .kjh-orange[ggplot2]
+# Data Visualization with .kjh-lblue[R] and .kjh-lblue[ggplot2]
 
 .class-info[
 
@@ -77,7 +77,7 @@ class: title title-1
 
 --
 
-## .kjh-blue[Use the Zoom chat to ask questions, or raise a hand with ![:scale 5%](img/01_stock_zoom_raise_hand.png)]
+## .pull-left.w80[Use the Zoom chat to ask questions, or raise a hand with ![:scale 5%](img/01_stock_zoom_raise_hand.png)]
 
 ???
 
@@ -105,24 +105,48 @@ class: title title-1
 
 ## Talking, Slides, and Live-Coding in RStudio 
 
-## Follow along with RStudio yourself if you can
+## Follow along and take notes in RStudio yourself    
 
-## The course packet is also an RStudio project and the place for your notes
+## The course packet is also an RStudio project 
+
+---
+
+# Get up and Running
+
+.center[![:scale 80%](img/01_rstudio_logo.png)]
 
 ---
 
-# Goals for this first session
+layout: false
+class: main-title main-title-inv
 
-&nbsp;
-
---
-
-## Some big-picture motivation & perspective
-
-???
-Maybe you're familiar with R already, but I don't assume it. So please bear with me. I do find that, often, it's good to revisit some of the basic features of R and RStudio, as very often people learn them on an as-needed basis, which leads to some gaps. So hopefully even if you are a bit familiar with these tools you'll learn some new things.
+.center[![:scale 70%](img/01_up_and_running_01.png)]
 
 ---
+
+layout: false
+class: main-title main-title-inv
+
+
+.center[![:scale 70%](img/01_up_and_running_02.png)]
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+# Try .kjh-yellow[knitting] your notes
+
+.center[![:scale 70%](img/01_up_and_running_03.png)]
+
+.w80.large[
+- **Don't worry if it's not clear what's happening at this point.**]
+
+---
+
+
 
 layout: false
 class: main-title main-title-inv
