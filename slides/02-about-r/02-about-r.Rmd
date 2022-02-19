@@ -6,7 +6,7 @@ output:
   xaringan::moon_reader:
     lib_dir: "libs"
     chakra: "../libs/remark-latest.min.js"
-    css: ["default", "../css/kjh-slides.css", "../css/kjh-inferno-fonts.css", "../css/animate.css"]
+    css: ["default", "../css/kjh-slides.css", "../css/kjh-inferno-fonts.css", "../css/animate.css", "../css/widths.css"]
     seal: false
     anchor_sections: false
     nature:
@@ -1226,7 +1226,7 @@ Again the object inspector is helpful here
 .pull-left[
 
 - Base R's trusty .kjh-lblue[**`data.frame`**]
-
+  
 .SMALL[
 ```{r titanic1}
 library(socviz)

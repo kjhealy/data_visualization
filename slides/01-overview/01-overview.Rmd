@@ -6,7 +6,7 @@ output:
   xaringan::moon_reader:
     lib_dir: "libs"
     chakra: "../libs/remark-latest.min.js"
-    css: ["default", "../css/kjh-slides.css", "../css/kjh-inferno-fonts.css", "../css/animate.css"]
+    css: ["default", "../css/kjh-slides.css", "../css/kjh-inferno-fonts.css", "../css/animate.css", "../css/widths.css"]
     seal: false
     anchor_sections: false
     nature:
@@ -140,7 +140,7 @@ class: title title-1
 # Wrangling data is frustrating
 
 .center[
-  <img src="img/01_stock_sad_mac.jpg" alt="Sad Mac" title="Sad Mac" width="1500%">
+  <img src="img/01_stock_sad_mac.png" alt="Sad Mac" title="Sad Mac" width="1500%">
 ]
 
 
@@ -438,13 +438,13 @@ class: title title-1
 
 # RStudio is an IDE for R
 
-.center[![:scale 100% "Mercedes AMG Dash"](img/01_ide_benz_amg_cabin.jpg)]
+.center[![:scale 100% "Mercedes AMG Dash"](img/01_ide_benz_amg_cabin.png)]
 
 ---
 
 # A kitchen is an IDE for Meals
 
-.center[![:scale 70% "Kitchen"](img/01_ide_jp_pouring_oil1920.jpg)]
+.center[![:scale 70% "Kitchen"](img/01_ide_jp_pouring_oil1920.png)]
 
 ---
 
@@ -472,7 +472,7 @@ SWITCH TO MAC HERE
 
 # RStudio
 
-.center[![:scale 70% "rstudio-4.png"](img/rstudio-conceptual-4.png)]
+.center[![:scale 70% "rstudio-4.png"](img/01_rstudio_conceptual_4.png)]
 
 ---
 
