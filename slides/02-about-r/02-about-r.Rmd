@@ -525,7 +525,7 @@ function
 
 # 2. .kjh-yellow[Everything is an object]
 
-.SMALL[There are a few built-in objects]
+There are a few built-in objects:
 
 
 ```{r 02-about-r-21}
@@ -551,11 +551,11 @@ LETTERS
 
 --
 
-In fact, this is mostly what we will be doing
+In fact, this is mostly what we will be doing.
 
 --
 
-Objects are created by .kjh-red[assigning] a thing to a name:
+Objects are created by .kjh-pink[_assigning_] a thing to a name:
 
 ```{r 02-about-r-24}
 ## name... gets ... this stuff
@@ -580,22 +580,22 @@ We can create an object with the .kjh-green[**`c()`**] function and the *assignm
 
 # The assignment operator
 
-- The assignment operator performs the action of creating objects
+- The .kjh-pink[assignment operator] performs the action of creating objects:
 
 --
 
 - Use a keyboard shortcut to write it:
 
-- Press `option` _and_ `-` on a Mac
+- Press .kjh-green[**`option`**] _and_ .kjh-green[**`-`**] on a Mac
 
-- Press `alt` _and_ `-` on Windows
+- Press .kjh-green[**`alt`**] _and_ .kjh-green[**`-`**] on Windows
 
 
 ---
 
-# Assignment with .kjh-green[`=`]
+# Assignment with .kjh-green[**`=`**]
 
-- You can use "`=`" as well as "`<-`" for assignment
+- You can use ".kjh-green[**`=`**]" as well as ".kjh-green[**`<-`**]" for assignment
 
 ```{r 02-about-r-25}
 my_numbers = c(1, 2, 3, 1, 3, 5, 25)
@@ -606,15 +606,15 @@ my_numbers
 
 --
 
-On the other hand, "`=`" has a different meaning when used in functions.
+On the other hand, ".kjh-green[**`=`**]" has a different meaning when used in functions.
 
 --
 
-I'm going to use "`<-`" for assigment throughout. Just be consistent either way.
+I'm going to use ".kjh-green[**`<-`**]" for assigment throughout. Just be consistent either way.
 
 ---
 
-# Assignment with .kjh-green[`=`]
+# Assignment with .kjh-green[**`=`**]
 
 .center[![:scale 100%](img/02_gordon_assignment.png)]
 
@@ -660,21 +660,36 @@ mean()
 
 - They take .kjh-orange[**inputs**] to .kjh-pink[**arguments**]
 
-- They perform .kjh-red[**actions**]
+- They perform .kjh-green[**actions**]
 
-- They produce, or return, .kjh-green[**outputs**]
-
-
-## .kjh-red[`mean`(].kjh-orange[`x`] `=` .kjh-pink[`my_numbers`].kjh-red[)]
+- They produce, or return, .kjh-lblue[**outputs**]
 
 --
 
-## .kjh-green[`[1] 6.25`]
+.pull-left[
+
+## .kjh-lblue[`x`] .kjh-green[`<-`] .kjh-green[`c(`].kjh-orange[1, 2, 3, 1, 3, 5, 25, 10].kjh-green[`)`]
+
+## .kjh-blue[`x`]
+
+## .kjh-blue[`[1]  1  2  3  1  3  5 25 10`]
+
+]
+--
+
+.pull-right[
+
+## .kjh-green[**`mean`(**].kjh-pink[`x`] `=` .kjh-orange[`my_numbers`].kjh-green[**)**]
+
+## .kjh-lblue[`[1] 6.25`]
+
+]
 
 ---
 
 # What functions usually do
 
+.large[
 ```{r 02-about-r-26}
 ## Get the mean of what? Of x.
 ## You need to tell the function what x is
@@ -682,8 +697,11 @@ mean(x = my_numbers)
 
 mean(x = your_numbers)
 ```
+]
 
---
+--- 
+
+# What functions usually do
 
 If you don't _name_ the arguments, R assumes you are providing them in the order the function expects.
 
@@ -708,14 +726,14 @@ help(mean)
 
 --
 
-- How to read an R help page ... 
+How to read an R help page ... 
 
 ---
 
 # What functions usually do
 
 
-- Arguments often tell the function what to do in specific circumstances
+Arguments often tell the function what to do in specific circumstances
 
 ```{r 02-about-r-30}
 missing_numbers <- c(1:10, NA, 20, 32, 50, 104, 32, 147, 99, NA, 45)
@@ -740,15 +758,17 @@ mean(missing_numbers, na.rm = TRUE, trim = 0.1)
 # What functions usually do
 
 
+.pull-left.w80[
 There are all kinds of functions. They return different things.
 
 ```{r 02-about-r-32}
 summary(my_numbers)
 ```
 
+]
 --
 
-You can assign the output of a function to a name, which turns it into an object. (Otherwise it'll send its output to the console.)
+.pull-left.w80[You can assign the output of a function to a name, which turns it into an object. (Otherwise it'll send its output to the console.)
 
 ```{r 02-about-r-33}
 my_summary <- summary(my_numbers)
@@ -756,11 +776,12 @@ my_summary <- summary(my_numbers)
 my_summary
 ```
 
+]
 ---
 
 # What functions usually do
 
-Objects hang around in your work environment until they are overwritten by you, or are deleted.
+.pull-left.w80[Objects hang around in your work environment until they are overwritten by you, or are deleted.
 
 ```{r 02-about-r-34, eval = FALSE}
 ## rm() function removes objects
@@ -771,45 +792,55 @@ my_summary
 ## Error: object 'my_summary' not found
 ```
 
+]
 ---
 
 # Functions can be .kjh-yellow[nested]
 
+.pull-left.w80[
 ```{r 02-about-r-35}
 c(1:20)
 ```
+]
 
 --
 
+.pull-left.w80[
 ```{r 02-about-r-36}
 mean(c(1:20))
 ```
-
+]
 --
 
+.pull-left.w80[
 ```{r 02-about-r-37}
 summary(mean(c(1:20)))
 ```
+]
 
+.pull-left.w80[
 ```{r 02-about-r-38}
 names(summary(mean(c(1:20))))
 ```
-
+]
 --
 
+
+.pull-left.w80[
 ```{r 02-about-r-39}
 length(names(summary(mean(c(1:20)))))
 ```
+]
 
 --
 
-Nested functions are evaluated from the inside out.
+.pull-left.w80[Nested functions are evaluated from the inside out.]
 
 ---
 
 # Use the pipe operator: .kjh-pink[**`%>%`**]
 
-.SMALL[Instead of nesting functions in parentheses, we can use the _pipe operator_:]
+Instead of nesting functions in parentheses, we can use the .kjh-pink[_pipe operator_]:
 
 
 ```{r 02-about-r-40}
@@ -818,11 +849,11 @@ c(1:20) %>% mean() %>% summary() %>% names() %>%  length()
 
 --
 
-.SMALL[Read this operator as "_.kjh-pink[**and then**]_"]
+Read this operator as "_.kjh-pink[**and then**]_"
 
 --
 
-.SMALL[Better, vertical space is free in R:]
+Better, vertical space is free in R:
 
 
 ```{r 02-about-r-41}
@@ -837,7 +868,7 @@ c(1:20) %>%
 
 # Pipelines make code more .kjh-green[readable]
 
-- Not great, Bob:
+Not great, Bob:
 
 ```r
   serve(stir(pour_in_pan(whisk(crack_eggs(get_from_fridge(eggs), into = "bowl"), len = 40), temp = "med-high")))
@@ -845,7 +876,7 @@ c(1:20) %>%
 
 --
 
-- Notice how the first thing you read is the last operation performed.
+Notice how the first thing you read is the last operation performed.
 
 --
 
@@ -870,7 +901,7 @@ serve(
 
 # Pipelines make code more .kjh-green[readable]
 
-- Much nicer:
+Much nicer:
 
 .medium[
 ```r
@@ -886,7 +917,7 @@ eggs %>%
 ]
 --
 
-- We'll still use nested parentheses quite a bit, often in the context of a function working inside a pipeline. But it's good not to have too many levels of nesting.
+.pull-left.w60[We'll still use nested parentheses quite a bit, often in the context of a function working inside a pipeline. But it's good not to have too many levels of nesting.]
 
 ---
 
@@ -956,12 +987,13 @@ penguins
 ]
 ---
 
-# Grabbing a single function with .kjh-yellow[`::`]
+# Grabbing a single function with .kjh-green[**`::`**]
 
-.small["Reach in" to an unloaded package and grab a function directly, using `<package>::<function>`]
+.pull-left.w70["Reach in" to an unloaded package and grab a function directly, using .kjh-green[`<package>::<function>`]]
 
 --
 
+.pull-left.w70[
 ```{r 02-about-r-45, message = FALSE, echo = FALSE}
 gtsummary::theme_gtsummary_journal(journal = "jama")
 #gtsummary::theme_gtsummary_compact()
@@ -975,7 +1007,7 @@ penguins %>%
   gtsummary::tbl_summary(by = species) #<<
 ```
 ]
-
+]
 ---
 
 # Remember this warning about conflicts?
@@ -1083,7 +1115,7 @@ names(my_smry)
 
 # The most common types of .kjh-green[vector]
 
-.pull-left.tiny.kjh-darkgrey[
+.pull-left.small.kjh-darkgrey[
 
 [![:scale 80% "Vectors 1"](img/02_summary_tree_atomic.png)]  
 
@@ -1093,7 +1125,7 @@ names(my_smry)
 
 --
 
-.pull-right.small[
+.pull-right[
 
 ```{r 02-about-r-52}
 my_int <- c(1, 3, 5, 6, 10)
@@ -1163,11 +1195,10 @@ Durations, which are stored in difftime vectors.
 
 # Vector types can't be heterogenous 
 
-- .small[Objects can be manually or automatically coerced from one class to another. Take care.]
+Objects can be manually or automatically coerced from one class to another. Take care!
 
 --
 
-.SMALL[
 ```{r 02-get-started-9}
 class(my_numbers)
 
@@ -1177,10 +1208,9 @@ my_new_vector # vectors are homogeneous/atomic
 
 class(my_new_vector)
 ```
-]
+
 --
 
-.SMALL[
 ```{r 02-about-r-54}
 my_dbl <- c(2.1, 4.77, 30.111, 3.14519)
 is.double(my_dbl)
@@ -1190,7 +1220,7 @@ my_dbl <- as.integer(my_dbl)
 my_dbl
 
 ```
-]
+
 
 ---
 
@@ -1206,7 +1236,7 @@ typeof(gapminder) # hmm
 ```
 ]
 
-.small[Underneath, most complex R objects are some kind of list with different components.]
+Underneath, most complex R objects are some kind of list with different components.
 
 
 ???
@@ -1225,73 +1255,67 @@ Again the object inspector is helpful here
 
 .pull-left[
 
-- Base R's trusty .kjh-lblue[**`data.frame`**]
+Base R's trusty .kjh-lblue[**`data.frame`**]
   
-.SMALL[
 ```{r titanic1}
 library(socviz)
 titanic
 class(titanic)
 ```
-]
 
-.SMALL[
 ```{r titanic2}
 ## The `$` idiom picks out a named column here; 
 ## more generally, the named element of a list
 titanic$percent  
 ```
-]
 
 ]
-
 --
 
 .pull-right[
 
-- The Tidyverse's enhanced .kjh-lblue[**`tibble`**]
+The Tidyverse's enhanced .kjh-lblue[**`tibble`**]
 
-.SMALL[
 ```{r titanic3}
 ## tibbles are build on data frames 
-titanic_tb <- as_tibble(titanic) 
 class(titanic)
+
+titanic_tb <- as_tibble(titanic) 
+
 titanic_tb
 class(titanic_tb)
 ```
- ]
+ 
 ]
 ---
 
 # All of this will matter later on
 
-.SMALL[
 ```{r 02-about-r-56}
 gss_sm
 ```
-]
 
 --
 
-.SMALL.squish2[Tidyverse tools are generally _type safe_, meaning their functions return the same type of thing every time, or fail if they cannot do this. So it's good to know about the various data types.]
+.pull-left.w80.squish2[Tidyverse tools are generally _type safe_, meaning their functions return the same type of thing every time, or fail if they cannot do this. So it's good to know about the various data types.]
 
 ---
 
 # 6. .kjh-yellow[Arithmetic on vectors]
 
-In R, all numbers are vectors of different sorts. Even single numbers ("scalars") are conceptually vectors of length 1.
+.pull-left.w60[In R, all numbers are vectors of different sorts. Even single numbers ("scalars") are conceptually vectors of length 1.]
 
 --
 
-- Arithmetic on vectors\* follows a series of _recycling rules_ that favor ease of expression of vectorized, "elementwise" operations.
+.pull-left.w60[Arithmetic on vectors\* follows a series of _recycling rules_ that favor ease of expression of vectorized, "elementwise" operations.]
 
-.footnote.tiny[*And arrays, too.]
-
-- See if you can predict what the following operations do: 
+.pull-left.w60.footnote.small[*And arrays, too.]
 
 ---
 
 # 6. .kjh-yellow[Arithmetic on vectors]
+
+See if you can predict what the following operations do: 
 
 ```{r 02-about-r-57}
 my_numbers
@@ -1319,9 +1343,7 @@ result2 <- my_numbers + my_numbers
 result2
 ```
 
-
 --
-
 
 ```{r 02-about-r-61, warning=TRUE}
 two_nums <- c(5, 10)
@@ -1330,13 +1352,11 @@ result3 <- my_numbers + two_nums
 
 ```
 
-
 --
 
 ```{r 02-about-r-62}
 result3
 ```
-
 
 ---
 
@@ -1355,7 +1375,7 @@ result4 <- my_numbers + three_nums
 result4
 ```
 
-Note that you get a _warning_ here. It'll still do it, though! Don't ignore warnings until you understand what they mean.
+Note that you got a **warning** here. R will still do what you told it do, though! Don't ignore warnings until you understand what they mean.
 
 ---
 
