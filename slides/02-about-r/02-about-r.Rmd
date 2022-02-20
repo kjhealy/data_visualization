@@ -1,12 +1,12 @@
 ---
-title: "Data Wrangling - 2. Finding your way in R"
+title: "Data Visualization - 2. Finding your way in R"
 author: "Kieran Healy"
 date: "`r Sys.Date()`"
 output:
   xaringan::moon_reader:
     lib_dir: "libs"
     chakra: "../libs/remark-latest.min.js"
-    css: ["default", "../css/kjh-slides.css", "../css/kjh-inferno-fonts.css", "../css/animate.css", "../css/widths.css"]
+    css: ["default", "../css/kjh-slides.css", "../css/kjh-fonts.css", "../css/animate.css", "../css/widths.css"]
     seal: false
     anchor_sections: false
     nature:
@@ -57,9 +57,9 @@ Statistical Horizons, September 2021]
 ---
 
 layout: false
-class: main-title main-title-inv
+class: center
 
-# .middle.squish4[Using RMarkdown to .kjh-orange[produce] and .kjh-green[reproduce] your work]
+# .middle.huge.squish4[Using RMarkdown to .kjh-orange[produce] and .kjh-green[reproduce] your work]
 
 ---
 
@@ -123,9 +123,9 @@ class: title title-1
 ---
 
 layout: false
-class: main-title main-title-inv
+class: center
 
-.center[![:scale 90% "Covid example"](img/02_lorem_covid_markdown.png)]  
+![:scale 90% "Covid example"](img/02_lorem_covid_markdown.png)
 
 ---
 
@@ -181,13 +181,13 @@ class: title title-1
 ---
 
 layout: false
-class: main-title main-title-inv
+class: center
 
 ## .top.huge.squish4[TYPE OUT<br />YOUR CODE<br />.kjh-orange[BY HAND]]
 
 --
 
-- .center.SMALL[_By far_ the best way to get a feel for how R works, and to get comfortable with the cycle of<br/> try-fail-cry-fix-wail-retry that is a permanent part of writing any code.]
+- .w50.SMALL[_By far_ the best way to get a feel for how R works, and to get comfortable with the cycle of try-fail-cry fix-fail-retry that is a permanent part of writing any code.]
 
 
 ---
@@ -197,9 +197,9 @@ class: main-title main-title-inv
 ---
 
 layout: false
-class: main-title main-title-inv
+class: center
 
-# .middle.squish4[<br />GETTING <br />O.kjh-orange[R]IENTED]
+# .huge.middle.squish4[<br />GETTING <br />O.kjh-orange[R]IENTED]
 
 ---
 
@@ -294,9 +294,9 @@ letters
 ---
 
 layout: false
-class: main-title main-title-inv
+class: center
 
-# .top.large.squish4[SOME THINGS<br />TO KNOW<br />ABOUT .kjh-orange[R]] 
+# .center.middle.huge.squish4[SOME THINGS<br />TO KNOW<br />ABOUT .kjh-orange[R]] 
 
 ---
 
@@ -475,9 +475,9 @@ See e.g. [https://0.30000000000000004.com](https://0.30000000000000004.com)
 ---
 
 layout: false
-class: main-title main-title-inv
+class: center
 
-# .middle.squish4[More later on why this might bite you, and how to deal with it]
+# .huge.middle.squish4[More later on why this might bite you, and how to deal with it]
 
 --
 
