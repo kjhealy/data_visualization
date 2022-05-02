@@ -2,22 +2,7 @@
 title: "Data Visualization - 1. Looking at Data"
 author: "Kieran Healy"
 date: "`r Sys.Date()`"
-output:
-  xaringan::moon_reader:
-    lib_dir: "libs"
-    chakra: "../libs/remark-latest.min.js"
-    css: ["default", "../css/kjh-slides.css", "../css/kjh-fonts.css", "../css/animate.css", "../css/widths.css"]
-    seal: false
-    anchor_sections: false
-    nature:
-      beforeInit: "../js/kjh-macros.js"
-      highlightStyle: default
-      highlightLines: true
-      countIncrementalSlides: false
-      slideNumberFormat: "%current%"
-      ratio: "16:9"
-      navigation:
-        scroll: false
+output: kjhslides::kjh_slides_reader
 editor_options: 
   chunk_output_type: console
 ---
@@ -33,11 +18,8 @@ library(kjhslides)
 ```{r setup, include=FALSE}
 
 kjh_register_tenso()
-
 kjh_set_knitr_opts()
-
 kjh_set_slide_theme()
-
 kjh_set_xaringnan_opts()
 
 ```
