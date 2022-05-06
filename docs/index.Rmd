@@ -1,7 +1,7 @@
 ---
 title: "Data Visualization"
 description: |
-  A Three-Day Remote Seminar at [Code Horizons](https://codehorizons.com/Seminars/data-visualization/)
+  A Remote Seminar at [Code Horizons](https://codehorizons.com/Seminars/data-visualization/)
 author:
 - name: Kieran Healy
   url: https://kieranhealy.org
@@ -21,10 +21,6 @@ knitr::opts_chunk$set(
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
-## Day 1 Office Hour
-
-- [Sample Exercise](office_01.html)
 
 <hr>
 
@@ -59,9 +55,9 @@ We will be working with the most recent stable versions of R and RStudio, as wel
 ### Install R and RStudio on your Laptop
 
 - Begin by installing R (<http://cloud.r-project.org>). Choose the version appropriate for your computing platform:
-  - [macOS with an Intel processor](https://cloud.r-project.org/bin/macosx/base/R-4.1.2.pkg)
-  - [macOS with an Apple Silicon (M1) processor](https://cloud.r-project.org/bin/macosx/big-sur-arm64/base/R-4.1.2-arm64.pkg)
-  - [Windows](https://cloud.r-project.org/bin/windows/base/R-4.1.2-win.exe), 
+  - [macOS with an Intel processor](https://cran.r-project.org/bin/macosx/base/R-4.2.0.pkg)
+  - [macOS with an Apple Silicon (M1) processor](https://cran.r-project.org/bin/macosx/big-sur-arm64/base/R-4.2.0-arm64.pkg)
+  - [Windows](https://cran.r-project.org/bin/windows/base/R-4.2.0-win.exe), 
   - [Linux](https://cloud.r-project.org/bin/linux/).
 - Next, install RStudio (<http://rstudio.com>). Follow the links to download the [free RStudio Desktop edition](https://rstudio.com/products/rstudio/download/#download) recommended for your system.
 
@@ -75,11 +71,11 @@ We will be working with the most recent stable versions of R and RStudio, as wel
 my_packages <- c("tidyverse", "broom", "coefplot", "cowplot", 
                   "drat", "gapminder", "GGally", "ggforce", 
                   "ggrepel", "ggraph", "ggridges", "graphlayouts", 
-                  "here", "margins", "maps", "mapproj", 
-                  "mapdata", "MASS", "naniar", "palmerpenguins", 
+                  "here", "marginaleffects", "margins", "maps", "mapproj", 
+                  "mapdata", "MASS", "modelsummary", "naniar", "palmerpenguins", 
                   "patchwork", "prismatic", "quantreg", "remotes", 
                   "scales", "sf", "socviz", "survey", "srvyr", 
-                  "tidygraph", "viridis", "viridisLite")
+                  "tidygraph")
 
 install.packages(my_packages, repos = "http://cran.rstudio.com")
 
@@ -97,7 +93,7 @@ If you do not have one already, it will be useful to create a GitHub account and
 
 ### Download the Course Packet
 
-The [course packet](https://github.com/kjhealy/dataviz_0122/archive/refs/heads/main.zip) is an RStudio project containing PDFs of the slides for the course together with code for almost all of the graphs we will draw, and some additional datasets and other material. After you have installed R and RStudio, [download the course packet](https://github.com/kjhealy/dataviz_0122/archive/refs/heads/main.zip) and uncompress it on your computer. Double-clicking the file named `dataviz.Rproj` should launch the project in RStudio.
+The course packet will be available before the course begins. It is an RStudio project containing PDFs of the slides for the course together with code for almost all of the graphs we will draw, and some additional datasets and other material. After you have installed R and RStudio, [download the course packet](https://github.com/kjhealy/dataviz_0122/archive/refs/heads/main.zip) and uncompress it on your computer. Double-clicking the file named `dataviz.Rproj` should launch the project in RStudio.
 
 # About the Instructor
 
