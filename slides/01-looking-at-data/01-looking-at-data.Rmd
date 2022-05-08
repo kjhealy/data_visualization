@@ -20,7 +20,7 @@ library(kjhslides)
 kjh_register_tenso()
 kjh_set_knitr_opts()
 kjh_set_slide_theme()
-kjh_set_xaringnan_opts()
+kjh_set_xaringan_opts()
 
 ```
 
@@ -50,21 +50,19 @@ class: title title-1
 
 --
 
-## 10am till 2pm US EST
+## 10:30am to 12:30pm US EST
 
 --
 
-## Lab session from 4pm to 5pm US EST
-
-- On First and Second Days
+## Break from 12:30:pm to 1:30pm
 
 --
+
+## 1:30pm to 3:00pm 
+
+---
 
 ## .pull-left.w80[Use the Zoom chat to ask questions, or raise a hand with ![:scale 5%](img/01_stock_zoom_raise_hand.png)]
-
-???
-
-- breaks: At 11am, around noon, and 1pm
 
 ---
 
@@ -126,6 +124,392 @@ class: title title-1
 
 .w80.large[
 - **Don't worry if it's not clear what's happening at this point.**]
+
+
+---
+
+class: center middle main-title section-title-1
+
+# .huge.kjh-lblue[Look at your Data]
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.bottom.kjh-yellow[Seeing things]
+
+---
+layout: false
+
+.center[![:scale 50%](img/01_anscombes_quartet.png)]
+
+.right.w90.small[Anscombe's Quartet]
+
+
+---
+layout: false
+
+.center[![:scale 40%](img/01_jackman_outlier.png)]
+
+---
+layout: false
+
+.center[![:scale 70%](img/01_desmond_estimates.png)]
+
+.right.w90.small[Desmond, Papachristos & Kirk (2016)]
+
+
+---
+layout: false
+
+.center[![:scale 85%](img/01_zoorob_main.png)]   
+
+.right.w90.small[Zoorob (2020)]
+
+---
+layout: false
+
+.center[![:scale 85%](img/01_zoorob_fits.png)]
+
+.right.w90.small[Zoorob (2020)]
+
+---
+layout: false
+
+.center[![:scale 55%](img/01_correlations.png)]
+
+.right.w90.small[]
+
+---
+layout: false
+
+.center[![:scale 80%](img/01_datasaurus_dozen.gif)]
+
+.right.w90.small[Cairo; Matejka & Fitzmaurice]
+
+---
+layout: false
+
+.center[![:scale 70%](img/01_pew_teeth_graph_redrawn.png)]
+
+.right.w90.small[Pew Research]
+
+---
+layout: false
+
+.center[![:scale 70%](img/01_pew_teeth_graph_redrawn_62pct.png)]
+
+.right.w90.small[Pew Research]
+
+---
+
+class: right bottom main-title section-title-1
+
+## .right.bottom.huge.kjh-yellow[Not Seeing Things]
+
+
+---
+layout: false
+
+.center[![:scale 90%](img/01_excel_3d_column_chart.png)]
+
+.right.w90.small[]
+
+---
+layout: false
+
+.center[![:scale 90%](img/01_excel_3d_column_chart_values.png)]
+
+.right.w90.small[]
+
+---
+layout: false
+class: main-title main-title-inv
+
+## .middle.squish4.huge[Bad Taste]
+
+--
+
+## .middle.squish4.huge.kjh-lblue[Bad Data]
+
+--
+
+## .middle.squish4.huge.kjh-pink[Bad Perception]
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.bottom.kjh-grey[Taste:] .huge.right.bottom.kjh-yellow[ Simplify, Simplify?]
+
+---
+layout: true
+class: title title-1
+---
+
+# Tufte's "Data to Ink Ratio"
+
+.left[![:scale 35%](img/01_tufte_cover.png)]
+
+---
+layout: false
+
+.center[![:scale 70%](img/01_chartjunk_life_expectancy.png)]
+
+---
+layout: false
+
+.center[![:scale 65%](img/01_holmes_monstrous_costs.png)]
+
+.right.w90.small[Nigel Holmes]
+
+---
+layout: false
+
+.center[![:scale 65%](img/01_holmes_monstrous_bar_chart.png)]
+
+.right.w90.small[]
+
+---
+layout: false
+
+.center[![:scale 70%](img/01_chartjunk_before.png)]
+
+.right.w90.small[Darkhorse Analytics]
+
+---
+layout: false
+
+.center[![:scale 50%](img/01_chartjunk_after.png)]
+
+.right.w90.small[Darkhorse Analytics]
+
+
+---
+layout: false
+
+.center[![:scale 120%](img/01_tufte_boxplots.png)]
+
+.right.w90.small[]
+
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.bottom.kjh-grey[Data:] .huge.right.bottom.kjh-yellow[ Junk-Free Junk Charts]
+
+---
+layout: false
+
+.center[![:scale 80%](img/01_democracy_nyt_version.png)]
+
+.right.w90.small[New York Times]
+
+
+
+---
+layout: false
+
+.center[![:scale 75%](img/01_democracy_voeten_version_2.png)]
+
+.right.w90.small[Erik Voeten]
+
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.bottom.kjh-grey[Perception:] .huge.right.bottom.kjh-yellow[Seeing and Not Seeing]
+
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.bottom.kjh-green[Edges & Contrasts]
+
+---
+layout: false
+
+.center[![:scale 55%](img/01_perception_hermann_grid_effect.png)]
+
+.right.w90.small[]
+
+---
+layout: false
+
+.center[![:scale 65%](img/01_illusion_fraser_column_1.png)]
+
+.right.w90.small[]
+
+---
+layout: false
+
+.center[![:scale 80%](img/01_illusion_fraser_diamond.png)]
+
+.right.w90.small[credit]
+
+---
+layout: false
+
+.center[![:scale 50%](img/01_perception_circles.gif)]
+
+.right.w90.small[]
+
+
+---
+layout: false
+
+.center[![:scale 30%](img/01_mach_bands_separated.png)]
+
+.right.w90.small[]
+
+
+---
+layout: false
+
+.center[![:scale 60%](img/01_mach_bands_comparison.png)]
+
+.right.w90.small[]
+
+
+---
+layout: false
+
+.center[![:scale 90%](img/01_perception_contrast_01.png)]
+
+.right.w90.small[]
+
+
+---
+layout: false
+
+.center[![:scale 90%](img/01_perception_contrast_02.png)]
+
+.right.w90.small[]
+
+
+---
+layout: false
+
+.center[![:scale 70%](img/01_perception_adelson_checker_single.png)]
+
+.right.w90.small[Edward Adelson]
+
+
+---
+layout: false
+
+.center[![:scale 90%](img/01_perception_adelson_checkershow_2.png)]
+
+.right.w90.small[Edward Adelson]
+
+
+
+---
+layout: false
+
+.center[![:scale 80%](img/01_perception_adelson_checker_movie.mp4)]
+
+.right.w90.small[Edward Adelson]
+
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.bottom.kjh-green[Luminance and Color]
+
+
+---
+layout: false
+
+.center[![:scale 40%](img/01_illusion_troxler_effect_dot.png)]
+
+.right.w90.small[Troxler effect]
+
+
+---
+layout: false
+
+.center[![:scale 50%](img/01_lilac_chaser.gif)]
+
+.right.w90.small["Lilac Chaser"]
+
+
+---
+layout: false
+
+.center[![:scale 90%](img/01_luminance_contrast_1.png)]
+
+.right.w90.small[Colin Ware]
+
+
+---
+layout: false
+
+.center[![:scale 90%](img/01_luminance_contrast_2.png)]
+
+.right.w90.small[Colin Ware]
+
+---
+layout: false
+
+.center[![:scale 80%](img/01_perception_heatmap_colors.png)]
+
+.right.w90.small[]
+
+
+---
+layout: false
+
+.center[![:scale 100%](img/01_perception_heatmap_movie.mp4)]
+
+.right.w90.small[]
+
+
+---
+layout: false
+
+.center[![:scale 80%](img/01_perception_heatmap_colors_marked.png)]
+
+.right.w90.small[]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
