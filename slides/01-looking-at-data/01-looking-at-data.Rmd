@@ -128,6 +128,42 @@ class: title title-1
 
 ---
 
+# Now write the following code
+
+.pull-left.w35[
+
+Write this out inside the "code chunk" in your notes.
+
+```{r first-plot, message=FALSE, fig.show="hide", fig.width=5.8, fig.height=5.5}
+library(tidyverse)
+library(gapminder)
+
+p <- ggplot(data = gapminder, 
+            mapping = aes(x = gdpPercap, 
+                          y = lifeExp)) + 
+  geom_point()
+
+p
+```
+
+... And knit your document again.
+
+]
+
+--
+
+.pull-right.w60[
+```{r, echo=FALSE}
+knitr::include_graphics(
+  knitr::fig_chunk("first-plot", "png")
+)
+```
+]
+
+
+---
+
+
 layout: true
 class: center middle main-title section-title-1
 

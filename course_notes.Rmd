@@ -67,10 +67,12 @@ gapminder
 The remainder of this document contains topic headings and an empty code chunk to get you started. Try knitting this document now by clicking the "Knit" button in the RStudio toolbar, or choosing File > Knit Document from the RStudio menu.
 
 
-## Why look at Data?
+## Look at your Data!
+
+Write your first bit of R code in the "chunk" below.
 
 ```{r 01-introduction-3 }
       
 ```
 
-
+The chunk is the bit between the backticks.

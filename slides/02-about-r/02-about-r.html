@@ -1,0 +1,2613 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Data Visualization - 2. Finding your way in R</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Kieran Healy" />
+    <meta name="date" content="2022-05-09" />
+    <script src="libs/header-attrs-2.14/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/tile-view-0.2.6/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view-0.2.6/tile-view.js"></script>
+    <link href="libs/animate.css-3.7.2/animate.xaringan.css" rel="stylesheet" />
+    <link href="libs/animate.css-xaringan-3.7.2/animate.fade.css" rel="stylesheet" />
+    <script src="libs/clipboard-2.0.6/clipboard.min.js"></script>
+    <link href="libs/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.js"></script>
+    <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
+    <link rel="stylesheet" href="/Users/kjhealy/Library/R/library/kjhslides/slides/css/kjh-slides.css" type="text/css" />
+    <link rel="stylesheet" href="/Users/kjhealy/Library/R/library/kjhslides/slides/css/tenso-berkeley.css" type="text/css" />
+    <link rel="stylesheet" href="/Users/kjhealy/Library/R/library/kjhslides/slides/css/animate.css" type="text/css" />
+    <link rel="stylesheet" href="/Users/kjhealy/Library/R/library/kjhslides/slides/css/widths.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+
+
+class: center middle main-title section-title-1
+
+# Finding your way in&lt;br /&gt;.kjh-lblue[R] and .kjh-lblue[RStudio]
+
+.class-info[
+
+**Data Visualization: Session 2**
+
+.light[Kieran Healy&lt;br&gt;
+Statistical Horizons, May 2022]
+
+]
+
+
+---
+
+layout: false
+class: center middle main-title main-title-inv
+
+# .middle.huge.squish4[We want to&lt;br /&gt;.kjh-orange[draw graphs]&lt;br /&gt;.kjh-green[reproducibly]]
+
+
+---
+layout: false
+
+.left[![:scale 30%](img/02_r_logo.png)]
+
+.right[![:scale 50%](img/02_rstudio_logo.png)]
+
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+# Abstraction in software
+
+.pull-left[
+
+## Less
+
+- Easy things are awkward
+
+- Hard things are straightforward
+
+- Really hard things are possible
+]
+
+
+.pull-right[
+
+## More
+
+- Easy things are trivial
+
+- Hard things are very awkward
+
+- Really hard things are impossible
+]
+
+
+.center.large[Compare:  D3, Grid, ggplot, Stata,  Excel]
+
+
+---
+
+# Two ways to use R and ggplot
+
+## 1. Do everything in R from start to finish
+
+
+`Raw data |&gt; Read, Clean, Analyse |&gt; Make figures`
+
+--
+
+## 2. Hand ggplot a table of results
+
+`Stata/SAS/etc |&gt; Tidy table |&gt; Read in to R |&gt; Make figures`
+
+
+---
+
+class: center middle main-title section-title-1
+
+# .huge[The .kjh-lblue[RStudio] IDE]
+
+---
+layout: false 
+class: bottom
+background-image: url("img/02_ide_control_room.png")
+background-size: cover
+
+## .huge.right.bottom.squish4.kjh-grey[An IDE for R]
+
+---
+layout: false
+class: bottom
+background-image: url("img/02_ide_kitchen.png")
+background-size: cover
+
+## .huge.right.bottom.squish4.kjh-grey[An IDE for Meals]
+
+
+---
+layout: false
+
+.center[![:scale 60%](img/02_ide_rstudio_startup.png)]
+
+.right.w90.small[RStudio at startup]
+
+---
+layout: false
+
+.center[![:scale 50%](img/02_ide_rstudio_schematic.png)]
+
+.right.w90.small[RStudio schematic overview]
+
+---
+layout: false
+
+.center[![:scale 50%](img/02_ide_rstudio_schematic_overlay.png)]
+
+.right.w90.small[RStudio schematic overview]
+
+---
+
+layout: false
+class: center middle
+
+## .middle.huge.squish4[Data + Instructions writen as code, rather than a series of point-and-click steps]
+
+
+---
+
+layout: false
+class: center middle
+
+## .middle.huge.squish4[Starting Data + Code is what's "real" in our R projects]
+
+---
+layout: false
+
+.center[![:scale 60%](img/02_ide_rstudio_startup.png)]
+
+.right.w90.small[RStudio at startup]
+
+---
+layout: false
+
+.center[![:scale 75%](img/02_ide_rstudio_sshot_1.png)]
+
+.right.w90.small[RStudio at startup]
+
+---
+layout: false
+
+.center[![:scale 75%](img/02_ide_rstudio_sshot_2.png)]
+
+.right.w90.small[RStudio at startup]
+
+---
+layout: false
+
+.center[![:scale 75%](img/02_ide_rstudio_sshot_3.png)]
+
+.right.w90.small[RStudio at startup]
+
+---
+layout: false
+
+.center[![:scale 75%](img/02_ide_rstudio_sshot_4.png)]
+
+.right.w90.small[RStudio at startup]
+
+
+---
+
+class: center middle main-title section-title-1
+
+# .large.squish4[Use .kjh-yellow[RMarkdown] to .kjh-orange[produce] and .kjh-green[reproduce]  work]
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+# Where we want to end up
+
+.center[![:scale 90% "PDF out"](img/02_lorem_covid_latex.png)]  
+
+---
+
+# Where we want to end up
+
+.center[![:scale 45% "HTML out"](img/02_lorem_covid_html.png)]  
+
+---
+
+# Where we want to end up
+
+.center[![:scale 100% "Word out"](img/02_lorem_covid_word.png)]  
+
+---
+
+# How to get there?
+
+.pull-left[![:scale 35% "R script"](img/02_covid_r_script.png)] 
+
+.pull-right[
+
+- We could write an **R script** with some notes inside, using it to create some figures and tables, paste them into our document.
+
+- This will work, but we can do better.
+
+]
+
+---
+
+# We can .kjh-yellow[make] this ...
+
+
+.pull-left[![:scale 100% "Out"](img/02_lorem_ipsum_goal.png)]  
+
+
+.pull-right.large[This is what we want to end up with. Nicely-formatted text, plots, and tables. In .kjh-red[an "Office" approach] we write the document and paste in the figures and tables.]
+
+---
+
+# ... by .kjh-green[writing] this
+
+.pull-left[![:scale 100% "Out"](img/02_lorem_ipsum_raw.png)]  
+
+.pull-right.large[In a .kjh-red[literate programming] approach, chunks of code contained in documents are processed and then replaced with their output when the output document is produced.]
+
+---
+
+# The .kjh-pink[`code`] gets replaced by its .kjh-green[output]
+
+
+.pull-left[![:scale 100% "Out"](img/02_lorem_ipsum_raw.png)]
+
+.pull-right[![:scale 100% "Out"](img/02_lorem_ipsum_goal.png)]
+
+---
+
+layout: false
+class: center
+
+![:scale 85% "Markdown document"](img/02_lorem_covid_markdown.png)
+
+
+
+---
+
+.center[![:scale 90% "Markdown document annotated"](img/02_lorem_covid_markdown_annotated.png)]  
+
+---
+
+.pull-left[![:scale 140% "Covid example output"](img/02_lorem_covid_triple.png)]  
+
+--
+
+.right.large[
+
+- This approach has its limitations, but it's _very_ useful and has many benefits.
+
+]
+
+
+---
+
+.pull-left[![:scale 44% "RMD out"](img/02_knit_rmd_tall.png)]  
+
+
+.pull-right[- When learning these workflows, stick with the defaults at the beginning. Later, you can customize the look of the output in all kinds of ways.
+
+- The slides for this course were written in RMarkdown. Many of the resources for R that you'll find online (including websites and full-length books) were as well.]
+
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+# The right frame of mind
+
+- This is like learning how to drive a car, or how to cook in a kitchen ... or learning to speak a language.
+
+--
+
+- After some orientation to what's where, you will learn best by _doing_.
+
+--
+
+- Software is a pain, but you won't crash the car or burn your house down. 
+
+???
+
+- Don't be afraid of the IDE or code. Expect to be frustrated, and don't be surprised when things go wrong. Things will go wrong _constantly_. The software is a very powerful, very obedient, and _very_ dumb robot.
+
+- But every time things "don't work", and every time you diagnose and fix them, you will become a little more adept at noticing and fixing these errors. And you will start to accumulate practical knowledge of common failures.
+
+- So be like Jacques and keep at it.
+
+---
+
+layout: false
+class: main-title main-title-inv center middle
+
+# .huge.squish4[TYPE OUT&lt;br /&gt;YOUR CODE&lt;br /&gt;.kjh-orange[BY HAND]]
+
+---
+
+.center[![:scale 90% "Samuel Beckett"](img/02_beckett_fail_better.png)]
+
+---
+
+layout: true
+class: center middle main-title section-title-1
+
+---
+
+# .huge.middle.squish4[&lt;br /&gt;GETTING &lt;br /&gt;O.kjh-lblue[R]IENTED]
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+# Loading the tidyverse libraries
+
+
+```r
+library(tidyverse)
+```
+
+```
+## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+```
+
+```
+## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
+## ✔ tibble  3.1.6     ✔ dplyr   1.0.9
+## ✔ tidyr   1.2.0     ✔ stringr 1.4.0
+## ✔ readr   2.1.2     ✔ forcats 0.5.1
+```
+
+```
+## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()
+```
+
+- The tidyverse has several components. 
+
+- We'll return to this message about Conflicts later.
+
+- Again, the code and messages you see here is actual R output, produced at the same time as the slide.
+
+---
+
+# Tidyverse components
+
+.pull-left[
+
+- .kjh-green[**`library`**]`(tidyverse)`
+- `Loading tidyverse: ggplot2`
+- `Loading tidyverse: tibble`
+- `Loading tidyverse: tidyr`
+- `Loading tidyverse: readr`
+- `Loading tidyverse: purrr`
+- `Loading tidyverse: dplyr`
+]
+
+--
+
+.pull-right[
+- Load the package and ...
+- `&lt;|` **Draw graphs**
+- `&lt;|` **Nicer data tables**
+- `&lt;|` **Tidy your data**
+- `&lt;|` **Get data into R**
+- `&lt;|` **Fancy Iteration**
+- `&lt;|` **Action verbs for tables**
+
+]
+
+---
+
+# What R looks like
+
+
+Code you can type and run:
+
+
+```r
+## Inside code chunks, lines beginning with a # character are comments
+## Comments are ignored by R
+
+my_numbers &lt;- c(1, 1, 2, 4, 1, 3, 1, 5) # Anything after a # character is ignored as well
+```
+
+Output:
+
+.smaller[Equivalent to running the code above, typing `my_numbers` at the console, and hitting enter.]
+
+
+```r
+my_numbers 
+```
+
+```
+## [1] 1 1 2 4 1 3 1 5
+```
+
+---
+
+# What R looks like
+
+By convention, code output in documents is prefixed by `##`
+
+
+```r
+my_numbers 
+```
+
+```
+## [1] 1 1 2 4 1 3 1 5
+```
+
+
+
+--
+
+Also by convention, outputting vectors, etc, gets a counter keeping track of the number of elements. For example,
+
+
+```r
+letters
+```
+
+```
+##  [1] "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m" "n" "o" "p" "q" "r" "s"
+## [20] "t" "u" "v" "w" "x" "y" "z"
+```
+
+
+
+---
+
+layout: false
+class: center middle
+
+# .center.middle.huge.squish4[SOME THINGS&lt;br /&gt;TO KNOW&lt;br /&gt;ABOUT .kjh-orange[R]] 
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+# 0. .kjh-yellow[It's a calculator]
+
+.pull-left[
+
+- Arithmetic
+
+
+
+```r
+(31 * 12) / 2^4
+```
+
+```
+## [1] 23.25
+```
+
+
+```r
+sqrt(25)
+```
+
+```
+## [1] 5
+```
+
+
+```r
+log(100)
+```
+
+```
+## [1] 4.60517
+```
+
+```r
+log10(100)
+```
+
+```
+## [1] 2
+```
+
+]
+
+--
+
+.pull-right[
+
+- Logic
+
+
+```r
+4 &lt; 10
+```
+
+```
+## [1] TRUE
+```
+
+```r
+4 &gt; 2 &amp; 1 &gt; 0.5 # The "&amp;" means "and"
+```
+
+```
+## [1] TRUE
+```
+
+```r
+4 &lt; 2 | 1 &gt; 0.5 # The "|" means "or"
+```
+
+```
+## [1] TRUE
+```
+
+```r
+4 &lt; 2 | 1 &lt; 0.5
+```
+
+```
+## [1] FALSE
+```
+]
+
+---
+
+# 0. .kjh-yellow[It's a calculator]
+
+Logical equality and inequality (yielding a .kjh-green[`TRUE`] or .kjh-red[`FALSE`] result) is done with `==` and `!=`. Other logical operators include `&lt;`, `&gt;`, `&lt;=`, `&gt;=`, and `!` for negation. We'll use these in plots to filter data, test conditions, and so on.
+
+.medium[
+
+
+```r
+## A logical test
+2 == 2 # Write `=` twice
+```
+
+```
+## [1] TRUE
+```
+
+
+```r
+## This will cause an error, because R will think you are trying to assign a value
+2 = 2
+
+## Error in 2 = 2 : invalid (do_set) left-hand side to assignment
+```
+
+
+```r
+3 != 7 # Write `!` and then `=` to make `!=`
+```
+
+```
+## [1] TRUE
+```
+]
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+# 1. .kjh-yellow[Everything in R has a name]
+
+
+```r
+my_numbers # We created this a few minutes ago
+```
+
+```
+## [1] 1 1 2 4 1 3 1 5
+```
+
+```r
+letters  # This one is built-in
+```
+
+```
+##  [1] "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m" "n" "o" "p" "q" "r" "s"
+## [20] "t" "u" "v" "w" "x" "y" "z"
+```
+
+```r
+pi  # Also built-in
+```
+
+```
+## [1] 3.141593
+```
+
+---
+
+# Some names are forbidden
+
+Or it's a _really_ bad idea to try to use them 
+
+
+```r
+## Don't name objects with terms fo logical values, 
+## or missing and null-value indicators
+
+TRUE
+FALSE
+Inf
+NaN 
+NA 
+NULL
+
+## Don't name objects with terms that are also
+## built-in functions for programming and flow-control
+
+for
+if
+while
+break
+function
+```
+
+---
+
+# 2. .kjh-yellow[Everything is an object]
+
+There are a few built-in objects:
+
+
+
+```r
+letters
+```
+
+```
+##  [1] "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m" "n" "o" "p" "q" "r" "s"
+## [20] "t" "u" "v" "w" "x" "y" "z"
+```
+
+--
+
+
+```r
+pi
+```
+
+```
+## [1] 3.141593
+```
+
+--
+
+
+```r
+LETTERS
+```
+
+```
+##  [1] "A" "B" "C" "D" "E" "F" "G" "H" "I" "J" "K" "L" "M" "N" "O" "P" "Q" "R" "S"
+## [20] "T" "U" "V" "W" "X" "Y" "Z"
+```
+
+---
+
+# 3. .kjh-yellow[You can create objects] 
+
+--
+
+In fact, this is mostly what we will be doing.
+
+--
+
+Objects are created by .kjh-pink[_assigning_] a thing to a name:
+
+
+```r
+## name... gets ... this stuff
+my_numbers &lt;- c(1, 2, 3, 1, 3, 5, 25, 10)
+
+## name ... gets ... the output of the function `c()`
+your_numbers &lt;- c(5, 31, 71, 1, 3, 21, 6, 52)
+```
+
+--
+
+The .kjh-green[**`c()`**] function _combines_ or _concatenates_ things
+
+
+The **assignment operator**, .kjh-pink[**`&lt;-`**], performs the action of creating objects.
+
+???
+
+The core thing we do in R is _create objects_ by _assigning a thing to a name_. That thing is usually the output of some _function_. There are a lot of built-in functions.
+
+We can create an object with the .kjh-green[**`c()`**] function and the *assignment operator*, `&lt;-`. 
+
+
+---
+
+# The assignment operator
+
+- The .kjh-pink[assignment operator] performs the action of creating objects:
+
+--
+
+- Use a keyboard shortcut to write it:
+
+- Press .kjh-green[**`option`**] _and_ .kjh-green[**`-`**] on a Mac
+
+- Press .kjh-green[**`alt`**] _and_ .kjh-green[**`-`**] on Windows
+
+
+---
+
+# Assignment with .kjh-green[**`=`**]
+
+- You can use ".kjh-green[**`=`**]" as well as ".kjh-green[**`&lt;-`**]" for assignment
+
+
+```r
+my_numbers = c(1, 2, 3, 1, 3, 5, 25)
+
+my_numbers
+```
+
+```
+## [1]  1  2  3  1  3  5 25
+```
+
+
+--
+
+On the other hand, ".kjh-green[**`=`**]" has a different meaning when used in functions.
+
+--
+
+I'm going to use ".kjh-green[**`&lt;-`**]" for assigment throughout. Just be consistent either way.
+
+---
+
+# Assignment with .kjh-green[**`=`**]
+
+.center[![:scale 100%](img/02_gordon_assignment.png)]
+
+???
+
+--- 
+
+layout: true
+class: title title-1
+
+---
+
+# 4. Do things to objects with .kjh-green[functions]
+
+
+
+```r
+## this object... gets ... the output of this function
+my_numbers &lt;- c(1, 2, 3, 1, 3, 5, 25, 10)
+
+your_numbers &lt;- c(5, 31, 71, 1, 3, 21, 6, 52)
+```
+
+
+```r
+my_numbers
+```
+
+```
+## [1]  1  2  3  1  3  5 25 10
+```
+
+- Functions can be identified by the parentheses after their names.
+
+
+```r
+my_numbers 
+```
+
+```
+## [1]  1  2  3  1  3  5 25 10
+```
+
+
+
+```r
+## If you run this you'll get an error
+mean()
+```
+
+---
+
+# What .kjh-green[functions] usually do
+
+- They take .kjh-orange[**inputs**] to .kjh-pink[**arguments**]
+
+- They perform .kjh-green[**actions**]
+
+- They produce, or return, .kjh-lblue[**outputs**]
+
+--
+
+.pull-left[
+
+### .kjh-lblue[`x`] .kjh-green[`&lt;-`] .kjh-green[`c(`].kjh-orange[1, 2, 3, 1, 3, 5, 25, 10].kjh-green[`)`]
+
+### .kjh-blue[`x`]
+
+### .kjh-blue[`[1]  1  2  3  1  3  5 25 10`]
+
+]
+--
+
+.pull-right[
+
+### .kjh-green[**`mean`(**].kjh-pink[`x`] `=` .kjh-orange[`my_numbers`].kjh-green[**)**]
+
+### .kjh-lblue[`[1] 6.25`]
+
+]
+
+---
+
+# What .kjh-green[functions] usually do
+
+.large[
+
+```r
+## Get the mean of what? Of x.
+## You need to tell the function what x is
+mean(x = my_numbers)
+```
+
+```
+## [1] 6.25
+```
+
+```r
+mean(x = your_numbers)
+```
+
+```
+## [1] 23.75
+```
+]
+
+--
+
+If you don't _name_ the arguments, R assumes you are providing them in the order the function expects.
+
+
+```r
+mean(your_numbers)
+```
+
+```
+## [1] 23.75
+```
+
+---
+
+# What .kjh-green[functions] usually do
+
+What arguments? Which order? Read the function's help page
+
+
+```r
+help(mean)
+```
+
+
+```r
+## quicker
+?mean
+```
+
+--
+
+How to read an R help page ... 
+
+---
+
+# What .kjh-green[functions] usually do
+
+
+Arguments often tell the function what to do in specific circumstances
+
+
+```r
+missing_numbers &lt;- c(1:10, NA, 20, 32, 50, 104, 32, 147, 99, NA, 45)
+
+mean(missing_numbers)
+```
+
+```
+## [1] NA
+```
+
+```r
+mean(missing_numbers, na.rm = TRUE)
+```
+
+```
+## [1] 32.44444
+```
+
+--
+
+Or select from one of several options
+
+
+```r
+## Look at ?mean to see what `trim` does
+mean(missing_numbers, na.rm = TRUE, trim = 0.1)
+```
+
+```
+## [1] 27.25
+```
+
+
+---
+
+# What .kjh-green[functions] usually do
+
+
+.pull-left.w80[
+There are all kinds of functions. They return different things.
+
+
+```r
+summary(my_numbers)
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    1.00    1.75    3.00    6.25    6.25   25.00
+```
+
+]
+--
+
+.pull-left.w80[You can assign the output of a function to a name, which turns it into an object. (Otherwise it'll send its output to the console.)
+
+
+```r
+my_summary &lt;- summary(my_numbers)
+
+my_summary
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    1.00    1.75    3.00    6.25    6.25   25.00
+```
+
+]
+---
+
+# What .kjh-green[functions] usually do
+
+.pull-left.w80[Objects hang around in your work environment until they are overwritten by you, or are deleted.
+
+
+```r
+## rm() function removes objects
+rm(my_summary)
+
+my_summary
+
+## Error: object 'my_summary' not found
+```
+
+]
+---
+
+# Functions can be .kjh-yellow[nested]
+
+.pull-left.w80[
+
+```r
+c(1:20)
+```
+
+```
+##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20
+```
+]
+
+--
+
+.pull-left.w80[
+
+```r
+summary(c(1:20))
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    1.00    5.75   10.50   10.50   15.25   20.00
+```
+]
+
+.pull-left.w80[
+
+```r
+names(summary(c(1:20)))
+```
+
+```
+## [1] "Min."    "1st Qu." "Median"  "Mean"    "3rd Qu." "Max."
+```
+]
+--
+
+
+.pull-left.w80[
+
+```r
+length(names(summary(c(1:20))))
+```
+
+```
+## [1] 6
+```
+]
+
+--
+
+.pull-left.w80[Nested functions are evaluated from the inside out.]
+
+---
+
+# Use the pipe operator: .kjh-pink[**`|&gt;`**]
+
+Instead of nesting functions in parentheses, we can use the .kjh-pink[_pipe operator_] to join them together:
+
+
+
+```r
+c(1:20) |&gt; summary() |&gt; names() |&gt;  length()
+```
+
+```
+## [1] 6
+```
+
+--
+
+Read this operator as "_.kjh-pink[**and then**]_"
+
+--
+
+Better, vertical space is free in R:
+
+
+
+```r
+c(1:20) |&gt; 
+  summary() |&gt; 
+  names() |&gt; 
+  length()
+```
+
+```
+## [1] 6
+```
+
+---
+
+# Pipelines make code more .kjh-green[readable]
+
+Not great, Bob:
+
+```r
+  serve(stir(pour_in_pan(whisk(crack_eggs(get_from_fridge(eggs), into = "bowl"), len = 40), temp = "med-high")))
+```
+
+--
+
+Notice how the first thing you read is the last operation performed.
+
+--
+
+Really not much better:
+
+.medium[
+```r
+serve(
+  stir(
+    pour_in_pan(
+      whisk(
+        crack_eggs(
+          get_from_fridge(eggs), 
+        into = "bowl"), 
+      len = 40), 
+    temp = "med-high")
+  )
+)
+```
+]
+---
+
+# Pipelines make code more .kjh-green[readable]
+
+Much nicer:
+
+.medium[
+```r
+eggs |&gt; 
+  get_from_fridge() |&gt; 
+  crack_eggs(into = "bowl") |&gt; 
+  whisk(len = 40) |&gt; 
+  pour_in_pan(temp = "med-high") |&gt; 
+  stir() |&gt; 
+  serve()
+
+```
+]
+--
+
+.pull-left.w60[We'll still use nested parentheses quite a bit, often in the context of a function working inside a pipeline. But it's good not to have too many levels of nesting.]
+
+---
+
+
+# The .kjh-yellow[magrittr] pipe: .kjh-pink[`%&gt;%`]
+
+- The pipe operator .kjh-pink[**`|&gt;`**] was not part of Base R until very recently. Pipling was originally introduced in a package called `magrittr`, where it was written .kjh-pink[**`%&gt;%`**] and behaved in very nearly* the same way as the base pipe now does. 
+
+--
+
+- The magrittr pipe continues to work. A lot of existing code uses it (e.g., my book!).
+
+--
+
+- _Sidenote:_ There are bunch of special operators in R that have the naming convention .kjh-pink[**`%something%`**]. For example .kjh-pink[**`%\*%`**] means "matrix multiply". We'll see more of them as we go. In this context the **`% %`** is sometimes pronounced "grapes".  
+
+.footnote.tiny[.kjh-darkgrey[\*With the new pipe, you can only pass an object to the _first_ argument in a function. This is fine for most tidyverse pipelines, where the first argument is usually (implicitly) the data. But it does mean that most Base R functions will continue not to be easily piped, as most of them do not follow the convention of passing the current data as the first argument]]
+
+---
+
+# Functions are bundled into .kjh-yellow[packages]
+
+--
+
+All programming languages gain power and convenience by having libraries or packages of functions that extend the core abilities of the language. In R, packages are loaded into your working environment using the .kjh-green[**`library()`**] function.
+
+--
+
+
+```r
+## A package containing a dataset rather than functions
+library(gapminder)
+
+gapminder
+```
+
+```
+## # A tibble: 1,704 × 6
+##    country     continent  year lifeExp      pop gdpPercap
+##    &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+##  1 Afghanistan Asia       1952    28.8  8425333      779.
+##  2 Afghanistan Asia       1957    30.3  9240934      821.
+##  3 Afghanistan Asia       1962    32.0 10267083      853.
+##  4 Afghanistan Asia       1967    34.0 11537966      836.
+##  5 Afghanistan Asia       1972    36.1 13079460      740.
+##  6 Afghanistan Asia       1977    38.4 14880372      786.
+##  7 Afghanistan Asia       1982    39.9 12881816      978.
+##  8 Afghanistan Asia       1987    40.8 13867957      852.
+##  9 Afghanistan Asia       1992    41.7 16317921      649.
+## 10 Afghanistan Asia       1997    41.8 22227415      635.
+## # … with 1,694 more rows
+```
+
+---
+
+# Functions are bundled into .kjh-yellow[packages]
+
+--
+
+.SMALL.squish2[You need only _install_ a package once (and occasionally update it). But you must _load_ the package in each R session before you can access its contents.]
+
+.SMALL[
+
+
+```r
+## Do at least once for each package. Once done, not needed each time.
+install.packages("palmerpenguins", repos = "http://cran.rstudio.com")
+
+## Needed sometimes, especially after an R major version upgrade.
+update.packages(repos = "http://cran.rstudio.com")
+```
+
+
+]
+
+.SMALL[
+
+```r
+## To load a package, usually at the start of your RMarkdown document or script file
+library(palmerpenguins)
+penguins
+```
+
+```
+## # A tibble: 344 × 8
+##    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##    &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
+##  1 Adelie  Torgersen           39.1          18.7               181        3750
+##  2 Adelie  Torgersen           39.5          17.4               186        3800
+##  3 Adelie  Torgersen           40.3          18                 195        3250
+##  4 Adelie  Torgersen           NA            NA                  NA          NA
+##  5 Adelie  Torgersen           36.7          19.3               193        3450
+##  6 Adelie  Torgersen           39.3          20.6               190        3650
+##  7 Adelie  Torgersen           38.9          17.8               181        3625
+##  8 Adelie  Torgersen           39.2          19.6               195        4675
+##  9 Adelie  Torgersen           34.1          18.1               193        3475
+## 10 Adelie  Torgersen           42            20.2               190        4250
+## # … with 334 more rows, and 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;
+```
+]
+---
+
+# Grabbing a single function with .kjh-green[**`::`**]
+
+.pull-left.w70["Reach in" to an unloaded package and grab a function directly, using .kjh-green[`&lt;package&gt;::&lt;function&gt;`]]
+
+--
+
+.pull-left.w70[
+
+
+.less-medium[
+
+```r
+## A little glimpse of what we'll do soon
+penguins |&gt; 
+  select(species, body_mass_g, sex) |&gt; 
+* gtsummary::tbl_summary(by = species)
+```
+
+<div id="klbqcvzvbr" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#klbqcvzvbr .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#klbqcvzvbr .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#klbqcvzvbr .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#klbqcvzvbr .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#klbqcvzvbr .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#klbqcvzvbr .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#klbqcvzvbr .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#klbqcvzvbr .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#klbqcvzvbr .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#klbqcvzvbr .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#klbqcvzvbr .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#klbqcvzvbr .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#klbqcvzvbr .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#klbqcvzvbr .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#klbqcvzvbr .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#klbqcvzvbr .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#klbqcvzvbr .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#klbqcvzvbr .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#klbqcvzvbr .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#klbqcvzvbr .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#klbqcvzvbr .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#klbqcvzvbr .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#klbqcvzvbr .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#klbqcvzvbr .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#klbqcvzvbr .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#klbqcvzvbr .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#klbqcvzvbr .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#klbqcvzvbr .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#klbqcvzvbr .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#klbqcvzvbr .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#klbqcvzvbr .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#klbqcvzvbr .gt_left {
+  text-align: left;
+}
+
+#klbqcvzvbr .gt_center {
+  text-align: center;
+}
+
+#klbqcvzvbr .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#klbqcvzvbr .gt_font_normal {
+  font-weight: normal;
+}
+
+#klbqcvzvbr .gt_font_bold {
+  font-weight: bold;
+}
+
+#klbqcvzvbr .gt_font_italic {
+  font-style: italic;
+}
+
+#klbqcvzvbr .gt_super {
+  font-size: 65%;
+}
+
+#klbqcvzvbr .gt_two_val_uncert {
+  display: inline-block;
+  line-height: 1em;
+  text-align: right;
+  font-size: 60%;
+  vertical-align: -0.25em;
+  margin-left: 0.1em;
+}
+
+#klbqcvzvbr .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 75%;
+  vertical-align: 0.4em;
+}
+
+#klbqcvzvbr .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#klbqcvzvbr .gt_slash_mark {
+  font-size: 0.7em;
+  line-height: 0.7em;
+  vertical-align: 0.15em;
+}
+
+#klbqcvzvbr .gt_fraction_numerator {
+  font-size: 0.6em;
+  line-height: 0.6em;
+  vertical-align: 0.45em;
+}
+
+#klbqcvzvbr .gt_fraction_denominator {
+  font-size: 0.6em;
+  line-height: 0.6em;
+  vertical-align: -0.05em;
+}
+</style>
+<table class="gt_table">
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"><strong>Characteristic</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>Adelie</strong>, N = 152</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>Chinstrap</strong>, N = 68</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>Gentoo</strong>, N = 124</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td class="gt_row gt_left">body_mass_g, Median (IQR)</td>
+<td class="gt_row gt_center">3,700 (3,350 – 4,000)</td>
+<td class="gt_row gt_center">3,700 (3,488 – 3,950)</td>
+<td class="gt_row gt_center">5,000 (4,700 – 5,500)</td></tr>
+    <tr><td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Unknown</td>
+<td class="gt_row gt_center">1</td>
+<td class="gt_row gt_center">0</td>
+<td class="gt_row gt_center">1</td></tr>
+    <tr><td class="gt_row gt_left">sex, n (%)</td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td></tr>
+    <tr><td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">female</td>
+<td class="gt_row gt_center">73 (50)</td>
+<td class="gt_row gt_center">34 (50)</td>
+<td class="gt_row gt_center">58 (49)</td></tr>
+    <tr><td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">male</td>
+<td class="gt_row gt_center">73 (50)</td>
+<td class="gt_row gt_center">34 (50)</td>
+<td class="gt_row gt_center">61 (51)</td></tr>
+    <tr><td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Unknown</td>
+<td class="gt_row gt_center">6</td>
+<td class="gt_row gt_center">0</td>
+<td class="gt_row gt_center">5</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+]
+]
+---
+
+# Remember this warning about conflicts?
+
+![:scale 80% "Conflicts"](img/02_function_masking.png)
+
+Notice how some functions in different packages have the same names.
+
+--
+
+Related concepts of _namespaces_ and _environments_.
+
+---
+
+# Scope of names
+ 
+.small[
+
+```r
+x &lt;- c(1:10)
+y &lt;- c(90:100)
+
+x
+```
+
+```
+##  [1]  1  2  3  4  5  6  7  8  9 10
+```
+
+```r
+y
+```
+
+```
+##  [1]  90  91  92  93  94  95  96  97  98  99 100
+```
+]
+--
+
+.small[
+```r
+mean()
+
+## Error in mean.default() : argument "x" is missing, with no default
+```
+]
+--
+.small[
+
+```r
+mean(x) # argument names are internal to functions
+```
+
+```
+## [1] 5.5
+```
+
+```r
+mean(x = x)
+```
+
+```
+## [1] 5.5
+```
+
+```r
+mean(x = y)
+```
+
+```
+## [1] 95
+```
+
+```r
+x
+```
+
+```
+##  [1]  1  2  3  4  5  6  7  8  9 10
+```
+
+```r
+y
+```
+
+```
+##  [1]  90  91  92  93  94  95  96  97  98  99 100
+```
+]
+
+---
+
+# 5. Objects come in .kjh-yellow[types] and .kjh-yellow[classes]
+
+I'm going to speak somewhat loosely here for now, and gloss over some distinctions between object classes and data structures, as well as kinds of objects and their attributes.
+
+--
+
+The object inspector in RStudio is your friend.
+
+--
+
+You can ask an object what it is. 
+
+
+```r
+class(my_numbers)
+```
+
+```
+## [1] "numeric"
+```
+
+```r
+typeof(my_numbers)
+```
+
+```
+## [1] "double"
+```
+
+
+---
+
+# 5. Objects come in .kjh-yellow[types] and .kjh-yellow[classes]
+
+Objects can have more than one (nested) class:
+
+--
+
+
+```r
+summary(my_numbers)
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    1.00    1.75    3.00    6.25    6.25   25.00
+```
+
+```r
+my_smry &lt;- summary(my_numbers) # remember, outputs can be assigned to a name, creating an object
+
+class(summary(my_numbers)) # functions can be nested, and are evaluated from the inside out
+```
+
+```
+## [1] "summaryDefault" "table"
+```
+
+```r
+class(my_smry) # equivalent to the previous line
+```
+
+```
+## [1] "summaryDefault" "table"
+```
+
+---
+
+# 5. Objects come in .kjh-yellow[types] and .kjh-yellow[classes]
+
+
+
+```r
+typeof(my_smry)
+```
+
+```
+## [1] "double"
+```
+
+```r
+attributes(my_smry)
+```
+
+```
+## $names
+## [1] "Min."    "1st Qu." "Median"  "Mean"    "3rd Qu." "Max."   
+## 
+## $class
+## [1] "summaryDefault" "table"
+```
+
+```r
+## In this case, the functions extract the corresponding attribute
+class(my_smry)
+```
+
+```
+## [1] "summaryDefault" "table"
+```
+
+```r
+names(my_smry)
+```
+
+```
+## [1] "Min."    "1st Qu." "Median"  "Mean"    "3rd Qu." "Max."
+```
+
+---
+
+# A .kjh-green[vector] is a fundamental kind of object
+
+.pull-left.small.kjh-darkgrey[
+
+[![:scale 80% "Vectors 1"](img/02_summary_tree_atomic.png)]  
+
+- From Hadley Wickham, _Advanced R_
+
+]
+
+--
+
+.pull-right[
+
+
+```r
+my_int &lt;- c(1, 3, 5, 6, 10)
+is.integer(my_int)
+```
+
+```
+## [1] FALSE
+```
+
+```r
+is.double(my_int)
+```
+
+```
+## [1] TRUE
+```
+
+```r
+my_int &lt;- as.integer(my_int)
+is.integer(my_int)
+```
+
+```
+## [1] TRUE
+```
+
+```r
+my_chr &lt;- c("Mary", "had", "a", "little", "lamb")
+is.character(my_chr)
+```
+
+```
+## [1] TRUE
+```
+
+```r
+my_lgl &lt;- c(TRUE, FALSE, TRUE)
+is.logical(my_lgl)
+```
+
+```
+## [1] TRUE
+```
+
+]
+
+---
+
+# The most common types of .kjh-green[vector]
+
+.pull-left.tiny.kjh-darkgrey[
+
+[![:scale 90% "Vectors 2"](img/02_summary_tree_s3.png)]  
+
+- From Hadley Wickham, _Advanced R_
+
+]
+
+--
+
+.pull-right.tiny[
+
+
+```r
+## Factors are for storing categorical variables
+x &lt;- factor(c("Yes", "No", "No", "Maybe", "Yes", "Yes"))
+x
+```
+
+```
+## [1] Yes   No    No    Maybe Yes   Yes  
+## Levels: Maybe No Yes
+```
+
+```r
+summary(x) # Alphabetical order by default
+```
+
+```
+## Maybe    No   Yes 
+##     1     2     3
+```
+
+```r
+typeof(x)       # A factor is a vector of integers 
+```
+
+```
+## [1] "integer"
+```
+
+```r
+attributes(x)   # ... with labels for its "levels" 
+```
+
+```
+## $levels
+## [1] "Maybe" "No"    "Yes"  
+## 
+## $class
+## [1] "factor"
+```
+
+```r
+levels(x)
+```
+
+```
+## [1] "Maybe" "No"    "Yes"
+```
+
+```r
+is.ordered(x)
+```
+
+```
+## [1] FALSE
+```
+
+]
+
+???
+
+HW: 
+
+Categorical data, where values come from a fixed set of levels recorded in factor vectors.
+
+Dates (with day resolution), which are recorded in Date vectors.
+
+Date-times (with second or sub-second resolution), which are stored in POSIXct vectors.
+
+Durations, which are stored in difftime vectors.
+
+---
+
+
+# Individual vectors can't be heterogenous 
+
+Objects can be manually or automatically coerced from one class to another. Take care!
+
+--
+
+
+```r
+class(my_numbers)
+```
+
+```
+## [1] "numeric"
+```
+
+```r
+my_new_vector &lt;- c(my_numbers, "Apple")
+
+my_new_vector # vectors are homogeneous/atomic
+```
+
+```
+## [1] "1"     "2"     "3"     "1"     "3"     "5"     "25"    "10"    "Apple"
+```
+
+```r
+class(my_new_vector)
+```
+
+```
+## [1] "character"
+```
+
+--
+
+
+```r
+my_dbl &lt;- c(2.1, 4.77, 30.111, 3.14519)
+is.double(my_dbl)
+```
+
+```
+## [1] TRUE
+```
+
+```r
+my_dbl &lt;- as.integer(my_dbl)
+
+my_dbl
+```
+
+```
+## [1]  2  4 30  3
+```
+
+
+---
+
+# Tibbles are a .kjh-yellow[list] of .kjh-green[vectors] of various .kjh-pink[types]
+
+.SMALL[
+
+```r
+gapminder # tibbles and data frames can contain vectors of different types
+```
+
+```
+## # A tibble: 1,704 × 6
+##    country     continent  year lifeExp      pop gdpPercap
+##    &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+##  1 Afghanistan Asia       1952    28.8  8425333      779.
+##  2 Afghanistan Asia       1957    30.3  9240934      821.
+##  3 Afghanistan Asia       1962    32.0 10267083      853.
+##  4 Afghanistan Asia       1967    34.0 11537966      836.
+##  5 Afghanistan Asia       1972    36.1 13079460      740.
+##  6 Afghanistan Asia       1977    38.4 14880372      786.
+##  7 Afghanistan Asia       1982    39.9 12881816      978.
+##  8 Afghanistan Asia       1987    40.8 13867957      852.
+##  9 Afghanistan Asia       1992    41.7 16317921      649.
+## 10 Afghanistan Asia       1997    41.8 22227415      635.
+## # … with 1,694 more rows
+```
+
+```r
+class(gapminder)
+```
+
+```
+## [1] "tbl_df"     "tbl"        "data.frame"
+```
+
+```r
+typeof(gapminder) # hmm
+```
+
+```
+## [1] "list"
+```
+]
+
+Underneath, most complex R objects are some kind of list with different components.
+
+
+???
+
+- A _data frame_ is a list of vectors of the same length, where the vectors can be of different types (e.g. numeric, character, logical, etc)
+
+- A _tibble_ is an enhanced data frame 
+
+Tibbles have an enhanced print method, never coerce strings to factors, and provide stricter subsetting methods. (HW)
+
+Again the object inspector is helpful here
+
+---
+
+# Classes can be nested
+
+Some classes build on and enhance the properties of simpler classes.
+
+.pull-left[
+
+Base R's trusty .kjh-lblue[**`data.frame`**]
+  
+
+```r
+library(socviz)
+titanic
+```
+
+```
+##       fate    sex    n percent
+## 1 perished   male 1364    62.0
+## 2 perished female  126     5.7
+## 3 survived   male  367    16.7
+## 4 survived female  344    15.6
+```
+
+```r
+class(titanic)
+```
+
+```
+## [1] "data.frame"
+```
+
+
+```r
+## The `$` idiom picks out a named column here; 
+## more generally, the named element of a list
+titanic$percent  
+```
+
+```
+## [1] 62.0  5.7 16.7 15.6
+```
+
+]
+--
+
+.pull-right[
+
+The Tidyverse's enhanced .kjh-lblue[**`tibble`**]
+
+
+```r
+## tibbles are build on data frames 
+class(titanic)
+```
+
+```
+## [1] "data.frame"
+```
+
+```r
+titanic_tb &lt;- as_tibble(titanic) 
+
+titanic_tb
+```
+
+```
+## # A tibble: 4 × 4
+##   fate     sex        n percent
+##   &lt;fct&gt;    &lt;fct&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+## 1 perished male    1364    62  
+## 2 perished female   126     5.7
+## 3 survived male     367    16.7
+## 4 survived female   344    15.6
+```
+
+```r
+class(titanic_tb)
+```
+
+```
+## [1] "tbl_df"     "tbl"        "data.frame"
+```
+ 
+]
+---
+
+# All of this will matter later on
+
+
+```r
+gss_sm
+```
+
+```
+## # A tibble: 2,867 × 32
+##     year    id ballot       age childs sibs   degree race  sex   region income16
+##    &lt;dbl&gt; &lt;dbl&gt; &lt;labelled&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;labe&gt; &lt;fct&gt;  &lt;fct&gt; &lt;fct&gt; &lt;fct&gt;  &lt;fct&gt;   
+##  1  2016     1 1             47      3 2      Bache… White Male  New E… $170000…
+##  2  2016     2 2             61      0 3      High … White Male  New E… $50000 …
+##  3  2016     3 3             72      2 3      Bache… White Male  New E… $75000 …
+##  4  2016     4 1             43      4 3      High … White Fema… New E… $170000…
+##  5  2016     5 3             55      2 2      Gradu… White Fema… New E… $170000…
+##  6  2016     6 2             53      2 2      Junio… White Fema… New E… $60000 …
+##  7  2016     7 1             50      2 2      High … White Male  New E… $170000…
+##  8  2016     8 3             23      3 6      High … Other Fema… Middl… $30000 …
+##  9  2016     9 1             45      3 5      High … Black Male  Middl… $60000 …
+## 10  2016    10 3             71      4 1      Junio… White Male  Middl… $60000 …
+## # … with 2,857 more rows, and 21 more variables: relig &lt;fct&gt;, marital &lt;fct&gt;,
+## #   padeg &lt;fct&gt;, madeg &lt;fct&gt;, partyid &lt;fct&gt;, polviews &lt;fct&gt;, happy &lt;fct&gt;,
+## #   partners &lt;fct&gt;, grass &lt;fct&gt;, zodiac &lt;fct&gt;, pres12 &lt;labelled&gt;,
+## #   wtssall &lt;dbl&gt;, income_rc &lt;fct&gt;, agegrp &lt;fct&gt;, ageq &lt;fct&gt;, siblings &lt;fct&gt;,
+## #   kids &lt;fct&gt;, religion &lt;fct&gt;, bigregion &lt;fct&gt;, partners_rc &lt;fct&gt;, obama &lt;dbl&gt;
+```
+
+--
+
+.pull-left.w80.squish2[Tidyverse tools are generally _type safe_, meaning their functions return the same type of thing every time, or fail if they cannot do this. So it's good to know about the various data types.]
+
+---
+
+# 6. .kjh-yellow[Arithmetic on vectors]
+
+.pull-left.w60[In R, all numbers are vectors of different sorts. Even single numbers ("scalars") are conceptually vectors of length 1.]
+
+--
+
+.pull-left.w60[Arithmetic on vectors\* follows a series of _recycling rules_ that favor ease of expression of vectorized, "elementwise" operations.]
+
+.pull-left.w60.footnote.small[*And arrays, too.]
+
+---
+
+# 6. .kjh-yellow[Arithmetic on vectors]
+
+See if you can predict what the following operations do: 
+
+
+```r
+my_numbers
+```
+
+```
+## [1]  1  2  3  1  3  5 25 10
+```
+
+```r
+result1 &lt;- my_numbers + 1
+```
+
+--
+
+
+```r
+result1
+```
+
+```
+## [1]  2  3  4  2  4  6 26 11
+```
+
+--
+
+
+```r
+result2 &lt;- my_numbers + my_numbers
+```
+
+--
+
+
+```r
+result2
+```
+
+```
+## [1]  2  4  6  2  6 10 50 20
+```
+
+--
+
+
+```r
+two_nums &lt;- c(5, 10)
+
+result3 &lt;- my_numbers + two_nums
+```
+
+--
+
+
+```r
+result3
+```
+
+```
+## [1]  6 12  8 11  8 15 30 20
+```
+
+---
+
+# 6. .kjh-yellow[Arithmetic on vectors]
+
+
+```r
+three_nums &lt;- c(1, 5, 10)
+
+result4 &lt;- my_numbers + three_nums
+```
+
+```
+## Warning in my_numbers + three_nums: longer object length is not a multiple of
+## shorter object length
+```
+
+--
+
+
+```r
+result4
+```
+
+```
+## [1]  2  7 13  2  8 15 26 15
+```
+
+Note that you got a **warning** here. R will still do what you told it do, though! Don't ignore warnings until you understand what they mean.
+
+---
+
+# 7. .kjh-yellow[R will be] .kjh-red[frustrating]
+
+--
+
+- The IDE tries its best to help you. Learn to attend to what it is trying to say.
+
+.left[![:scale 70% "Error 1"](img/02_error_object_length_warning.png)]  
+
+--
+
+.left[![:scale 60% "Error 2"](img/02_error_missing_comma.png)]  
+
+--
+
+.left[![:scale 60% "Error 3"](img/02_error_extra_paren.png)]  
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="/Users/kjhealy/Library/R/library/kjhslides/slides/libs/remark-latest.min.js"></script>
+<script src="/Users/kjhealy/Library/R/library/kjhslides/slides/js/kjh-macros.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "default",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"slideNumberFormat": "%current%",
+"ratio": "16:9",
+"navigation": {
+"scroll": false
+}
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
