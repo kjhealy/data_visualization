@@ -26,14 +26,14 @@ kjh_set_xaringan_opts()
 
 class: center middle main-title section-title-1
 
-# Data Visualization with .kjh-lblue[R] and .kjh-lblue[ggplot2]
+# .kjh-yellow[Data Visualization] with R and .kjh-lblue[ggplot2]
 
 .class-info[
 
 **Data Visualization: Session 1**
 
 .light[Kieran Healy<br>
-Statistical Horizons, September 2021]
+Statistical Horizons, May 2022]
 
 ]
 
@@ -133,7 +133,7 @@ class: center middle main-title section-title-1
 
 ---
 
-# .huge.squish4.kjh-lblue[.kjh-yellow[Look] at<br />your data]
+# .huge.squish4.kjh-lblue[You should<br />.kjh-yellow[look at]<br />your data]
 
 ---
 
@@ -142,7 +142,7 @@ class: right bottom main-title section-title-1
 
 ---
 
-## .huge.right.bottom.kjh-yellow[Seeing things]
+## .huge.right.squish4.bottom.kjh-yellow[Seeing things]
 
 ---
 layout: false
@@ -252,7 +252,7 @@ class: main-title main-title-inv
 
 class: right bottom main-title section-title-1
 
-## .huge.right.bottom.kjh-grey[Taste:] .huge.right.bottom.kjh-yellow[ Simplify, Simplify?]
+## .huge.right.squish4.bottom.kjh-grey[Taste:] .huge.right.squish4.bottom.kjh-yellow[ Simplify, Simplify?]
 
 ---
 layout: true
@@ -309,7 +309,7 @@ layout: false
 
 class: right bottom main-title section-title-1
 
-## .huge.right.bottom.kjh-grey[Data:] .huge.right.bottom.kjh-yellow[ Junk-Free Junk Charts]
+## .huge.right.squish4.bottom.kjh-grey[Data:] .huge.right.squish4.bottom.kjh-yellow[ Junk-Free Junk Charts]
 
 ---
 layout: false
@@ -332,14 +332,14 @@ layout: false
 
 class: right bottom main-title section-title-1
 
-## .huge.right.bottom.kjh-grey[Perception:] .huge.right.bottom.kjh-yellow[Seeing and Not Seeing]
+## .huge.right.squish4.bottom.kjh-grey[Perception:] .huge.right.squish4.bottom.kjh-yellow[Seeing and Not Seeing]
 
 
 ---
 
 class: right bottom main-title section-title-1
 
-## .huge.right.bottom.kjh-green[Edges & Contrasts]
+## .huge.right.squish4.bottom.kjh-green[Edges & Contrasts]
 
 ---
 layout: false
@@ -431,7 +431,7 @@ layout: false
 
 class: right bottom main-title section-title-1
 
-## .huge.right.bottom.kjh-green[Luminance and Color]
+## .huge.right.squish4.bottom.kjh-green[Luminance and Color]
 
 
 ---
@@ -576,7 +576,7 @@ layout: false
 
 class: right bottom main-title section-title-1
 
-## .huge.right.bottom.kjh-green[Pre-Attentive Processing]
+## .huge.right.squish4.bottom.kjh-green[Pre-Attentive Processing]
 
 
 ---
@@ -639,7 +639,7 @@ layout: false
 
 class: right bottom main-title section-title-1
 
-## .huge.right.bottom.kjh-green[&nbsp; &nbsp; Gestalt Inferences <br />and Design]
+## .huge.right.squish4.bottom.kjh-green[&nbsp; &nbsp; Gestalt Inferences <br />and Design]
 
 
 
@@ -653,7 +653,7 @@ layout: false
 ---
 layout: false
 
-.center[![:scale 80%](img/01_gestalt_cave_clarity.png)]
+.center[![:scale 70%](img/01_gestalt_cave_clarity.png)]
 
 .right.w90.small[George Cave]
 
@@ -661,7 +661,7 @@ layout: false
 ---
 layout: false
 
-.center[![:scale 80%](img/01_gestalt_cave_codings.png)]
+.center[![:scale 70%](img/01_gestalt_cave_codings.png)]
 
 .right.w90.small[George Cave]
 
@@ -669,9 +669,9 @@ layout: false
 ---
 layout: false
 
-.center[![:scale 80%](img/01_gestalt_comparisons.png)]
+.center[![:scale 90%](img/01_gestalt_comparisons.png)]
 
-.right.w90.small[George Cave]
+.right.w90.small[]
 
 
 
@@ -705,7 +705,7 @@ layout: false
 
 class: right bottom main-title section-title-1
 
-## .huge.right.bottom.kjh-yellow[Visual tasks in<br /> .kjh-green[decoding graphs]]
+## .huge.right.squish4.bottom.squish4.kjh-yellow[Visual tasks in<br /> .kjh-green[decoding graphs]]
 
 
 
@@ -766,7 +766,7 @@ layout: false
 
 class: right bottom main-title section-title-1
 
-## .huge.right.bottom.kjh-yellow[A rough hierarchy<br /> .kjh-green[of mappings for data]]
+## .huge.right.squish4.bottom.kjh-yellow[A rough hierarchy<br /> .kjh-green[of mappings for data]]
 
 
 ---
@@ -789,7 +789,7 @@ layout: false
 
 class: center middle main-title section-title-1
 
-# .huge.squish4.kjh-lblue[Honesty and .kjh-yellow[good judgment]]
+# .huge.squish4.kjh-lblue[Honesty & .kjh-yellow[judgment]]
 
 
 
@@ -826,14 +826,14 @@ layout: false
 
 class: center middle main-title section-title-1
 
-# .huge.kjh-lblue[In Practice]
-
+## .huge.kjh-lblue.squish4[Visualizing your Data]
+# .huge.squish4.kjh-yellow[in practice]
 
 ---
 
 class: right bottom main-title section-title-1
 
-## .huge.right.bottom.kjh-yellow[Workhorses]
+## .huge.right.squish4.bottom.kjh-yellow[Workhorses]
 
 ---
 layout: false
@@ -876,7 +876,7 @@ layout: false
 
 class: right bottom main-title section-title-1
 
-## .huge.right.bottom.kjh-yellow[Show Ponies]
+## .huge.right.squish4.bottom.kjh-yellow[Show Ponies]
 
 
 ---
@@ -923,7 +923,7 @@ layout: false
 
 class: right bottom main-title section-title-1
 
-## .huge.right.bottom.kjh-yellow[Unicorns …]
+## .huge.right.squish4.bottom.kjh-yellow[Unicorns …]
 
 ---
 layout: false
