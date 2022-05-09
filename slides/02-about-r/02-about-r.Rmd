@@ -26,7 +26,7 @@ kjh_set_xaringan_opts()
 
 class: center middle main-title section-title-1
 
-# Finding your way in .kjh-yellow[R]
+# Finding your way in<br />.kjh-lblue[R] and .kjh-lblue[RStudio]
 
 .class-info[
 
@@ -37,12 +37,175 @@ Statistical Horizons, May 2022]
 
 ]
 
+
+---
+
+layout: false
+class: center middle main-title main-title-inv
+
+# .middle.huge.squish4[We want to<br />.kjh-orange[draw graphs]<br />.kjh-green[reproducibly]]
+
+
+---
+layout: false
+
+.left[![:scale 30%](img/02_r_logo.png)]
+
+.right[![:scale 50%](img/02_rstudio_logo.png)]
+
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+# Abstraction in software
+
+.pull-left[
+
+## Less
+
+- Easy things are awkward
+
+- Hard things are straightforward
+
+- Really hard things are possible
+]
+
+
+.pull-right[
+
+## More
+
+- Easy things are trivial
+
+- Hard things are very awkward
+
+- Really hard things are impossible
+]
+
+
+.center.large[Compare:  D3, Grid, ggplot, Stata,  Excel]
+
+
+---
+
+# Two ways to use R and ggplot
+
+## 1. Do everything in R from start to finish
+
+
+`Raw data |> Read, Clean, Analyse |> Make figures`
+
+--
+
+## 2. Hand ggplot a table of results
+
+`Stata/SAS/etc |> Tidy table |> Read in to R |> Make figures`
+
+
+---
+
+class: center middle main-title section-title-1
+
+# .huge[The .kjh-lblue[RStudio] IDE]
+
+---
+layout: false 
+class: bottom
+background-image: url("img/02_ide_control_room.png")
+background-size: cover
+
+## .huge.right.bottom.squish4.kjh-grey[An IDE for R]
+
+---
+layout: false
+class: bottom
+background-image: url("img/02_ide_kitchen.png")
+background-size: cover
+
+## .huge.right.bottom.squish4.kjh-grey[An IDE for Meals]
+
+
+---
+layout: false
+
+.center[![:scale 60%](img/02_ide_rstudio_startup.png)]
+
+.right.w90.small[RStudio at startup]
+
+---
+layout: false
+
+.center[![:scale 50%](img/02_ide_rstudio_schematic.png)]
+
+.right.w90.small[RStudio schematic overview]
+
+---
+layout: false
+
+.center[![:scale 50%](img/02_ide_rstudio_schematic_overlay.png)]
+
+.right.w90.small[RStudio schematic overview]
+
 ---
 
 layout: false
 class: center middle
 
-# .middle.huge.squish4[Using RMarkdown to .kjh-orange[produce] and .kjh-green[reproduce] your work]
+## .middle.huge.squish4[Data + Instructions writen as code, rather than a series of point-and-click steps]
+
+
+---
+
+layout: false
+class: center middle
+
+## .middle.huge.squish4[Starting Data + Code is what's "real" in our R projects]
+
+---
+layout: false
+
+.center[![:scale 60%](img/02_ide_rstudio_startup.png)]
+
+.right.w90.small[RStudio at startup]
+
+---
+layout: false
+
+.center[![:scale 75%](img/02_ide_rstudio_sshot_1.png)]
+
+.right.w90.small[RStudio at startup]
+
+---
+layout: false
+
+.center[![:scale 75%](img/02_ide_rstudio_sshot_2.png)]
+
+.right.w90.small[RStudio at startup]
+
+---
+layout: false
+
+.center[![:scale 75%](img/02_ide_rstudio_sshot_3.png)]
+
+.right.w90.small[RStudio at startup]
+
+---
+layout: false
+
+.center[![:scale 75%](img/02_ide_rstudio_sshot_4.png)]
+
+.right.w90.small[RStudio at startup]
+
+
+---
+
+class: center middle main-title section-title-1
+
+# .large.squish4[Use .kjh-yellow[RMarkdown] to .kjh-orange[produce] and .kjh-green[reproduce]  work]
 
 ---
 
@@ -86,17 +249,22 @@ class: title title-1
 # We can .kjh-yellow[make] this ...
 
 
-.center[![:scale 50% "Out"](img/02_lorem_ipsum_goal.png)]  
+.pull-left[![:scale 100% "Out"](img/02_lorem_ipsum_goal.png)]  
+
+
+.pull-right.large[This is what we want to end up with. Nicely-formatted text, plots, and tables. In .kjh-red[an "Office" approach] we write the document and paste in the figures and tables.]
 
 ---
 
 # ... by .kjh-green[writing] this
 
-.center[![:scale 50% "Out"](img/02_lorem_ipsum_raw.png)]  
+.pull-left[![:scale 100% "Out"](img/02_lorem_ipsum_raw.png)]  
+
+.pull-right.large[In a .kjh-red[literate programming] approach, chunks of code contained in documents are processed and then replaced with their output when the output document is produced.]
 
 ---
 
-# The code gets replaced by its output
+# The .kjh-pink[`code`] gets replaced by its .kjh-green[output]
 
 
 .pull-left[![:scale 100% "Out"](img/02_lorem_ipsum_raw.png)]
@@ -108,16 +276,17 @@ class: title title-1
 layout: false
 class: center
 
-![:scale 90% "Covid example"](img/02_lorem_covid_markdown.png)
+![:scale 85% "Markdown document"](img/02_lorem_covid_markdown.png)
+
+
 
 ---
 
-.center[![:scale 90% "Covid example annotated"](img/02_lorem_covid_markdown_annotated.png)]  
+.center[![:scale 90% "Markdown document annotated"](img/02_lorem_covid_markdown_annotated.png)]  
 
 ---
 
-.pull-left[![:scale 66% "Covid example output"](img/02_lorem_covid_html_full.png)]  
-
+.pull-left[![:scale 140% "Covid example output"](img/02_lorem_covid_triple.png)]  
 
 --
 
@@ -126,6 +295,8 @@ class: center
 - This approach has its limitations, but it's _very_ useful and has many benefits.
 
 ]
+
+
 ---
 
 .pull-left[![:scale 44% "RMD out"](img/02_knit_rmd_tall.png)]  
