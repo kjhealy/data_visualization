@@ -97,11 +97,11 @@ class: title title-1
 ## 1. Do everything in R from start to finish
 
 
-`Raw data |> Read, Clean, Analyse |> Make figures`
+`Raw data |> Read, Clean, Analyse |> Tidy table |>  Make figures`
 
 --
 
-## 2. Hand ggplot a table of results
+## 2. Just hand ggplot a table of results
 
 `Stata/SAS/etc |> Tidy table |> Read in to R |> Make figures`
 
@@ -155,7 +155,7 @@ layout: false
 layout: false
 class: center middle
 
-## .middle.huge.squish4[Data + Instructions writen as code, rather than a series of point-and-click steps]
+## .middle.huge.squish4[Think in terms of<br />.kjh-orange[Data] + .kjh-green[Transformations], written out as code, rather than a series of point-and-click steps]
 
 
 ---
@@ -163,7 +163,7 @@ class: center middle
 layout: false
 class: center middle
 
-## .middle.huge.squish4[Starting Data + Code is what's "real" in our R projects]
+## .middle.huge.squish4[Our starting .kjh-orange[data] + our .kjh-green[code] is what's "real" in our projects, not the final output or any intermediate objects]
 
 ---
 layout: false
@@ -1432,3 +1432,142 @@ Note that you got a **warning** here. R will still do what you told it do, thoug
 --
 
 .left[![:scale 60% "Error 3"](img/02_error_extra_paren.png)]  
+
+
+---
+
+class: center middle main-title section-title-1
+
+# .huge.kjh-lblue[Let's Go!]
+
+---
+
+# Time to make a plot
+
+Like before:
+
+```{r}
+gapminder
+```
+
+---
+
+# Like before
+
+.pull-left.w35[
+
+
+```{r codefig-plot-2, message=FALSE, fig.show="hide", fig.width=5.8, fig.height=5.5}
+library(tidyverse)
+library(gapminder)
+
+p <- ggplot(data = gapminder, 
+            mapping = aes(x = gdpPercap, 
+                          y = lifeExp)) 
+
+p + geom_point()
+```
+
+]
+
+--
+
+.pull-right.w60[
+```{r, echo=FALSE}
+knitr::include_graphics(
+  knitr::fig_chunk("codefig-plot-2", "png")
+)
+```
+]
+
+---
+
+# What we did
+
+.pull-left.w40[
+
+
+```{r, message=FALSE, eval = FALSE, echo = TRUE}
+library(tidyverse)
+
+library(gapminder)
+```
+]
+
+.pull-right.w60[
+
+- Load the packages we need: `tidyverse` and `gapminder`
+]
+
+--
+
+.pull-left.w40[
+
+```{r, message=FALSE, eval = FALSE, echo = TRUE}
+
+p <- ggplot(data = gapminder, 
+            mapping = aes(x = gdpPercap, 
+                          y = lifeExp)) 
+```
+]
+
+.pull-right.w60[
+
+- New object named .kjh-lblue[**`p`**] .kjh-pink[`gets`] the output of the .kjh-green[`ggplot()` _function_], given these .kjh-orange[_arguments_]
+- Notice how one of the arguments, .kjh-orange[`mapping`], is itself taking the output of a function named .kjh-green[`aes()`]
+] 
+
+--
+
+.pull-left.w40[
+
+```{r, message=FALSE, eval = FALSE, echo = TRUE}
+
+
+p + geom_point()
+
+```
+]
+
+.pull-right.w60[
+- Show me the output of the .kjh-lblue[**`p`**] object and the .kjh-green[`geom_point()`] function.
+- The .kjh-pink[`+`] here acts just like the .kjh-pink[`|>`] pipe, but for ggplot functions only. (This is an accident of history.)
+]
+
+---
+
+# And what is R doing?
+
+- .huge[R objects are just lists of .kjh-orange[stuff to use] or .kjh-green[things to do]]
+
+---
+layout: false
+class: bottom
+background-image: url("img/02_r_object_bento_box.png")
+background-size: cover
+
+## .huge.right.bottom.squish4.kjh-grey[Objects are like Bento Boxes]
+
+---
+layout: false
+
+.center[![:scale 50%](img/02_r_objects_p_bleep.png)]
+
+.right.w90.huge[The .kjh-lblue[`p`] object]
+
+---
+layout: false
+
+.center[![:scale 100%](img/02_r_object_inspector_panel.png)]
+
+.right.w90.huge[Peek in with the object inspector]
+
+
+---
+layout: false
+ 
+.center[![:scale 80%](img/02_r_ide_object_inspector.png)]
+
+.right.w90.huge[Peek in with the object inspector]
+   
+

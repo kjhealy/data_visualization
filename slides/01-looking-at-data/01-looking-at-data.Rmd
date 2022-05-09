@@ -134,16 +134,16 @@ class: title title-1
 
 Write this out inside the "code chunk" in your notes.
 
-```{r first-plot, message=FALSE, fig.show="hide", fig.width=5.8, fig.height=5.5}
+```{r codefig-first-plot, message=FALSE, fig.show="hide", fig.width=5.8, fig.height=5.5}
 library(tidyverse)
 library(gapminder)
 
 p <- ggplot(data = gapminder, 
             mapping = aes(x = gdpPercap, 
-                          y = lifeExp)) + 
-  geom_point()
+                          y = lifeExp))  
 
-p
+
+p + geom_point()
 ```
 
 ... And knit your document again.
@@ -155,7 +155,7 @@ p
 .pull-right.w60[
 ```{r, echo=FALSE}
 knitr::include_graphics(
-  knitr::fig_chunk("first-plot", "png")
+  knitr::fig_chunk("codefig-first-plot", "png")
 )
 ```
 ]
