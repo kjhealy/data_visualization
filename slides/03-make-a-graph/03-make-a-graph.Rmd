@@ -27,7 +27,8 @@ library(gapminder)
 
 kjh_register_tenso()    # Default fonts. Comment out if you don't have Tenso and Berkeley fonts.
 kjh_set_knitr_opts()    
-kjh_set_slide_theme()   # ggplot theme to go with slides. Set tenso = FALSE if necessary.
+# kjh_set_slide_theme()   # ggplot theme to go with slides. Set tenso = FALSE if necessary.
+kjh_set_classic_theme()
 kjh_set_xaringan_opts()
 
 ```
@@ -767,16 +768,24 @@ class: title title-1
 
 # Guides and scales reflect .kjh-green[`aes()`] mappings
 
+.pull-left[
+
 - `mapping = aes(color = continent, fill = continent)`
 
-.center[![:scale 90%](img/03_guides_1.png)]
+.right[![:scale 44%](img/03_guides_1_classic.png)]
 
+]
 
 --
 
+.pull-right[
+
+
 - `mapping = aes(color = continent)`
 
-.center[![:scale 90%](img/03_guides_2.png)]
+.left[![:scale 42%](img/03_guides_2_classic.png)]
+
+]
 
 ---
 layout: false
