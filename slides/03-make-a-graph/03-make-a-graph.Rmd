@@ -760,14 +760,94 @@ class: main-title main-title-inv middle
 
 ---
 
-# Guides and scales follow mappings
+layout: true
+class: title title-1
+
+---
+
+# Guides and scales reflect .kjh-green[`aes()`] mappings
+
+- `mapping = aes(color = continent, fill = continent)`
+
+.center[![:scale 90%](img/03_guides_1.png)]
+
+
+--
+
+- `mapping = aes(color = continent)`
+
+.center[![:scale 90%](img/03_guides_2.png)]
+
+---
+layout: false
+class: main-title main-title-inv
+
+# .middle.squish4.large[.kjh-blue[Remember:] .kjh-blue[Every mapped variable has a scale]]
 
 
 
+---
+
+class: center middle main-title section-title-1
+
+# .huge.kjh-lblue[Saving your work]
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+# Use .kjh-green[`ggsave()`]
+
+```{r 03-make-a-plot-20, echo=TRUE, eval=FALSE}
+
+## Save the most recent plot
+ggsave(filename = "figures/my_figure.png")
+
+
+## Use here() for more robust file paths
+ggsave(filename = here("figures", "my_figure.png"))
+
+## A plot object
+p_out <- p + geom_point(mapping = aes(color = log(pop))) +
+    scale_x_log10()
+
+ggsave(filename = here("figures", "lifexp_vs_gdp_gradient.pdf"), 
+       plot = p_out)
+
+ggsave(here("figures", "lifexp_vs_gdp_gradient.png"), 
+       plot = p_out, 
+       width = 8, 
+       height = 5)
+```
+
+---
+
+# In code chunks
+
+## Set options in any chunk header:
+
+.smaller[`{r, fig.height=8, fig.width=5, fig.show = "hold", fig.cap="A caption"}`]      
+
+
+## Or for the whole document:
+
+```{r, eval=FALSE, echo=TRUE}
+knitr::opts_chunk$set(warning = TRUE,
+                        message = TRUE,
+                        fig.retina = 3,
+                        fig.align = "center",
+                        fig.asp = 0.7,
+                        dev = c("png", "pdf"))
+```
 
 
 
+---
 
+# Getting help
 
 
 
