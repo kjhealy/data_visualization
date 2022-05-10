@@ -1,0 +1,189 @@
+---
+title: "04 - Show the Right Numbers"
+author: "Kieran Healy"
+date: "`r Sys.Date()`"
+output: kjhslides::kjh_slides_reader
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r note, include=FALSE}
+## NB: By default the  template will create a new subdirectory with its files inside.
+```
+
+
+```{r packages, include=FALSE}
+library(flipbookr)
+library(here)
+library(tidyverse)
+library(kjhslides)
+```
+
+
+```{r setup, include=FALSE}
+## Configure the slides
+
+kjh_register_tenso()    # Default fonts. Comment out if you don't have Tenso and Berkeley fonts.
+kjh_set_knitr_opts()    
+kjh_set_slide_theme()   # ggplot theme to go with slides. Set tenso = FALSE if necessary.
+kjh_set_xaringan_opts()
+
+```
+
+
+class: center middle main-title section-title-1
+
+# Show the .kjh-yellow[Right Numbers]
+
+.class-info[
+
+**Data Visualization: Session 4**
+
+.light[Kieran Healy<br>
+Statistical Horizons, May 2022
+]
+
+]
+
+
+---
+
+# Set up our workspace
+
+```{r}
+library(tidyverse)      # Your friend and mine
+library(gapminder)      # Gapminder data
+library(here)           # Portable file paths
+library(socviz)         # Handy socviz functions
+```
+
+
+---
+layout: false
+class: main-title main-title-inv
+
+# .middle.squish4.large[.kjh-blue[ggplot implements a .kjh-green[grammar] of graphics]]
+
+
+---
+layout: false
+class: main-title main-title-inv
+
+### .middle.large.squish3[.kjh-blue[The grammar is a set of rules for how to .kjh-lblue[produce graphics from data], by _.kjh-green[mapping]_ data to or _.kjh-green[representing]_ it by geometric .kjh-orange[objects] (like points and lines) that have aesthetic .kjh-orange[attributes] (like position, color, size, and shape), together with further rules for transforming data if needed, for adjusting scales and their guides, and for projecting results onto some coordinate system.]]
+
+---
+layout: false
+class: bottom
+background-image: url("img/04_chomsky.png")
+background-size: cover
+
+### .right.bottom.squish4.kjh-grey[Like other rules of syntax,<br />the grammar limits what you can validly say,<br />but it doesn't automatically make what you say<br />sensible or meaningful]
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.bottom.squish4.kjh-yellow[Grouped data and the .kjh-lblue[`group`] aesthetic]
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+`r chunk_reveal("reveal-groupline", widths = c(50,50), title = "# Try to make a lineplot")`
+
+```{r reveal-groupline, include = FALSE}
+p <- ggplot(data = gapminder,
+            mapping = aes(x = year,
+                          y = gdpPercap))
+p + geom_line()        
+```
+
+---
+
+
+`r chunk_reveal("reveal-groupline2", widths = c(50,50), title = "# Try to make a lineplot")`
+
+```{r reveal-groupline2, include = FALSE}
+p <- ggplot(data = gapminder,
+            mapping = aes(x = year,
+                          y = gdpPercap))
+
+## Geoms can take their own mappings, remember
+p + geom_line(mapping = aes(group = country))        
+```
+
+
+---
+
+
+`r chunk_reveal("reveal-facet", widths = c(50,50), title = "# Facet the plot")`
+
+```{r reveal-facet, include = FALSE}
+p <- ggplot(data = gapminder,
+            mapping = aes(x = year,
+                          y = gdpPercap))
+
+## Geoms can take their own mappings, remember
+p + geom_line(mapping = aes(group = country)) + 
+  facet_wrap(~ continent)
+```
+
+
+---
+
+# Faceting is a very powerful tool
+
+### A facet is not a geom; it's a way of arranging repeated geoms by some additional variable
+
+--
+
+### Facets use R's "formula" syntax: `facet_wrap(~ continent)` Read the .kjh-pink[**`~`**] as "on" or "by"
+
+--
+
+### You can also use this syntax: `facet_wrap(vars(continent))`
+
+--
+
+### This is newer, and consistent with other ways of referring to variables within tidyverse functions.
+
+
+---
+
+# Facets in action
+
+```{r}
+p <- ggplot(data = gapminder,
+            mapping = aes(x = year,
+                          y = gdpPercap))
+
+p_out <- p + geom_line(color="gray70", 
+              mapping=aes(group = country)) +
+    geom_smooth(size = 1.1,
+                method = "loess",
+                se = FALSE) +
+    scale_y_log10(labels=scales::dollar_format()) +
+    facet_wrap(~ continent, ncol = 5) +#<<
+    labs(x = "Year",
+         y = "log GDP per capita",
+         title = "GDP per capita on Five Continents",
+         caption = "Data: Gapminder")    
+```
+
+---
+layout: false
+
+```{r, echo=FALSE, fig.width=16, fig.height=5}
+p_out
+```
+
+
+.right.w90.small[A more polished faceted plot.]
+
+
+
+
+
