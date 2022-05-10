@@ -40,7 +40,7 @@ class: center middle main-title section-title-1
 
 .class-info[
 
-**Data Wrangling: Session 3**
+**Data Visualization: Session 3**
 
 .light[Kieran Healy<br>
 Statistical Horizons, May 2022
@@ -640,6 +640,136 @@ p + geom_point() +
 class: right bottom main-title section-title-1
 
 ## .huge.right.bottom.squish4[.kjh-yellow[Mapping] vs .kjh-lblue[Setting]<br />your plot's aesthetics]
+
+---
+
+# "Can I change the color of the points?"
+
+
+```{r}
+p <- ggplot(data = gapminder,
+            mapping = aes(x = gdpPercap,
+                          y = lifeExp,
+                          color = "purple"))
+
+## Put in an object for convenience
+p_out <- p + geom_point() +
+    geom_smooth(method = "loess") +
+    scale_x_log10()
+```
+
+---
+
+# What has gone wrong here?
+
+```{r, fig.width=8, fig.height=5}
+p_out
+```
+
+
+---
+
+# Try again
+
+```{r}
+p <- ggplot(data = gapminder,
+            mapping = aes(x = gdpPercap,
+                          y = lifeExp))
+
+## Put in an object for convenience
+p_out <- p + geom_point(color = "purple") +
+    geom_smooth(method = "loess") +
+    scale_x_log10()
+```
+
+
+---
+
+# Try again
+
+```{r, fig.width=8, fig.height=5}
+p_out
+```
+
+---
+
+# Geoms can take many arguments
+
+- Here we .kjh-orange[set] `color`, `size`, and `alpha`. Meanwhile `x` and `y` are .kjh-lblue[mapped].
+
+- We also give non-default values to some other arguments
+
+```{r}
+p <- ggplot(data = gapminder,
+            mapping = aes(x = gdpPercap,
+                          y = lifeExp)) 
+p_out <- p + geom_point(alpha = 0.3) +
+    geom_smooth(color = "orange", 
+                se = FALSE, 
+                size = 8, 
+                method = "lm") +
+    scale_x_log10()
+```
+
+---
+
+# Geoms can take many arguments
+
+```{r, fig.width=8.5, fig.height=5}
+p_out
+```
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.bottom.squish4.kjh-yellow[Map or Set values<br />.kjh-lblue[per geom]]
+
+---
+`r chunk_reveal("reveal-pergeom1", widths = c(45,55), title = "# Geoms can take their own mappings")`
+
+```{r reveal-pergeom1, include = FALSE}
+p <- ggplot(data = gapminder,
+            mapping = aes(x = gdpPercap,
+                          y = lifeExp,
+                          color = continent,
+                          fill = continent))
+p + geom_point() +
+    geom_smooth(method = "loess") +
+    scale_x_log10(labels = scales::dollar_format())
+```
+
+---
+`r chunk_reveal("reveal-pergeom2", widths = c(45,55), title = "# Geoms can take their own mappings")`
+
+```{r reveal-pergeom2, include = FALSE}
+p <- ggplot(data = gapminder,
+            mapping = aes(x = gdpPercap,
+                          y = lifeExp))
+p + geom_point(mapping = aes(color = continent)) +
+    geom_smooth(method = "loess") +
+    scale_x_log10(labels = scales::dollar_format())
+ 
+```
+
+---
+layout: false
+class: main-title main-title-inv middle
+
+# .middle.squish4.large.kjh-orange[Pay attention to which scales and guides are drawn, and why]
+
+---
+
+# Guides and scales follow mappings
+
+
+
+
+
+
+
+
+
 
 
 
