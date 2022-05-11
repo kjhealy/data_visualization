@@ -1327,8 +1327,9 @@ by_country |>
   ggplot(mapping = aes(x = roads_mean, 
                        y = donors_mean)) + 
   geom_point() + 
-  geom_text(mapping = aes(x = roads_mean + 1, 
-                          label = country))
+  geom_text(mapping = aes(x = roads_mean + 2, 
+                          label = country),
+            hjust = 0)
 
 
 ```
