@@ -154,7 +154,7 @@ class: title title-1
 
 class: center middle main-title section-title-1
 
-# .huge[Feeding .kjh-yellow[data] to .kjh-lblue[ggplot]]
+# .huge[.kjh-yellow[Feeding data] .kjh-lblue[to `ggplot`]]
 
 ---
 
@@ -262,8 +262,6 @@ class: title title-1
 
 # Some .kjh-orange[actions] to take on a single table 
 
---
-
 .pull-left.w80[
 - .kjh-orange[**Group**] the data at the level we want, such as “_Religion by Region_” or _“Children by School_”.
 
@@ -297,6 +295,14 @@ class: title title-1
 .pull-left-wide[
 - **Summarize** tables (i.e. perform aggregating calculations) using .kjh-green[**`summarize()`**].
 ]
+
+---
+
+class: center middle main-title section-title-1
+
+# .huge[.kjh-lblue[Example:]<br/>.kjh-yellow[The GSS]]
+
+
 
 ---
 
@@ -569,7 +575,7 @@ rel_by_region |>
 
 ---
 
-# Pass your pipeline on to ... a .kjh-yellow[table]
+# Pass your pipeline on to a .kjh-yellow[table]
 
 ```{r 03a-dplyr-basics-15, eval = FALSE}
 gss_sm |> 
@@ -619,7 +625,7 @@ class: center middle
 
 class: right bottom main-title section-title-1
 
-## .huge.right.bottom.squish4[.kjh-lblue[Facets] .kjh-yellow[are often<br />better than] .kjh-grey[Guides]]
+## .huge.right.bottom.squish4[.kjh-lblue[Facets] .kjh-yellow[are often<br />better than] .kjh-lblue[Guides]]
 
 
 ---
@@ -832,12 +838,18 @@ gss_sm |>
          pct = round((freq*100), 1)) 
 ```
 
+---
+
+layout: true
+class: title title-1
 
 ---
 
 class: center middle main-title section-title-1
 
-# .huge.kjh-lblue[Extend your vocabulary]
+# .huge[.kjh-lblue[Extend your] .kjh-yellow[`ggplot` vocabulary]]
+
+
 
 ---
 
@@ -864,7 +876,7 @@ class: center middle main-title section-title-1
 
 class: right bottom main-title section-title-1
 
-## .huge.right.bottom.squish4.kjh-yellow[Some data on<br />Organ Donation]
+## .huge.right.bottom.squish4[.kjh-yellow[Some data on]<br />.kjh-lblue[Organ Donation]]
 
 ---
 # .kjh-pink[`organdata`] is in the `socviz` package
@@ -922,7 +934,7 @@ p + geom_line() +
 
 class: right bottom main-title section-title-1
 
-## .huge.right.bottom.squish4.kjh-yellow[Showing continuous measures by category]
+## .huge.right.bottom.squish4[.kjh-yellow[Showing continuous measures] .kjh-lblue[by category]]
 
 ---
 
@@ -1020,7 +1032,7 @@ organdata |>
 
 class: right bottom main-title section-title-1
 
-## .huge.right.bottom.squish4[.kjh-yellow[Summarize better with] .kjh-lblue[**`dplyr`**]]
+## .huge.right.bottom.squish4[.kjh-yellow[Summarize better]<br /> .kjh-lblue[with **`dplyr`**]]
 
 
 ---
@@ -1566,7 +1578,139 @@ p_out
 
 class: right bottom main-title section-title-1
 
-## .huge.right.bottom.squish4[.kjh-yellow[Labeling points of interest]]
+## .huge.right.bottom.squish4[.kjh-yellow[Labeling points<br />of interest]]
 
+---
+
+layout: true
+class: title title-1
+
+---
+
+
+# Option 1: On the fly inside `ggplot`
+
+
+.pull-left.w50[
+```{r codefig-subset1, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5}
+by_country |> 
+  ggplot(mapping = aes(x = gdp_mean,
+                       y = health_mean)) +
+  geom_point() + 
+  geom_text_repel(data = subset(by_country, gdp_mean > 25000), 
+                  mapping = aes(label = country))
+
+
+```
+]
+
+--
+
+.pull-right.w50[
+```{r, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-subset1", "png"))
+```
+]
+
+---
+
+# Option 1: On the fly inside `ggplot`
+
+
+.pull-left.w50[
+```{r codefig-subset2, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5}
+
+by_country |> 
+  ggplot(mapping = aes(x = gdp_mean,
+                       y = health_mean)) +
+  geom_point() + 
+  geom_text_repel(data = subset(by_country, 
+                                gdp_mean > 25000 |
+                                  health_mean < 1500 |
+                                  country %in% "Belgium"), 
+                  mapping = aes(label = country))
+
+
+```
+
+.pull-left.w90[Stuffing everything into the .kjh-green[`subset()`] call might get messy]
+
+]
+
+--
+
+.pull-right.w50[
+```{r, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-subset2", "png"))
+```
+]
+
+---
+
+# Option 2: Use `dplyr` to subset first
+
+
+```{r}
+df_hl <- by_country |> 
+  filter(gdp_mean > 25000 | 
+           health_mean < 1500 | 
+           country %in% "Belgium")
+
+df_hl
+```
+
+---
+
+# Option 2: Use `dplyr` to subset first
+
+
+```{r}
+df_hl <- by_country |> 
+  filter(gdp_mean > 25000 | 
+           health_mean < 1500 | 
+           country %in% "Belgium")
+
+df_hl
+```
+
+---
+
+
+# Option 2: Use `dplyr` to subset first
+
+
+.pull-left.w50[
+```{r codefig-subset3, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5}
+
+by_country |> 
+  ggplot(mapping = aes(x = gdp_mean,
+                       y = health_mean)) +
+  geom_point() + 
+  geom_text_repel(data = df_hl, 
+                  mapping = aes(label = country))
+
+
+```
+
+.pull-left.w90[This makes things a little neater.]
+
+]
+
+--
+
+.pull-right.w50[
+```{r, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-subset3", "png"))
+```
+]
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.bottom.squish4[.kjh-yellow[Write and draw]<br>.kjh-lblue[inside the plot area]]
 
 
