@@ -1,0 +1,113 @@
+---
+title: "Slide Template"
+author: "Kieran Healy"
+date: "`r Sys.Date()`"
+output: kjhslides::kjh_slides_reader
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r note, include=FALSE}
+## NB: By default the  template will create a new subdirectory with its files inside.
+```
+
+
+```{r packages, include=FALSE}
+library(flipbookr)
+library(here)
+library(tidyverse)
+library(kjhslides)
+```
+
+
+```{r setup, include=FALSE}
+## Configure the slides
+
+kjh_register_tenso()    # Default fonts. Comment out if you don't have Tenso and Berkeley fonts.
+kjh_set_knitr_opts()    
+kjh_set_slide_theme()   # ggplot theme to go with slides. Set tenso = FALSE if necessary.
+kjh_set_xaringan_opts()
+
+```
+
+
+
+class: center middle main-title section-title-1
+
+# Work with .kjh-lblue[dplyr] and .kjh-yellow[ggplot]
+
+.class-info[
+
+**Data Visualization: Session 5**
+
+.light[Kieran Healy<br>
+Code Horizons, May 2022
+]
+
+]
+
+
+---
+
+# Set up our workspace
+
+```{r}
+library(tidyverse)      # Your friend and mine
+library(here)           # Portable file paths
+library(socviz)         # Handy socviz functions
+```
+
+---
+
+class: main-title main-title-inv center middle 
+
+
+.center[![:scale 90%](img/05_ggplots_flow_of_action_lg.png)]
+
+---
+
+class: main-title main-title-inv center middle 
+
+.center[![:scale 90%](img/05_layers_nolabels.png)]
+
+
+---
+
+class: main-title main-title-inv center middle 
+
+.center[![:scale 90%](img/05_layers_lower3.png)]
+
+
+---
+
+class: main-title main-title-inv center middle 
+
+.center[![:scale 90%](img/05_layers_all_labeled.png)]
+
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+class: center middle main-title section-title-1
+
+# .huge[Feeding .kjh-yellow[data] to .kjh-lblue[ggplot]]
+
+---
+
+layout: false
+class: center middle
+
+## .middle.huge.squish4[.kjh-orange[Transform and Summarize first.]<br />.kjh-lblue[Then send your clean tables to ggplot.]]
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.bottom.squish4.kjh-yellow[Crosstabulation]
+
+
+
