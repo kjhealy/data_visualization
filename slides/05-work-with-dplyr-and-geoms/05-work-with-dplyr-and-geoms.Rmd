@@ -1225,7 +1225,7 @@ by_country |>
 
 # Again, these methods are general
 
-.pull-left.w45[
+.pull-left.w50[
 ```{r codefig-consent4, message=FALSE, fig.show="hide", fig.width=8, fig.height=6}
 by_country |> 
   ggplot(mapping = 
@@ -1238,7 +1238,7 @@ by_country |>
   guides(color = "none") +
   facet_wrap(~ consent_law, 
              ncol = 1,
-             scales = "free_y") +  #<
+             scales = "free_y") +  #<<
   labs(x = "Donor Procurement Rate",
        y = NULL, 
        color = "Consent Law")
@@ -1247,7 +1247,7 @@ by_country |>
 
 --
 
-.pull-right.w55[
+.pull-right.w50[
 ```{r, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-consent4", "png"))
@@ -1354,7 +1354,7 @@ by_country |>
 
 class: right bottom main-title section-title-1
 
-## .huge.right.bottom.squish4.kjh-yellow[U.S. Historic Elections Data]
+## .huge.right.bottom.squish4.kjh-yellow[U.S. Historic<br/>Presidential Elections]
 
 ---
 
@@ -1365,6 +1365,208 @@ elections_historic
 ```
 
 ---
+
+# We'll draw a plot like this
+
+.center[![:scale 55%](img/05_electionplot_sample.png)]
+
+
+---
+
+# Keep things neat
+
+```{r}
+## The packages we'll use in addition to ggplot
+library(ggrepel) #<<
+library(scales) #<<
+
+p_title <- "Presidential Elections: Popular & Electoral College Margins"
+p_subtitle <- "1824-2016"
+p_caption <- "Data for 2016 are provisional."
+x_label <- "Winner's share of Popular Vote"
+y_label <- "Winner's share of Electoral College Votes"
+```
+
+---
+
+# Base Layer, Lines, Points
+
+
+.pull-left.w45[
+```{r codefig-presplot1, message=FALSE, fig.show="hide", fig.width=5, fig.height=4.5}
+p <- ggplot(data = elections_historic, 
+            mapping = aes(x = popular_pct, 
+                          y = ec_pct,
+                          label = winner_label))
+
+p + geom_hline(yintercept = 0.5, 
+               size = 1.4, 
+               color = "gray80") +
+    geom_vline(xintercept = 0.5, 
+               size = 1.4, 
+               color = "gray80") +
+    geom_point()
+
+```
+]
+
+--
+
+.pull-right.w55[
+```{r, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-presplot1", "png"))
+```
+]
+
+---
+
+# Add the labels
+
+
+.pull-left.w45[
+```{r codefig-presplot2, message=FALSE, fig.show="hide", fig.width=5, fig.height=4.5}
+p <- ggplot(data = elections_historic, 
+            mapping = aes(x = popular_pct, 
+                          y = ec_pct,
+                          label = winner_label))
+
+p + geom_hline(yintercept = 0.5, 
+               size = 1.4, color = "gray80") +
+  geom_vline(xintercept = 0.5, 
+             size = 1.4, color = "gray80") +
+  geom_point() + 
+  geom_text_repel()
+
+```
+
+.pull-left.w85[This looks messy because .kjh-green[`geom_text_repel()`] uses the dimensions of the available graphics device to iteratively figure out the labels. Let's allow it to draw on the whole slide.]
+
+]
+
+--
+
+.pull-right.w55[
+```{r, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-presplot2", "png"))
+```
+]
+
+---
+
+# The labeling is with respect to the plot size
+
+```{r}
+p <- ggplot(data = elections_historic, 
+            mapping  = aes(x = popular_pct, 
+                           y = ec_pct,
+                           label = winner_label))
+
+p_out <- p + 
+  geom_hline(yintercept = 0.5, 
+             size = 1.4, 
+             color = "gray80") +
+  geom_vline(xintercept = 0.5, 
+             size = 1.4, 
+             color = "gray80") +
+  geom_point() + 
+  geom_text_repel() #<<
+
+```
+
+---
+
+layout:false
+class: middle center
+
+```{r, echo = FALSE, fig.width=15, fig.height=8.5}
+p_out
+```
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+# Adjust the Scales
+
+```{r}
+p <- ggplot(data = elections_historic, 
+            mapping  = aes(x = popular_pct, 
+                           y = ec_pct,
+                           label = winner_label))
+p_out <- p + geom_hline(yintercept = 0.5, 
+                        size = 1.4, 
+                        color = "gray80") +
+    geom_vline(xintercept = 0.5, 
+               size = 1.4, 
+               color = "gray80") +
+    geom_point() +
+    geom_text_repel() +
+    scale_x_continuous(labels = percent_format()) + #<<
+    scale_y_continuous(labels = percent_format()) #<<
+```
+
+---
+
+layout:false
+class: middle center
+
+```{r, echo = FALSE, fig.width=15, fig.height=8.5}
+p_out
+```
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+# Add the labels
+
+```{r}
+p <- ggplot(data = elections_historic, 
+            mapping  = aes(x = popular_pct, 
+                           y = ec_pct,
+                           label = winner_label))
+p_out <- p + geom_hline(yintercept = 0.5, 
+                        size = 1.4, 
+                        color = "gray80") +
+  geom_vline(xintercept = 0.5, 
+             size = 1.4, 
+             color = "gray80") +
+  geom_point() +
+  geom_text_repel(mapping = aes(family = "Tenso Slide")) +#<<
+  scale_x_continuous(labels = percent_format()) +
+  scale_y_continuous(labels = percent_format()) +
+  labs(x = x_label, y = y_label,  #<<
+       title = p_title, 
+       subtitle = p_subtitle,
+       caption = p_caption)   
+  
+  
+  
+```
+
+
+---
+
+layout:false
+class: middle center
+
+```{r, echo = FALSE, fig.width=15, fig.height=8.5}
+p_out
+```
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.bottom.squish4[.kjh-yellow[Labeling points of interest]]
 
 
 
