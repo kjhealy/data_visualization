@@ -1004,6 +1004,234 @@ class: right bottom main-title section-title-1
 ## .huge.right.bottom.squish4[.kjh-yellow[Summarize better with] .kjh-lblue[**`dplyr`**]]
 
 
+---
+
+# Summarize a bunch of variables
+
+```{r}
+by_country <- organdata |>  
+  group_by(consent_law, country)  |> 
+    summarize(donors_mean= mean(donors, na.rm = TRUE),
+              donors_sd = sd(donors, na.rm = TRUE),
+              gdp_mean = mean(gdp, na.rm = TRUE),
+              health_mean = mean(health, na.rm = TRUE),
+              roads_mean = mean(roads, na.rm = TRUE),
+              cerebvas_mean = mean(cerebvas, na.rm = TRUE))
+
+head(by_country)
+```
+
+- This works, but there's so much repetition. It's an invitation to make mistakes copying and pasting.
+
+---
+layout: false
+class: main-title main-title-inv
+
+# .middle.squish4.huge[.kjh-lblue[DRY:]] <br /> .middle.squish4.large.kjh-orange[Don't Repeat Yourself]
 
 
+---
+
+layout: true
+class: title title-1
+
+---
+
+# Use .kjh-green[across()] and .kjh-green[where()] instead
+
+```{r}
+by_country <- organdata |> 
+  group_by(consent_law, country) |>
+    summarize(across(where(is.numeric),#<<
+                     list(mean = mean, 
+                          sd = sd),
+                      na.rm = TRUE))
+head(by_country)              
+              
+```
+
+---
+
+# Use .kjh-green[across()] and .kjh-green[where()] instead
+
+```{r}
+by_country <- organdata |> 
+  group_by(consent_law, country) |>
+    summarize(across(where(is.numeric),
+                     list(mean = mean, 
+                          sd = sd),
+                      na.rm = TRUE), 
+              .groups = "drop") #<<
+head(by_country)              
+              
+```
+
+---
+
+# Plot our summary data
+
+
+.pull-left.w45[
+```{r codefig-consent1, message=FALSE, fig.show="hide", fig.width=8, fig.height=5}
+by_country |> 
+  ggplot(mapping = 
+           aes(x = donors_mean, 
+               y = reorder(country, donors_mean),
+               color = consent_law)) + 
+  geom_point(size=3) +
+  labs(x = "Donor Procurement Rate",
+       y = NULL, 
+       color = "Consent Law")
+```
+]
+
+--
+
+.pull-right.w55[
+```{r, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-consent1", "png"))
+
+```
+
+]
+
+
+---
+
+# What about faceting it instead?
+
+.pull-left.w45[
+
+```{r codefig-consent2, message=FALSE, fig.show="hide", fig.width=8, fig.height=5}
+by_country |> 
+  ggplot(mapping = 
+           aes(x = donors_mean, 
+               y = reorder(country, donors_mean),
+               color = consent_law)) + 
+  geom_point(size=3) +
+  guides(color = "none") +
+  facet_wrap(~ consent_law) + #<
+  labs(x = "Donor Procurement Rate",
+       y = NULL, 
+       color = "Consent Law")
+```
+
+.pull-left.w80[The problem is that countries can only be in one category.]
+
+]
+
+--
+
+.pull-right.w55[
+```{r, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-consent2", "png"))
+```
+]
+
+
+---
+
+# What about faceting it instead?
+
+.pull-left.w45[
+```{r codefig-consent2a, message=FALSE, fig.show="hide", fig.width=5, fig.height=9}
+by_country |> 
+  ggplot(mapping = 
+           aes(x = donors_mean, 
+               y = reorder(country, donors_mean),
+               color = consent_law)) + 
+  geom_point(size=3) +
+  guides(color = "none") +
+  facet_wrap(~ consent_law, ncol = 1) + #<
+  labs(x = "Donor Procurement Rate",
+       y = NULL, 
+       color = "Consent Law")
+```
+
+.pull-left.w80[Restricting to one column doesn't fix it.]
+
+]
+
+
+
+--
+
+.pull-right.w55[
+```{r, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-consent2a", "png"))
+```
+]
+
+
+
+---
+
+# Allow the y-scale to vary
+
+.pull-left.w45[
+```{r codefig-consent3, message=FALSE, fig.show="hide", fig.width=8, fig.height=5}
+by_country |> 
+  ggplot(mapping = 
+           aes(x = donors_mean, 
+               y = reorder(country, donors_mean),
+               color = consent_law)) + 
+  geom_point(size=3) +
+  guides(color = "none") +
+  facet_wrap(~ consent_law, 
+             ncol = 1,
+             scales = "free_y") +  #<
+  labs(x = "Donor Procurement Rate",
+       y = NULL, 
+       color = "Consent Law")
+```
+
+.pull.left.w90[Normally the point of a facet is to preserve comparability between panels by not allowing the scales to vary. But for categorical measures it can be useful to allow this.]
+
+]
+
+
+--
+
+.pull-right.w55[
+```{r, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-consent3", "png"))
+```
+]
+
+---
+
+# Again, these methods are general
+
+.pull-left.w45[
+```{r codefig-consent4, message=FALSE, fig.show="hide", fig.width=8, fig.height=5}
+by_country |> 
+  ggplot(mapping = 
+           aes(x = donors_mean, 
+               y = reorder(country, donors_mean),
+               color = consent_law)) + 
+  geom_pointrange(mapping = 
+                    aes(xmin = donors_mean - donors_sd,
+                        xmax = donors_mean + donors_sd)) +
+  guides(color = "none") +
+  facet_wrap(~ consent_law, 
+             ncol = 1,
+             scales = "free_y") +  #<
+  labs(x = "Donor Procurement Rate",
+       y = NULL, 
+       color = "Consent Law")
+```
+]
+
+--
+
+.pull-right.w55[
+```{r, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-consent4", "png"))
+```
+]
 
