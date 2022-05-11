@@ -1,5 +1,5 @@
 ---
-title: "Slide Template"
+title: "Data Visualization: Session 5"
 author: "Kieran Healy"
 date: "`r Sys.Date()`"
 output: kjhslides::kjh_slides_reader
@@ -718,6 +718,292 @@ p_out_facet
 class: right bottom main-title section-title-1
 
 ## .huge.right.bottom.squish4[.kjh-yellow[Two kinds of] .kjh-lblue[facet]]
+
+---
+
+# Facet Children vs Age by Race
+
+```{r, fig.width=10, fig.height=5}
+p <-  ggplot(data = gss_sm,
+             mapping = aes(x = age, y = childs))
+
+p + geom_point(alpha = 0.2) + 
+  geom_smooth() +
+  facet_wrap(~ race)
+
+```
+
+---
+
+# We can facet by more than one variable
+
+```{r, fig.width=8, fig.height=5.5}
+p <-  ggplot(data = gss_sm,
+             mapping = aes(x = age, y = childs))
+
+p + geom_point(alpha = 0.2) + 
+  geom_smooth() +
+  facet_wrap(~ sex + race) #<< 
+
+```
+
+
+---
+
+# We can arrange .kjh-green[facet_wrap()] quite freely
+
+```{r, fig.width=15, fig.height=5.5}
+p <-  ggplot(data = gss_sm,
+             mapping = aes(x = age, y = childs))
+
+p + geom_point(alpha = 0.2) + 
+  geom_smooth() +
+  facet_wrap(~ sex + race, nrow = 1) #<< 
+
+```
+
+
+---
+
+# .kjh-green[facet_grid()] is more like a true crosstab
+
+```{r, fig.width=11, fig.height=6.5, warning = FALSE}
+p + geom_point(alpha = 0.2) + 
+  geom_smooth() +
+  facet_grid(sex ~ race) #<< 
+
+```
+
+
+---
+
+# Both can be exended to multi-way views
+
+```{r, fig.width=11, fig.height=6.5, warning = FALSE}
+p_out <- p + geom_point(alpha = 0.2) + 
+  geom_smooth() +
+  facet_grid(bigregion ~ race + sex) #<< 
+
+```
+
+---
+layout: false
+
+```{r, echo=FALSE, warning=FALSE, fig.width=12, fig.height=8}
+p_out
+```
+
+---
+
+class: center middle main-title section-title-1
+
+# .huge[.kjh-lblue[What we've] .kjh-yellow[built-up]]
+
+---
+
+layout: true
+class: title title-1
+---
+
+# Core Grammar
+
+.center[![:scale 80%](img/05_builtup_1.png)]
+
+---
+
+# Grouped data; faceting
+
+- Along with a few peeks at scale transformations, guide adjustments, and theme adjustment 
+
+.center[![:scale 80%](img/05_builtup_2.png)]
+
+
+---
+
+# `dplyr` and Pipelining 
+
+###  The elements of filtering and summarizing 
+
+```{r}
+gss_sm |> 
+  group_by(bigregion, religion) |> 
+  tally() |> 
+  mutate(freq = n / sum(n),
+         pct = round((freq*100), 1)) 
+```
+
+
+---
+
+class: center middle main-title section-title-1
+
+# .huge.kjh-lblue[Extend your vocabulary]
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.bottom.squish4.kjh-yellow[Some data on<br />Organ Donation]
+
+
+---
+
+# .kjh-pink[`organdata`] is in the `socviz` package
+
+```{r}
+organdata
+```
+
+---
+
+# First looks
+
+```{r, fig.width=10, fig.height=6}
+p <- ggplot(data = organdata,
+            mapping = aes(x = year, y = donors))
+p + geom_point()
+```
+
+---
+
+# First looks
+
+```{r, fig.width=10, fig.height=6}
+p <- ggplot(data = organdata,
+            mapping = aes(x = year, y = donors))
+p + geom_line() 
+```
+
+---
+
+# First looks
+
+```{r, fig.width=10, fig.height=6}
+p <- ggplot(data = organdata,
+            mapping = aes(x = year, y = donors))
+p + geom_line(aes(group = country)) 
+```
+
+
+---
+
+# First looks
+
+```{r, fig.width=21, fig.height=8}
+p <- ggplot(data = organdata,
+            mapping = aes(x = year, y = donors))
+p + geom_line() + 
+  facet_wrap(~ country, nrow = 3)
+```
+
+
+---
+
+
+
+class: right bottom main-title section-title-1
+
+## .huge.right.bottom.squish4.kjh-yellow[Showing continuous measures by category]
+
+---
+
+# Boxplots: .kjh-green[`geom_boxplot()`]
+
+```{r, fig.width = 15, fig.height=5}
+## Pipeline the data directly; then it's implicitly the first argument to `ggplot()`
+organdata |> 
+  ggplot(mapping = aes(x = country, y = donors)) + 
+  geom_boxplot()
+```
+
+---
+
+# Put categories on the y-axis!
+
+```{r, fig.width=10, fig.height=6}
+organdata |> 
+  ggplot(mapping = aes(x = donors, y = country)) + #<<
+  geom_boxplot() +
+  labs(y = NULL)
+```
+
+---
+
+# Reorder y by the mean of x
+
+```{r, fig.width=10, fig.height=6}
+organdata |> 
+  ggplot(mapping = aes(x = donors, y = reorder(country, donors, na.rm = TRUE))) + #<<
+  geom_boxplot() +
+  labs(y = NULL)
+```
+
+---
+
+# (Reorder y by any statistic you like)
+
+```{r, fig.width=10, fig.height=6}
+organdata |> 
+  ggplot(mapping = aes(x = donors, y = reorder(country, donors, sd, na.rm = TRUE))) + #<<
+  geom_boxplot() +
+  labs(y = NULL)
+```
+
+---
+
+# .kjh-green[geom_boxplot()] knows `color` and `fill`
+
+```{r, fig.width=10, fig.height=6}
+organdata |> 
+  ggplot(mapping = aes(x = donors, y = reorder(country, donors, na.rm = TRUE), fill = world)) + #<<
+  geom_boxplot() +
+  labs(y = NULL)
+```
+
+
+---
+
+# These strategies are quite general
+
+```{r, fig.width=10, fig.height=5.5}
+organdata |> 
+  ggplot(mapping = aes(x = donors, y = reorder(country, donors, na.rm = TRUE), color = world)) + 
+  geom_point(size = rel(3)) + #<<
+  labs(y = NULL)
+```
+
+
+---
+
+# .kjh-green[geom-jitter()] can help with overplotting
+
+```{r, fig.width=10, fig.height=6}
+organdata |> 
+  ggplot(mapping = aes(x = donors, y = reorder(country, donors, na.rm = TRUE), color = world)) + 
+  geom_jitter(size = rel(3)) + #<<
+  labs(y = NULL)
+```
+
+---
+
+# Adjust with a `postion` argument
+
+```{r, fig.width=10, fig.height=6}
+organdata |> 
+  ggplot(mapping = aes(x = donors, y = reorder(country, donors, na.rm = TRUE),
+                       color = world)) + 
+  geom_jitter(size = rel(3), position = position_jitter(height = 0.1)) + #<<
+  labs(y = NULL)
+```
+
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.bottom.squish4[.kjh-yellow[Summarize better with] .kjh-lblue[**`dplyr`**]]
+
+
 
 
 
