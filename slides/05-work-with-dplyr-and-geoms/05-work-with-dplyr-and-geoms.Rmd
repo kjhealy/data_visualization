@@ -841,13 +841,32 @@ class: center middle main-title section-title-1
 
 ---
 
+# We'll move forward in three ways
+
+## .kjh-lblue[Learn more geoms] 
+
+- .kjh-green[`geom_point()`], .kjh-green[`geom_line()`], .kjh-green[`geom_col()`],  .kjh-green[`geom_histogram()`], .kjh-green[`geom_density()`], .kjh-green[`geom_jitter()`], 
+.kjh-green[`geom_boxplot()`], .kjh-green[`geom_pointrange()`],...
+
+--
+
+## .kjh-lblue[Learn more about scales, guides, and themes] 
+
+- The functions that control the details of representing data and styling our plots.
+
+--
+
+## .kjh-lblue[Learn more about extensions to ggplot]
+
+- External packages that enhance `ggplot`'s capabilities, usually by adding support for new kinds of plot (i.e., new geoms), or new functionality (e.g. the `scales` package).
+
+---
+
 class: right bottom main-title section-title-1
 
 ## .huge.right.bottom.squish4.kjh-yellow[Some data on<br />Organ Donation]
 
-
 ---
-
 # .kjh-pink[`organdata`] is in the `socviz` package
 
 ```{r}
@@ -1172,7 +1191,7 @@ by_country |>
 # Allow the y-scale to vary
 
 .pull-left.w45[
-```{r codefig-consent3, message=FALSE, fig.show="hide", fig.width=8, fig.height=5}
+```{r codefig-consent3, message=FALSE, fig.show="hide", fig.width=8, fig.height=6}
 by_country |> 
   ggplot(mapping = 
            aes(x = donors_mean, 
@@ -1207,7 +1226,7 @@ by_country |>
 # Again, these methods are general
 
 .pull-left.w45[
-```{r codefig-consent4, message=FALSE, fig.show="hide", fig.width=8, fig.height=5}
+```{r codefig-consent4, message=FALSE, fig.show="hide", fig.width=8, fig.height=6}
 by_country |> 
   ggplot(mapping = 
            aes(x = donors_mean, 
@@ -1234,4 +1253,117 @@ by_country |>
   knitr::fig_chunk("codefig-consent4", "png"))
 ```
 ]
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.bottom.squish4.kjh-yellow[Plot text directly]
+
+---
+
+# .kjh-green[`geom_text()`] for basic labels
+
+
+
+.pull-left.w45[
+```{r geomtext, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5}
+
+by_country |> 
+  ggplot(mapping = aes(x = roads_mean, 
+                       y = donors_mean)) + 
+  geom_text(mapping = aes(label = country))
+
+```
+]
+
+--
+
+.pull-right.w55[
+```{r, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("geomtext", "png"))
+```
+]
+
+
+---
+
+# It's not very flexible
+
+
+.pull-left.w45[
+```{r geomtext2, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5}
+
+by_country |> 
+  ggplot(mapping = aes(x = roads_mean, 
+                       y = donors_mean)) + 
+  geom_point() + 
+  geom_text(mapping = aes(label = country),
+            hujust = 0)
+
+
+```
+]
+
+--
+
+.pull-right.w55[
+```{r, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("geomtext2", "png"))
+```
+]
+
+---
+
+# There are tricks, but they're limited
+
+
+.pull-left.w45[
+```{r geomtext3, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5}
+
+by_country |> 
+  ggplot(mapping = aes(x = roads_mean, 
+                       y = donors_mean)) + 
+  geom_point() + 
+  geom_text(mapping = aes(x = roads_mean + 1, 
+                          label = country))
+
+
+```
+]
+
+--
+
+.pull-right.w55[
+```{r, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("geomtext3", "png"))
+```
+]
+
+---
+
+# We'll use .kjh-lblue[`ggrepel`] instead
+
+### The .kjh-lblue[`ggrepel`] package provides .kjh-green[`geom_text_repel()`] and .kjh-green[`geom_label_repel()`]
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.bottom.squish4.kjh-yellow[U.S. Historic Elections Data]
+
+---
+
+# .kjh-pink[`elections_historic`] is in .kjh-grey[`socviz`] 
+
+```{r}
+elections_historic
+```
+
+---
+
+
 
