@@ -336,11 +336,11 @@ summary(out)
 
 # Tidy regression output with .kjh-yellow[broom]
 
-```{r r 07-.kjh-green[Iterating]-8}
+```{r iterating-8}
 library(broom)
 ```
 
-```{r r 07-.kjh-green[Iterating]-9}
+```{r iterating-9}
 tidy(out)
 ```
 
@@ -351,7 +351,7 @@ That's a _lot_ nicer. Now it's just a tibble. We know those.
 # Tidy regression output with .kjh-yellow[broom]
 
 
-```{r r 07-.kjh-green[Iterating]-11}
+```{r iterating-11}
 out_conf <- tidy(out, conf.int = TRUE)
 out_conf 
 ```
@@ -598,5 +598,236 @@ glance(out)
 ```
 
 The usefulness of .kjh-green[`glance()`] becomes clearer when dealing with ensembles of models.
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.bottom.squish4[.kjh-yellow[Another example]]
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+# A Kaplan-Meier Curve
+
+```{r}
+library(survival)
+
+
+head(lung)
+
+tail(lung)
+```
+
+---
+
+# A Kaplan-Meier Curve
+
+First we fit the model:
+
+```{r}
+## Hazard model
+out_cph <- coxph(Surv(time, status) ~ age + sex, data = lung)
+
+summary(out_cph)
+
+```
+
+---
+
+# A Kaplan-Meier Curve
+
+Then we create the survival curve, which is _nearly_ tidy out of the box:
+
+```{r}
+## Hazard model
+out_surv <- survfit(out_cph)
+
+## See how this is just a print method,
+## not a tibble, or even a data frame.
+## So it just runs off the end of the slide.
+summary(out_surv)
+
+```
+
+---
+
+# A Kaplan-Meier Curve
+
+Then we tidy it and draw the plot.
+
+```{r}
+## Much nicer. (See how the column headers have been regularized, too.)
+out_tidy <- tidy(out_surv)
+out_tidy
+
+p_out <- out_tidy |> 
+  ggplot(mapping = aes(x = time, y = estimate)) + 
+  geom_line() + 
+  geom_ribbon(mapping = aes(ymin = conf.low, ymax = conf.high),#<<
+              alpha = 0.4) #<<
+
+```
+
+---
+layout: false
+
+```{r, echo=FALSE, fig.height=8, fig.width=15}
+p_out
+```
+
+
+.right.w90.small[Kaplan-Meier Plot]
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.bottom.squish4[.kjh-yellow[Grouped Analysis with] .kjh-lblue[`broom`]]
+
+---
+layout: false
+class: main-title main-title-inv
+
+# .middle.squish4.large[.kjh-orange[Pipelines show their real power] .kjh-lblue[when used iteratively]]
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+# Iteration without tears (or loops)
+
+- You might be familiar with code that looks like this:
+
+```{r}
+x <- 10
+
+for (i in 1:5) {
+  print(x + i)
+}
+```
+
+- This is one way to accomplish 
+
+# Grouped analysis and .kjh-orange[list columns]
+
+```{r iterating-20}
+eu77 <- gapminder |> 
+  filter(continent == "Europe", year == 1977)
+
+fit <- lm(lifeExp ~ log(gdpPercap), data = eu77)
+```
+
+
+```{r iterating-21}
+summary(fit)
+```
+
+
+---
+
+# Grouped analysis and .kjh-orange[list columns]
+
+```{r iterating-22}
+
+out_le <- gapminder |>
+    group_by(continent, year) |>
+    nest() #<<
+
+out_le
+
+```
+
+Think of nesting as a kind of "super-grouping". Look in the object inspector.
+
+---
+
+# Grouped analysis and .kjh-orange[list columns]
+
+It's still in there.
+
+```{r iterating-23}
+out_le |> 
+  filter(continent == "Europe" & year == 1977) |> 
+  unnest(cols = c(data))
+```
+
+---
+
+# Grouped analysis and .kjh-orange[list columns]
+
+```{r iterating-24, echo = FALSE}
+old_digits <- getOption("digits")
+options(digits = 3)
+```
+
+Here we write a tiny, very specific function and .kjh-green[**`map()`**] it to every row in the `data` column.
+
+```{r iterating-25}
+
+fit_ols <- function(df) {
+    lm(lifeExp ~ log(gdpPercap), data = df)
+}
+
+out_le <- gapminder |>
+    group_by(continent, year) |>
+    nest() |> 
+    mutate(model = map(data, fit_ols)) #<<
+```
+
+---
+
+# Grouped analysis and .kjh-orange[list columns]
+
+
+```{r 07-iterating-on-data-63 }
+out_le
+```
+
+
+---
+
+# Grouped analysis and .kjh-orange[list columns]
+
+We can tidy the nested models, too.
+
+```{r iterating-26}
+
+fit_ols <- function(df) {
+    lm(lifeExp ~ log(gdpPercap), data = df)
+}
+
+out_tidy <- gapminder |>
+    group_by(continent, year) |>
+    nest() |> 
+    mutate(model = map(data, fit_ols),
+           tidied = map(model, tidy)) |>
+    unnest(cols = c(tidied)) |>
+    filter(term %nin% "(Intercept)" &
+           continent %nin% "Oceania")
+```
+
+
+---
+
+# Grouped analysis and .kjh-orange[list columns]
+
+```{r 07-iterating-on-data-64 }
+out_tidy
+```
+
+
 
 
