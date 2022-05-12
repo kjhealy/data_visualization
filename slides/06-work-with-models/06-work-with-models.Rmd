@@ -1216,8 +1216,41 @@ pwalk(
 # Peek in the .kjh-orange[`figures/`] folder
 
 ```{r}
-fs::dir_tree(here("figures")) 
+fs::dir_ls(here("figures")) |> 
+  basename()
 ```
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.bottom.squish4[.kjh-yellow[Get model-based graphics] .kjh-lblue[right]]
+
+---
+layout: false
+class: main-title main-title-inv
+
+## .squish4.large.right[.kjh-green[Present findings in substantive terms]]
+
+--
+
+## .squish4.large.right[.kjh-lblue[Show degrees of confidence or uncertainty]]
+
+--
+## .squish4.large.right[.kjh-pink[Show the data when you can]]
+
+
+---
+layout: false
+class: main-title main-title-inv
+
+## .squish4.huge.top.center[.kjh-blue[These points apply .kjh-orange[just as well] to  presenting data in _any_ format: tables, models, text, whatever. .kjh-pink[Graphs are not special here!]]]
+
+---
+
+class: center middle main-title section-title-1
+
+# .huge.squish4[.kjh-lblue[Plot Marginal Effects]]
 
 
 
