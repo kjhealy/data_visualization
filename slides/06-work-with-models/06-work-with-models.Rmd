@@ -34,7 +34,7 @@ kjh_set_xaringan_opts()
 
 class: center middle main-title section-title-1
 
-# A Title Slide with .kjh-yellow[R]
+# Work with .kjh-yellow[Models]
 
 .class-info[
 
@@ -60,6 +60,543 @@ class: title title-1
 library(here)      # manage file paths
 library(socviz)    # data and some useful functions
 library(tidyverse) # your friend and mine
+library(gapminder) # Everyone's favorite dataset
+library(broom)     # Tidy model output
+library(marginaleffects) # Tidy marginal effects
+library(modelsummary) # Tidy summary tables and graphs
 ```
 ]
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+# We know .kjh-lblue[`ggplot`] can work with models
+
+
+.pull-left.w45[
+```{r codefig-model1, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5}
+p <- gapminder |> 
+  ggplot(mapping = aes(x = log(gdpPercap), 
+                       y = lifeExp))  
+
+p + geom_point(alpha=0.1) +
+  geom_smooth(color = "tomato", 
+              fill="tomato", 
+              method = MASS::rlm) +
+  geom_smooth(color = "steelblue", 
+              fill="steelblue", 
+              method = "lm") + 
+  labs(title = "Robust and OLS fits")
+```
+
+- We know because `geoms` often do calculations in the background, via their `stat` functions.
+
+]
+
+--
+
+.pull-right.w55[
+```{r, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-model1", "png"))
+```
+]
+
+
+---
+
+# And these can be complex ...
+
+
+.pull-left.w45[
+```{r codefig-model2, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5}
+
+p + geom_point(alpha=0.1) +
+    geom_smooth(color = "tomato", 
+                method = "lm", 
+                size = 1.2, 
+                formula = y ~ splines::bs(x, 3), 
+                se = FALSE)
+
+```
+]
+
+--
+
+.pull-right.w55[
+```{r, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-model2", "png"))
+```
+]
+
+---
+
+# And these can be complex ... but ...
+
+
+.pull-left.w45[
+```{r codefig-model3, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5}
+
+p + geom_point(alpha=0.1) +
+    geom_quantile(color = "tomato", 
+                  size = 1.2, 
+                  method = "rqss",
+                  lambda = 1, 
+                  quantiles = c(0.20, 0.5, 0.85))
+
+```
+]
+
+--
+
+.pull-right.w55[
+```{r, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-model3", "png"))
+```
+
+]
+
+
+---
+
+layout: false
+class: center middle
+
+## .middle.huge.squish4[.kjh-orange[Transform and summarize first.]<br />.kjh-lblue[Then send your clean tables to ggplot.]]
+
+---
+
+class: center middle main-title section-title-1
+
+# .huge[.kjh-lblue[Look inside] .kjh-yellow[the box]]
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+# Again, objects are Bento Boxes of To-Do lists
+
+
+```{r}
+gapminder
+```
+
+---
+
+# Fit a model
+
+```{r}
+out <- lm(formula = lifeExp ~ gdpPercap + log(pop) + continent, 
+          data = gapminder)
+
+summary(out)
+```
+
+
+---
+
+# Poke around inside
+
+- Use the Object Inspector to take a look
+
+.left[![:scale 20%](img/06_lm_object_schematic.png)]
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.bottom.squish4[.kjh-yellow[Predict from models:]<br /> .kjh-lblue[DIY method]]
+
+---
+
+# Behind the curtain
+
+### .kjh-green[`predict()`] and its methods do a lot of work behind the scenes
+
+- We won't usually need to do this stuff manually. But the idea is that the generic .kjh-green[`predict()`] function has _methods_ for specific sorts of models. Give it a model and some new data and it will produce predicted values for the new data. Here's an example/
+
+---
+
+# The labor-intensive way
+
+```{r}
+min_gdp <- min(gapminder$gdpPercap)
+max_gdp <- max(gapminder$gdpPercap)
+med_pop <- median(gapminder$pop)
+
+# Make a grid of predictor values
+pred_df <- expand_grid(gdpPercap = (seq(from = min_gdp,
+                                        to = max_gdp,
+                                        length.out = 100)),
+                       pop = med_pop,
+                       continent = c("Africa", "Americas",
+                                     "Asia", "Europe", "Oceania"))
+
+pred_df
+```
+
+---
+
+# The labor-intensive way
+
+```{r}
+# Get the predicted values
+pred_out <- predict(object = out,
+                    newdata = pred_df,
+                    interval = "confidence")
+head(pred_out)
+
+```
+
+---
+
+# The labor-intensive way
+
+```{r}
+# Bind them into one data frame. We can do this safely
+# here because we know the row order by construction. 
+# But this is not a safe approach in general.
+
+pred_df <- cbind(pred_df, pred_out)
+head(pred_df)
+```
+
+---
+
+# The labor-intensive way
+
+```{r}
+p <- ggplot(data = subset(pred_df, continent %in% c("Europe", "Africa")),
+            aes(x = gdpPercap,
+                y = fit, 
+                ymin = lwr, 
+                ymax = upr,
+                color = continent,
+                fill = continent,
+                group = continent))
+
+# Use the original data as the point layer
+p_out <- p + geom_point(data = subset(gapminder,
+                             continent %in% c("Europe", "Africa")),
+               mapping = aes(x = gdpPercap, y = lifeExp,
+                   color = continent),
+               alpha = 0.5,
+               inherit.aes = FALSE) + 
+# And the predicted values to draw the lines  
+    geom_line() +
+    geom_ribbon(alpha = 0.2, color = FALSE) +
+    scale_x_log10(labels = scales::dollar)
+```
+
+---
+layout: false
+
+```{r, echo = FALSE, fig.width=12, fig.height=7}
+p_out
+```
+
+
+.right.w90.small[Fitted lines and original values]
+
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+class: center middle main-title section-title-1
+
+# .huge[.kjh-lblue[Use] .kjh-yellow[`broom`] .kjh-lblue[to tidy models]]
+
+
+---
+
+# We can't .kjh-yellow[do] anything with this
+
+```{r}
+out <- lm(formula = lifeExp ~ gdpPercap + log(pop) + continent, 
+          data = gapminder)
+
+summary(out)
+```
+
+
+---
+
+# Tidy regression output with .kjh-yellow[broom]
+
+```{r r 07-.kjh-green[Iterating]-8}
+library(broom)
+```
+
+```{r r 07-.kjh-green[Iterating]-9}
+tidy(out)
+```
+
+That's a _lot_ nicer. Now it's just a tibble. We know those.
+
+---
+
+# Tidy regression output with .kjh-yellow[broom]
+
+
+```{r r 07-.kjh-green[Iterating]-11}
+out_conf <- tidy(out, conf.int = TRUE)
+out_conf 
+```
+
+
+---
+
+# Tidy regression output with .kjh-yellow[broom]
+
+
+```{r 07-iterating-on-data-62 }
+out_conf |> 
+    filter(term %nin% "(Intercept)")  |> 
+    mutate(nicelabs = prefix_strip(term, "continent")) |> 
+    select(nicelabs, everything())
+```
+
+
+---
+
+# Tidy regression output with .kjh-yellow[broom]
+
+
+.pull-left.w55[
+```{r codefig-broomplot, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5}
+out_conf |> 
+    filter(term %nin% "(Intercept)") |> 
+    mutate(nicelabs = prefix_strip(term, "continent")) |> 
+  ggplot(mapping = aes(x = estimate, 
+                       xmin = conf.low, 
+                       xmax = conf.high, 
+                       y = reorder(nicelabs, 
+                                   estimate))) + 
+  geom_pointrange() + 
+  labs(x = "Estimate", 
+       y = NULL, 
+       title = "Severely Misspecified")
+```
+]
+
+--
+
+.pull-right.w45[
+```{r, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-broomplot", "png"))
+```
+]
+
+---
+
+# Three ways to tidy
+
+### .kjh-lblue[Component level]: .kjh-green[`tidy()`]
+
+### .kjh-orange[Observation level]: .kjh-green[`augment()`]
+
+### .kjh-pink[Model level]: .kjh-green[`glance()`]
+
+---
+
+# .kjh-lblue[Component] level
+
+```text
+
+> summary(out)
+
+Call:
+lm(formula = lifeExp ~ gdpPercap + log(pop) + continent, data = gapminder)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-47.490  -4.614   0.250   5.293  26.094 
+```
+
+.kjh-lblue[
+```text
+Coefficients:
+                   Estimate Std. Error t value Pr(>|t|)    
+(Intercept)       3.816e+01  2.050e+00  18.618  < 2e-16 ***
+gdpPercap         4.557e-04  2.345e-05  19.435  < 2e-16 ***
+log(pop)          6.394e-01  1.329e-01   4.810 1.64e-06 ***
+continentAmericas 1.308e+01  6.063e-01  21.579  < 2e-16 ***
+continentAsia     7.784e+00  5.810e-01  13.398  < 2e-16 ***
+continentEurope   1.695e+01  6.350e-01  26.691  < 2e-16 ***
+continentOceania  1.764e+01  1.779e+00   9.916  < 2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+```
+]
+
+```text
+Residual standard error: 8.336 on 1697 degrees of freedom
+Multiple R-squared:  0.585,	Adjusted R-squared:  0.5835 
+F-statistic: 398.7 on 6 and 1697 DF,  p-value: < 2.2e-16
+```
+
+---
+
+# .kjh-orange[Observation] level
+
+```text
+
+> summary(out)
+
+Call:
+lm(formula = lifeExp ~ gdpPercap + log(pop) + continent, data = gapminder)
+```
+
+.kjh-orange[
+
+```text
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-47.490  -4.614   0.250   5.293  26.094 
+```
+]
+
+```text
+Coefficients:
+                   Estimate Std. Error t value Pr(>|t|)    
+(Intercept)       3.816e+01  2.050e+00  18.618  < 2e-16 ***
+gdpPercap         4.557e-04  2.345e-05  19.435  < 2e-16 ***
+log(pop)          6.394e-01  1.329e-01   4.810 1.64e-06 ***
+continentAmericas 1.308e+01  6.063e-01  21.579  < 2e-16 ***
+continentAsia     7.784e+00  5.810e-01  13.398  < 2e-16 ***
+continentEurope   1.695e+01  6.350e-01  26.691  < 2e-16 ***
+continentOceania  1.764e+01  1.779e+00   9.916  < 2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+```
+
+
+```text
+Residual standard error: 8.336 on 1697 degrees of freedom
+Multiple R-squared:  0.585,	Adjusted R-squared:  0.5835 
+F-statistic: 398.7 on 6 and 1697 DF,  p-value: < 2.2e-16
+```
+
+
+---
+
+# .kjh-orange[Observation] level
+
+```{r}
+augment(out)
+```
+
+---
+
+# .kjh-orange[Observation] level
+
+- For OLS models: 
+
+- .kjh-orange[.fitted] — The fitted values of the model.
+- .kjh-orange[.se.fit] — The standard errors of the fitted values.
+- .kjh-orange[.resid] — The residuals.
+- .kjh-orange[.hat] — The diagonal of the hat matrix.
+- .kjh-orange[.sigma] — An estimate of the residual standard deviation when the corresponding observation is dropped from the model.
+- .kjh-orange[.cooksd] — Cook’s distance, a common regression diagnostic.
+- .kjh-orange[.std.resid] — The standardized residuals.
+
+
+---
+
+# .kjh-orange[Observation] level
+
+```{r}
+# Adding the data argument puts back any additional columns from the original
+# tibble
+out_aug <-  augment(out, data = gapminder)
+head(out_aug)
+
+```
+
+```{r}
+## Residuals vs Fitted Values
+p <- ggplot(data = out_aug,
+            mapping = aes(x = .fitted, y = .resid))
+p_out <- p + geom_point() 
+```
+
+---
+layout: false
+
+```{r, echo = FALSE, fig.width=15, fig.height=8}
+p_out
+```
+
+
+.right.w90.small[I told you it was misspecified]
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+
+# .kjh-pink[Component] level
+
+```text
+
+> summary(out)
+
+Call:
+lm(formula = lifeExp ~ gdpPercap + log(pop) + continent, data = gapminder)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-47.490  -4.614   0.250   5.293  26.094 
+```
+
+```text
+Coefficients:
+                   Estimate Std. Error t value Pr(>|t|)    
+(Intercept)       3.816e+01  2.050e+00  18.618  < 2e-16 ***
+gdpPercap         4.557e-04  2.345e-05  19.435  < 2e-16 ***
+log(pop)          6.394e-01  1.329e-01   4.810 1.64e-06 ***
+continentAmericas 1.308e+01  6.063e-01  21.579  < 2e-16 ***
+continentAsia     7.784e+00  5.810e-01  13.398  < 2e-16 ***
+continentEurope   1.695e+01  6.350e-01  26.691  < 2e-16 ***
+continentOceania  1.764e+01  1.779e+00   9.916  < 2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+```
+
+.kjh-pink[
+```text
+Residual standard error: 8.336 on 1697 degrees of freedom
+Multiple R-squared:  0.585,	Adjusted R-squared:  0.5835 
+F-statistic: 398.7 on 6 and 1697 DF,  p-value: < 2.2e-16
+```
+]
+
+---
+
+# .kjh-pink[Component] level
+
+
+```{r}
+glance(out)
+```
+
+The usefulness of .kjh-green[`glance()`] becomes clearer when dealing with ensembles of models.
+
 
