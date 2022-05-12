@@ -1713,4 +1713,192 @@ class: right bottom main-title section-title-1
 
 ## .huge.right.bottom.squish4[.kjh-yellow[Write and draw]<br>.kjh-lblue[inside the plot area]]
 
+---
 
+layout: true
+class: title title-1
+
+---
+
+# .kjh-green[`annotate()`] can imitate geoms
+
+
+.pull-left.w50[
+```{r codefig-annotate1, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5}
+
+organdata |> 
+  ggplot(mapping = aes(x = roads, 
+                       y = donors)) + 
+  geom_point() + 
+  annotate(geom = "text", 
+           family = "Tenso Slide",
+           x = 157, 
+           y = 33,
+           label = "A surprisingly high \n recovery rate.",
+           hjust = 0)
+
+```
+]
+
+--
+
+.pull-right.w50[
+```{r, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-annotate1", "png"))
+```
+]
+
+---
+
+# .kjh-green[`annotate()`] can imitate geoms
+
+
+
+.pull-left.w50[
+```{r codefig-annotate2, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5}
+
+organdata |> 
+  ggplot(mapping = aes(x = roads, 
+                       y = donors)) + 
+  geom_point() +
+  annotate(geom = "rect", 
+           xmin = 125, xmax = 155,
+           ymin = 30, ymax = 35,
+           fill = "red", 
+           alpha = 0.2) + 
+  annotate(geom = "text", 
+           x = 157, y = 33,
+           family = "Tenso Slide",
+           label = "A surprisingly high \n recovery rate.", 
+           hjust = 0)
+
+```
+]
+
+--
+
+.pull-right.w50[
+```{r, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-annotate2", "png"))
+```
+]
+
+
+---
+
+class: center middle main-title section-title-1
+
+# .huge[.kjh-lblue[Scales, Guides, Themes]]
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+# Every .kjh-lblue[mapped variable] has a .kjh-orange[scale]
+
+### Aesthetic mappings link quantities or categories in your data to things you can see on the graph. Thus, they have a  scale associated with that representation.
+
+### Scale functions manage this relationship. Remember: not just `x` and `y` but also `color`, `fill`, `shape`, `size`, and `alpha` are scales.
+
+- If it can represent your data, it has a scale, and a _scale function_ to manage it.
+
+### This means you control things like color schemes _for data mappings_ through scale functions
+
+- Because those colors are representing features of your daeta.
+
+---
+
+# Naming conventions for scale functions
+
+- In general, scale functions are named like this:
+
+- .center.large[.kjh-green[`scale\\\_`].kjh-orange[`<MAPPING>`].kjh-green[`\\\_`].kjh-lblue[`<KIND>`].kjh-green[`()`]]
+
+
+- .large[We already know there are a lot of .kjh-orange[**mappings**]]. 
+- .center[.kjh-orange[`x`], .kjh-orange[`y`], .kjh-orange[`color`], .kjh-orange[`size`], .kjh-orange[`shape`], and so on.] 
+
+- .large[And there are many .kjh-lblue[**kinds**] of scale as well.] 
+- .center[Scales can be .kjh-lblue[discrete], .kjh-lblue[continuous], .kjh-lblue[log10], .kjh-lblue[date], .kjh-lblue[binned], and many others.]
+
+- .large[So there's a whole zoo of scale functions.]
+- .center[The naming convention helps us keep track.]
+
+
+---
+
+# Naming conventions for scale functions
+
+- .large.center[.kjh-green[`scale\\\_`].kjh-orange[`mapping`].kjh-green[`\\\_`].kjh-lblue[`kind`].kjh-green[`()`]]
+
+- .center[.kjh-green[`scale\\\_`].kjh-orange[`x`].kjh-green[`\\\_`].kjh-lblue[`continuous`].kjh-green[`()`]]
+
+- .center[.kjh-green[`scale\\\_`].kjh-orange[`y`].kjh-green[`\\\_`].kjh-lblue[`continous`].kjh-green[`()`]]
+
+- .center[.kjh-green[`scale\\\_`].kjh-orange[`x`].kjh-green[`\\\_`].kjh-lblue[`discrete`].kjh-green[`()`]]
+
+- .center[.kjh-green[`scale\\\_`].kjh-orange[`y`].kjh-green[`\\\_`].kjh-lblue[`discrete`].kjh-green[`()`]]
+
+- .center[.kjh-green[`scale\\\_`].kjh-orange[`x`].kjh-green[`\\\_`].kjh-lblue[`log10`].kjh-green[`()`]]
+
+- .center[.kjh-green[`scale\\\_`].kjh-orange[`x`].kjh-green[`\\\_`].kjh-lblue[`sqrt`].kjh-green[`()`]]
+
+
+---
+
+# Naming conventions for scale functions
+
+- .large.center[.kjh-green[`scale\\\_`].kjh-orange[`mapping`].kjh-green[`\\\_`].kjh-lblue[`kind`].kjh-green[`()`]]
+
+- .center[.kjh-green[`scale\\\_`].kjh-orange[`color`].kjh-green[`\\\_`].kjh-lblue[`discrete`].kjh-green[`()`]]
+
+- .center[.kjh-green[`scale\\\_`].kjh-orange[`color`].kjh-green[`\\\_`].kjh-lblue[`gradient`].kjh-green[`()`]]
+
+- .center[.kjh-green[`scale\\\_`].kjh-orange[`color`].kjh-green[`\\\_`].kjh-lblue[`gradient2`].kjh-green[`()`]]
+
+- .center[.kjh-green[`scale\\\_`].kjh-orange[`color`].kjh-green[`\\\_`].kjh-lblue[`brewer`].kjh-green[`()`]]
+
+- .center[.kjh-green[`scale\\\_`].kjh-orange[`fill`].kjh-green[`\\\_`].kjh-lblue[`discrete`].kjh-green[`()`]]
+
+- .center[.kjh-green[`scale\\\_`].kjh-orange[`fill`].kjh-green[`\\\_`].kjh-lblue[`gradient`].kjh-green[`()`]]
+
+- .center[.kjh-green[`scale\\\_`].kjh-orange[`fill`].kjh-green[`\\\_`].kjh-lblue[`gradient2`].kjh-green[`()`]]
+
+- .center[.kjh-green[`scale\\\_`].kjh-orange[`fill`].kjh-green[`\\\_`].kjh-lblue[`brewer`].kjh-green[`()`]]
+
+---
+
+# Naming conventions for scale functions
+
+- Scale functions take arguments appropriate to their mapping and kind
+
+
+.pull-left.w50[
+```{r codefig-scalefn1, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5}
+
+organdata |> 
+  ggplot(mapping = aes(x = roads,
+                       y = donors,
+                       color = world)) + 
+  geom_point() +
+  scale_y_continuous(breaks = c(5, 15, 25),
+                     labels = c("Five", 
+                                "Fifteen", 
+                                "Twenty Five"))
+
+```
+]
+
+--
+
+.pull-right.w50[
+```{r, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-scalefn1", "png"))
+```
+]
