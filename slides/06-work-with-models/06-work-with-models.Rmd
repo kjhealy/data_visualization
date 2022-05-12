@@ -707,7 +707,7 @@ class: title title-1
 
 ---
 
-# Iteration without tears (or loops)
+# Iteration without tears (or explicit loops)
 
 - You might be familiar with code that looks like this:
 
@@ -719,9 +719,240 @@ for (i in 1:5) {
 }
 ```
 
-- This is one way to accomplish 
+- This is one way to do something repeatedly.
+
+---
+
+# Iteration without tears (or explicit loops)
+
+- We can also write, e.g., 
+
+```{r}
+x <- c(10, 20, 30, 40)
+
+for (i in 1:length(x)) {
+  # Add 5 to the ith element of x
+  print(x[i] + 5)
+}
+```
+
+- This way we can refer to each element of x in turn, and do the same thing do it.
+
+---
+
+# Iteration without tears (or explicit loops)
+
+- The more complicated the thing we want to do, the more likely we are to use functions to help us out.
+
+```{r}
+x <- 10
+
+for (i in 1:5) {
+  print(sqrt(x + i))
+}
+```
+
+
+---
+
+# Isn't this like ... Vectorized arithmetic?
+
+- The simplest cases are not that different from the vectorized arithmetic we saw before. 
+
+```{r 07-iterating-on-data-5 }
+a <- c(1:10)
+
+b <- 1
+
+# You know what R will do here
+a + b
+
+```
+
+--
+
+R's vectorized rules add `b` to every element of `a`. In a sense, the .kjh-green[**`+`**] operation can be thought of as a function that takes each element of `a` and does something with it. In this case "add `b`".  
+
+---
+
+# Repeatedly applying a function 
+
+We can make this explicit by writing a function:
+
+```{r 07-iterating-on-data-6 }
+a <- c(1:10)
+
+
+add_b <- function(x) {
+  b <- 1
+  x + b # for any x
+}
+```
+
+Now:
+
+```{r 07-iterating-on-data-7 }
+add_b(x = a)
+```
+
+In effect we take the vector **`a`** and feed it to the .kjh-green[`add_b()`] function one element at a time.
+
+---
+
+# Repeatedly applying a function 
+
+
+Again, R's vectorized approach means it automatically applies .kjh-green[`add_b()`] to every element of the x we give it.
+
+```{r 07-iterating-on-data-8 }
+add_b(x = 10)
+```
+
+```{r 07-iterating-on-data-9 }
+add_b(x = c(1, 99, 1000))
+```
+
+---
+
+# .kjh-green[Iterating] in a pipeline
+Some operations can't directly be vectorized in this way, most often because the function we want to apply only knows what to do if it is handed, say, a vector. It doesn't understand what to do if it's handed a list of vectors or a tibble of them, etc. This is when we might find ourselves manually iterating---writing out every single step explicitly. 
+
+```{r 07-iterating-on-data-10 }
+library(gapminder)
+gapminder %>% 
+  summarize(country_n = n_distinct(country), 
+            continent_n = n_distinct(continent), 
+            year_n = n_distinct(year), 
+            lifeExp_n = n_distinct(lifeExp), 
+            population_n = n_distinct(population))
+```
+
+That's tedious to write! Computers are supposed to allow us to avoid that sort of thing.
+
+---
+
+# .kjh-green[Iterating] in a pipeline
+
+So how would we iterate this? What we want is to apply the .kjh-green[**`n_distinct()`**] function to each column of `gapminder`. But we can't easily write a loop inside a pipeline. We want a way to iterate that lets us repeatedly apply a function without explicitly writing a loop. 
+
+```{r 07-iterating-on-data-11 }
+library(gapminder)
+gapminder %>% 
+  summarize(n_distinct(country), 
+            n_distinct(continent), 
+            n_distinct(year), 
+            n_distinct(lifeExp), 
+            n_distinct(population))
+```
+
+.smaller.kjh-darkgrey[Using .kjh-green[**`n_distinct()`**] in this context is an idea I got from Rebecca Barter's discussion of `purrr`.]
+
+---
+
+# .kjh-green[Iterating] in a pipeline
+
+In real life, you'd use .kjh-green[**across()**], like this:
+
+```{r 07-iterating-on-data-12 }
+gapminder %>% 
+  summarize(across(everything(), n_distinct))
+```
+
+---
+
+# .kjh-green[Iterating] in a pipeline
+
+But you could also say "Feed each column of .kjh-pink[`gapminder`] in turn to the .kjh-green[`n_distinct()`] function". 
+
+This is what the .kjh-green[`map()`] function is for.
+
+.pull-left[
+
+
+```{r 07-iterating-on-data-13 }
+  map(gapminder, n_distinct)
+```
+
+]
+
+.pull-right[
+Read it as "Feed each column of `gapminder` to the .kjh-green[**`n_distinct()`**] function.
+
+(This is pretty much what .kjh-green[**`across()`**] is doing more nicely.)
+]
+
+
+---
+
+# .kjh-green[Iterating] in a pipeline
+
+.pull-left[
+
+Or, in pipeline form:
+
+```{r 07-iterating-on-data-14 }
+gapminder %>% 
+  map(n_distinct)
+```
+
+]
+
+.pull-right[
+
+You can see we are getting a _list_ back.
+
+]
+
+---
+
+# .kjh-green[Iterating] in a pipeline
+
+Or, in pipeline form:
+
+```{r 07-iterating-on-data-15 }
+result <- gapminder %>% 
+  map(n_distinct)
+
+class(result)
+
+result$continent
+
+result[[2]]
+```
+
+
+---
+
+# .kjh-green[Iterating] in a pipeline
+
+But we know .kjh-green[**`n_distinct()`**] should always return an integer. So we use .kjh-green[**`map_int()`**] instead of the generic .kjh-green[**`map()`**].
+
+
+```{r 07-iterating-on-data-16 }
+gapminder %>% 
+  map_int(n_distinct)
+```
+
+The thing about the .kjh-green[**`map()`**] family is that it can deal with all kinds of input types and output types.
+
+
+---
+layout: false
+class: main-title main-title-inv middle
+
+# .middle.squish4.large[.kjh-orange[So what's the use] .kjh-lblue[of all that stuff?]]
+
+---
+
+layout: true
+class: title title-1
+
+---
+
 
 # Grouped analysis and .kjh-orange[list columns]
+
+Let's say I want to fit a simple model to data for all countries in Europe in 1977.
 
 ```{r iterating-20}
 eu77 <- gapminder |> 
@@ -740,6 +971,8 @@ summary(fit)
 
 # Grouped analysis and .kjh-orange[list columns]
 
+What if I want to do that for all Continent-Year combinations? I'm not going to write a loop!
+
 ```{r iterating-22}
 
 out_le <- gapminder |>
@@ -756,7 +989,7 @@ Think of nesting as a kind of "super-grouping". Look in the object inspector.
 
 # Grouped analysis and .kjh-orange[list columns]
 
-It's still in there.
+Europe '77 is still in there.
 
 ```{r iterating-23}
 out_le |> 
@@ -791,6 +1024,7 @@ out_le <- gapminder |>
 
 # Grouped analysis and .kjh-orange[list columns]
 
+- Now we have a new column. Each row of the .kjh-orange[`model`] column contains a full regression for that continent-year.
 
 ```{r 07-iterating-on-data-63 }
 out_le
@@ -813,10 +1047,9 @@ out_tidy <- gapminder |>
     group_by(continent, year) |>
     nest() |> 
     mutate(model = map(data, fit_ols),
-           tidied = map(model, tidy)) |>
-    unnest(cols = c(tidied)) |>
-    filter(term %nin% "(Intercept)" &
-           continent %nin% "Oceania")
+           tidied = map(model, tidy)) 
+
+out_tidy
 ```
 
 
@@ -824,10 +1057,167 @@ out_tidy <- gapminder |>
 
 # Grouped analysis and .kjh-orange[list columns]
 
+We can get the tidied results out into the main table if we like.
+
 ```{r 07-iterating-on-data-64 }
+out_tidy <- out_tidy |>
+    unnest(cols = c(tidied)) |>
+    filter(term %nin% "(Intercept)" &
+           continent %nin% "Oceania")
+
 out_tidy
 ```
 
+---
+
+# Plot what we have
+
+```{r}
+p <- ggplot(data = out_tidy,
+            mapping = aes(x = year, y = estimate,
+                          ymin = estimate - 2*std.error,
+                          ymax = estimate + 2*std.error,
+                          group = continent, 
+                          color = continent))
+
+p_out <- p + 
+  geom_pointrange(size = rel(1.25), 
+                  position = position_dodge(width = rel(1.3))) +#<<
+  scale_x_continuous(breaks = unique(gapminder$year)) + #<<
+  labs(x = "Year", 
+       y = "Estimate", 
+       color = "Continent")
+```
+
+
+---
+layout: false
+
+```{r, echo = FALSE, fig.height=6, fig.width=15}
+p_out
+```
+
+
+.right.w90.small[Repeated Estimates of log GDP on Life Expectancy by Continent]
+
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+# And there's more ... 
+
+Let's go back to this stage:
+
+```{r}
+# New model
+fit_ols2 <- function(df) {
+    lm(lifeExp ~ log(gdpPercap) + log(pop), data = df)
+}
+
+out_tidy <- gapminder |>
+    group_by(continent, year) |>
+    nest() |> 
+    mutate(model = map(data, fit_ols2),
+           tidied = map(model, tidy)) 
+
+out_tidy
+```
+
+---
+
+# A function to draw a coef plot
+
+```{r}
+# Plot the output from our model
+mod_plot <- function(data, 
+                     title){
+  data |> 
+    filter(term %nin% "(Intercept)") |> 
+    ggplot(mapping = aes(x = estimate,
+                         xmin = estimate - std.error,
+                         xmax = estimate + std.error,
+                         y = reorder(term, estimate))) + 
+    geom_pointrange() + 
+    labs(title = title, 
+         y = NULL)
+}
+```
+
+---
+
+# Add it using .kjh-green[`map2()`] or .kjh-green[`pmap()`]
+
+- When we have two arguments to feed a function we can used .kjh-green[`map2()`]. The general case is .kjh-green[`pmap()`], for passing along any number of arguments in a list.
+
+```{r}
+out_tidy <- gapminder |>
+    group_by(continent, year) |>
+    nest() |> 
+    mutate(title = paste(continent, year),
+           model = map(data, fit_ols2),#<<
+           tidied = map(model, tidy), 
+           ggout = pmap(list(tidied, 
+                             title), 
+                        mod_plot)) #<<
+
+out_tidy
+```
+
+- Now, every element of .kjh-orange[`ggout`] is ...
+
+---
+
+# A plot!
+
+.pull-left[
+```{r, fig.height=3, fig.width=6}
+out_tidy$ggout[[8]]
+```
+]
+
+
+.pull-right[
+```{r, fig.height=3, fig.width=6}
+out_tidy$ggout[[18]]
+```
+]
+
+---
+
+# We don't just put them in there for fun
+
+- We can e.g. .kjh-green[`walk`] the plots out to disk
+
+.kjh-green[`walk()`] is .kjh-green[`map()`] for when you just want a "side-effect" such as printed output. There is also .kjh-green[`walk2()`] and .kjh-green[`pwalk()`]
+
+```{r}
+
+pwalk(
+  list(
+    filename = paste0(out_tidy$title, ".png"),
+    plot = out_tidy$ggout,
+    path = here("figures"),
+    height = 3, width = 4,
+    dpi = 300
+  ),
+  ggsave
+)
+
+
+                       
+```
+
+---
+
+# Peek in the .kjh-orange[`figures/`] folder
+
+```{r}
+fs::dir_tree(here("figures")) 
+```
 
 
 
