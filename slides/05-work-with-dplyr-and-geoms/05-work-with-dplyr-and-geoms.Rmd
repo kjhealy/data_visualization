@@ -1873,7 +1873,7 @@ class: title title-1
 
 ---
 
-# Naming conventions for scale functions
+# Scale functions in practice
 
 - Scale functions take arguments appropriate to their mapping and kind
 
@@ -1902,3 +1902,119 @@ organdata |>
   knitr::fig_chunk("codefig-scalefn1", "png"))
 ```
 ]
+
+---
+
+# More usefully ...
+
+
+.pull-left.w50[
+```{r codefig-scalecolordiscrete, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5}
+
+organdata |> 
+  ggplot(mapping = aes(x = roads,
+                       y = donors,
+                       color = world)) + 
+  geom_point() +
+  scale_color_discrete(labels =
+                         c("Corporatist", 
+                           "Liberal",
+                           "Social Democratic", 
+                           "Unclassified")) +
+  labs(x = "Road Deaths",
+       y = "Donor Procurement",
+       color = "Welfare State")
+
+```
+]
+
+--
+
+.pull-right.w50[
+```{r, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-scalecolordiscrete", "png"))
+```
+]
+
+---
+
+# The .kjh-green[`guides()`] function
+
+.pull-left.w45[
+```{r codefig-guidesfn, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=5.5}
+
+organdata |> 
+  ggplot(mapping = aes(x = roads,
+                       y = donors,
+                       color = consent_law)) + 
+  geom_point() +
+  facet_wrap(~ consent_law, ncol = 1) +
+  guides(color = "none") + 
+  labs(x = "Road Deaths",
+       y = "Donor Procurement")
+
+```
+
+.pull-left.w90[- Control overall properties of the guide labels.
+- Common use: turning it off.
+- We'll see more advanced uses later.]
+
+]
+
+--
+
+.pull-right.w50[
+```{r, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-guidesfn", "png"))
+```
+]
+
+
+---
+
+# The .kjh-green[`theme()`] function
+
+```{r, echo=FALSE}
+kjhslides::kjh_set_classic_theme()
+```
+
+
+.pull-left.w40[
+```{r codefig-themefn, message=FALSE, fig.show="hide", fig.width=5, fig.height=4.5}
+## Using the "classic" ggplot theme here
+organdata |> 
+  ggplot(mapping = aes(x = roads,
+                       y = donors,
+                       color = consent_law)) + 
+  geom_point() +
+  labs(title = "By Consent Law",
+    x = "Road Deaths",
+    y = "Donor Procurement", 
+    color = "Legal Regime:") + 
+  theme(legend.position = "bottom", 
+        plot.title = element_text(color = "darkred",
+                                  face = "bold"))
+
+```
+
+.pull-left.w95[
+.kjh-green[`theme()`] styles parts of your plot that are _not_ directly representing your data. Often the first thing people want to adjust; but logically it's the _last_ thing. Again, more detail later!
+]
+
+]
+
+--
+
+.pull-right.w50[
+```{r, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-themefn", "png"))
+```
+]
+
+```{r, echo=FALSE}
+kjhslides::kjh_set_slide_theme()
+```
+
