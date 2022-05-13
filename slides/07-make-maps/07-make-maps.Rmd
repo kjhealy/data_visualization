@@ -1,0 +1,73 @@
+---
+title: "07 - Make Maps"
+author: "Kieran Healy"
+date: "`r Sys.Date()`"
+output: kjhslides::kjh_slides_reader
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r note, include=FALSE}
+## NB: By default the  template will create a new subdirectory with its files inside.
+```
+
+
+```{r packages, include=FALSE}
+library(flipbookr)
+library(here)
+library(tidyverse)
+library(kjhslides)
+```
+
+
+```{r setup, include=FALSE}
+## Configure the slides
+
+kjh_register_tenso()    # Default fonts. Comment out if you don't have Tenso and Berkeley fonts.
+kjh_set_knitr_opts()    
+kjh_set_slide_theme()   # ggplot theme to go with slides. Set tenso = FALSE if necessary.
+kjh_set_xaringan_opts()
+
+```
+
+
+
+class: center middle main-title section-title-1
+
+# .kjh-yellow[Making] .kjh-lblue[Maps]
+
+.class-info[
+
+**Data Visualization: Session 7**
+
+.light[Kieran Healy<br>
+Code Horizons, May 2022
+]
+
+]
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+# Load our libraries
+
+```{r 03a-dplyr-basics-2, message = FALSE}
+library(here)      # manage file paths
+library(socviz)    # data and some useful functions
+library(tidyverse) # your friend and mine
+library(sf)        # Simple Features Geometries and geom_sf()
+library(ggforce)   # Useful enhancements to ggplot
+```
+
+---
+
+class: center middle main-title section-title-1
+
+# .huge[.kjh-lblue[Choropleths]]
+
+
+
