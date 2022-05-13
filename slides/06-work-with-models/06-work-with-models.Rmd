@@ -1538,13 +1538,16 @@ out_yrd |>
 # Set up the plot
 
 ```{r}
-p <- ggplot(data = subset(out_yrd, race %nin% "Other"),
-            mapping = aes(x = degree, y = prop,
-                          ymin = prop - 2*prop_se,
-                          ymax = prop + 2*prop_se,
-                          fill = race,
-                          color = race,
-                          group = race))
+p <- out_yrd |> 
+  drop_na() |> 
+  filter(race %nin% "Other") |> 
+  ggplot(mapping = aes(x = degree, 
+                       y = prop,
+                       ymin = prop - 2*prop_se,
+                       ymax = prop + 2*prop_se,
+                       fill = race,
+                       color = race,
+                       group = race))
 
 dodge_w <- position_dodge(width = 0.9)
 ```
@@ -1577,33 +1580,75 @@ p + geom_col(position = dodge_w, alpha = 0.2) +
 # In full (but switch to rows)
 
 ```{r}
-p_out <- p + geom_col(position = dodge_w, alpha = 0.2) +
-    geom_errorbar(position = dodge_w, width = 0.2) +
-    scale_x_discrete(labels = wrap_format(10)) +
-    scale_y_continuous(labels = percent_format()) +
-    scale_color_brewer(type = "qual", 
-                       palette = "Dark2") +
-    scale_fill_brewer(type = "qual", 
-                      palette = "Dark2") +
-    labs(title = "Educational Attainment by Race",
-         subtitle = "GSS 1976-2016",
-         fill = "Race",
-         color = "Race",
-         x = NULL, y = "Percent") +
-    facet_wrap(~ year, nrow = 2) 
+p_out <- p + 
+  geom_col(position = dodge_w, alpha = 0.2) +
+  geom_errorbar(position = dodge_w, width = 0.2) +
+  scale_x_discrete(labels = wrap_format(10)) +
+  scale_y_continuous(labels = percent_format()) +
+  scale_color_brewer(type = "qual", 
+                     palette = "Dark2") +
+  scale_fill_brewer(type = "qual", 
+                    palette = "Dark2") +
+  labs(title = "Educational Attainment by Race",
+       subtitle = "GSS 1976-2016",
+       fill = "Race",
+       color = "Race",
+       x = NULL, y = "Percent") +
+  facet_wrap(~ year, nrow = 2) + 
+  theme(axis.text.x = 
+          element_text(size = rel(0.6), 
+                       face = "bold"))
 ```
 
 ---
 layout: false
 
-```{r, echo = FALSE, fig.width=15, fig.height=6}
+```{r, echo = FALSE, fig.width=18, fig.height=6}
 p_out
 ```
 
 --
 
-##  .center[Is this an effective figure? Not really!]
+##  .large.center[Is this figure .kjh-red[effective]? Not really!]
 
+---
 
+layout: true
+class: title title-1
 
+---
+
+# Let's try a different view
+
+```{r}
+p <- out_yrd |> 
+  drop_na() |> 
+  filter(race %nin% "Other", 
+         degree %nin% "Junior College") |> 
+  ggplot(mapping = aes(x = year, y = prop, 
+                          ymin = prop - 2*prop_se,
+                          ymax = prop + 2*prop_se, 
+                          fill = race, color = race,
+                          group = race))
+
+p_out <- p + 
+  geom_ribbon(mapping = aes(color = NULL),
+              alpha = 0.3) +
+  geom_line(size = rel(1.25)) + 
+  scale_y_continuous(labels = percent_format()) +
+  scale_color_brewer(type = "qual", palette = "Dark2") +
+  scale_fill_brewer(type = "qual", palette = "Dark2") +
+  facet_wrap(~ degree, ncol = 2) +
+  labs(title = "Educational Attainment by Race",
+       subtitle = "GSS 1976-2016", fill = "Race",
+       color = "Race", x = NULL, y = "Percent") 
+
+```
+
+---
+layout: false
+
+```{r, echo = FALSE, fig.width=12, fig.height=8}
+p_out
+```
 
