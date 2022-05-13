@@ -222,7 +222,7 @@ election |>
                                 "40\n(Trump)")) + 
   facet_wrap(~ census, ncol=2, 
              scales="free_y") +
-  guides(color=FALSE) + 
+  guides(color = "none") + 
   labs(x = "Point Margin", y = NULL) +
     theme(axis.text=element_text(size=8))
 
@@ -258,7 +258,7 @@ p_out <- election |>
                                 "40\n(Trump)")) + 
   facet_wrap(~ census, ncol=2, 
              scales="free_y") +
-  guides(color=FALSE) + 
+  guides(color = "none") + 
   labs(x = "Point Margin", y = NULL) +
     theme(axis.text=element_text(size=8))
 
@@ -304,7 +304,7 @@ p_out <- election |>
   facet_col(~ census, #<<
             scales="free_y", #<<
             space = "free") + #<<
-  guides(color=FALSE) + 
+  guides(color = "none") + 
   labs(x = "Point Margin", y = NULL) +
     theme(axis.text=element_text(size=6), 
           strip.text = element_text(size = rel(0.6)))
@@ -333,7 +333,7 @@ class: center middle main-title section-title-1
 
 class: right bottom main-title section-title-1
 
-## .huge.right.bottom.squish4[.kjh-yellow[Maps as simple] .kjh-lblue[polygons]]
+## .huge.right.bottom.squish4[.kjh-yellow[Maps as] .kjh-lblue[polygons]]
 
 ---
 
@@ -376,7 +376,6 @@ us_states
 ---
 
 # Like this, with .kjh-green[`geom_polygon()`]
-
 
 .pull-left.w35[
 ```{r codefig-poly1, message=FALSE, fig.show="hide", fig.width=6, fig.height=4.5}
@@ -451,7 +450,7 @@ class: title title-1
 
 # For now, we'll do it the direct way
 
-.middle.large[To make explicit what's happening, we'll do it at the level of the `ggplot` grammar, first. Then we'll introduce a package and a new geom that will handle this for us, and more.]
+- .middle.large[To make explicit what's happening, and to emphasize how .kjh-pink[_it's all just points and lines made from tables_] we'll first do it at the level of the .kjh-lblue[`ggplot`] grammar with a geom that just draws shapes, .kjh-green[`geom_polygon()`]. After that, we'll introduce a new package, .kjh-lblue[`sf`] and a new geom, .kjh-green[`geom_sf()`] that will handle this for us, and more.]
 
 ---
 
@@ -475,6 +474,7 @@ us_states |>
             lat0 = 39, 
             lat1 = 45) 
 
+## A coordinate transformation!
 
 ```
 
@@ -524,6 +524,370 @@ class: title title-1
 
 # Next, some data
 
+.small[- We can merge our state-level `election` data with the `us_states` table, but we need to do a little work.] 
+
+.pull-left.w45[
+```{r}
+us_states
+```
+
+]
+
+.pull-right.w45[
+```{r}
+election
+```
+]
+
+--
+
+.center[To merge, or .kjh-pink[_join_] these tables, they need to have a column in common to act as a key.]
+
+
+---
+
+# Recode to make a key
+
+```{r}
+election <- election |> 
+  mutate(region = tolower(state)) |> 
+  relocate(region)
+
+election
+```
+
+---
+
+# Now we can join them
+
+.pull-left.w45[
+```{r}
+us_states
+```
+
+]
+
+.pull-right.w45[
+```{r}
+election
+```
+]
+
+---
+
+# This is a .kjh-pink[_left join_]
+
+```{r}
+us_states_elec <- left_join(us_states, election)
+
+us_states_elec
+```
+
+--
+
+.center[Now our `us_states_elec` table has both the line-drawing information and (very redundantly) the election data merged in, with rows repeated as necessary.]
+
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+# Now we can start drawing choropleths
+
+
+.pull-left.w45[
+```{r codefig-choroparty, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5}
+
+us_states_elec |> 
+  ggplot(mapping = aes(x = long, 
+                       y = lat,
+                       fill = party,#<<
+                       group = group)) + 
+  geom_polygon(color = "gray90", 
+               size = 0.1) +
+  coord_map(projection = "albers", 
+            lat0 = 39, lat1 = 45) +
+  guides(fill = "none")
+
+
+```
+]
+
+.pull-right.w55[
+```{r, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-choroparty", "png"))
+```
+
+]
+
+---
+
+# Let's turn off the gridlines
+
+This is a .kjh-pink[_theme function_].
+
+```{r}
+theme_map <- function(base_size=9, base_family="") {
+    require(grid)
+    theme_bw(base_size=base_size, base_family=base_family) %+replace%
+        theme(axis.line=element_blank(),
+              axis.text=element_blank(),
+              axis.ticks=element_blank(),
+              axis.title=element_blank(),
+              panel.background=element_blank(),
+              panel.border=element_blank(),
+              panel.grid=element_blank(),
+              panel.spacing=unit(0, "lines"),
+              plot.background=element_blank(),
+              legend.justification = c(0,0),
+              legend.position = c(0,0)
+              )
+}
+```
+
+---
+
+# Add the theme function at the end
+
+.pull-left.w45[
+```{r codefig-choropartytheme, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5}
+
+us_states_elec |> 
+  ggplot(mapping = aes(x = long, 
+                       y = lat,
+                       fill = party,#<<
+                       group = group)) + 
+  geom_polygon(color = "gray90", 
+               size = 0.1) +
+  coord_map(projection = "albers", 
+            lat0 = 39, lat1 = 45) +
+  theme_map()
+
+
+```
+]
+
+.pull-right.w55[
+```{r, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-choropartytheme", "png"))
+```
+
+]
+
+---
+
+# Fix the Party Colors
+
+
+.pull-left.w45[
+```{r codefig-choropartycolors, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5}
+  
+## recall
+party_colors
+
+us_states_elec |> 
+  ggplot(mapping = aes(x = long, 
+                       y = lat,
+                       fill = party,#<<
+                       group = group)) + 
+  geom_polygon(color = "gray90", 
+               size = 0.1) +
+  scale_fill_manual(values = party_colors) + 
+  coord_map(projection = "albers", 
+            lat0 = 39, lat1 = 45) +
+  theme_map()
+
+```
+]
+
+--
+
+.pull-right.w55[
+```{r, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-choropartycolors", "png"))
+```
+]
+
+---
+
+# On maps, continuous measures are _gradients_
+
+
+.pull-left.w45[
+```{r codefig-gradient1, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5}
+
+us_states_elec |> 
+  ggplot(mapping = aes(x = long, 
+                       y = lat,
+                       fill = pct_trump,#<<
+                       group = group)) + 
+  geom_polygon(color = "gray90", 
+               size = 0.1) +
+  coord_map(projection = "albers", 
+            lat0 = 39, lat1 = 45) +
+  labs(title = "Trump vote", 
+       fill = "Percent") +  
+  theme_map()
+
+```
+]
+
+--
+
+.pull-right.w55[
+```{r, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-gradient1", "png"))
+```
+]
+
+---
+
+# Fix the gradient scale with its .kjh-orange[scale function]
+
+
+.pull-left.w45[
+```{r codefig-gradient2, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5}
+
+us_states_elec |> 
+  ggplot(mapping = aes(x = long, 
+                       y = lat,
+                       fill = pct_trump,
+                       group = group)) + 
+  geom_polygon(color = "gray90", 
+               size = 0.1) +
+  scale_fill_gradient(low = "white",  #<<
+                      high = "#CB454A") + #<<
+        labs(title = "Trump vote") +
+  coord_map(projection = "albers", 
+            lat0 = 39, lat1 = 45) +
+  labs(title = "Trump vote", 
+       fill = "Percent") +  
+  theme_map()
+
+
+```
+]
+
+--
+
+.pull-right.w55[
+```{r, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-gradient2", "png"))
+```
+
+
+]
+
+---
+
+# Some gradients are .kjh-yellow[_diverging_]
+
+
+.pull-left.w45[
+```{r codefig-diverging1, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5}
+
+us_states_elec |> 
+  ggplot(mapping = aes(x = long, 
+                       y = lat,
+                       fill = d_points,#<<
+                       group = group)) + 
+  geom_polygon(color = "gray90", 
+               size = 0.1) +
+  scale_fill_gradient2() + #<<
+  coord_map(projection = "albers", 
+            lat0 = 39, lat1 = 45) +
+  labs(title = "Winning Margins", 
+       fill = "Percent") +  
+  theme_map()
+
+
+```
+]
+
+--
+
+.pull-right.w55[
+```{r, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-diverging1", "png"))
+```
+
+]
+
+---
+
+# Purple America Map
+
+
+.pull-left.w45[
+```{r codefig-purpleamerica, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5}
+
+us_states_elec |> 
+  ggplot(mapping = aes(x = long, 
+                       y = lat,
+                       fill = d_points,#<<
+                       group = group)) + 
+  geom_polygon(color = "gray90", 
+               size = 0.1) +
+  scale_fill_gradient2(low = "red",#<<
+                mid = scales::muted("purple"),#<<
+                high = "blue",#<<
+                breaks = c(-25, 0, 25, #<<
+                        50, 75)) + #<<
+  coord_map(projection = "albers", 
+            lat0 = 39, lat1 = 45) +
+  labs(title = "Winning Margins", 
+       fill = "Percent") +  
+  theme_map()
+
+
+
+```
+]
+
+--
+
+.pull-right.w55[
+```{r, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-purpleamerica", "png"))
+```
+]
+
+---
+layout: false
+
+```{r, echo = FALSE, fig.width=12, fig.height=7}
+us_states_elec |> 
+  ggplot(mapping = aes(x = long, 
+                       y = lat,
+                       fill = d_points,#<<
+                       group = group)) + 
+  geom_polygon(color = "gray90", 
+               size = 0.1) +
+  scale_fill_gradient2(low = "red",#<<
+                mid = scales::muted("purple"),#<<
+                high = "blue",#<<
+                breaks = c(-25, 0, 25, #<<
+                        50, 75)) + #<<
+  coord_map(projection = "albers", 
+            lat0 = 39, lat1 = 45) +
+  labs(title = "Winning Margins", 
+       fill = "Percent") +  
+  theme_map()
+
+```
+
+
+.right.w90.small[Take a closer look]
 
 
 
