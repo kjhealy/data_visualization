@@ -1160,8 +1160,8 @@ out_tidy <- gapminder |>
     mutate(title = paste(continent, year),
            model = map(data, fit_ols2),#<<
            tidied = map(model, tidy), 
-           ggout = pmap(list(tidied, 
-                             title), 
+           ggout = pmap(list(tidied, #<<
+                             title), #<<
                         mod_plot)) #<<
 
 out_tidy
@@ -1252,5 +1252,167 @@ class: center middle main-title section-title-1
 
 # .huge.squish4[.kjh-lblue[Plot Marginal Effects]]
 
+---
 
+class: right bottom main-title section-title-1
+
+## .huge.right.bottom.squish4[.kjh-yellow[The] .kjh-lblue[`marginaleffects`] .kjh-yellow[package]]
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+# An example from the GSS
+
+```{r}
+gss_sm
+```
+
+---
+
+# Set up our model
+
+```{r}
+gss_sm$polviews_m <- relevel(gss_sm$polviews, 
+                             ref = "Moderate")
+
+out_bo <- glm(obama ~ polviews_m + sex*race,
+              family = "binomial", 
+              data = gss_sm)
+
+tidy(out_bo)
+
+```
+
+---
+
+# Calculate the Marginal Effects
+
+```{r}
+library(marginaleffects)
+
+bo_mfx <- marginaleffects(out_bo)
+
+## This gives us the marginal effects at the unit level 
+as_tibble(bo_mfx)
+```
+
+---
+
+# Calculate the AMEs
+
+- And this gives us the Average Marginal Effects
+
+```{r}
+summary(bo_mfx) |> 
+  as_tibble()
+```
+
+---
+
+# Alternatively, do it with .kjh-lblue[`broom`]
+
+```{r}
+tidy(bo_mfx)
+```
+
+---
+
+# Which gets us back to familiar territory
+
+
+.pull-left.w40[
+```{r codefig-meffects, message=FALSE, fig.show="hide", fig.width=7, fig.height=3.5}
+
+tidy(bo_mfx) |> 
+  ggplot(mapping = aes(x = estimate, 
+                       xmin = conf.low, 
+                       xmax = conf.high,
+                       y = reorder(contrast, 
+                                   estimate))) + 
+  geom_vline(xintercept = 0, color = "gray70",
+             size = rel(1.2)) +
+  geom_pointrange() +
+  labs(x = "Average Marginal Effect", 
+       y = NULL)
+
+```
+]
+
+--
+
+.pull-right.w60[
+```{r, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-meffects", "png"))
+```
+]
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+# .kjh-lblue[`marginaleffects`] can do a lot more
+
+.center[![:scale 75%](img/06_marginaleffects_package.png)]
+
+
+---
+
+# .kjh-lblue[`marginaleffects`] can do a lot more
+
+- .medium[It includes a range of plotting methods, to produce graphics directly.] 
+
+- .medium[These are built on .kjh-lblue[`ggplot`]. Similarly integration with .kjh-lblue[`broom`] means that you can use the package-specific plotting functions take the tidy output and adapt it to your own needs.]
+
+- .medium[Also check out .kjh-lblue[`modelsummary`], by the same author, for quick and flexible summaries of models and datasets. Again, this sort of package is very convenient to use directly. But with just a little facility with R and tidyverse-style idioms and patterns, you'll get even more out of it. You'll better understand how to adapt it and why its functions work as they do.] 
+
+---
+
+class: center middle main-title section-title-1
+
+# .huge[.kjh-lblue[Complex Surveys]]
+
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.bottom.squish4[.kjh-yellow[Using the] .kjh-lblue[`survey`] .kjh-yellow[and] .kjh-lblue[`srvyr`] .kjh-yellow[packages]]
+
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+# Working with complex surveys
+
+As always, our question is "What's the smoothest way for me to get the .kjh-orange[tidy table of results] I need to hand off to .kjh-lblue[`ggplot`]?"
+
+For complex surveys, we use .kjh-lblue[`survey`], the standard package for survey analysis in R, and .kjh-lblue[`srvyr`], a helper package designed to integrate what .kjh-lblue[`survey`] can do with the Tiydverse framework. 
+
+```{r}
+## Load the packages
+library(survey)
+library(srvyr)
+```
+
+---
+
+# Example: The GSS again
+
+This time, a small piece of the full GSS from the early 1970s to 2018.
+
+```{r}
+gss_lon
+```
 
