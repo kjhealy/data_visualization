@@ -64,6 +64,7 @@ library(gapminder) # Everyone's favorite dataset
 library(broom)     # Tidy model output
 library(marginaleffects) # Tidy marginal effects
 library(modelsummary) # Tidy summary tables and graphs
+library(scales)    # Format our axes and guides 
 ```
 ]
 
@@ -1415,4 +1416,194 @@ This time, a small piece of the full GSS from the early 1970s to 2018.
 ```{r}
 gss_lon
 ```
+
+---
+
+
+# Add the weighting information
+
+```{r}
+# These details are dependent on the kind of survey you're working with
+options(survey.lonely.psu = "adjust")
+options(na.action="na.pass")
+
+gss_svy <- gss_lon |> 
+  filter(year > 1974) |> 
+  mutate(stratvar = interaction(year, vstrat)) %>%
+  as_survey_design(ids = vpsu,
+                   strata = stratvar,
+                   weights = wtssall,
+                   nest = TRUE)
+
+gss_svy # Now it's no longer simply a tibble
+```
+
+---
+
+# Trends in .kjh-orange[`happy`]
+
+```{r}
+out_hap <- gss_svy %>%
+    group_by(year, sex, happy) %>%
+    summarize(prop = survey_mean(na.rm = TRUE, vartype = "ci"))
+
+out_hap
+```
+
+Once again, it's now a tidy tibble, and we know what to do with those.
+
+---
+`r chunk_reveal("reveal-gsshappy", widths = c(45,55), title = "# Build the plot")`
+
+```{r reveal-gsshappy, include = FALSE}
+out_hap |>
+  filter(happy == "Not Too Happy") |> 
+  ggplot(mapping = aes(x = year, 
+                       y = prop,
+                       ymin = prop_low, 
+                       ymax = prop_upp)) +
+  geom_line(size = 1.2) +
+  geom_ribbon(alpha = 0.3) +
+  scale_x_continuous(breaks = 
+                       seq(1978, 2018, 4)) +
+  scale_y_continuous(labels = 
+                       percent_format(accuracy = 1)) + 
+  labs(x = "Year",
+    y = "Percent",
+    title = "Trends in Unhappiness", 
+    subtitle = "1975-2018", 
+    caption = "Data: GSS.")
+```
+
+---
+
+# With a proper aspect ratio
+
+```{r, echo = FALSE, fig.width=11, fig.height=6}
+out_hap |>
+  filter(happy == "Not Too Happy") |> 
+  ggplot(mapping = aes(x = year, 
+                       y = prop,
+                       ymin = prop_low, 
+                       ymax = prop_upp)) +
+  geom_line(size = 1.2) +
+  geom_ribbon(alpha = 0.3) +
+  scale_x_continuous(breaks = 
+                       seq(1978, 2018, 4)) +
+  scale_y_continuous(labels = 
+                       percent_format(accuracy = 1)) + 
+  labs(x = "Year",
+    y = "Percent",
+    title = "Trends in Unhappiness", 
+    subtitle = "1975-2018", 
+    caption = "Data: GSS.")
+```
+
+---
+
+`r chunk_reveal("reveal-bwmrg", widths = c(50,50), title = "# A more complex example")`
+
+```{r reveal-bwmrg, include = FALSE}
+gss_svy |>
+  filter(year %in% seq(1976, 2016, by = 4)) |>
+  group_by(year, race, degree) |>
+  summarize(prop = survey_mean(na.rm = TRUE)) 
+```
+
+---
+
+# Let's put that in an object
+
+```{r}
+
+out_yrd <- gss_svy |>
+  filter(year %in% seq(1976, 2016, by = 4)) |>
+  group_by(year, race, degree) |>
+  summarize(prop = survey_mean(na.rm = TRUE)) 
+
+```
+
+---
+
+# Check the sums
+
+```{r}
+out_yrd |> 
+  group_by(year, race) |> 
+  summarize(tot = sum(prop))
+```
+
+---
+
+# Set up the plot
+
+```{r}
+p <- ggplot(data = subset(out_yrd, race %nin% "Other"),
+            mapping = aes(x = degree, y = prop,
+                          ymin = prop - 2*prop_se,
+                          ymax = prop + 2*prop_se,
+                          fill = race,
+                          color = race,
+                          group = race))
+
+dodge_w <- position_dodge(width = 0.9)
+```
+
+
+---
+`r chunk_reveal("reveal-gsscol", widths = c(45,55), title = "# Draw the Plot")`
+
+```{r reveal-gsscol, include = FALSE}
+ 
+p + geom_col(position = dodge_w, alpha = 0.2) +
+    geom_errorbar(position = dodge_w, width = 0.2) +
+    scale_x_discrete(labels = wrap_format(10)) +
+    scale_y_continuous(labels = percent_format()) +
+    scale_color_brewer(type = "qual", 
+                       palette = "Dark2") +
+    scale_fill_brewer(type = "qual", 
+                      palette = "Dark2") +
+    labs(title = "Educational Attainment by Race",
+         subtitle = "GSS 1976-2016",
+         fill = "Race",
+         color = "Race",
+         x = NULL, y = "Percent") +
+    facet_wrap(~ year, ncol = 2) 
+
+```
+
+---
+
+# In full (but switch to rows)
+
+```{r}
+p_out <- p + geom_col(position = dodge_w, alpha = 0.2) +
+    geom_errorbar(position = dodge_w, width = 0.2) +
+    scale_x_discrete(labels = wrap_format(10)) +
+    scale_y_continuous(labels = percent_format()) +
+    scale_color_brewer(type = "qual", 
+                       palette = "Dark2") +
+    scale_fill_brewer(type = "qual", 
+                      palette = "Dark2") +
+    labs(title = "Educational Attainment by Race",
+         subtitle = "GSS 1976-2016",
+         fill = "Race",
+         color = "Race",
+         x = NULL, y = "Percent") +
+    facet_wrap(~ year, nrow = 2) 
+```
+
+---
+layout: false
+
+```{r, echo = FALSE, fig.width=15, fig.height=6}
+p_out
+```
+
+--
+
+##  .center[Is this an effective figure? Not really!]
+
+
+
 
