@@ -173,7 +173,7 @@ An excellent article by Karl Broman and Kara Woo:
 
 ---
 
-# The most common .kjh-orange[`tidyr`] operation
+# The most common .kjh-lblue[`tidyr`] operation
 
 Pivoting:
 
@@ -230,7 +230,7 @@ Base R has .kjh-green[`read.csv()`]
 
 Corresponding tidyverse "underscored" version: .kjh-green[`read_csv()`].
 
-It is pickier and more talkative than the Base R version.
+It is pickier and more talkative than the Base R version. Use it instead.
 
 ---
 
@@ -241,7 +241,7 @@ If we're loading a file, it's coming from _somewhere_.
 If it's on our local disk somewhere, we will need to interact with the file system. We should try to do this in a way that avoids _absolute_ file paths. 
 
 ```r
-# This is not portable
+# This is not portable!
 df <- read_csv("/Users/kjhealy/Documents/data/misc/project/data/mydata.csv")
 ```
 
@@ -358,9 +358,9 @@ For data that's separated by one (or more) columns of space.
 # You can read files remotely, too
 
 .SMALL.squish3[
-You can give all of these functions local files, or they can point to URLs.
+You can give these functions local files, or they can also be pointed at URLs.
 
-Compressed files will be automatically uncompressed.
+Compressed files (`.zip`, `.tar.gz`) will be automatically uncompressed.
 
 (Be careful what you download from remote locations!)]
 
@@ -371,6 +371,53 @@ organ_remote <- read_csv("http://kjhealy.co/organdonation.csv")
 organ_remote
 ```
 ]
+
+---
+
+class: center middle main-title section-title-1
+
+# .huge.kjh-lblue[A Plot's .kjh-yellow[Components]]
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+# What we need our code to make
+
+.pull-left[
+
+.center[![:scale 80%](img/03_ggplot_flow_final_plot_only.png)]
+
+]
+
+--
+
+
+- .medium[Data .kjh-pink[**represented**] by visual elements,]
+
+--
+
+- .medium[like .kjh-orange[_position_], .kjh-orange[_length_], .kjh-orange[_color_], and .kjh-orange[_size_],]
+
+--
+
+- .medium[Each measured on some .kjh-pink[**scale**],]
+
+--
+
+- .medium[Each scale with a labeled .kjh-pink[**guide**],]
+
+--
+
+- .medium[With the plot itself also .kjh-pink[**titled**] and labeled]
+
+---
+
+layout: true
+class: title title-1
 
 ---
 
