@@ -423,64 +423,64 @@ class: title title-1
 
 class: center middle main-title section-title-1
 
-# .huge.kjh-lblue[How .kjh-yellow[ggplot] works]
+# .huge[.kjh-yellow[How `ggplot`]<br />.kjh-lblue[does this]]
 
 ---
 
-# ggplot's flow of action
+# .kjh-lblue[`ggplot`]'s flow of action
 
 .center[![:scale 90%](img/03_ggplot_flow_wide_all.png)]
 
 
 ---
 
-# ggplot's flow of action
+# .kjh-lblue[`ggplot`]'s flow of action
 
 .center[![:scale 50%](img/03_ggplot_flow_tidy_data_only.png)]
 
 
 ---
 
-# ggplot's flow of action
+# .kjh-lblue[`ggplot`]'s flow of action
 
 .center[![:scale 50%](img/03_ggplot_flow_final_plot_only.png)]
 
 ---
 
-# ggplot's flow of action
+# .kjh-lblue[`ggplot`]'s flow of action
 
 .center[![:scale 90%](img/03_ggplot_flow_wide_all.png)]
 
 ---
 
-# ggplot's flow of action
+# .kjh-lblue[`ggplot`]'s flow of action
 
 .center[![:scale 100%](img/03_ggplot_flow_wide_1to3.png)]
 
 ---
 
-# ggplot's flow of action
+# .kjh-lblue[`ggplot`]'s flow of action
 
 .center[![:scale 100%](img/03_ggplot_flow_wide_4to6.png)]
 
 
 ---
 
-# ggplot's flow of action: .kjh-red[required]
+# .kjh-lblue[`ggplot`]'s flow of action: .kjh-red[required]
 
 .center[![:scale 40%](img/03_ggplot_flow_wide_1.png)]
 
 
 ---
 
-# ggplot's flow of action: .kjh-red[required]
+# .kjh-lblue[`ggplot`]'s flow of action: .kjh-red[required]
 
 .center[![:scale 40%](img/03_ggplot_flow_wide_2.png)]
 
 
 ---
 
-# ggplot's flow of action: .kjh-red[required]
+# .kjh-lblue[`ggplot`]'s flow of action: .kjh-red[required]
 
 .center[![:scale 35%](img/03_ggplot_flow_wide_3.png)]
 
