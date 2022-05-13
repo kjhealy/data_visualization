@@ -70,4 +70,112 @@ class: center middle main-title section-title-1
 # .huge[.kjh-lblue[Choropleths]]
 
 
+---
+layout: false
+
+.center[![:scale 75%](img/07_election_state_1.png)]
+
+.right.w90.small[State-level; vote share; diverging; binned into four categories.]
+
+
+---
+layout: false
+
+.center[![:scale 75%](img/07_election_county.png)]
+
+.right.w90.small[County level; winner only]
+
+---
+layout: false
+
+.center[![:scale 75%](img/07_election_county_share.png)]
+
+.right.w90.small[County level vote share; diverging; binned into six categories]
+
+---
+layout: false
+
+.center[![:scale 75%](img/07_election_county_purple.png)]
+
+.right.w90.small[County level vote share; diverging continuous; purple midpoint]
+
+---
+layout: false
+
+.center[![:scale 75%](img/07_election_county_purple_pop.png)]
+
+.right.w90.small[County level vote share; purple midpoint; county area deformed in proportion to population. By Mark Newman]
+
+---
+layout: false
+
+.center[![:scale 60%](img/07_election_electoral_college_cartogram.png)]
+
+.right.w90.small[Electoral college cartogram]
+
+---
+
+layout: true
+class: title title-1
+
+---
+layout: false
+class: main-title main-title-inv middle
+
+# .middle.squish4.medium[.kjh-lblue[Problems showing] .kjh-orange[Non-Spatial Data]<br /> .kjh-lblue[in choropleth maps]]
+
+---
+
+.center[![:scale 75%](img/07_federal_lands_cred_sm.png)]
+
+.right.w90.big[Pretty, Big, and Pretty Empty]
+
+---
+
+.center[![:scale 70%](img/07_federal_lands_admin_sm.png)]
+
+.right.w90.big[Pretty, Big, and Pretty Empty]
+
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+
+# Aside: What the hell's that?
+
+.center[![:scale 80%](img/07_nevada_sm_clip.png)]
+
+---
+
+# Zoom and Enhance
+
+.center[![:scale 90%](img/07_federal_checkerboard_sm.png)]
+
+.center.large[Suprisingly, not a coding error on my part.]
+
+---
+
+# It's the .kjh-pink[Transcontinental Railroad]
+
+.center[![:scale 50%](img/07_trans_pacific_route.png)]
+
+.center.medium[Making its way through the .kjh-lblue[Great Basin], America's largest .kjh-orange[endorheic watershed]. The checkerboard is a deliberate assignation of property rights along the borders of the railway line.]
+---
+
+# Still with us, too
+
+.center[![:scale 60%](img/07_interstate_80_route.png)]
+
+.center.medium[Not identical, as Interstate 80 was able to go through some parts the railroad had to go around. OK, now back to scheduled programming.]
+
+
+
+
+
+
+
 
