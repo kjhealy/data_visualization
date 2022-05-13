@@ -820,7 +820,7 @@ Some operations can't directly be vectorized in this way, most often because the
 
 ```{r 07-iterating-on-data-10 }
 library(gapminder)
-gapminder %>% 
+gapminder |>  
   summarize(country_n = n_distinct(country), 
             continent_n = n_distinct(continent), 
             year_n = n_distinct(year), 
@@ -838,7 +838,7 @@ So how would we iterate this? What we want is to apply the .kjh-green[**`n_disti
 
 ```{r 07-iterating-on-data-11 }
 library(gapminder)
-gapminder %>% 
+gapminder |>  
   summarize(n_distinct(country), 
             n_distinct(continent), 
             n_distinct(year), 
@@ -855,7 +855,7 @@ gapminder %>%
 In real life, you'd use .kjh-green[**across()**], like this:
 
 ```{r 07-iterating-on-data-12 }
-gapminder %>% 
+gapminder |>  
   summarize(across(everything(), n_distinct))
 ```
 
@@ -892,7 +892,7 @@ Read it as "Feed each column of `gapminder` to the .kjh-green[**`n_distinct()`**
 Or, in pipeline form:
 
 ```{r 07-iterating-on-data-14 }
-gapminder %>% 
+gapminder |>  
   map(n_distinct)
 ```
 
@@ -911,7 +911,7 @@ You can see we are getting a _list_ back.
 Or, in pipeline form:
 
 ```{r 07-iterating-on-data-15 }
-result <- gapminder %>% 
+result <- gapminder |>  
   map(n_distinct)
 
 class(result)
@@ -930,7 +930,7 @@ But we know .kjh-green[**`n_distinct()`**] should always return an integer. So w
 
 
 ```{r 07-iterating-on-data-16 }
-gapminder %>% 
+gapminder |>  
   map_int(n_distinct)
 ```
 
@@ -1429,7 +1429,7 @@ options(na.action="na.pass")
 
 gss_svy <- gss_lon |> 
   filter(year > 1974) |> 
-  mutate(stratvar = interaction(year, vstrat)) %>%
+  mutate(stratvar = interaction(year, vstrat)) |> 
   as_survey_design(ids = vpsu,
                    strata = stratvar,
                    weights = wtssall,
@@ -1443,8 +1443,8 @@ gss_svy # Now it's no longer simply a tibble
 # Trends in .kjh-orange[`happy`]
 
 ```{r}
-out_hap <- gss_svy %>%
-    group_by(year, sex, happy) %>%
+out_hap <- gss_svy |> 
+    group_by(year, sex, happy)  |> 
     summarize(prop = survey_mean(na.rm = TRUE, vartype = "ci"))
 
 out_hap
@@ -1651,4 +1651,36 @@ layout: false
 ```{r, echo = FALSE, fig.width=12, fig.height=8}
 p_out
 ```
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+# Two other good packages: .kjh-lblue[`ggeffects`]
+
+.center[![:scale 90%](img/06_ggeffects_package.png)]
+
+---
+
+# Two other good packages: .kjh-lblue[`interactions`]
+
+.center[![:scale 90%](img/06_ggeffects_package.png)]
+
+---
+
+layout: true
+class: title title-1
+
+---
+layout: false
+class: main-title main-title-inv middle
+
+# .middle.squish4.medium[.kjh-orange[Look for packages] .kjh-lblue[that work tidily]]
+
+---
+
+
 
