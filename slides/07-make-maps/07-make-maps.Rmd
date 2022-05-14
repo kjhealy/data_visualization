@@ -1449,12 +1449,329 @@ class: title title-1
 
 # .kjh-green[`geom_polygon()`] is limiting
 
-- It's very useful to have the intuition that, when drawing maps, we're just working with tables of `x` and `y` coordinates and shapes that represent quantities in our data, in a way that's very similar to any other geom. This makes it worth getting comfortable with what  .kjh-green[`geom_polygon()`] and .kjh-green[`coord_map()`] are doing. But the business of having very large map tables and manually specifying projections is inefficient. 
+- It's very useful to have the intuition that, when drawing maps, .kjh-orange[we're just working with tables] of `x` and `y` coordinates, and .kjh-orange[shapes represent quantities in our data], in a way that's essentially the same as any other geom. This makes it worth getting comfortable with what  .kjh-green[`geom_polygon()`] and .kjh-green[`coord_map()`] are doing. But the business of having very large map tables and manually specifying projections is inefficient. 
 
 --
 
-- In addition, sometimes our data _really is_ properly spatial, at which point we need a more rigorous and consistent way of specifying those elements. There's a whole world of Geodesic standards and tools devoted to specifying these things for GIS applications. R is not a dedicated GIS, but we can take advantage of these tools.
+- In addition, sometimes our data _really is_ properly spatial, at which point we need a more rigorous and consistent way of specifying those elements. There's a whole world of Geodesic standards and methods devoted to specifying these things for GIS applications. R is not a dedicated GIS, but we can take advantage of these tools.
 
 --
 
-- Enter .kjh-pink[simple features], the .kjh-lblue[`sf`] package, and .kjh-green[`geom_sf()`]
+- .center.large[Enter .kjh-pink[simple features], the .kjh-lblue[`sf`] package, and .kjh-green[`geom_sf()`]]
+
+---
+
+# The Simple Features package
+
+```{r, echo = FALSE}
+detach(package:sf)
+```
+
+- When we load .kjh-lblue[`sf`] it creates a way to use several standard GIS concepts and tools, such as the .kjh-lblue[GEOS] library for computational geometry, the .kjh-lblue[PROJ] software that transforms spatial coordinates from one reference system to another, as in map projections, and the Simple Features standard for specifying the elements of spatial attributes. 
+
+```{r, message=TRUE}
+library(sf)
+```
+
+--
+
+Let's see the main upshot for us as end-users. 
+
+---
+
+# The .kjh-lblue[`nycdogs`] package
+
+.pull-left.w60[
+```{r}
+library(nycdogs)
+nyc_license
+```
+]
+
+.pull-right.w40[
+.center[![:scale 80%](img/07_nycdogs_hex.png)]
+]
+
+---
+
+# The .kjh-lblue[`nycdogs`] package
+
+- The metadata tells you this is not a regular tibble.
+
+```{r}
+nyc_zips
+```
+
+---
+
+# The .kjh-lblue[`nycdogs`] package
+
+```{r}
+nyc_zips |> 
+  select(objectid:borough)
+```
+
+- The .kjh-orange[`polygon`] column is a list of lat/lon points that, when joined, draw the outline of the zip code area. This is _much_ more compact than a big table where every row is a single point.
+
+---
+
+# Let's make a summary table
+
+---
+`r chunk_reveal("reveal-nycfrench", widths = c(40,60), title = "# Let's make a summary table")`
+
+```{r reveal-nycfrench, include = FALSE}
+nyc_license  |> 
+  filter(extract_year == 2018) |> 
+  group_by(breed_rc, zip_code) |> 
+  tally() |> 
+  mutate(freq = n / sum(n)) |> 
+  filter(breed_rc == "French Bulldog") ->
+  nyc_fb
+
+```
+
+---
+
+# Now we have two tables again
+
+.pull-left[
+```{r}
+nyc_zips
+```
+
+]
+
+--
+
+.pull-right[
+```{r}
+nyc_fb
+```
+
+]
+
+--
+
+- Join them:
+
+```{r}
+fb_map <- left_join(nyc_zips, nyc_fb, by = "zip_code")
+```
+
+
+---
+
+# A NYC map theme
+
+- Just moving the legend, really.
+
+```{r}
+theme_nymap <- function(base_size=9, base_family="") {
+    require(grid)
+    theme_bw(base_size=base_size, base_family=base_family) %+replace%
+        theme(axis.line=element_blank(),
+              axis.text=element_blank(),
+              axis.ticks=element_blank(),
+              axis.title=element_blank(),
+              panel.background=element_blank(),
+              panel.border=element_blank(),
+              panel.grid=element_blank(),
+              panel.spacing=unit(0, "lines"),
+              plot.background=element_blank(),
+              legend.justification = c(0,0),
+              legend.position = c(0.05, 0.58), 
+              legend.direction = "horizontal"
+        )
+}
+
+```
+
+---
+`r chunk_reveal("reveal-bulldogmap", widths = c(35,65), title = "# First cut at a map")`
+
+```{r reveal-bulldogmap, include = FALSE}
+fb_map %>% 
+    ggplot(mapping = aes(fill = freq)) +
+    geom_sf(color = "gray80", size = 0.1) + #<<
+    scale_fill_viridis_c(option = "A") +
+    labs(fill = "Percent of All French Bulldogs") +
+    annotate(geom = "text", 
+             x = -74.145 + 0.029, 
+             y = 40.82-0.012, 
+           label = "New York City's French Bulldogs", 
+           size = 6) + 
+    annotate(geom = "text", 
+             x = -74.1468 + 0.029, 
+             y = 40.8075-0.012, 
+           label = "By Zip Code. Based on Licensing Data", 
+           size = 5) + 
+    theme_nymap() + 
+   guides(fill = 
+           guide_legend(title.position = "top", 
+                label.position = "bottom",
+                keywidth = 1, 
+                nrow = 1))  
+ 
+```
+---
+
+`r chunk_reveal("reveal-bulldogmap2", widths = c(35,65), title = "# Use a different palette")`
+
+```{r reveal-bulldogmap2, include = FALSE}
+library(colorspace)
+
+fb_map |> 
+  ggplot(mapping = aes(fill = freq)) +
+  geom_sf(color = "gray80", size = 0.1) +
+  scale_fill_continuous_sequential(
+    palette = "Oranges",
+    labels = scales::percent_format()) +
+  labs(fill = "Percent of all French Bulldogs") +
+  annotate(geom = "text", 
+           x = -74.145 + 0.029, 
+           y = 40.82-0.012, 
+           label = "New York City's French Bulldogs", 
+           size = 6) + 
+  annotate(geom = "text", 
+           x = -74.1468 + 0.029, 
+           y = 40.7955, 
+           label = "By Zip Code. Based on Licensing Data", 
+           size = 5) + 
+  theme_nymap() + 
+  guides(fill = 
+           guide_legend(title.position = "top", 
+                label.position = "bottom",
+                keywidth = 1, 
+                nrow = 1))  
+
+```
+
+---
+layout: false
+
+```{r, echo = FALSE, fig.width=12, fig.height=8}
+fb_map |> 
+  ggplot(mapping = aes(fill = freq)) +
+  geom_sf(color = "gray80", size = 0.1) +
+  scale_fill_continuous_sequential(
+    palette = "Oranges",
+    labels = scales::percent_format()) +
+  labs(fill = "Percent of All French Bulldogs") +
+  annotate(geom = "text", 
+           x = -74.145 + 0.029, 
+           y = 40.82-0.012, 
+           label = "New York City's French Bulldogs", 
+           size = 6) + 
+  annotate(geom = "text", 
+           x = -74.1468 + 0.029, 
+           y = 40.7955, 
+           label = "By Zip Code. Based on Licensing Data", 
+           size = 5) + 
+  theme_nymap() + 
+  guides(fill = 
+           guide_legend(title.position = "top", 
+                label.position = "bottom",
+                keywidth = 1, 
+                nrow = 1))  
+
+```
+
+
+.right.w90.small[NYC Dogs Map mark 2]
+
+---
+
+layout: true
+class: title title-1
+
+---
+`r chunk_reveal("reveal-bulldogzeros", widths = c(35,65), title = "# Keep the Zero count zips")`
+
+```{r reveal-bulldogzeros, include = FALSE}
+
+nyc_license  |> 
+  filter(extract_year == 2018) |> 
+  group_by(breed_rc, zip_code) |> 
+  tally() |> 
+  ungroup() |> 
+  complete(zip_code, breed_rc, 
+             fill = list(n = 0)) |> 
+  # Regroup to get the right denominator
+  group_by(breed_rc) |> 
+  mutate(freq = n / sum(n)) |> 
+  filter(breed_rc == "French Bulldog") ->
+  nyc_fb2
+
+fb_map2 <- left_join(nyc_zips, 
+                     nyc_fb2, 
+                     by = "zip_code")
+
+```
+
+---
+`r chunk_reveal("reveal-bulldogfb2", widths = c(35,65), title = "# Now redraw the map")`
+
+```{r reveal-bulldogfb2, include = FALSE}
+fb_map2 |> 
+  ggplot(mapping = aes(fill = freq)) +
+  geom_sf(color = "gray80", size = 0.1) +
+  scale_fill_continuous_sequential(
+    palette = "Oranges", 
+    labels = scales::percent_format()) +
+  labs(fill = "Percent of all French Bulldogs") +
+  annotate(geom = "text", 
+           x = -74.145 + 0.029, 
+           y = 40.82-0.012, 
+           label = "New York City's French Bulldogs", 
+           size = 6) + 
+  annotate(geom = "text", 
+           x = -74.1468 + 0.029, 
+           y = 40.7955, 
+           label = "By Zip Code. Based on Licensing Data", 
+           size = 5) + 
+  theme_nymap() + 
+  guides(fill = 
+           guide_legend(title.position = "top", 
+                        label.position = "bottom",
+                        keywidth = 1, 
+                        nrow = 1))  
+
+```
+
+---
+layout: false
+
+```{r, echo = FALSE, fig.width=12, fig.height=8}
+fb_map2 |> 
+  ggplot(mapping = aes(fill = freq)) +
+  geom_sf(color = "gray80", size = 0.1) +
+  scale_fill_continuous_sequential(
+    palette = "Oranges", 
+    labels = scales::percent_format()) +
+  labs(fill = "Percent of all French Bulldogs") +
+  annotate(geom = "text", 
+           x = -74.145 + 0.029, 
+           y = 40.808, 
+           label = "New York City's French Bulldogs", 
+           size = 6) + 
+  annotate(geom = "text", 
+           x = -74.145 + 0.028, 
+           y = 40.795, 
+           label = "By Zip Code. Based on Licensing Data", 
+           size = 5) + 
+  theme_nymap() + 
+  guides(fill = 
+           guide_legend(title.position = "top", 
+                        label.position = "bottom",
+                        keywidth = 1, 
+                        nrow = 1))  
+
+```
+
+
+.right.w90.small[Zero areas properly zero, missing areas properly missing.]
+
+
+
+
