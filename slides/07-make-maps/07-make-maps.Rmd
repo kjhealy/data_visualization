@@ -1321,4 +1321,140 @@ p_out
 .right.w90.small[Faceting works just as it would for any other kind of plot.]
 
 
+---
 
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.bottom.squish4[.kjh-yellow[Is your data<br/ >] .kjh-lblue[really spatial?]]
+
+
+---
+
+layout: true
+class: title title-1
+
+---
+`r chunk_reveal("reveal-maxstates", widths = c(35,65), title = "# The two leading states in each region in 2014")`
+
+```{r reveal-maxstates, include = FALSE}
+## Put this in an object called `st_top`
+opiates |> 
+  filter(year == max(year), 
+         abbr != "DC") |> 
+  group_by(region) |> 
+  slice_max(order_by = adjusted, 
+            n = 2)
+
+```
+
+```{r, echo = FALSE}
+st_top <- opiates |> 
+  filter(year == max(year), 
+         abbr != "DC") |> 
+  group_by(region) |> 
+  slice_max(order_by = adjusted, 
+            n = 2)
+```
+
+
+---
+`r chunk_reveal("reveal-opiateline", widths = c(35,65), title = "# Opiates Time Series plot")`
+
+```{r reveal-opiateline, include = FALSE}
+ 
+opiates |> 
+  ggplot(aes(x = year, 
+             y = adjusted)) +
+  geom_line(aes(group = state),
+            color = "gray50") + 
+  geom_smooth(aes(group = region),
+              se = FALSE) + 
+  ggrepel::geom_text_repel(
+    data = st_top,
+    mapping = aes(x = year, 
+                  y = adjusted, 
+                  label = abbr), 
+    size = 3, 
+    segment.color = NA, 
+    nudge_x = 0.5) +
+  coord_cartesian(c(min(opiates$year), 
+                    max(opiates$year) + 1)) + 
+  labs(x = NULL, 
+       y = "Rate per 100,000 population",
+       title = "State-Level Opiate Death 
+          Rates by Region, 1999-2014") +
+  facet_wrap(~ reorder(region, adjusted, 
+                       na.rm = TRUE), 
+             nrow  = 1)
+  
+
+```
+
+---
+layout: false
+
+```{r, echo = FALSE, fig.height = 6, fig.width = 15}
+p_out <- opiates |> 
+  ggplot(aes(x = year, 
+             y = adjusted)) +
+  geom_line(aes(group = state),
+            color = "gray50") + 
+  geom_smooth(aes(group = region),
+              se = FALSE) + 
+  ggrepel::geom_text_repel(
+    data = st_top,
+    mapping = aes(x = year, 
+                  y = adjusted, 
+                  label = abbr), 
+    size = 3, 
+    segment.color = NA, 
+    nudge_x = 0.5) +
+  coord_cartesian(c(min(opiates$year), 
+                    max(opiates$year) + 1)) + 
+  labs(x = NULL, 
+       y = "Rate per 100,000 population",
+       title = "State-Level Opiate Death 
+          Rates by Region, 1999-2014") +
+  facet_wrap(~ reorder(region, adjusted, 
+                       na.rm = TRUE), 
+             nrow  = 1)
+  
+p_out
+```
+
+
+.right.w90.small[Regional trends in opiate-related mortality.]
+
+
+
+
+
+
+---
+
+class: center middle main-title section-title-1
+
+# .huge[.kjh-lblue[Simple Features]]
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+
+
+# .kjh-green[`geom_polygon()`] is limiting
+
+- It's very useful to have the intuition that, when drawing maps, we're just working with tables of `x` and `y` coordinates and shapes that represent quantities in our data, in a way that's very similar to any other geom. This makes it worth getting comfortable with what  .kjh-green[`geom_polygon()`] and .kjh-green[`coord_map()`] are doing. But the business of having very large map tables and manually specifying projections is inefficient. 
+
+--
+
+- In addition, sometimes our data _really is_ properly spatial, at which point we need a more rigorous and consistent way of specifying those elements. There's a whole world of Geodesic standards and tools devoted to specifying these things for GIS applications. R is not a dedicated GIS, but we can take advantage of these tools.
+
+--
+
+- Enter .kjh-pink[simple features], the .kjh-lblue[`sf`] package, and .kjh-green[`geom_sf()`]
