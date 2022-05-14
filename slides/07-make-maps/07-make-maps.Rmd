@@ -887,9 +887,103 @@ us_states_elec |>
 ```
 
 
-.right.w90.small[Take a closer look]
+.right.w90.small[Take a closer look at this, though.]
+
+
+---
+layout: false
+
+.center[![:scale 80%](img/07_dc_section.png)]
+
+.right.w90.small[Washington, DC]
+
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+
+# Purple America Map, without DC
+
+
+.pull-left.w45[
+```{r codefig-purpleamerica2, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5}
+
+us_states_elec |> 
+  filter(region %nin% "district of columbia") |> #<<
+  ggplot(mapping = aes(x = long, 
+                       y = lat,
+                       fill = d_points,
+                       group = group)) + 
+  geom_polygon(color = "gray90", 
+               size = 0.1) +
+  scale_fill_gradient2(low = "red",
+                mid = scales::muted("purple"),
+                high = "blue") +
+  coord_map(projection = "albers", 
+            lat0 = 39, lat1 = 45) +
+  labs(title = "Winning Margins", 
+       fill = "Percent") +  
+  theme_map()
 
 
 
+```
+]
 
+--
+
+.pull-right.w55[
+```{r, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-purpleamerica2", "png"))
+```
+]
+
+---
+layout: false
+
+```{r, echo = FALSE, fig.width=12, fig.height=7}
+us_states_elec |> 
+  filter(region %nin% "district of columbia") |> #<<
+  ggplot(mapping = aes(x = long, 
+                       y = lat,
+                       fill = d_points,
+                       group = group)) + 
+  geom_polygon(color = "gray90", 
+               size = 0.1) +
+  scale_fill_gradient2(low = "red",
+                mid = scales::muted("purple"),
+                high = "blue") +
+  coord_map(projection = "albers", 
+            lat0 = 39, lat1 = 45) +
+  labs(title = "Winning Margins", 
+       fill = "Percent") +  
+  theme_map()
+
+```
+
+
+.right.w90.small[More balanced.]
+
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.bottom.squish4[.kjh-yellow[America's] .kjh-lblue[Ur-Choropleths]]
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+# County-level choropleths
+
+- Conceptually identical to state ones. The tables are just bigger, because there are way more lines to draw. 
 
