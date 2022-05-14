@@ -1,5 +1,5 @@
 ---
-title: "Data Visualization: Session 5"
+title: "Data Visualization - 5. Dplyr and Geoms"
 author: "Kieran Healy"
 date: "`r Sys.Date()`"
 output: kjhslides::kjh_slides_reader

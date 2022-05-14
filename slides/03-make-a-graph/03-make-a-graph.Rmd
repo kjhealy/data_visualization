@@ -1,5 +1,5 @@
 ---
-title: "Make Some Graphs"
+title: "Data Visualization - 3. Make Some Graphs"
 author: "Kieran Healy"
 date: "`r Sys.Date()`"
 output: kjhslides::kjh_slides_reader
