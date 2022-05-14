@@ -578,7 +578,7 @@ election
 # This is a .kjh-pink[_left join_]
 
 ```{r}
-us_states_elec <- left_join(us_states, election)
+us_states_elec <- left_join(us_states, election, by = "region")
 
 us_states_elec
 ```
@@ -974,7 +974,7 @@ us_states_elec |>
 
 class: right bottom main-title section-title-1
 
-## .huge.right.bottom.squish4[.kjh-yellow[America's] .kjh-lblue[Ur-Choropleths]]
+## .huge.right.bottom.squish4[.kjh-yellow[America's]<br />.kjh-lblue[Ur-Choropleths]]
 
 ---
 
@@ -986,4 +986,339 @@ class: title title-1
 # County-level choropleths
 
 - Conceptually identical to state ones. The tables are just bigger, because there are way more lines to draw. 
+
+```{r}
+county_map <- as_tibble(county_map)
+county_map
+```
+
+- 191,000 or so rows
+- `id` here is the county FIPS code.
+
+---
+
+# County-level choropleths
+
+```{r}
+county_data <- as_tibble(county_data)
+county_data
+```
+
+---
+
+# County-level choropleths
+
+- 3,195 entities, including states (FIPS `id` ends in four zeros) 
+- And the US as a whole (FIPS `id` of `0`)
+
+- Sample a few rows, with specific columns:
+
+```{r}
+county_data  |> 
+    select(id, name, state, pop_dens, pct_black) %>%
+    sample_n(10)
+```
+
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+# Joined table
+
+```{r}
+county_full <- left_join(county_map, county_data, by = "id")
+
+county_full
+```
+
+
+---
+`r chunk_reveal("reveal-countypop", widths = c(35,65), title = "# County Population Density")`
+
+```{r reveal-countypop, include = FALSE}
+county_full |> 
+  ggplot(mapping = aes(x = long, y = lat,
+                          fill = pop_dens, 
+                          group = group)) + 
+  geom_polygon(color = "gray70", 
+               size = 0.1) + 
+  coord_fixed() + 
+  scale_fill_brewer(palette="Blues",
+                    labels = c("0-10", "10-50", "50-100",
+                     "100-500", "500-1,000",
+                      "1,000-5,000", ">5,000")) + 
+  labs(fill = "Population per\nsquare mile") + 
+  theme_map() + 
+  guides(fill = guide_legend(nrow = 1)) + 
+  theme(legend.position = "bottom")
+```
+
+---
+layout: false
+
+```{r, echo = FALSE, fig.height=8, fig.width=12}
+county_full |> 
+  ggplot(mapping = aes(x = long, y = lat,
+                          fill = pop_dens, 
+                          group = group)) + 
+  geom_polygon(color = "gray70", 
+               size = 0.1) + 
+  coord_fixed() + 
+  scale_fill_brewer(palette="Blues",
+                    labels = c("0-10", "10-50", "50-100",
+                     "100-500", "500-1,000",
+                      "1,000-5,000", ">5,000")) + 
+  labs(fill = "Population per\nsquare mile") + 
+  theme_map() + 
+  guides(fill = guide_legend(nrow = 1)) + 
+  theme(legend.position = "bottom")
+```
+
+
+.right.w90.small[Population Density by County, binned]
+
+---
+
+layout: true
+class: title title-1
+
+---
+`r chunk_reveal("reveal-choroblack", widths = c(35,65), title = "# Same again for Percent Black")`
+
+```{r reveal-choroblack, include = FALSE}
+county_full |> 
+  ggplot(mapping = aes(x = long, y = lat,
+                       fill = pct_black,  
+                       group = group)) + 
+  geom_polygon(color = "gray70", 
+               size = 0.1) + 
+  coord_fixed() + 
+  scale_fill_brewer(palette="Greens",
+                    labels = c("0-2%", "2-5%", "5-10%",
+                               "10-15%", "15-25%",
+                               "25-50%", ">50%")) + 
+  labs(fill = "US Population, percent Black") + 
+  theme_map() + 
+  guides(fill = guide_legend(nrow = 1)) + 
+  theme(legend.position = "bottom")
+```
+
+---
+layout: false
+
+```{r, echo = FALSE, fig.height=8, fig.width=12}
+county_full |> 
+  ggplot(mapping = aes(x = long, y = lat,
+                       fill = pct_black, #<< 
+                       group = group)) + 
+  geom_polygon(color = "gray70", 
+               size = 0.1) + 
+  coord_fixed() + 
+  scale_fill_brewer(palette="Greens",
+                    labels = c("0-2%", "2-5%", "5-10%",
+                               "10-15%", "15-25%",
+                               "25-50%", ">50%")) + 
+  labs(fill = "US Population, percent Black") + 
+  theme_map() + 
+  guides(fill = guide_legend(nrow = 1)) + 
+  theme(legend.position = "bottom")
+```
+
+
+.right.w90.small[Percent Black, by County, binned]
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.bottom.squish4[.kjh-yellow[Big counties, small populations,] .kjh-lblue[rare events]]
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+# Example: Reverse coding
+
+.pull-left.w45[
+```{r}
+orange_pal <- RColorBrewer::brewer.pal(n = 6, 
+                                       name = "Oranges")
+orange_pal
+```
+
+
+```{r, echo = FALSE, fig.height=0.5, fig.width=5}
+par(mar = c(0, 0, 0, 0))
+colorspace::swatchplot("Orange Palette" = orange_pal, nrow = 1)
+```
+]
+
+--
+
+.pull-right.w45[
+```{r}
+# Just reverse it
+orange_rev <- rev(orange_pal)
+orange_rev
+```
+
+```{r, echo = FALSE, fig.height=0.5, fig.width=5}
+par(mar = c(0, 0, 0, 0))
+colorspace::swatchplot("Reverse Orange" = orange_rev, nrow = 1)
+```
+]
+
+
+---
+
+# Build a plot
+
+```{r}
+p_g1 <- county_full |> 
+  ggplot(mapping = aes(x = long, y = lat,
+                       fill = su_gun6, #<< 
+                       group = group)) + 
+  geom_polygon(color = "gray70", 
+               size = 0.1) + 
+  coord_fixed() + 
+  scale_fill_manual(values = orange_pal) + #<<
+  labs(title = "Gun-Related Suicides, 1999-2015",
+       fill = "Rate per 100,000 pop.") + 
+  theme_map() + 
+  guides(fill = guide_legend(nrow = 1)) + 
+  theme(legend.position = "bottom")
+```
+
+---
+layout: false
+class: middle
+
+```{r, echo = FALSE, fig.height=8, fig.width=12}
+p_g1 
+```
+
+.right.w90.small[Regular palette]
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+# And another
+
+```{r}
+p_g2 <- county_full |> 
+  ggplot(mapping = aes(x = long, y = lat,
+                       fill = pop_dens6, #<< 
+                       group = group)) + 
+  geom_polygon(color = "gray70", 
+               size = 0.1) + 
+  coord_fixed() + 
+  scale_fill_manual(values = orange_rev) + #<<
+  labs(title = "Reverse-coded Population Density",
+       fill = "Persons per square mile") + 
+  theme_map() + 
+  guides(fill = guide_legend(nrow = 1)) + 
+  theme(legend.position = "bottom")
+```
+
+---
+layout: false
+class: middle
+
+
+```{r, echo = FALSE, fig.height=8, fig.width=12}
+p_g2
+```
+
+.right.w90.small[Reverse-coded density]
+
+---
+
+layout: false
+class: middle
+
+
+.pull-left[
+```{r, echo = FALSE, , fig.height=6, fig.width=8}
+p_g1
+```
+
+
+]
+
+.pull-right[
+```{r, echo = FALSE, fig.height=6, fig.width=8}
+p_g2
+```
+
+
+]
+
+.right.w90.small[Comparing the plots]
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.bottom.squish4[.kjh-yellow[Small multiples] .kjh-lblue[for maps]]
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+# Opiate-related Mortality, 1999-2014
+
+```{r}
+opiates
+
+opiates$state <- tolower(opiates$state)
+us_states$state <- us_states$region
+opiates_map <- left_join(us_states, opiates, by = "state")
+```
+
+
+---
+
+```{r}
+p_out <- opiates_map |> 
+  ggplot(mapping = aes(x = long, y = lat,
+                       group = group,
+                       fill = cut_interval(adjusted, n = 5))) + 
+  geom_polygon(color = "lightblue", size = 0.2) +
+  coord_map(projection = "albers", lat0 = 39, lat1 = 45) +
+  scale_fill_brewer(type = "seq", palette = "Oranges") +
+  theme_map() + 
+  facet_wrap(~ year, ncol = 4) +
+  guides(fill = guide_legend(nrow = 1)) + 
+  theme(legend.position = "bottom",
+        strip.background = element_blank()) +
+  labs(fill = "Death rate per 100,000 population",
+       title = "Opiate-Related Deaths by State, 1999-2014")
+```
+
+---
+layout: false
+class: middle
+
+```{r, echo = FALSE, fig.height=8, fig.width=16}
+p_out
+```
+
+
+.right.w90.small[Faceting works just as it would for any other kind of plot.]
+
+
 
