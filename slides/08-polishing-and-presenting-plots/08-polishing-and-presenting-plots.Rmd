@@ -34,11 +34,11 @@ kjh_set_xaringan_opts()
 
 class: center middle main-title section-title-1
 
-# .kjh-yellow[Polishing] & .kjh-lblue[Presenting] your Plots 
+# .kjh-yellow[Polishing your plots]<br /> .kjh-lblue[and Presenting them]
 
 .class-info[
 
-**Data Wrangling: Session 8**
+**Data Visualization: Session 8**
 
 .light[Kieran Healy<br>
 Code Horizons, April 2022
@@ -86,7 +86,7 @@ asasec
 
 # Build your plots a piece at a time
 
-```{r, echo = FALSE, fig.height=8, fig.width=12}
+```{r, echo = FALSE, fig.height=6, fig.width=10}
 asasec |> 
   filter(Year == 2014) |> 
   ggplot(mapping = aes(x = Members, 
@@ -101,7 +101,7 @@ asasec |>
 
 # Build your plots a piece at a time
 
-```{r, echo = FALSE, fig.height=8, fig.width=12}
+```{r, echo = FALSE, fig.height=6, fig.width=10}
 asasec |> 
   filter(Year == 2014) |> 
   ggplot(mapping = aes(x = Members, 
@@ -182,7 +182,7 @@ kjh_set_classic_theme()
 - .large[.kjh-lblue[`ggplot`] has several color palettes built in. A variety of packages provide others.] 
 
 ---
-`r chunk_reveal("reveal-scalemanual", widths = c(35,65), title = "# You can always specify scales manually")`
+`r chunk_reveal("reveal-scalemanual", widths = c(40,60), title = "# You can always specify scales manually")`
 
 ```{r reveal-scalemanual, include = FALSE}
 p <- ggplot(data = organdata,
@@ -196,7 +196,7 @@ p
 ```
 
 ---
-`r chunk_reveal("reveal-scalemanual2", widths = c(35,65), title = "# You can always specify scales manually")`
+`r chunk_reveal("reveal-scalemanual2", widths = c(40,60), title = "# You can always specify scales manually")`
 
 ```{r reveal-scalemanual2, include = FALSE}
 p + scale_color_manual(
@@ -206,7 +206,7 @@ p + scale_color_manual(
 
 
 ---
-`r chunk_reveal("reveal-scalemanual3", widths = c(35,65), title = "# You can always specify scales manually")`
+`r chunk_reveal("reveal-scalemanual3", widths = c(40,60), title = "# You can always specify scales manually")`
 
 ```{r reveal-scalemanual3, include = FALSE}
 p + scale_color_manual(
@@ -216,7 +216,7 @@ p + scale_color_manual(
 
 
 ---
-`r chunk_reveal("reveal-scalemanual4", widths = c(35,65), title = "# You can always specify scales manually")`
+`r chunk_reveal("reveal-scalemanual4", widths = c(40,60), title = "# You can always specify scales manually")`
 
 ```{r reveal-scalemanual4, include = FALSE}
 
@@ -248,7 +248,7 @@ p + scale_color_manual(
 
 .pull-right[
 
-### The _qualitative_ palettes
+### _Qualitative_ palettes
 
 ```{r, echo = FALSE, fig.height=5.5, fig.width=7}
 opar <- par(mar = c(5.1, 4.1, 4.1, 2.1))
@@ -278,7 +278,7 @@ par(opar)
 
 .pull-right[
 
-### The _sequential_ palettes
+### _Sequential_ palettes
 
 ```{r, echo = FALSE, fig.height=5.5, fig.width=4}
 par(mar=c(0,4,0,0))
@@ -306,7 +306,7 @@ RColorBrewer::display.brewer.all(type = "seq")
 
 .pull-right[
 
-### The _diverging_ palettes
+### _Diverging_ palettes
 
 ```{r, echo = FALSE, fig.height=5.5, fig.width=6}
 par(mar=c(0,4,0,0))
@@ -320,7 +320,7 @@ RColorBrewer::display.brewer.all(type = "div")
 
 ---
 
-# Categorical Brewer Palettes
+# Qualitative Brewer Palettes
 
 
 ```{r, eval = FALSE, fig.show="hold", out.width="50%"}
@@ -474,6 +474,7 @@ kjh_set_slide_theme()
 ```{r, echo = FALSE, fig.width=15, fig.height=8.5}
 # Democratic Blue and Republican Red
 party_colors <- c("#2E74C0", "#CB454A")
+party_colors <- c("royalblue1", "red2")
 
 ggplot(data = subset(county_data,
                      flipped == "No"),
@@ -516,8 +517,8 @@ class: title title-1
 `r chunk_reveal("reveal-fliptrump", widths = c(45,55), title = "# We know how to build this")`
 
 ```{r reveal-fliptrump, include = FALSE}
-# Democratic Blue and Republican Red
-party_colors <- c("#2E74C0", "#CB454A")
+# Brighter Blue and Red
+party_colors <- c("royalblue1", "red2")
 
 ggplot(data = subset(county_data,
                      flipped == "No"),
@@ -548,16 +549,10 @@ ggplot(data = subset(county_data,
 ```
 
 ---
+layout: false
+class: main-title main-title-inv middle
 
-layout: true
-class: title title-1
-
----
-
-# In practice
-
-- Imagine making several versions of this plot to accompany a presentation. 
-
+# .middle.squish4.large[.kjh-orange[Leverage ggplot's]<br />.kjh-lblue[layered approach]]
 
 ---
 layout: false
@@ -573,64 +568,67 @@ pop_max <- max(county_data$pop)
 black_min <- min(county_data$black/100)
 black_max <- max(county_data$black/100 + 0.047)
 
+x_label <- "County Population (log scale)"
+y_label <- "Percent Black Population"
 
 x_breaks <- c(1e3, 1e4, 1e5, 1e6, 1e7)
 y_breaks <- seq(from = 0, to = 0.8, by = 0.2)
+data_point_size <- rel(3)
 
 p_layer_1 <- ggplot(data = county_data,
                     mapping = aes(x = pop, y = black/100)) + 
-  geom_point(color = "gray30", 
+  geom_point(color = "gray20", 
              alpha = 0.25, 
-             size = rel(2)) + 
+             size = data_point_size) + 
   scale_x_log10(breaks = x_breaks,
                 labels = label_number(scale_cut = cut_short_scale())) + 
   scale_y_continuous(breaks = y_breaks, 
                      labels = label_percent()) +
   expand_limits(x = pop_max, 
                 y = black_max) +
-  labs(x = "County Population (log scale)",
-       y = "Percent Black Population",
+  labs(x = x_label,
+       y = y_label,
        title = "U.S. Counties by Population and Percent Black",
        caption = "")
 
 p_layer_2 <- ggplot(data = subset(county_data,
                      flipped == "No"),
                     mapping = aes(x = pop, y = black/100)) + 
-  geom_point(color = "gray30", 
+  geom_point(color = "gray20", 
              alpha = 0.25, 
-             size = rel(2)) + 
+             size = data_point_size) + 
   expand_limits(x = pop_max, 
                 y = black_max) +
   scale_x_log10(breaks = x_breaks,
                 labels = label_number(scale_cut = cut_short_scale())) + 
   scale_y_continuous(breaks = y_breaks, 
                      labels = label_percent()) +
-  labs(x = "County Population (log scale)",
-       y = "Percent Black Population",
-       title = "These Counties Did not Flip in 2016",
+  labs(x = x_label,
+       y = y_label,
+       title = "These counties did not flip in 2016",
        caption = "")
 
 
 p_layer_3 <- ggplot(data = subset(county_data,
                      flipped == "Yes"),
                     mapping = aes(x = pop, y = black/100)) + 
-  geom_point(color = "gray30", 
+  geom_point(color = "gray5", 
              alpha = 0.25, 
-             size = rel(2)) + 
+             size = data_point_size) + 
    geom_point(data = subset(county_data,
                      flipped == "Yes"), 
               color = NA, 
               alpha = 0,
-              size = rel(2)) +
+              size = data_point_size) +
   scale_x_log10(breaks = x_breaks,
                 labels = label_number(scale_cut = cut_short_scale())) + 
   scale_y_continuous(breaks = y_breaks, 
                      labels = label_percent()) +
   expand_limits(x = pop_max, 
                 y = black_max) +
-  labs(x = "County Population (log scale)",
-       y = "Percent Black Population",
-       title = "These Counties Did",
+  labs(x = x_label,
+       y = y_label,
+       title = "These counties did",
        caption = "")
 
 
@@ -639,12 +637,12 @@ p_layer_4 <- ggplot(data = subset(county_data,
                     mapping = aes(x = pop, y = black/100)) + 
   geom_point(color = "gray30", 
              alpha = 0.25, 
-             size = rel(2)) + 
+             size = data_point_size) + 
   geom_point(data = subset(county_data,
                       flipped == "Yes"),
              mapping = aes(x = pop, y = black/100,
                            color = partywinner16), 
-             size = rel(2)) + 
+             size = data_point_size) + 
   scale_x_log10(breaks = x_breaks,
                 labels = label_number(scale_cut = cut_short_scale())) + 
   scale_y_continuous(breaks = y_breaks, 
@@ -652,9 +650,9 @@ p_layer_4 <- ggplot(data = subset(county_data,
   scale_color_manual(values = party_colors) +
   expand_limits(x = pop_max, 
                 y = black_max) +
-  labs(x = "County Population (log scale)",
-       y = "Percent Black Population",
-       title = "Counties that Flipped shown by Party Color",
+  labs(x = x_label,
+       y = y_label,
+       title = "Counties that flipped shown by party color",
        color = "Flipped to",
        caption = "Counties in gray did not flip.")
 
@@ -663,13 +661,13 @@ p_layer_5 <- ggplot(data = subset(county_data,
                     mapping = aes(x = pop, y = black/100)) + 
   geom_point(color = "gray30", 
              alpha = 0.25, 
-             size = rel(2)) + 
+             size = data_point_size) + 
   geom_point(data = subset(county_data,
                       flipped == "Yes"),
              mapping = aes(x = pop, y = black/100,
                            color = partywinner16), 
              size = rel(2)) + 
-  geom_text_repel(data = subset(county_data,
+  geom_label_repel(data = subset(county_data,
               flipped == "Yes" & black  > 25),
                   mapping = aes(x = pop,
                     y = black/100, label = state, 
@@ -682,10 +680,10 @@ p_layer_5 <- ggplot(data = subset(county_data,
   scale_color_manual(values = party_colors) +
   expand_limits(x = pop_max, 
                 y = black_max) +
-  labs(x = "County Population (log scale)",
-       y = "Percent Black Population",
+  labs(x = x_label,
+       y = y_label,
        color = "Flipped to",
-       title = "Counties that Flipped shown by Party Color, and labeled by State",
+       title = "Counties that flipped shown by party color, and labeled by state",
        caption = "Counties in gray did not flip.")
 
 
@@ -696,15 +694,15 @@ p_layer_6 <- ggplot(data = subset(county_data,
                     mapping = aes(x = pop, y = black/100)) + 
   geom_point(color = "gray30", 
              alpha = 0.25, 
-             size = rel(2)) + 
+             size = data_point_size) + 
   geom_point(data = subset(county_data,
                       flipped == "Yes"),
              mapping = aes(x = pop, y = black/100,
                            color = partywinner16), 
              size = rel(2)) + 
-  geom_text_repel(data = subset(county_data,
+  geom_label_repel(data = subset(county_data,
               flipped == "Yes" & black  
-              > 35 & black < 50),
+              > 20 & black < 50),
                   mapping = aes(x = pop,
                     y = black/100, label = state, 
                     family = "Tenso Slide", 
@@ -716,10 +714,10 @@ p_layer_6 <- ggplot(data = subset(county_data,
   scale_color_manual(values = party_colors) +
   coord_cartesian(xlim = c(0.75e4, 1.5e5), 
                   ylim = c(0.2, 0.5)) +
-  labs(x = "County Population (log scale)",
-       y = "Percent Black Population",
+  labs(x = x_label,
+       y = y_label,
        color = "Flipped to",
-       title = "Counties that Flipped shown by Party Color, and labeled by State",
+       title = "Counties that flipped shown by party color, and labeled by state; zoomed-in",
        caption = "Counties in gray did not flip.")
 
 
@@ -772,5 +770,12 @@ layout: false
 ```{r, echo = FALSE, fig.width=15, fig.height=8.5}
 p_layer_5
 ```
+
+---
+layout: false
+class: main-title main-title-inv middle
+
+# .middle.squish4.large[.kjh-lblue[Layer,]<br />.kjh-pink[Highlight,]<br />.kjh-lblue[Repeat]]
+
 
 
