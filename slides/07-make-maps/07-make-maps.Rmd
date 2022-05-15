@@ -459,7 +459,7 @@ class: title title-1
 
 ---
 
-`r chunk_reveal("reveal-coord", widths = c(35,65), title = "# Fix the projection")`
+`r chunk_reveal("reveal-coord", widths = c(40,60), title = "# Fix the projection")`
 
 ```{r reveal-coord, include = FALSE}
 
@@ -1037,7 +1037,7 @@ county_full
 
 
 ---
-`r chunk_reveal("reveal-countypop", widths = c(35,65), title = "# County Population Density")`
+`r chunk_reveal("reveal-countypop", widths = c(40,60), title = "# County Population Density")`
 
 ```{r reveal-countypop, include = FALSE}
 county_full |> 
@@ -1087,7 +1087,7 @@ layout: true
 class: title title-1
 
 ---
-`r chunk_reveal("reveal-choroblack", widths = c(35,65), title = "# Same again for Percent Black")`
+`r chunk_reveal("reveal-choroblack", widths = c(40,60), title = "# Same again for Percent Black")`
 
 ```{r reveal-choroblack, include = FALSE}
 county_full |> 
@@ -1336,7 +1336,7 @@ layout: true
 class: title title-1
 
 ---
-`r chunk_reveal("reveal-maxstates", widths = c(35,65), title = "# The two leading states in each region in 2014")`
+`r chunk_reveal("reveal-maxstates", widths = c(40,60), title = "# The two leading states in each region in 2014")`
 
 ```{r reveal-maxstates, include = FALSE}
 ## Put this in an object called `st_top`
@@ -1360,7 +1360,7 @@ st_top <- opiates |>
 
 
 ---
-`r chunk_reveal("reveal-opiateline", widths = c(35,65), title = "# Opiates Time Series plot")`
+`r chunk_reveal("reveal-opiateline", widths = c(40,60), title = "# Opiates Time Series plot")`
 
 ```{r reveal-opiateline, include = FALSE}
  
@@ -1535,18 +1535,18 @@ nyc_license  |>
 
 # Now we have two tables again
 
-.pull-left[
+.pull-left.w70[
 ```{r}
-nyc_zips
+nyc_zips |> select(objectid:st_fips)
 ```
 
 ]
 
 --
 
-.pull-right[
+.pull-right.w30[
 ```{r}
-nyc_fb
+nyc_fb |> select(breed_rc:n)
 ```
 
 ]
@@ -1559,6 +1559,14 @@ nyc_fb
 fb_map <- left_join(nyc_zips, nyc_fb, by = "zip_code")
 ```
 
+
+---
+
+# Ready to map
+
+```{r}
+fb_map |> select(zip_code, po_name, borough, breed_rc:freq, geometry)
+```
 
 ---
 
@@ -1588,7 +1596,7 @@ theme_nymap <- function(base_size=9, base_family="") {
 ```
 
 ---
-`r chunk_reveal("reveal-bulldogmap", widths = c(35,65), title = "# First cut at a map")`
+`r chunk_reveal("reveal-bulldogmap", widths = c(40,60), title = "# First cut at a map")`
 
 ```{r reveal-bulldogmap, include = FALSE}
 fb_map %>% 
@@ -1616,7 +1624,7 @@ fb_map %>%
 ```
 ---
 
-`r chunk_reveal("reveal-bulldogmap2", widths = c(35,65), title = "# Use a different palette")`
+`r chunk_reveal("reveal-bulldogmap2", widths = c(40,60), title = "# Use a different palette")`
 
 ```{r reveal-bulldogmap2, include = FALSE}
 library(colorspace)
@@ -1686,7 +1694,7 @@ layout: true
 class: title title-1
 
 ---
-`r chunk_reveal("reveal-bulldogzeros", widths = c(35,65), title = "# Keep the Zero count zips")`
+`r chunk_reveal("reveal-bulldogzeros", widths = c(40,60), title = "# Keep the Zero count zips")`
 
 ```{r reveal-bulldogzeros, include = FALSE}
 
@@ -1709,8 +1717,22 @@ fb_map2 <- left_join(nyc_zips,
 
 ```
 
+
 ---
-`r chunk_reveal("reveal-bulldogfb2", widths = c(35,65), title = "# Now redraw the map")`
+
+# Ready to map, again
+
+```{r}
+fb_map2 |> select(zip_code, po_name, borough, breed_rc:freq, geometry)
+```
+
+- This time, a number of previous .kjh-red[NA] rows are now zeroes instead.
+
+---
+
+
+---
+`r chunk_reveal("reveal-bulldogfb2", widths = c(40,60), title = "# Now redraw the map")`
 
 ```{r reveal-bulldogfb2, include = FALSE}
 fb_map2 |> 

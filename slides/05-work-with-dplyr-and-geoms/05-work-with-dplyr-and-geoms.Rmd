@@ -1977,11 +1977,11 @@ organdata |>
 # The .kjh-green[`theme()`] function
 
 ```{r, echo=FALSE}
-kjhslides::kjh_set_classic_theme()
+kjhslides::kjh_set_classic_theme(4)
 ```
 
 
-.pull-left.w40[
+.pull-left.w45[
 ```{r codefig-themefn, message=FALSE, fig.show="hide", fig.width=5, fig.height=4.5}
 ## Using the "classic" ggplot theme here
 organdata |> 

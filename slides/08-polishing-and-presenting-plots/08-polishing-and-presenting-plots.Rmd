@@ -777,5 +777,224 @@ class: main-title main-title-inv middle
 
 # .middle.squish4.large[.kjh-lblue[Layer,]<br />.kjh-pink[Highlight,]<br />.kjh-lblue[Repeat]]
 
+---
 
+layout: true
+class: title title-1
+
+---
+
+# Build from ideas to data
+
+.center[![:scale 90%](img/08_status_conceptual.png)]
+
+---
+
+# Build from ideas to data
+
+.center[![:scale 90%](img/08_status_hypotheses.png)]
+
+
+---
+
+# Build from ideas to data
+
+.center[![:scale 80%](img/08_status_results.png)]
+
+---
+
+# Repeat to .kjh-lblue[differentiate]
+
+.center[![:scale 80%](img/08_model_controls_pointrange_IRRs_MASSnb.png)]
+
+
+---
+
+# Repeat to .kjh-lblue[differentiate]
+
+.center[![:scale 60%](img/08_mode_lsm_nb_gender_journal.png)]
+
+---
+
+# Layer and repeat with .kjh-lblue[facets]
+
+.center[![:scale 65%](img/08_growth_curve_quantile_quantreg_gender.png)]
+
+---
+
+# Layer and repeat .kjh-lblue[across] facets
+
+.center[![:scale 60%](img/08_altservices.png)]
+
+---
+
+# Layer and repeat .kjh-lblue[across] facets
+
+.center[![:scale 60%](img/08_altservices2.png)]
+
+
+---
+
+# X-Ray Vision
+
+.center[![:scale 75%](img/08_layers_all_labeled.png)]
+
+---
+
+class: center middle main-title section-title-1
+
+# .huge[.kjh-lblue[T].kjh-yellow[h].kjh-pink[e].kjh-green[m].kjh-orange[e].kjh-grey[s]]
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+# Themes ...
+
+
+- .medium[are controlled by the .kjh-green[`theme()`] function]
+
+- .medium[can be bundled into functions of their own, like .kjh-green[`theme_bw()`] or .kjh-green[`theme_minimal()`]]
+
+- .medium[can be set for the duration of a file or project with .kjh-green[`theme_set()`]]
+
+- .medium[make changes that are applied _additively_]
+
+- .medium[and most importantly ...]
+
+---
+layout: false
+class: main-title main-title-inv
+
+# .middle.squish4.large.kjh-orange[Thematic elements do not represent data directly]
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+
+# Make a plot
+
+```{r}
+kjh_set_classic_theme(3)
+```
+
+
+.pull-left.w45[
+```{r codefig-themes1, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5}
+
+p <- organdata |> 
+  drop_na(world) |> 
+  ggplot(mapping = aes(x = roads, y = donors, 
+                          color = world)) + 
+  geom_point(size = 3) + 
+  labs(x = "Road Deaths", 
+       y = "Procurement Rate",
+       title = "By Welfare State Regime")
+
+p 
+
+```
+]
+
+--
+
+.pull-right.w55[
+```{r, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-themes1", "png"))
+```
+]
+
+---
+
+# Add a theme ... .kjh-green[`theme_bw()`]
+
+
+.pull-left.w45[
+```{r codefig-theme2, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5}
+p + theme_bw()
+```
+]
+
+--
+
+.pull-right.w55[
+```{r, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-theme2", "png"))
+```
+]
+
+
+---
+
+# Add a theme ... .kjh-green[`theme_minimal()`]
+
+
+.pull-left.w45[
+```{r codefig-theme3, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5}
+p + theme_minimal()
+```
+]
+
+--
+
+.pull-right.w55[
+```{r, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-theme3", "png"))
+```
+]
+
+---
+
+# Add a theme ... .kjh-green[`theme_dark()`]
+
+
+.pull-left.w45[
+```{r codefig-themedark, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5}
+p + theme_dark()
+```
+]
+
+--
+
+.pull-right.w55[
+```{r, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-themedark", "png"))
+```
+]
+
+---
+
+# Adjustments with the .kjh-green[`theme()`] function]
+
+.pull-left.w45[
+```{r codefig-themeadditive, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5}
+
+p + theme_bw() +
+  theme(legend.position = "top")
+
+```
+
+- None of this directly touches the parts of the plot that are representing your data---i.e. the visual parts that are mapped to a variable, and thus have a scale. Adjusting those is the job of the .kjh-green[`scale_`] and .kjh-green[`guide()`] functions.
+
+]
+
+--
+
+.pull-right.w55[
+```{r, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-themeadditive", "png"))
+```
+]
 
