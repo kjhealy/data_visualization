@@ -270,7 +270,7 @@ layout: false
 
 class: right bottom main-title section-title-1
 
-## .right.bottom.huge.kjh-yellow[Not Seeing Things]
+## .right.bottom.huge[.kjh-lblue[Not] .kjh-yellow[Seeing Things]]
 
 
 ---
@@ -398,7 +398,7 @@ class: right bottom main-title section-title-1
 
 class: right bottom main-title section-title-1
 
-## .huge.right.squish4.bottom.kjh-green[Edges & Contrasts]
+## .huge.right.squish4.bottom.kjh-lblue[Edges & Contrasts]
 
 ---
 layout: false
@@ -490,7 +490,7 @@ layout: false
 
 class: right bottom main-title section-title-1
 
-## .huge.right.squish4.bottom.kjh-green[Luminance and Color]
+## .huge.right.squish4.bottom.kjh-lblue[Luminance and Color]
 
 
 ---
@@ -602,15 +602,15 @@ layout: false
 ---
 layout: false
 
-.center[![:scale 65%](img/01_dorian_rainbow.png)]
+.center[![:scale 60%](img/01_dorian_rainbow.png)]
 
-.right.w90.small[]
+.right.w90.small[National Weather Service]
 
 
 ---
 layout: false
 
-.center[![:scale 65%](img/01_dorian_hclrainbow.png)]
+.center[![:scale 60%](img/01_dorian_hclrainbow.png)]
 
 .right.w90.small[Achim Zeileis]
 
@@ -618,7 +618,7 @@ layout: false
 ---
 layout: false
 
-.center[![:scale 65%](img/01_dorian_rainbow_gray.png)]
+.center[![:scale 60%](img/01_dorian_rainbow_gray.png)]
 
 .right.w90.small[Achim Zeileis]
 
@@ -626,7 +626,7 @@ layout: false
 ---
 layout: false
 
-.center[![:scale 65%](img/01_dorian_hclrainbow_gray.png)]
+.center[![:scale 60%](img/01_dorian_hclrainbow_gray.png)]
 
 .right.w90.small[Achim Zeileis]
 
@@ -635,7 +635,7 @@ layout: false
 
 class: right bottom main-title section-title-1
 
-## .huge.right.squish4.bottom.kjh-green[Pre-Attentive Processing]
+## .huge.right.squish4.bottom.kjh-lblue[Pre-Attentive Processing]
 
 
 ---
@@ -681,6 +681,15 @@ layout: false
 ---
 layout: false
 
+.center[![:scale 68%](img/01_preattentive_easy_hard_blank.png)]
+
+.right.w90.small[Colin Ware]
+
+
+
+---
+layout: false
+
 .center[![:scale 68%](img/01_preattentive_easy_hard.png)]
 
 .right.w90.small[Colin Ware]
@@ -698,7 +707,7 @@ layout: false
 
 class: right bottom main-title section-title-1
 
-## .huge.right.squish4.bottom.kjh-green[&nbsp; &nbsp; Gestalt Inferences <br />and Design]
+## .huge.right.squish4.bottom.kjh-lblue[&nbsp; &nbsp; Gestalt Inferences <br />and Design]
 
 
 
@@ -712,17 +721,17 @@ layout: false
 ---
 layout: false
 
-.center[![:scale 70%](img/01_gestalt_cave_clarity.png)]
+.center[![:scale 70%](img/01_gestalt_cave_codings.png)]
 
 .right.w90.small[George Cave]
-
 
 ---
 layout: false
 
-.center[![:scale 70%](img/01_gestalt_cave_codings.png)]
+.center[![:scale 70%](img/01_gestalt_cave_clarity.png)]
 
 .right.w90.small[George Cave]
+
 
 
 ---
@@ -739,7 +748,7 @@ layout: false
 
 class: center middle main-title section-title-1
 
-# .huge.squish4.kjh-lblue[Codings, or .kjh-yellow[mappings,]<br />for data]
+# .huge.squish4.kjh-lblue[Encodings or .kjh-yellow[mappings]<br />for data]
 
 
 ---
@@ -764,7 +773,7 @@ layout: false
 
 class: right bottom main-title section-title-1
 
-## .huge.right.squish4.bottom.squish4.kjh-yellow[Visual tasks in<br /> .kjh-green[decoding graphs]]
+## .huge.right.squish4.bottom.squish4.kjh-yellow[Visual tasks in<br /> .kjh-lblue[decoding graphs]]
 
 
 
@@ -825,7 +834,7 @@ layout: false
 
 class: right bottom main-title section-title-1
 
-## .huge.right.squish4.bottom.kjh-yellow[A rough hierarchy<br /> .kjh-green[of mappings for data]]
+## .huge.right.squish4.bottom.kjh-yellow[A rough hierarchy<br /> .kjh-lblue[of mappings for data]]
 
 
 ---
@@ -885,8 +894,7 @@ layout: false
 
 class: center middle main-title section-title-1
 
-## .huge.kjh-lblue.squish4[Visualizing your Data]
-# .huge.squish4.kjh-yellow[in practice]
+# .huge.squish4[.kjh-lblue[Graphing]<br/>.kjh-yellow[in practice]]
 
 ---
 
@@ -1006,36 +1014,4 @@ layout: false
 .center[![:scale 50%](img/01_unicorn_synteny_map_of_the_pig_and_human_genomes.png)]
 
 .right.w90.small[… or monsters]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
----
-
-# End
-
----
 
