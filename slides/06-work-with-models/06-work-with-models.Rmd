@@ -1467,7 +1467,7 @@ out_hap |>
   scale_x_continuous(breaks = 
                        seq(1978, 2018, 4)) +
   scale_y_continuous(labels = 
-                       percent_format(accuracy = 1)) + 
+                       label_percent(accuracy = 1)) + 
   labs(x = "Year",
     y = "Percent",
     title = "Trends in Unhappiness", 
@@ -1491,7 +1491,7 @@ out_hap |>
   scale_x_continuous(breaks = 
                        seq(1978, 2018, 4)) +
   scale_y_continuous(labels = 
-                       percent_format(accuracy = 1)) + 
+                       label_percent(accuracy = 1)) + 
   labs(x = "Year",
     y = "Percent",
     title = "Trends in Unhappiness", 
@@ -1561,7 +1561,7 @@ dodge_w <- position_dodge(width = 0.9)
 p + geom_col(position = dodge_w, alpha = 0.2) +
     geom_errorbar(position = dodge_w, width = 0.2) +
     scale_x_discrete(labels = wrap_format(10)) +
-    scale_y_continuous(labels = percent_format()) +
+    scale_y_continuous(labels = label_percent()) +
     scale_color_brewer(type = "qual", 
                        palette = "Dark2") +
     scale_fill_brewer(type = "qual", 
@@ -1584,7 +1584,7 @@ p_out <- p +
   geom_col(position = dodge_w, alpha = 0.2) +
   geom_errorbar(position = dodge_w, width = 0.2) +
   scale_x_discrete(labels = wrap_format(10)) +
-  scale_y_continuous(labels = percent_format()) +
+  scale_y_continuous(labels = label_percent()) +
   scale_color_brewer(type = "qual", 
                      palette = "Dark2") +
   scale_fill_brewer(type = "qual", 
@@ -1635,7 +1635,7 @@ p_out <- p +
   geom_ribbon(mapping = aes(color = NULL),
               alpha = 0.3) +
   geom_line(size = rel(1.25)) + 
-  scale_y_continuous(labels = percent_format()) +
+  scale_y_continuous(labels = label_percent()) +
   scale_color_brewer(type = "qual", palette = "Dark2") +
   scale_fill_brewer(type = "qual", palette = "Dark2") +
   facet_wrap(~ degree, ncol = 2) +

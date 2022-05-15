@@ -119,7 +119,7 @@ asasec |>
                     mapping = 
                     aes(family = "Tenso Slide")) + 
   scale_y_continuous(labels = 
-                       scales::dollar_format()) + 
+                       scales::label_dollar()) + 
   labs(x="Membership", y="Revenues",
         color = "Section has own Journal",
         title = "ASA Sections",
@@ -152,7 +152,7 @@ asasec |>
                     mapping = 
                     aes(family = "Tenso Slide")) + 
   scale_y_continuous(labels = 
-                       scales::dollar_format()) + 
+                       scales::label_dollar()) + 
   labs(x="Membership", y="Revenues",
         color = "Section has own Journal",
         title = "ASA Sections",
@@ -481,7 +481,7 @@ ggplot(data = subset(county_data,
                      y = black/100)) + 
   geom_point(alpha = 0.15, color = "gray30", 
              size = rel(2)) +
-  scale_x_log10(labels = comma_format()) + 
+  scale_x_log10(labels = label_comma()) + 
   geom_point(data = subset(county_data,
                       flipped == "Yes"),
              mapping = aes(x = pop, y = black/100,
@@ -497,7 +497,7 @@ ggplot(data = subset(county_data,
                                 face = "bold"), 
                   size = 3.5) + 
   scale_color_manual(values = party_colors) + 
-  scale_y_continuous(labels = percent_format()) +
+  scale_y_continuous(labels = label_percent()) +
   labs(color = "County flipped to ... ",
        x = "County Population (log scale)",
        y = "Percent Black Population",
@@ -525,7 +525,7 @@ ggplot(data = subset(county_data,
                      y = black/100)) + 
   geom_point(alpha = 0.15, color = "gray30", 
              size = rel(2)) +
-  scale_x_log10(labels = comma_format()) + 
+  scale_x_log10(labels = label_comma()) + 
   geom_point(data = subset(county_data,
                       flipped == "Yes"),
              mapping = aes(x = pop, y = black/100,
@@ -538,7 +538,7 @@ ggplot(data = subset(county_data,
                     family = "Tenso Slide", 
                     face = "bold"), size = rel(3.5)) + 
   scale_color_manual(values = party_colors) + 
-  scale_y_continuous(labels = percent_format()) +
+  scale_y_continuous(labels = label_percent()) +
   labs(color = "County flipped to ... ",
        x = "County Population (log scale)",
        y = "Percent Black Population",
@@ -546,9 +546,231 @@ ggplot(data = subset(county_data,
        caption = "Counties in gray did not flip.")
  
 ```
+
 ---
 
+layout: true
+class: title title-1
+
+---
+
+# In practice
+
+- Imagine making several versions of this plot to accompany a presentation. 
 
 
+---
+layout: false
+
+
+```{r, echo = FALSE}
+county_data <- as_tibble(county_data) |> 
+  filter(!is.na(name) & name %nin% as.character(c(1:52)))
+
+pop_min <- min(county_data$pop)
+pop_max <- max(county_data$pop)
+
+black_min <- min(county_data$black/100)
+black_max <- max(county_data$black/100 + 0.047)
+
+
+x_breaks <- c(1e3, 1e4, 1e5, 1e6, 1e7)
+y_breaks <- seq(from = 0, to = 0.8, by = 0.2)
+
+p_layer_1 <- ggplot(data = county_data,
+                    mapping = aes(x = pop, y = black/100)) + 
+  geom_point(color = "gray30", 
+             alpha = 0.25, 
+             size = rel(2)) + 
+  scale_x_log10(breaks = x_breaks,
+                labels = label_number(scale_cut = cut_short_scale())) + 
+  scale_y_continuous(breaks = y_breaks, 
+                     labels = label_percent()) +
+  expand_limits(x = pop_max, 
+                y = black_max) +
+  labs(x = "County Population (log scale)",
+       y = "Percent Black Population",
+       title = "U.S. Counties by Population and Percent Black",
+       caption = "")
+
+p_layer_2 <- ggplot(data = subset(county_data,
+                     flipped == "No"),
+                    mapping = aes(x = pop, y = black/100)) + 
+  geom_point(color = "gray30", 
+             alpha = 0.25, 
+             size = rel(2)) + 
+  expand_limits(x = pop_max, 
+                y = black_max) +
+  scale_x_log10(breaks = x_breaks,
+                labels = label_number(scale_cut = cut_short_scale())) + 
+  scale_y_continuous(breaks = y_breaks, 
+                     labels = label_percent()) +
+  labs(x = "County Population (log scale)",
+       y = "Percent Black Population",
+       title = "These Counties Did not Flip in 2016",
+       caption = "")
+
+
+p_layer_3 <- ggplot(data = subset(county_data,
+                     flipped == "Yes"),
+                    mapping = aes(x = pop, y = black/100)) + 
+  geom_point(color = "gray30", 
+             alpha = 0.25, 
+             size = rel(2)) + 
+   geom_point(data = subset(county_data,
+                     flipped == "Yes"), 
+              color = NA, 
+              alpha = 0,
+              size = rel(2)) +
+  scale_x_log10(breaks = x_breaks,
+                labels = label_number(scale_cut = cut_short_scale())) + 
+  scale_y_continuous(breaks = y_breaks, 
+                     labels = label_percent()) +
+  expand_limits(x = pop_max, 
+                y = black_max) +
+  labs(x = "County Population (log scale)",
+       y = "Percent Black Population",
+       title = "These Counties Did",
+       caption = "")
+
+
+p_layer_4 <- ggplot(data = subset(county_data,
+                     flipped == "No"),
+                    mapping = aes(x = pop, y = black/100)) + 
+  geom_point(color = "gray30", 
+             alpha = 0.25, 
+             size = rel(2)) + 
+  geom_point(data = subset(county_data,
+                      flipped == "Yes"),
+             mapping = aes(x = pop, y = black/100,
+                           color = partywinner16), 
+             size = rel(2)) + 
+  scale_x_log10(breaks = x_breaks,
+                labels = label_number(scale_cut = cut_short_scale())) + 
+  scale_y_continuous(breaks = y_breaks, 
+                     labels = label_percent()) +
+  scale_color_manual(values = party_colors) +
+  expand_limits(x = pop_max, 
+                y = black_max) +
+  labs(x = "County Population (log scale)",
+       y = "Percent Black Population",
+       title = "Counties that Flipped shown by Party Color",
+       color = "Flipped to",
+       caption = "Counties in gray did not flip.")
+
+p_layer_5 <- ggplot(data = subset(county_data,
+                     flipped == "No"),
+                    mapping = aes(x = pop, y = black/100)) + 
+  geom_point(color = "gray30", 
+             alpha = 0.25, 
+             size = rel(2)) + 
+  geom_point(data = subset(county_data,
+                      flipped == "Yes"),
+             mapping = aes(x = pop, y = black/100,
+                           color = partywinner16), 
+             size = rel(2)) + 
+  geom_text_repel(data = subset(county_data,
+              flipped == "Yes" & black  > 25),
+                  mapping = aes(x = pop,
+                    y = black/100, label = state, 
+                    family = "Tenso Slide", 
+                    face = "bold"), size = rel(3.5)) + 
+  scale_x_log10(breaks = x_breaks,
+                labels = label_number(scale_cut = cut_short_scale())) + 
+  scale_y_continuous(breaks = y_breaks, 
+                     labels = label_percent()) +
+  scale_color_manual(values = party_colors) +
+  expand_limits(x = pop_max, 
+                y = black_max) +
+  labs(x = "County Population (log scale)",
+       y = "Percent Black Population",
+       color = "Flipped to",
+       title = "Counties that Flipped shown by Party Color, and labeled by State",
+       caption = "Counties in gray did not flip.")
+
+
+## Zoom in -- replace expand_limits() with coord_cartesian()
+## Adjust repel criteria also
+p_layer_6 <- ggplot(data = subset(county_data,
+                     flipped == "No"),
+                    mapping = aes(x = pop, y = black/100)) + 
+  geom_point(color = "gray30", 
+             alpha = 0.25, 
+             size = rel(2)) + 
+  geom_point(data = subset(county_data,
+                      flipped == "Yes"),
+             mapping = aes(x = pop, y = black/100,
+                           color = partywinner16), 
+             size = rel(2)) + 
+  geom_text_repel(data = subset(county_data,
+              flipped == "Yes" & black  
+              > 35 & black < 50),
+                  mapping = aes(x = pop,
+                    y = black/100, label = state, 
+                    family = "Tenso Slide", 
+                    face = "bold"), size = rel(3.5)) + 
+  scale_x_log10(breaks = x_breaks,
+                labels = label_number(scale_cut = cut_short_scale())) + 
+  scale_y_continuous(breaks = y_breaks, 
+                     labels = label_percent()) +
+  scale_color_manual(values = party_colors) +
+  coord_cartesian(xlim = c(0.75e4, 1.5e5), 
+                  ylim = c(0.2, 0.5)) +
+  labs(x = "County Population (log scale)",
+       y = "Percent Black Population",
+       color = "Flipped to",
+       title = "Counties that Flipped shown by Party Color, and labeled by State",
+       caption = "Counties in gray did not flip.")
+
+
+
+```
+
+```{r, echo = FALSE, fig.width=15, fig.height=8.5}
+p_layer_1
+```
+
+---
+layout: false
+
+```{r, echo = FALSE, fig.width=15, fig.height=8.5}
+p_layer_2
+```
+
+---
+layout: false
+
+```{r, echo = FALSE, fig.width=15, fig.height=8.5}
+p_layer_3
+```
+
+---
+layout: false
+
+```{r, echo = FALSE, fig.width=15, fig.height=8.5}
+p_layer_4
+```
+
+---
+layout: false
+
+```{r, echo = FALSE, fig.width=15, fig.height=8.5}
+p_layer_5
+```
+
+---
+layout: false
+
+```{r, echo = FALSE, fig.width=15, fig.height=8.5}
+p_layer_6
+```
+
+
+---
+layout: false
+
+```{r, echo = FALSE, fig.width=15, fig.height=8.5}
+p_layer_5
+```
 
 

@@ -1518,8 +1518,8 @@ p_out <- p + geom_hline(yintercept = 0.5,
                color = "gray80") +
     geom_point() +
     geom_text_repel() +
-    scale_x_continuous(labels = percent_format()) + #<<
-    scale_y_continuous(labels = percent_format()) #<<
+    scale_x_continuous(labels = label_percent()) + #<<
+    scale_y_continuous(labels = label_percent()) #<<
 ```
 
 ---
@@ -1553,8 +1553,8 @@ p_out <- p + geom_hline(yintercept = 0.5,
              color = "gray80") +
   geom_point() +
   geom_text_repel(mapping = aes(family = "Tenso Slide")) +#<<
-  scale_x_continuous(labels = percent_format()) +
-  scale_y_continuous(labels = percent_format()) +
+  scale_x_continuous(labels = label_percent()) +
+  scale_y_continuous(labels = label_percent()) +
   labs(x = x_label, y = y_label,  #<<
        title = p_title, 
        subtitle = p_subtitle,

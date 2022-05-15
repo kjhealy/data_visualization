@@ -1626,7 +1626,7 @@ fb_map |>
   geom_sf(color = "gray80", size = 0.1) +
   scale_fill_continuous_sequential(
     palette = "Oranges",
-    labels = scales::percent_format()) +
+    labels = scales::label_percent()) +
   labs(fill = "Percent of all French Bulldogs") +
   annotate(geom = "text", 
            x = -74.145 + 0.029, 
@@ -1656,7 +1656,7 @@ fb_map |>
   geom_sf(color = "gray80", size = 0.1) +
   scale_fill_continuous_sequential(
     palette = "Oranges",
-    labels = scales::percent_format()) +
+    labels = scales::label_percent()) +
   labs(fill = "Percent of All French Bulldogs") +
   annotate(geom = "text", 
            x = -74.145 + 0.029, 
@@ -1718,7 +1718,7 @@ fb_map2 |>
   geom_sf(color = "gray80", size = 0.1) +
   scale_fill_continuous_sequential(
     palette = "Oranges", 
-    labels = scales::percent_format()) +
+    labels = scales::label_percent()) +
   labs(fill = "Percent of all French Bulldogs") +
   annotate(geom = "text", 
            x = -74.145 + 0.029, 
@@ -1748,7 +1748,7 @@ fb_map2 |>
   geom_sf(color = "gray80", size = 0.1) +
   scale_fill_continuous_sequential(
     palette = "Oranges", 
-    labels = scales::percent_format()) +
+    labels = scales::label_percent()) +
   labs(fill = "Percent of all French Bulldogs") +
   annotate(geom = "text", 
            x = -74.145 + 0.029, 

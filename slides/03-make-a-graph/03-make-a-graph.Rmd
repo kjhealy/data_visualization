@@ -651,7 +651,7 @@ p <- ggplot(data = gapminder,
                           y=lifeExp))
 p + geom_point() +
     geom_smooth(method = "lm") +
-    scale_x_log10(labels = scales::dollar_format())
+    scale_x_log10(labels = scales::label_dollar())
 ```
 
 ---
@@ -665,7 +665,7 @@ p <- ggplot(data = gapminder,
                           y = lifeExp))
 p + geom_point() + 
   geom_smooth(method = "lm") +
-    scale_x_log10(labels = scales::dollar_format()) +
+    scale_x_log10(labels = scales::label_dollar()) +
     labs(x = "GDP Per Capita", 
          y = "Life Expectancy in Years",
          title = "Economic Growth and Life Expectancy",
@@ -784,7 +784,7 @@ p <- ggplot(data = gapminder,
                           fill = continent))
 p + geom_point() +
     geom_smooth(method = "loess") +
-    scale_x_log10(labels = scales::dollar_format())
+    scale_x_log10(labels = scales::label_dollar())
 ```
 
 ---
@@ -796,7 +796,7 @@ p <- ggplot(data = gapminder,
                           y = lifeExp))
 p + geom_point(mapping = aes(color = continent)) +
     geom_smooth(method = "loess") +
-    scale_x_log10(labels = scales::dollar_format())
+    scale_x_log10(labels = scales::label_dollar())
  
 ```
 
