@@ -975,7 +975,7 @@ p + theme_dark()
 
 ---
 
-# Adjustments with the .kjh-green[`theme()`] function]
+# Adjustments with the .kjh-green[`theme()`] function
 
 .pull-left.w45[
 ```{r codefig-themeadditive, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5}
@@ -997,4 +997,324 @@ p + theme_bw() +
   knitr::fig_chunk("codefig-themeadditive", "png"))
 ```
 ]
+
+---
+
+# There are _many_ adjustable theme elements
+
+.small.pull-left.w45[
+.kjh-orange[`line`]  .kjh-orange[`rect`] .kjh-orange[`text`] .kjh-orange[`title`] .kjh-orange[`aspect.ratio`]
+
+.kjh-orange[`axis.title`] .kjh-orange[`axis.title.x`] .kjh-orange[`axis.title.x.top`] .kjh-orange[`axis.title.x.bottom`] .kjh-orange[`axis.title.y`] .kjh-orange[`axis.title.y.left`] .kjh-orange[`axis.title.y.right`] .kjh-orange[`axis.text`] .kjh-orange[`axis.text.x`] .kjh-orange[`axis.text.x.top`] .kjh-orange[`axis.text.x.bottom`] .kjh-orange[`axis.text.y`] .kjh-orange[`axis.text.y.left`] .kjh-orange[`axis.text.y.right`] .kjh-orange[`axis.ticks`] .kjh-orange[`axis.ticks.x`] .kjh-orange[`axis.ticks.x.top`] .kjh-orange[`axis.ticks.x.bottom`] .kjh-orange[`axis.ticks.y`] .kjh-orange[`axis.ticks.y.left`] .kjh-orange[`axis.ticks.y.right`] .kjh-orange[`axis.ticks.length`] .kjh-orange[`axis.ticks.length.x`] .kjh-orange[`axis.ticks.length.x.top`] .kjh-orange[`axis.ticks.length.x.bottom`] .kjh-orange[`axis.ticks.length.y`] .kjh-orange[`axis.ticks.length.y.left`] .kjh-orange[`axis.ticks.length.y.right`] .kjh-orange[`axis.line`] .kjh-orange[`axis.line.x`] .kjh-orange[`axis.line.x.top`] .kjh-orange[`axis.line.x.bottom`] .kjh-orange[`axis.line.y`] .kjh-orange[`axis.line.y.left`] .kjh-orange[`axis.line.y.right`]
+
+]
+
+.small.pull-right.w55[
+
+.kjh-orange[`legend.background`] .kjh-orange[`legend.margin`] .kjh-orange[`legend.spacing`] .kjh-orange[`legend.spacing.x`] .kjh-orange[`legend.spacing.y`] .kjh-orange[`legend.key`] .kjh-orange[`legend.key.size`] .kjh-orange[`legend.key.height`] .kjh-orange[`legend.key.width`] .kjh-orange[`legend.text`] .kjh-orange[`legend.text.align`] .kjh-orange[`legend.title`] .kjh-orange[`legend.title.align`] .kjh-orange[`legend.position`] .kjh-orange[`legend.direction`] .kjh-orange[`legend.justification`] .kjh-orange[`legend.box`] .kjh-orange[`legend.box.just`] .kjh-orange[`legend.box.margin`] .kjh-orange[`legend.box.background`] .kjh-orange[`legend.box.spacing`]
+
+.kjh-orange[`panel.background`] .kjh-orange[`panel.border`] .kjh-orange[`panel.spacing`] .kjh-orange[`panel.spacing.x`] .kjh-orange[`panel.spacing.y`] .kjh-orange[`panel.grid`] .kjh-orange[`panel.grid.major`] .kjh-orange[`panel.grid.minor`] .kjh-orange[`panel.grid.major.x`] .kjh-orange[`panel.grid.major.y`] .kjh-orange[`panel.grid.minor.x`] .kjh-orange[`panel.grid.minor.y`] .kjh-orange[`panel.ontop`] .kjh-orange[`plot.background`] 
+
+.kjh-orange[`plot.title`] .kjh-orange[`plot.title.position`] .kjh-orange[`plot.subtitle`] .kjh-orange[`plot.caption`] .kjh-orange[`plot.caption.position`] .kjh-orange[`plot.tag`] .kjh-orange[`plot.tag.position`] .kjh-orange[`plot.margin`]
+
+.kjh-orange[`strip.background`] .kjh-orange[`strip.background.x`] .kjh-orange[`strip.background.y`] .kjh-orange[`strip.placement`] .kjh-orange[`strip.text`] .kjh-orange[`strip.text.x`] .kjh-orange[`strip.text.y`] .kjh-orange[`strip.switch.pad.grid`] .kjh-orange[`strip.switch.pad.wrap`]
+]
+
+---
+
+# But they are structured 
+
+.small.pull-left.w45[
+
+.kjh-pink[`line`]  .kjh-pink[`rect`] .kjh-pink[`text`] .kjh-pink[`title`] .kjh-pink[`aspect.ratio`]
+
+.kjh-lblue[`axis.title`] .kjh-lblue[`axis.title.x`] .kjh-lblue[`axis.title.x.top`] .kjh-lblue[`axis.title.x.bottom`] .kjh-lblue[`axis.title.y`] .kjh-lblue[`axis.title.y.left`] .kjh-lblue[`axis.title.y.right`] .kjh-lblue[`axis.text`] .kjh-lblue[`axis.text.x`] .kjh-lblue[`axis.text.x.top`] .kjh-lblue[`axis.text.x.bottom`] .kjh-lblue[`axis.text.y`] .kjh-lblue[`axis.text.y.left`] .kjh-lblue[`axis.text.y.right`] .kjh-lblue[`axis.ticks`] .kjh-lblue[`axis.ticks.x`] .kjh-lblue[`axis.ticks.x.top`] .kjh-lblue[`axis.ticks.x.bottom`] .kjh-lblue[`axis.ticks.y`] .kjh-lblue[`axis.ticks.y.left`] .kjh-lblue[`axis.ticks.y.right`] .kjh-lblue[`axis.ticks.length`] .kjh-lblue[`axis.ticks.length.x`] .kjh-lblue[`axis.ticks.length.x.top`] .kjh-lblue[`axis.ticks.length.x.bottom`] .kjh-lblue[`axis.ticks.length.y`] .kjh-lblue[`axis.ticks.length.y.left`] .kjh-lblue[`axis.ticks.length.y.right`] .kjh-lblue[`axis.line`] .kjh-lblue[`axis.line.x`] .kjh-lblue[`axis.line.x.top`] .kjh-lblue[`axis.line.x.bottom`] .kjh-lblue[`axis.line.y`] .kjh-lblue[`axis.line.y.left`] .kjh-lblue[`axis.line.y.right`]
+]
+
+.small.pull-right.w55[
+
+.kjh-green[`legend.background`] .kjh-green[`legend.margin`] .kjh-green[`legend.spacing`] .kjh-green[`legend.spacing.x`] .kjh-green[`legend.spacing.y`] .kjh-green[`legend.key`] .kjh-green[`legend.key.size`] .kjh-green[`legend.key.height`] .kjh-green[`legend.key.width`] .kjh-green[`legend.text`] .kjh-green[`legend.text.align`] .kjh-green[`legend.title`] .kjh-green[`legend.title.align`] .kjh-green[`legend.position`] .kjh-green[`legend.direction`] .kjh-green[`legend.justification`] .kjh-green[`legend.box`] .kjh-green[`legend.box.just`] .kjh-green[`legend.box.margin`] .kjh-green[`legend.box.background`] .kjh-green[`legend.box.spacing`]
+
+.kjh-orange[`panel.background`] .kjh-orange[`panel.border`] .kjh-orange[`panel.spacing`] .kjh-orange[`panel.spacing.x`] .kjh-orange[`panel.spacing.y`] .kjh-orange[`panel.grid`] .kjh-orange[`panel.grid.major`] .kjh-orange[`panel.grid.minor`] .kjh-orange[`panel.grid.major.x`] .kjh-orange[`panel.grid.major.y`] .kjh-orange[`panel.grid.minor.x`] .kjh-orange[`panel.grid.minor.y`] .kjh-orange[`panel.ontop`] 
+
+.kjh-orange[`plot.background`] .kjh-orange[`plot.title`] .kjh-orange[`plot.title.position`] .kjh-orange[`plot.subtitle`] .kjh-orange[`plot.caption`] .kjh-orange[`plot.caption.position`] .kjh-orange[`plot.tag`] .kjh-orange[`plot.tag.position`] .kjh-orange[`plot.margin`]
+
+.kjh-blue[`strip.background`] .kjh-blue[`strip.background.x`] .kjh-blue[`strip.background.y`] .kjh-blue[`strip.placement`] .kjh-blue[`strip.text`] .kjh-blue[`strip.text.x`] .kjh-blue[`strip.text.y`] .kjh-blue[`strip.switch.pad.grid`] .kjh-blue[`strip.switch.pad.wrap`]
+]
+
+
+---
+
+# And _inherit_  
+
+.small.pull-left.w45[
+
+**.kjh-pink[`line`]**  **.kjh-pink[`rect`]** **.kjh-pink[`text`]** **.kjh-pink[`title`]** **.kjh-pink[`aspect.ratio`]**
+
+**.kjh-lblue[`axis.title`]** .tiny[.kjh-lblue[`axis.title.x`] .kjh-lblue[`axis.title.x.top`] .kjh-lblue[`axis.title.x.bottom`] .kjh-lblue[`axis.title.y`] .kjh-lblue[`axis.title.y.left`] .kjh-lblue[`axis.title.y.right`]] **.kjh-lblue[`axis.text`]** .tiny[.kjh-lblue[`axis.text.x`] .kjh-lblue[`axis.text.x.top`] .kjh-lblue[`axis.text.x.bottom`] .kjh-lblue[`axis.text.y`] .kjh-lblue[`axis.text.y.left`] .kjh-lblue[`axis.text.y.right`]] **.kjh-lblue[`axis.ticks`]** .tiny[.kjh-lblue[`axis.ticks.x`] .kjh-lblue[`axis.ticks.x.top`] .kjh-lblue[`axis.ticks.x.bottom`] .kjh-lblue[`axis.ticks.y`] .kjh-lblue[`axis.ticks.y.left`] .kjh-lblue[`axis.ticks.y.right`] .kjh-lblue[`axis.ticks.length`] .kjh-lblue[`axis.ticks.length.x`] .kjh-lblue[`axis.ticks.length.x.top`] .kjh-lblue[`axis.ticks.length.x.bottom`] .kjh-lblue[`axis.ticks.length.y`] .kjh-lblue[`axis.ticks.length.y.left`] .kjh-lblue[`axis.ticks.length.y.right`]] **.kjh-lblue[`axis.line`]** .tiny[.kjh-lblue[`axis.line.x`] .kjh-lblue[`axis.line.x.top`] .kjh-lblue[`axis.line.x.bottom`] .kjh-lblue[`axis.line.y`] .kjh-lblue[`axis.line.y.left`] .kjh-lblue[`axis.line.y.right`]]
+]
+
+.small.pull-right.w55[
+
+**.kjh-green[`legend.background`]** **.kjh-green[`legend.margin`]** **.kjh-green[`legend.spacing`]** .tiny[.kjh-green[`legend.spacing.x`] .kjh-green[`legend.spacing.y`]] **.kjh-green[`legend.key`]** .tiny[.kjh-green[`legend.key.size`] .kjh-green[`legend.key.height`] .kjh-green[`legend.key.width`]] **.kjh-green[`legend.text`]** **.kjh-green[`legend.text.align`]** **.kjh-green[`legend.title`]** **.kjh-green[`legend.title.align`]** **.kjh-green[`legend.position`]** **.kjh-green[`legend.direction`]** **.kjh-green[`legend.justification`]** **.kjh-green[`legend.box`]** .tiny[.kjh-green[`legend.box.just`] .kjh-green[`legend.box.margin`] .kjh-green[`legend.box.background`] .kjh-green[`legend.box.spacing`]]
+
+**.kjh-orange[`panel.background`]** **.kjh-orange[`panel.border`]** **.kjh-orange[`panel.spacing`]** .tiny[.kjh-orange[`panel.spacing.x`] .kjh-orange[`panel.spacing.y`]] **.kjh-orange[`panel.grid`]** .tiny[.kjh-orange[`panel.grid.major`] .kjh-orange[`panel.grid.minor`] .kjh-orange[`panel.grid.major.x`] .kjh-orange[`panel.grid.major.y`] .kjh-orange[`panel.grid.minor.x`] .kjh-orange[`panel.grid.minor.y`]] **.kjh-orange[`panel.ontop`]**
+
+**.kjh-orange[`plot.background`]** **.kjh-orange[`plot.title`]** **.kjh-orange[`plot.title.position`]** **.kjh-orange[`plot.subtitle`]** **.kjh-orange[`plot.caption`]** **.kjh-orange[`plot.caption.position`]** **.kjh-orange[`plot.tag`]** **.kjh-orange[`plot.tag.position`]** **.kjh-orange[`plot.margin`]**
+
+**.kjh-blue[`strip.background`]** .tiny[.kjh-blue[`strip.background.x`] .kjh-blue[`strip.background.y`]] **.kjh-blue[`strip.placement`]** **.kjh-blue[`strip.text`]** .tiny[.kjh-blue[`strip.text.x`] .kjh-blue[`strip.text.y`]] **.kjh-blue[`strip.switch.pad.grid`]** **.kjh-blue[`strip.switch.pad.wrap`]**
+]
+
+---
+
+# Two kinds of adjustment
+
+.medium[It's a single setting. E.g, `legend.position` can be `"none"`, `"left"`, `"right"`, `"bottom"`, or `"top"`]
+
+Hence, e.g., .kjh-green[`theme(`].kjh-orange[`legend.position = "top"`].kjh-green[`)`], which we have seen several times. Similarly for e.g. .kjh-orange[`legend.direction`] (can be "horizontal" or "vertical").
+
+--
+
+.medium[It's a component of the plot that might be styled in several ways. E.g., The text on the axes, or the lines in the plot panel.]
+
+If the latter ...
+
+---
+
+# If adjusting a thematic element, first ask ...
+
+.medium[_Where_ on the plot is it?]
+
+Is it part of an _axis_, part of the _panel_, the _strip_ (facet title) box, or the _legend_? This will help you find the name of the thing you want to adjust. 
+
+--
+
+E.g. "I want to adjust the text for the markings on the x-axis"
+
+You want .kjh-orange[axis.ticks.x]
+
+--
+
+E.g. "I want to adjust the styling of the main y-axis grid lines inside the plot" 
+
+You want .kjh-orange[panel.grid.major.y]
+
+
+---
+
+# If adjusting a thematic element, then ask ...
+
+.medium[What _kind_ of element is it?]
+
+Is it _text_, or a _line_, or a _rectangle_?
+
+--
+
+This will tell you what function to use to make the adjustment to the named element. 
+
+--
+
+If it's text, adjust the element with .kjh-green[`element_text()`] 
+
+--
+
+If it's a line, adjust it with .kjh-green[`element_line()`]
+
+--
+
+If it's a rectangle, with .kjh-green[`element_rect()`].
+
+---
+
+# For example ...
+
+.medium["I want to adjust the styling of the plot title"]
+
+
+--
+
+- The relevant element is .kjh-orange[`plot.title`]. 
+
+--
+
+- It's _text_.
+
+--
+
+- Inside the theme function, adjust it with .kjh-green[`element_text()`]. 
+
+
+---
+
+# For example ...
+
+.pull-left.w45[
+```{r codefig-elementtext, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5}
+
+p + theme(plot.title = 
+            element_text(size = rel(3),
+                         face = "bold", 
+                         color = "orange"))
+
+```
+]
+
+--
+
+.pull-right.w55[
+```{r, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-elementtext", "png"))
+```
+]
+
+
+---
+
+# For example ...
+
+.medium["I want to adjust y axis grid lines on the plot"]
+
+--
+
+- The relevant elements are .kjh-orange[`panel.grid.major.y`] and .kjh-orange[`panel.grid.minor.y`]. 
+
+--
+
+- These are _lines_.
+
+--
+
+- Inside the theme function, adjust it with .kjh-green[`element_line()`]. 
+
+
+---
+
+# For example ...
+
+.pull-left.w45[
+```{r codefig-elementline, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5}
+
+p + theme(panel.grid.major.y = 
+            element_line(color = "red"),
+          panel.grid.minor.y = 
+            element_line(color = "black", 
+                         linetype = "dotted"))
+
+```
+]
+
+--
+
+.pull-right.w55[
+```{r, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-elementline", "png"))
+```
+]
+
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.bottom.squish4[.kjh-yellow[The] .kjh-lblue[`ggthemes`] .kjh-yellow[package]]
+
+
+---
+layout: false
+
+```{r, echo = FALSE, fig.width=12, fig.height=8}
+p_layer_4
+```
+
+.right.w90.small[We made this earlier. Here it is in a default theme.]
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+# Theming a plot
+
+```{r}
+library(ggthemes)
+theme_set(theme_fivethirtyeight())
+
+```
+
+.medium[See how the full function call goes inside .kjh-green[`theme_set()`], including the parentheses, because we are actually running that function to set all the elements.] 
+
+
+---
+layout: false
+
+```{r, echo = FALSE, fig.width=12, fig.height=8}
+p_layer_4
+```
+
+.right.w90.small[Calling the object now draws the plot with the thematic elements added.]
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+# Theming a plot
+
+```{r}
+theme_set(theme_economist())
+
+```
+
+---
+layout: false
+
+```{r, echo = FALSE, fig.width=12, fig.height=8}
+p_layer_4
+```
+
+.right.w90.small[Calling the object now draws the plot with the thematic elements added.]
+
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+# This seems morally wrong
+
+```{r}
+theme_set(theme_stata())
+
+```
+
+---
+layout: false
+
+```{r, echo = FALSE, fig.width=12, fig.height=8}
+p_layer_4
+```
+
+.right.w90.small[Why would you do this to yourself?]
+
+
+---
+layout: false
+class: main-title main-title-inv
+
+# .middle.squish4.large[.kjh-lblue[Pick a theme]<br/> .kjh-orange[and stick with it]]
+
+
+
+
+
+
+
 
