@@ -1124,6 +1124,10 @@ If it's a line, adjust it with .kjh-green[`element_line()`]
 
 If it's a rectangle, with .kjh-green[`element_rect()`].
 
+--
+
+If you want to _fully turn off_ an element, use .kjh-green[`element_blank()`]
+
 ---
 
 # For example ...
