@@ -232,16 +232,39 @@ layout: false
 ---
 layout: false
 
-.center[![:scale 70%](img/01_pew_teeth_graph_redrawn.png)]
+.center[![:scale 50%](img/01_pew_teeth_graph_redrawn.png)]
 
 .right.w90.small[Pew Research]
+
+.small[A. In recent years, the rate of cavities has increased in many countries]<br/>
+.small[B. In some countries, people brush their teeth more frequently than in other countries]<br/>
+.small[C. The more sugar people eat, the more likely they are to get cavities]<br/>
+.small[D. In recent years, the consumption of sugar has increased in many countries]
 
 ---
 layout: false
 
-.center[![:scale 70%](img/01_pew_teeth_graph_redrawn_62pct.png)]
+.center[![:scale 50%](img/01_pew_teeth_graph_redrawn.png)]
 
 .right.w90.small[Pew Research]
+
+.small[A. In recent years, the rate of cavities has increased in many countries]<br/>
+.small[B. In some countries, people brush their teeth more frequently than in other countries]<br/>
+.small[.kjh-pink[**C. The more sugar people eat, the more likely they are to get cavities**]]<br/>
+.small[D. In recent years, the consumption of sugar has increased in many countries]
+
+---
+layout: false
+
+.center[![:scale 50%](img/01_pew_teeth_graph_redrawn_62pct.png)]
+
+.right.w90.small[Pew Research]
+
+.small[A. In recent years, the rate of cavities has increased in many countries]<br/>
+.small[B. In some countries, people brush their teeth more frequently than in other countries]<br/>
+.small[.kjh-pink[**C. The more sugar people eat, the more likely they are to get cavities**]]<br/>
+.small[D. In recent years, the consumption of sugar has increased in many countries]
+
 
 ---
 
