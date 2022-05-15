@@ -1307,7 +1307,7 @@ p_layer_4
 
 ---
 layout: false
-class: main-title main-title-inv
+class: main-title main-title-inv middle
 
 # .middle.squish4.large[.kjh-lblue[Pick a theme]<br/> .kjh-orange[and stick with it]]
 
