@@ -56,7 +56,7 @@ class: title title-1
 # Load our libraries
 
 .SMALL[
-```{r 03a-dplyr-basics-2, message = TRUE}
+```{r 06-work-with-models-1, message = TRUE}
 library(here)      # manage file paths
 library(socviz)    # data and some useful functions
 library(tidyverse) # your friend and mine
@@ -101,7 +101,7 @@ p + geom_point(alpha=0.1) +
 --
 
 .pull-right.w55[
-```{r, echo=FALSE}
+```{r 06-work-with-models-2, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-model1", "png"))
 ```
@@ -129,7 +129,7 @@ p + geom_point(alpha=0.1) +
 --
 
 .pull-right.w55[
-```{r, echo=FALSE}
+```{r 06-work-with-models-3, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-model2", "png"))
 ```
@@ -156,7 +156,7 @@ p + geom_point(alpha=0.1) +
 --
 
 .pull-right.w55[
-```{r, echo=FALSE}
+```{r 06-work-with-models-4, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-model3", "png"))
 ```
@@ -187,7 +187,7 @@ class: title title-1
 # Again, objects are Bento Boxes of To-Do lists
 
 
-```{r}
+```{r 06-work-with-models-5 }
 gapminder
 ```
 
@@ -195,7 +195,7 @@ gapminder
 
 # Fit a model
 
-```{r}
+```{r 06-work-with-models-6 }
 out <- lm(formula = lifeExp ~ gdpPercap + log(pop) + continent, 
           data = gapminder)
 
@@ -229,7 +229,7 @@ class: right bottom main-title section-title-1
 
 # The labor-intensive way
 
-```{r}
+```{r 06-work-with-models-7 }
 min_gdp <- min(gapminder$gdpPercap)
 max_gdp <- max(gapminder$gdpPercap)
 med_pop <- median(gapminder$pop)
@@ -249,7 +249,7 @@ pred_df
 
 # The labor-intensive way
 
-```{r}
+```{r 06-work-with-models-8 }
 # Get the predicted values
 pred_out <- predict(object = out,
                     newdata = pred_df,
@@ -262,7 +262,7 @@ head(pred_out)
 
 # The labor-intensive way
 
-```{r}
+```{r 06-work-with-models-9 }
 # Bind them into one data frame. We can do this safely
 # here because we know the row order by construction. 
 # But this is not a safe approach in general.
@@ -275,7 +275,7 @@ head(pred_df)
 
 # The labor-intensive way
 
-```{r}
+```{r 06-work-with-models-10 }
 p <- ggplot(data = subset(pred_df, continent %in% c("Europe", "Africa")),
             aes(x = gdpPercap,
                 y = fit, 
@@ -301,7 +301,7 @@ p_out <- p + geom_point(data = subset(gapminder,
 ---
 layout: false
 
-```{r, echo = FALSE, fig.width=12, fig.height=7}
+```{r 06-work-with-models-11, echo = FALSE, fig.width=12, fig.height=7}
 p_out
 ```
 
@@ -325,7 +325,7 @@ class: center middle main-title section-title-1
 
 # We can't .kjh-yellow[do] anything with this
 
-```{r}
+```{r 06-work-with-models-12 }
 out <- lm(formula = lifeExp ~ gdpPercap + log(pop) + continent, 
           data = gapminder)
 
@@ -337,11 +337,11 @@ summary(out)
 
 # Tidy regression output with .kjh-yellow[broom]
 
-```{r iterating-8}
+```{r 06-work-with-models-13 }
 library(broom)
 ```
 
-```{r iterating-9}
+```{r 06-work-with-models-14 }
 tidy(out)
 ```
 
@@ -352,7 +352,7 @@ That's a _lot_ nicer. Now it's just a tibble. We know those.
 # Tidy regression output with .kjh-yellow[broom]
 
 
-```{r iterating-11}
+```{r 06-work-with-models-15 }
 out_conf <- tidy(out, conf.int = TRUE)
 out_conf 
 ```
@@ -363,7 +363,7 @@ out_conf
 # Tidy regression output with .kjh-yellow[broom]
 
 
-```{r 07-iterating-on-data-62 }
+```{r 06-work-with-models-16 }
 out_conf |> 
     filter(term %nin% "(Intercept)")  |> 
     mutate(nicelabs = prefix_strip(term, "continent")) |> 
@@ -396,7 +396,7 @@ out_conf |>
 --
 
 .pull-right.w45[
-```{r, echo=FALSE}
+```{r 06-work-with-models-17, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-broomplot", "png"))
 ```
@@ -497,7 +497,7 @@ F-statistic: 398.7 on 6 and 1697 DF,  p-value: < 2.2e-16
 
 # .kjh-orange[Observation] level
 
-```{r}
+```{r 06-work-with-models-18 }
 augment(out)
 ```
 
@@ -520,7 +520,7 @@ augment(out)
 
 # .kjh-orange[Observation] level
 
-```{r}
+```{r 06-work-with-models-19 }
 # Adding the data argument puts back any additional columns from the original
 # tibble
 out_aug <-  augment(out, data = gapminder)
@@ -528,7 +528,7 @@ head(out_aug)
 
 ```
 
-```{r}
+```{r 06-work-with-models-20 }
 ## Residuals vs Fitted Values
 p <- ggplot(data = out_aug,
             mapping = aes(x = .fitted, y = .resid))
@@ -538,7 +538,7 @@ p_out <- p + geom_point()
 ---
 layout: false
 
-```{r, echo = FALSE, fig.width=15, fig.height=8}
+```{r 06-work-with-models-21, echo = FALSE, fig.width=15, fig.height=8}
 p_out
 ```
 
@@ -594,7 +594,7 @@ F-statistic: 398.7 on 6 and 1697 DF,  p-value: < 2.2e-16
 # .kjh-pink[Component] level
 
 
-```{r}
+```{r 06-work-with-models-22 }
 glance(out)
 ```
 
@@ -615,7 +615,7 @@ class: title title-1
 
 # A Kaplan-Meier Curve
 
-```{r}
+```{r 06-work-with-models-23 }
 library(survival)
 
 
@@ -630,7 +630,7 @@ tail(lung)
 
 First we fit the model:
 
-```{r}
+```{r 06-work-with-models-24 }
 ## Hazard model
 out_cph <- coxph(Surv(time, status) ~ age + sex, data = lung)
 
@@ -644,7 +644,7 @@ summary(out_cph)
 
 Then we create the survival curve, which is _nearly_ tidy out of the box:
 
-```{r}
+```{r 06-work-with-models-25 }
 ## Hazard model
 out_surv <- survfit(out_cph)
 
@@ -661,7 +661,7 @@ summary(out_surv)
 
 Then we tidy it and draw the plot.
 
-```{r}
+```{r 06-work-with-models-26 }
 ## Much nicer. (See how the column headers have been regularized, too.)
 out_tidy <- tidy(out_surv)
 out_tidy
@@ -677,7 +677,7 @@ p_out <- out_tidy |>
 ---
 layout: false
 
-```{r, echo=FALSE, fig.height=8, fig.width=15}
+```{r 06-work-with-models-27, echo=FALSE, fig.height=8, fig.width=15}
 p_out
 ```
 
@@ -712,7 +712,7 @@ class: title title-1
 
 - You might be familiar with code that looks like this:
 
-```{r}
+```{r 06-work-with-models-28 }
 x <- 10
 
 for (i in 1:5) {
@@ -728,7 +728,7 @@ for (i in 1:5) {
 
 - We can also write, e.g., 
 
-```{r}
+```{r 06-work-with-models-29 }
 x <- c(10, 20, 30, 40)
 
 for (i in 1:length(x)) {
@@ -745,7 +745,7 @@ for (i in 1:length(x)) {
 
 - The more complicated the thing we want to do, the more likely we are to use functions to help us out.
 
-```{r}
+```{r 06-work-with-models-30 }
 x <- 10
 
 for (i in 1:5) {
@@ -760,7 +760,7 @@ for (i in 1:5) {
 
 - The simplest cases are not that different from the vectorized arithmetic we saw before. 
 
-```{r 07-iterating-on-data-5 }
+```{r 06-work-with-models-31 }
 a <- c(1:10)
 
 b <- 1
@@ -780,7 +780,7 @@ R's vectorized rules add `b` to every element of `a`. In a sense, the .kjh-green
 
 We can make this explicit by writing a function:
 
-```{r 07-iterating-on-data-6 }
+```{r 06-work-with-models-32 }
 a <- c(1:10)
 
 
@@ -792,7 +792,7 @@ add_b <- function(x) {
 
 Now:
 
-```{r 07-iterating-on-data-7 }
+```{r 06-work-with-models-33 }
 add_b(x = a)
 ```
 
@@ -805,11 +805,11 @@ In effect we take the vector **`a`** and feed it to the .kjh-green[`add_b()`] fu
 
 Again, R's vectorized approach means it automatically applies .kjh-green[`add_b()`] to every element of the x we give it.
 
-```{r 07-iterating-on-data-8 }
+```{r 06-work-with-models-34 }
 add_b(x = 10)
 ```
 
-```{r 07-iterating-on-data-9 }
+```{r 06-work-with-models-35 }
 add_b(x = c(1, 99, 1000))
 ```
 
@@ -818,7 +818,7 @@ add_b(x = c(1, 99, 1000))
 # .kjh-green[Iterating] in a pipeline
 Some operations can't directly be vectorized in this way, most often because the function we want to apply only knows what to do if it is handed, say, a vector. It doesn't understand what to do if it's handed a list of vectors or a tibble of them, etc. This is when we might find ourselves manually iterating---writing out every single step explicitly. 
 
-```{r 07-iterating-on-data-10 }
+```{r 06-work-with-models-36 }
 library(gapminder)
 gapminder |>  
   summarize(country_n = n_distinct(country), 
@@ -836,7 +836,7 @@ That's tedious to write! Computers are supposed to allow us to avoid that sort o
 
 So how would we iterate this? What we want is to apply the .kjh-green[**`n_distinct()`**] function to each column of `gapminder`. But we can't easily write a loop inside a pipeline. We want a way to iterate that lets us repeatedly apply a function without explicitly writing a loop. 
 
-```{r 07-iterating-on-data-11 }
+```{r 06-work-with-models-37 }
 library(gapminder)
 gapminder |>  
   summarize(n_distinct(country), 
@@ -854,7 +854,7 @@ gapminder |>
 
 In real life, you'd use .kjh-green[**across()**], like this:
 
-```{r 07-iterating-on-data-12 }
+```{r 06-work-with-models-38 }
 gapminder |>  
   summarize(across(everything(), n_distinct))
 ```
@@ -870,7 +870,7 @@ This is what the .kjh-green[`map()`] function is for.
 .pull-left[
 
 
-```{r 07-iterating-on-data-13 }
+```{r 06-work-with-models-39 }
   map(gapminder, n_distinct)
 ```
 
@@ -891,7 +891,7 @@ Read it as "Feed each column of `gapminder` to the .kjh-green[**`n_distinct()`**
 
 Or, in pipeline form:
 
-```{r 07-iterating-on-data-14 }
+```{r 06-work-with-models-40 }
 gapminder |>  
   map(n_distinct)
 ```
@@ -910,7 +910,7 @@ You can see we are getting a _list_ back.
 
 Or, in pipeline form:
 
-```{r 07-iterating-on-data-15 }
+```{r 06-work-with-models-41 }
 result <- gapminder |>  
   map(n_distinct)
 
@@ -929,7 +929,7 @@ result[[2]]
 But we know .kjh-green[**`n_distinct()`**] should always return an integer. So we use .kjh-green[**`map_int()`**] instead of the generic .kjh-green[**`map()`**].
 
 
-```{r 07-iterating-on-data-16 }
+```{r 06-work-with-models-42 }
 gapminder |>  
   map_int(n_distinct)
 ```
@@ -955,7 +955,7 @@ class: title title-1
 
 Let's say I want to fit a simple model to data for all countries in Europe in 1977.
 
-```{r iterating-20}
+```{r 06-work-with-models-43 }
 eu77 <- gapminder |> 
   filter(continent == "Europe", year == 1977)
 
@@ -963,7 +963,7 @@ fit <- lm(lifeExp ~ log(gdpPercap), data = eu77)
 ```
 
 
-```{r iterating-21}
+```{r 06-work-with-models-44 }
 summary(fit)
 ```
 
@@ -974,7 +974,7 @@ summary(fit)
 
 What if I want to do that for all Continent-Year combinations? I'm not going to write a loop!
 
-```{r iterating-22}
+```{r 06-work-with-models-45 }
 
 out_le <- gapminder |>
     group_by(continent, year) |>
@@ -992,7 +992,7 @@ Think of nesting as a kind of "super-grouping". Look in the object inspector.
 
 Europe '77 is still in there.
 
-```{r iterating-23}
+```{r 06-work-with-models-46 }
 out_le |> 
   filter(continent == "Europe" & year == 1977) |> 
   unnest(cols = c(data))
@@ -1002,14 +1002,14 @@ out_le |>
 
 # Grouped analysis and .kjh-orange[list columns]
 
-```{r iterating-24, echo = FALSE}
+```{r 06-work-with-models-47, echo = FALSE}
 old_digits <- getOption("digits")
 options(digits = 3)
 ```
 
 Here we write a tiny, very specific function and .kjh-green[**`map()`**] it to every row in the `data` column.
 
-```{r iterating-25}
+```{r 06-work-with-models-48 }
 
 fit_ols <- function(df) {
     lm(lifeExp ~ log(gdpPercap), data = df)
@@ -1027,7 +1027,7 @@ out_le <- gapminder |>
 
 - Now we have a new column. Each row of the .kjh-orange[`model`] column contains a full regression for that continent-year.
 
-```{r 07-iterating-on-data-63 }
+```{r 06-work-with-models-49 }
 out_le
 ```
 
@@ -1038,7 +1038,7 @@ out_le
 
 We can tidy the nested models, too.
 
-```{r iterating-26}
+```{r 06-work-with-models-50 }
 
 fit_ols <- function(df) {
     lm(lifeExp ~ log(gdpPercap), data = df)
@@ -1060,7 +1060,7 @@ out_tidy
 
 We can get the tidied results out into the main table if we like.
 
-```{r 07-iterating-on-data-64 }
+```{r 06-work-with-models-51 }
 out_tidy <- out_tidy |>
     unnest(cols = c(tidied)) |>
     filter(term %nin% "(Intercept)" &
@@ -1073,7 +1073,7 @@ out_tidy
 
 # Plot what we have
 
-```{r}
+```{r 06-work-with-models-52 }
 p <- ggplot(data = out_tidy,
             mapping = aes(x = year, y = estimate,
                           ymin = estimate - 2*std.error,
@@ -1094,7 +1094,7 @@ p_out <- p +
 ---
 layout: false
 
-```{r, echo = FALSE, fig.height=6, fig.width=15}
+```{r 06-work-with-models-53, echo = FALSE, fig.height=6, fig.width=15}
 p_out
 ```
 
@@ -1113,7 +1113,7 @@ class: title title-1
 
 Let's go back to this stage:
 
-```{r}
+```{r 06-work-with-models-54 }
 # New model
 fit_ols2 <- function(df) {
     lm(lifeExp ~ log(gdpPercap) + log(pop), data = df)
@@ -1132,7 +1132,7 @@ out_tidy
 
 # A function to draw a coef plot
 
-```{r}
+```{r 06-work-with-models-55 }
 # Plot the output from our model
 mod_plot <- function(data, 
                      title){
@@ -1154,7 +1154,7 @@ mod_plot <- function(data,
 
 - When we have two arguments to feed a function we can used .kjh-green[`map2()`]. The general case is .kjh-green[`pmap()`], for passing along any number of arguments in a list.
 
-```{r}
+```{r 06-work-with-models-56 }
 out_tidy <- gapminder |>
     group_by(continent, year) |>
     nest() |> 
@@ -1175,14 +1175,14 @@ out_tidy
 # A plot!
 
 .pull-left[
-```{r, fig.height=3, fig.width=6}
+```{r 06-work-with-models-57, fig.height=3, fig.width=6}
 out_tidy$ggout[[8]]
 ```
 ]
 
 
 .pull-right[
-```{r, fig.height=3, fig.width=6}
+```{r 06-work-with-models-58, fig.height=3, fig.width=6}
 out_tidy$ggout[[18]]
 ```
 ]
@@ -1195,7 +1195,7 @@ out_tidy$ggout[[18]]
 
 .kjh-green[`walk()`] is .kjh-green[`map()`] for when you just want a "side-effect" such as printed output. There is also .kjh-green[`walk2()`] and .kjh-green[`pwalk()`]
 
-```{r}
+```{r 06-work-with-models-59 }
 
 pwalk(
   list(
@@ -1216,7 +1216,7 @@ pwalk(
 
 # Peek in the .kjh-orange[`figures/`] folder
 
-```{r}
+```{r 06-work-with-models-60 }
 fs::dir_ls(here("figures")) |> 
   basename()
 ```
@@ -1268,7 +1268,7 @@ class: title title-1
 
 # An example from the GSS
 
-```{r}
+```{r 06-work-with-models-61 }
 gss_sm
 ```
 
@@ -1276,7 +1276,7 @@ gss_sm
 
 # Set up our model
 
-```{r}
+```{r 06-work-with-models-62 }
 gss_sm$polviews_m <- relevel(gss_sm$polviews, 
                              ref = "Moderate")
 
@@ -1292,7 +1292,7 @@ tidy(out_bo)
 
 # Calculate the Marginal Effects
 
-```{r}
+```{r 06-work-with-models-63 }
 library(marginaleffects)
 
 bo_mfx <- marginaleffects(out_bo)
@@ -1307,7 +1307,7 @@ as_tibble(bo_mfx)
 
 - And this gives us the Average Marginal Effects
 
-```{r}
+```{r 06-work-with-models-64 }
 summary(bo_mfx) |> 
   as_tibble()
 ```
@@ -1316,7 +1316,7 @@ summary(bo_mfx) |>
 
 # Alternatively, do it with .kjh-lblue[`broom`]
 
-```{r}
+```{r 06-work-with-models-65 }
 tidy(bo_mfx)
 ```
 
@@ -1346,7 +1346,7 @@ tidy(bo_mfx) |>
 --
 
 .pull-right.w60[
-```{r, echo=FALSE}
+```{r 06-work-with-models-66, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-meffects", "png"))
 ```
@@ -1401,7 +1401,7 @@ As always, our question is "What's the smoothest way for me to get the .kjh-oran
 
 For complex surveys, we use .kjh-lblue[`survey`], the standard package for survey analysis in R, and .kjh-lblue[`srvyr`], a helper package designed to integrate what .kjh-lblue[`survey`] can do with the Tiydverse framework. 
 
-```{r}
+```{r 06-work-with-models-67 }
 ## Load the packages
 library(survey)
 library(srvyr)
@@ -1413,7 +1413,7 @@ library(srvyr)
 
 This time, a small piece of the full GSS from the early 1970s to 2018.
 
-```{r}
+```{r 06-work-with-models-68 }
 gss_lon
 ```
 
@@ -1422,7 +1422,7 @@ gss_lon
 
 # Add the weighting information
 
-```{r}
+```{r 06-work-with-models-69 }
 # These details are dependent on the kind of survey you're working with
 options(survey.lonely.psu = "adjust")
 options(na.action="na.pass")
@@ -1440,9 +1440,9 @@ gss_svy # Now it's no longer simply a tibble
 
 ---
 
-# Trends in .kjh-orange[`happy`]
+# Trends in the .kjh-orange[`happy`] measure
 
-```{r}
+```{r 06-work-with-models-70 }
 out_hap <- gss_svy |> 
     group_by(year, sex, happy)  |> 
     summarize(prop = survey_mean(na.rm = TRUE, vartype = "ci"))
@@ -1453,10 +1453,11 @@ out_hap
 Once again, it's now a tidy tibble, and we know what to do with those.
 
 ---
-`r chunk_reveal("reveal-gsshappy", widths = c(45,55), title = "# Build the plot")`
 
-```{r reveal-gsshappy, include = FALSE}
-out_hap |>
+
+.pull-left.w45[
+```{r codefig-gssaltfig, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5}
+out_hap |>  
   filter(happy == "Not Too Happy") |> 
   ggplot(mapping = aes(x = year, 
                        y = prop,
@@ -1473,13 +1474,24 @@ out_hap |>
     title = "Trends in Unhappiness", 
     subtitle = "1975-2018", 
     caption = "Data: GSS.")
+
 ```
+]
+
+--
+
+.pull-right.w55[
+```{r 06-work-with-models-71, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-gssaltfig", "png"))
+```
+]
 
 ---
 
 # With a proper aspect ratio
 
-```{r, echo = FALSE, fig.width=11, fig.height=6}
+```{r 06-work-with-models-72, echo = FALSE, fig.width=11, fig.height=6}
 out_hap |>
   filter(happy == "Not Too Happy") |> 
   ggplot(mapping = aes(x = year, 
@@ -1501,9 +1513,14 @@ out_hap |>
 
 ---
 
-`r chunk_reveal("reveal-bwmrg", widths = c(50,50), title = "# A more complex example")`
+layout: true
+class: title title-1
 
-```{r reveal-bwmrg, include = FALSE}
+---
+
+# A more complex example
+
+```{r 06-work-with-models-73 }
 gss_svy |>
   filter(year %in% seq(1976, 2016, by = 4)) |>
   group_by(year, race, degree) |>
@@ -1514,7 +1531,7 @@ gss_svy |>
 
 # Let's put that in an object
 
-```{r}
+```{r 06-work-with-models-74 }
 
 out_yrd <- gss_svy |>
   filter(year %in% seq(1976, 2016, by = 4)) |>
@@ -1527,7 +1544,7 @@ out_yrd <- gss_svy |>
 
 # Check the sums
 
-```{r}
+```{r 06-work-with-models-75 }
 out_yrd |> 
   group_by(year, race) |> 
   summarize(tot = sum(prop))
@@ -1537,7 +1554,7 @@ out_yrd |>
 
 # Set up the plot
 
-```{r}
+```{r 06-work-with-models-76 }
 p <- out_yrd |> 
   drop_na() |> 
   filter(race %nin% "Other") |> 
@@ -1554,10 +1571,11 @@ dodge_w <- position_dodge(width = 0.9)
 
 
 ---
-`r chunk_reveal("reveal-gsscol", widths = c(45,55), title = "# Draw the Plot")`
 
-```{r reveal-gsscol, include = FALSE}
- 
+# Draw the plot
+
+.pull-left.w45[
+```{r codefig-barplotreplace, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5}
 p + geom_col(position = dodge_w, alpha = 0.2) +
     geom_errorbar(position = dodge_w, width = 0.2) +
     scale_x_discrete(labels = wrap_format(10)) +
@@ -1574,12 +1592,22 @@ p + geom_col(position = dodge_w, alpha = 0.2) +
     facet_wrap(~ year, ncol = 2) 
 
 ```
+]
+
+--
+
+.pull-right.w55[
+```{r 06-work-with-models-77, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-barplotreplace", "png"))
+```
+]
 
 ---
 
 # In full (but switch to rows)
 
-```{r}
+```{r 06-work-with-models-78 }
 p_out <- p + 
   geom_col(position = dodge_w, alpha = 0.2) +
   geom_errorbar(position = dodge_w, width = 0.2) +
@@ -1603,7 +1631,7 @@ p_out <- p +
 ---
 layout: false
 
-```{r, echo = FALSE, fig.width=18, fig.height=6}
+```{r 06-work-with-models-79, echo = FALSE, fig.width=18, fig.height=6}
 p_out
 ```
 
@@ -1620,7 +1648,7 @@ class: title title-1
 
 # Let's try a different view
 
-```{r}
+```{r 06-work-with-models-80 }
 p <- out_yrd |> 
   drop_na() |> 
   filter(race %nin% "Other", 
@@ -1648,7 +1676,7 @@ p_out <- p +
 ---
 layout: false
 
-```{r, echo = FALSE, fig.width=12, fig.height=8}
+```{r 06-work-with-models-81, echo = FALSE, fig.width=12, fig.height=8}
 p_out
 ```
 

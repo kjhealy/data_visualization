@@ -56,7 +56,7 @@ class: title title-1
 
 # Load our libraries
 
-```{r 03a-dplyr-basics-2, message = FALSE}
+```{r 08-polishing-and-presenting-plots-1, message = FALSE}
 library(here)       # manage file paths
 library(tidyverse)  # your friend and mine
 library(socviz)     # data and some useful functions
@@ -77,7 +77,7 @@ class: center middle main-title section-title-1
 
 # Build your plots a piece at a time
 
-```{r}
+```{r 08-polishing-and-presenting-plots-2 }
 asasec <- as_tibble(asasec)
 asasec
 ```
@@ -86,7 +86,7 @@ asasec
 
 # Build your plots a piece at a time
 
-```{r, echo = FALSE, fig.height=6, fig.width=10}
+```{r 08-polishing-and-presenting-plots-3, echo = FALSE, fig.height=6, fig.width=10}
 asasec |> 
   filter(Year == 2014) |> 
   ggplot(mapping = aes(x = Members, 
@@ -101,7 +101,7 @@ asasec |>
 
 # Build your plots a piece at a time
 
-```{r, echo = FALSE, fig.height=6, fig.width=10}
+```{r 08-polishing-and-presenting-plots-4, echo = FALSE, fig.height=6, fig.width=10}
 asasec |> 
   filter(Year == 2014) |> 
   ggplot(mapping = aes(x = Members, 
@@ -167,7 +167,7 @@ class: center middle main-title section-title-1
 
 # .huge[.kjh-lblue[More about Scales]]
 
-```{r, echo = FALSE}
+```{r 08-polishing-and-presenting-plots-5, echo = FALSE}
 kjh_set_classic_theme()
 ```
 
@@ -250,7 +250,7 @@ p + scale_color_manual(
 
 ### _Qualitative_ palettes
 
-```{r, echo = FALSE, fig.height=5.5, fig.width=7}
+```{r 08-polishing-and-presenting-plots-6, echo = FALSE, fig.height=5.5, fig.width=7}
 opar <- par(mar = c(5.1, 4.1, 4.1, 2.1))
 par(mar=c(0,4,0,0))
 RColorBrewer::display.brewer.all(type = "qual")
@@ -280,7 +280,7 @@ par(opar)
 
 ### _Sequential_ palettes
 
-```{r, echo = FALSE, fig.height=5.5, fig.width=4}
+```{r 08-polishing-and-presenting-plots-7, echo = FALSE, fig.height=5.5, fig.width=4}
 par(mar=c(0,4,0,0))
 RColorBrewer::display.brewer.all(type = "seq")
 ```
@@ -308,7 +308,7 @@ RColorBrewer::display.brewer.all(type = "seq")
 
 ### _Diverging_ palettes
 
-```{r, echo = FALSE, fig.height=5.5, fig.width=6}
+```{r 08-polishing-and-presenting-plots-8, echo = FALSE, fig.height=5.5, fig.width=6}
 par(mar=c(0,4,0,0))
 RColorBrewer::display.brewer.all(type = "div")
 ```
@@ -323,7 +323,7 @@ RColorBrewer::display.brewer.all(type = "div")
 # Qualitative Brewer Palettes
 
 
-```{r, eval = FALSE, fig.show="hold", out.width="50%"}
+```{r 08-polishing-and-presenting-plots-9, eval = FALSE, fig.show="hold", out.width="50%"}
 p + geom_point(size = 2) + 
   scale_color_brewer(palette = "Set2") +
   labs(title = "Set2")
@@ -345,13 +345,13 @@ p + geom_point(size = 2) +
 layout: false
 
 .pull-left[
-```{r, echo = FALSE, fig.height=4, fig.width=6}
+```{r 08-polishing-and-presenting-plots-10, echo = FALSE, fig.height=4, fig.width=6}
 p + geom_point(size = 3) + 
   scale_color_brewer(palette = "Set2") +
   labs(title = "Set2")
 ```
 
-```{r, echo = FALSE, fig.height=4, fig.width=6}
+```{r 08-polishing-and-presenting-plots-11, echo = FALSE, fig.height=4, fig.width=6}
 p + geom_point(size = 3) + 
   scale_color_brewer(palette = "Pastel2") +
   labs(title = "Pastel2")
@@ -359,13 +359,13 @@ p + geom_point(size = 3) +
 ]
 
 .pull-right[
-```{r, echo = FALSE, fig.height=4, fig.width=6}
+```{r 08-polishing-and-presenting-plots-12, echo = FALSE, fig.height=4, fig.width=6}
 p + geom_point(size = 3) + 
   scale_color_brewer(palette = "Dark2") +
   labs(title = "Dark2")
 ```
 
-```{r, echo = FALSE, fig.height=4, fig.width=6}
+```{r 08-polishing-and-presenting-plots-13, echo = FALSE, fig.height=4, fig.width=6}
 p + geom_point(size = 3) + 
   scale_color_brewer(palette = "Accent") +
   labs(title = "Accent")
@@ -388,7 +388,7 @@ class: title title-1
 ---
 layout: false
 
-```{r, fig.height = 8, fig.width = 16, echo = FALSE}
+```{r 08-polishing-and-presenting-plots-14, fig.height = 8, fig.width = 16, echo = FALSE}
 colorspace::hcl_palettes(plot = TRUE)
 ```
 
@@ -466,12 +466,12 @@ class: right bottom main-title section-title-1
 ---
 layout: false
 
-```{r, echo = FALSE}
+```{r 08-polishing-and-presenting-plots-15, echo = FALSE}
 kjh_set_slide_theme()
 ```
 
 
-```{r, echo = FALSE, fig.width=15, fig.height=8.5}
+```{r 08-polishing-and-presenting-plots-16, echo = FALSE, fig.width=15, fig.height=8.5}
 # Democratic Blue and Republican Red
 party_colors <- c("#2E74C0", "#CB454A")
 party_colors <- c("royalblue1", "red2")
@@ -558,7 +558,7 @@ class: main-title main-title-inv middle
 layout: false
 
 
-```{r, echo = FALSE}
+```{r 08-polishing-and-presenting-plots-17, echo = FALSE}
 county_data <- as_tibble(county_data) |> 
   filter(!is.na(name) & name %nin% as.character(c(1:52)))
 
@@ -724,42 +724,42 @@ p_layer_6 <- ggplot(data = subset(county_data,
 
 ```
 
-```{r, echo = FALSE, fig.width=15, fig.height=8.5}
+```{r 08-polishing-and-presenting-plots-18, echo = FALSE, fig.width=15, fig.height=8.5}
 p_layer_1
 ```
 
 ---
 layout: false
 
-```{r, echo = FALSE, fig.width=15, fig.height=8.5}
+```{r 08-polishing-and-presenting-plots-19, echo = FALSE, fig.width=15, fig.height=8.5}
 p_layer_2
 ```
 
 ---
 layout: false
 
-```{r, echo = FALSE, fig.width=15, fig.height=8.5}
+```{r 08-polishing-and-presenting-plots-20, echo = FALSE, fig.width=15, fig.height=8.5}
 p_layer_3
 ```
 
 ---
 layout: false
 
-```{r, echo = FALSE, fig.width=15, fig.height=8.5}
+```{r 08-polishing-and-presenting-plots-21, echo = FALSE, fig.width=15, fig.height=8.5}
 p_layer_4
 ```
 
 ---
 layout: false
 
-```{r, echo = FALSE, fig.width=15, fig.height=8.5}
+```{r 08-polishing-and-presenting-plots-22, echo = FALSE, fig.width=15, fig.height=8.5}
 p_layer_5
 ```
 
 ---
 layout: false
 
-```{r, echo = FALSE, fig.width=15, fig.height=8.5}
+```{r 08-polishing-and-presenting-plots-23, echo = FALSE, fig.width=15, fig.height=8.5}
 p_layer_6
 ```
 
@@ -767,7 +767,7 @@ p_layer_6
 ---
 layout: false
 
-```{r, echo = FALSE, fig.width=15, fig.height=8.5}
+```{r 08-polishing-and-presenting-plots-24, echo = FALSE, fig.width=15, fig.height=8.5}
 p_layer_5
 ```
 
@@ -881,7 +881,7 @@ class: title title-1
 
 # Make a plot
 
-```{r}
+```{r 08-polishing-and-presenting-plots-25 }
 kjh_set_classic_theme(3)
 ```
 
@@ -906,7 +906,7 @@ p
 --
 
 .pull-right.w55[
-```{r, echo=FALSE}
+```{r 08-polishing-and-presenting-plots-26, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-themes1", "png"))
 ```
@@ -926,7 +926,7 @@ p + theme_bw()
 --
 
 .pull-right.w55[
-```{r, echo=FALSE}
+```{r 08-polishing-and-presenting-plots-27, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-theme2", "png"))
 ```
@@ -947,7 +947,7 @@ p + theme_minimal()
 --
 
 .pull-right.w55[
-```{r, echo=FALSE}
+```{r 08-polishing-and-presenting-plots-28, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-theme3", "png"))
 ```
@@ -967,7 +967,7 @@ p + theme_dark()
 --
 
 .pull-right.w55[
-```{r, echo=FALSE}
+```{r 08-polishing-and-presenting-plots-29, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-themedark", "png"))
 ```
@@ -992,7 +992,7 @@ p + theme_bw() +
 --
 
 .pull-right.w55[
-```{r, echo=FALSE}
+```{r 08-polishing-and-presenting-plots-30, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-themeadditive", "png"))
 ```
@@ -1166,7 +1166,7 @@ p + theme(plot.title =
 --
 
 .pull-right.w55[
-```{r, echo=FALSE}
+```{r 08-polishing-and-presenting-plots-31, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-elementtext", "png"))
 ```
@@ -1211,7 +1211,7 @@ p + theme(panel.grid.major.y =
 --
 
 .pull-right.w55[
-```{r, echo=FALSE}
+```{r 08-polishing-and-presenting-plots-32, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-elementline", "png"))
 ```
@@ -1228,7 +1228,7 @@ class: right bottom main-title section-title-1
 ---
 layout: false
 
-```{r, echo = FALSE, fig.width=12, fig.height=8}
+```{r 08-polishing-and-presenting-plots-33, echo = FALSE, fig.width=12, fig.height=8}
 p_layer_4
 ```
 
@@ -1243,7 +1243,7 @@ class: title title-1
 
 # Theming a plot
 
-```{r}
+```{r 08-polishing-and-presenting-plots-34 }
 library(ggthemes)
 theme_set(theme_fivethirtyeight())
 
@@ -1255,7 +1255,7 @@ theme_set(theme_fivethirtyeight())
 ---
 layout: false
 
-```{r, echo = FALSE, fig.width=12, fig.height=8}
+```{r 08-polishing-and-presenting-plots-35, echo = FALSE, fig.width=12, fig.height=8}
 p_layer_4
 ```
 
@@ -1270,7 +1270,7 @@ class: title title-1
 
 # Theming a plot
 
-```{r}
+```{r 08-polishing-and-presenting-plots-36 }
 theme_set(theme_economist())
 
 ```
@@ -1278,7 +1278,7 @@ theme_set(theme_economist())
 ---
 layout: false
 
-```{r, echo = FALSE, fig.width=12, fig.height=8}
+```{r 08-polishing-and-presenting-plots-37, echo = FALSE, fig.width=12, fig.height=8}
 p_layer_4
 ```
 
@@ -1294,7 +1294,7 @@ class: title title-1
 
 # This seems morally wrong
 
-```{r}
+```{r 08-polishing-and-presenting-plots-38 }
 theme_set(theme_stata())
 
 ```
@@ -1302,7 +1302,7 @@ theme_set(theme_stata())
 ---
 layout: false
 
-```{r, echo = FALSE, fig.width=12, fig.height=8}
+```{r 08-polishing-and-presenting-plots-39, echo = FALSE, fig.width=12, fig.height=8}
 p_layer_4
 ```
 

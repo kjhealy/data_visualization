@@ -50,7 +50,7 @@ Code Horizons, May 2022
 
 # Set up our workspace
 
-```{r}
+```{r 04-show-the-right-numbers-1 }
 library(tidyverse)      # Your friend and mine
 library(gapminder)      # Gapminder data
 library(here)           # Portable file paths
@@ -159,7 +159,7 @@ p + geom_line(mapping = aes(group = country)) +
 
 # Facets in action
 
-```{r}
+```{r 04-show-the-right-numbers-2 }
 p <- ggplot(data = gapminder,
             mapping = aes(x = year,
                           y = gdpPercap))
@@ -180,7 +180,7 @@ p_out <- p + geom_line(color="gray70",
 ---
 layout: false
 
-```{r, echo=FALSE, fig.width=16, fig.height=5}
+```{r 04-show-the-right-numbers-3, echo=FALSE, fig.width=16, fig.height=5}
 p_out
 ```
 
@@ -205,7 +205,7 @@ class: title title-1
 
 ## County-level census data for Midwestern U.S. Counties
 
-```{r}
+```{r 04-show-the-right-numbers-4 }
 midwest
 ```
 
@@ -229,7 +229,7 @@ p + geom_histogram()
 --
 
 .pull-right.w55[
-```{r, echo=FALSE}
+```{r 04-show-the-right-numbers-5, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-histogram", "png"))
 ```
@@ -255,7 +255,7 @@ p + geom_histogram(bins = 10)
 --
 
 .pull-right.w55[
-```{r, echo=FALSE}
+```{r 04-show-the-right-numbers-6, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-histogram2", "png"))
 ```
@@ -288,7 +288,7 @@ midwest |>
 --
 
 .pull-right.w55[
-```{r, echo=FALSE}
+```{r 04-show-the-right-numbers-7, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-subset", "png"))
 ```
@@ -311,7 +311,7 @@ p + geom_density()
 --
 
 .pull-right.w55[
-```{r, echo=FALSE}
+```{r 04-show-the-right-numbers-8, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-density1", "png"))
 ```
@@ -335,7 +335,7 @@ p + geom_density(alpha = 0.3)
 --
 
 .pull-right.w55[
-```{r, echo=FALSE}
+```{r 04-show-the-right-numbers-9, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-density2", "png"))
 ```
@@ -367,14 +367,14 @@ midwest |>
 --
 
 .pull-right.w55[
-```{r, echo=FALSE}
+```{r 04-show-the-right-numbers-10, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-density3", "png"))
 ```
 ]
 
 
-```{r, echo = FALSE, message = FALSE}
+```{r 04-show-the-right-numbers-11, echo = FALSE, message = FALSE}
 ## Generate some fake data
 
 ## Keep track of labels for as_labeller() functions in plots later.
@@ -452,7 +452,7 @@ class: title title-1
 ]
 
 .pull-right[
-```{r}
+```{r 04-show-the-right-numbers-12 }
 df
 ```
 ]
@@ -484,7 +484,7 @@ df |>
 --
 
 .pull-right.w50[
-```{r, echo=FALSE}
+```{r 04-show-the-right-numbers-13, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-refdist1", "png"))
 ```
@@ -495,7 +495,7 @@ df |>
 # Try faceting instead
 
 .pull-left.w55[
-```{r}
+```{r 04-show-the-right-numbers-14 }
 p_out <- df |>
   pivot_longer(cols = pop_a:pop_c) |>
   ggplot() + 
@@ -527,7 +527,7 @@ p_out <- df |>
 
 # Try faceting instead
 
-```{r, echo = FALSE, fig.width=15, fig.height=5}
+```{r 04-show-the-right-numbers-15, echo = FALSE, fig.width=15, fig.height=5}
 p_out
 ```
 
@@ -547,12 +547,12 @@ class: title title-1
 # Sometimes no counting is required
 
 
-```{r, echo = FALSE}
+```{r 04-show-the-right-numbers-16, echo = FALSE}
 ggplot2::theme_set(ggplot2::theme_classic())
 ```
 
 
-```{r}
+```{r 04-show-the-right-numbers-17 }
 titanic
 ```
 
@@ -579,7 +579,7 @@ p + geom_bar(stat = "identity") #<<
 --
 
 .pull-right.w55[
-```{r, echo=FALSE}
+```{r 04-show-the-right-numbers-18, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-titanic1", "png"))
 ```
@@ -606,7 +606,7 @@ p + geom_bar(stat = "identity",
 --
 
 .pull-right.w55[
-```{r, echo=FALSE}
+```{r 04-show-the-right-numbers-19, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-titanic2", "png"))
 ```
@@ -634,7 +634,7 @@ p + geom_bar(stat = "identity",
 --
 
 .pull-right.w55[
-```{r, echo=FALSE}
+```{r 04-show-the-right-numbers-20, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-titanic3", "png"))
 ```
@@ -661,7 +661,7 @@ p + geom_col(position = "dodge") + #<<
 --
 
 .pull-right.w55[
-```{r, echo=FALSE}
+```{r 04-show-the-right-numbers-21, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-geomcol", "png"))
 ```
@@ -671,13 +671,13 @@ p + geom_col(position = "dodge") + #<<
 
 # Using .kjh-green[geom_col()] for thresholds
 
-```{r, echo = FALSE, message=FALSE}
+```{r 04-show-the-right-numbers-22, echo = FALSE, message=FALSE}
 kjhslides::kjh_set_slide_theme()
 ```
 
 
 .pull-left[
-```{r}
+```{r 04-show-the-right-numbers-23 }
 oecd_sum
 ```
 ]
@@ -695,7 +695,7 @@ oecd_sum
 # Using .kjh-green[geom_col()] for thresholds
 
 .pull-left.w45[
-```{r}
+```{r 04-show-the-right-numbers-24 }
 p <- ggplot(data = oecd_sum, 
             mapping = aes(x = year, 
                           y = diff, 
@@ -721,7 +721,7 @@ p_out <- p + geom_col() +
 
 # Using .kjh-green[geom_col()] for thresholds
 
-```{r, echo = FALSE, fig.width=15, fig.height=4}
+```{r 04-show-the-right-numbers-25, echo = FALSE, fig.width=15, fig.height=4}
 p_out
 ```
 

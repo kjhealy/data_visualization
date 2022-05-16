@@ -53,7 +53,7 @@ class: title title-1
 # Load our libraries
 
 .SMALL[
-```{r 03a-dplyr-basics-2, message = TRUE}
+```{r 05-work-with-dplyr-and-geoms-1, message = TRUE}
 library(here)      # manage file paths
 library(socviz)    # data and some useful functions
 library(tidyverse) # your friend and mine
@@ -179,7 +179,7 @@ class: title title-1
 
 # U.S. General Social Survey data: .kjh-pink[`gss_sm`]
 
-```{r}
+```{r 05-work-with-dplyr-and-geoms-2 }
 gss_sm  
 ```
 
@@ -190,7 +190,7 @@ gss_sm
 
 # Two-way tables: Row percents
 
-```{r, echo=FALSE}
+```{r 05-work-with-dplyr-and-geoms-3, echo=FALSE}
 gss_sm |> 
   janitor::tabyl(bigregion, religion) |> 
   janitor::adorn_totals(where = "col") |> 
@@ -204,7 +204,7 @@ gss_sm |>
 
 # Two-way tables: Column percents
 
-```{r, echo = FALSE}
+```{r 05-work-with-dplyr-and-geoms-4, echo = FALSE}
 
 gss_sm |> 
   janitor::tabyl(bigregion, religion) |> 
@@ -218,7 +218,7 @@ gss_sm |>
 
 # Two-way tables: Full marginals
 
-```{r, echo = FALSE}
+```{r 05-work-with-dplyr-and-geoms-5, echo = FALSE}
 
 gss_sm |> 
   janitor::tabyl(bigregion, religion) |> 
@@ -308,7 +308,7 @@ class: center middle main-title section-title-1
 
 # U.S. General Social Survey data: .kjh-pink[`gss_sm`]
 
-```{r 03a-dplyr-basics-3 }
+```{r 05-work-with-dplyr-and-geoms-6 }
 gss_sm
 ```
 
@@ -331,7 +331,7 @@ Notice again how the tibble already tells us a lot.
 - We're just taking a look at the relevant columns here. We don't need to narrow it like this to do our summary, though.
 
 
-```{r 03a-dplyr-basics-4 }
+```{r 05-work-with-dplyr-and-geoms-7 }
 gss_sm |> 
   select(id, bigregion, religion) 
 ```
@@ -341,7 +341,7 @@ gss_sm |>
 
 # Group by .kjh-orange[_one_] column or variable
 
-```{r 03a-dplyr-basics-5 }
+```{r 05-work-with-dplyr-and-geoms-8 }
 
 gss_sm |> 
   group_by(bigregion) #<<
@@ -363,7 +363,7 @@ gss_sm |>
 # Pipelines carry assumptions forward
 
 .small[
-```{r 03a-dplyr-basics-9 }
+```{r 05-work-with-dplyr-and-geoms-9 }
 gss_sm |> 
   group_by(bigregion, religion) |> #<<
   summarize(total = n()) |> 
@@ -383,7 +383,7 @@ Summary calculations are done on the innermost group, which then "disappears". (
 # Pipelines carry assumptions forward
 
 .small[
-```{r 03a-dplyr-basics-10 }
+```{r 05-work-with-dplyr-and-geoms-10 }
 gss_sm |> 
   group_by(bigregion, religion) |> 
   summarize(total = n()) |> 
@@ -400,7 +400,7 @@ gss_sm |>
 
 .small[
 
-```{r 03a-dplyr-basics-11 }
+```{r 05-work-with-dplyr-and-geoms-11 }
 gss_sm |> 
   group_by(bigregion, religion) |> #<<
   summarize(total = n()) |> #<<
@@ -420,7 +420,7 @@ We're going to be doing this .kjh-green[**`group_by()`**] ... .kjh-green[**`n()`
 - .SMALL.squish3[Do it yourself with .kjh-green[**`n()`**]]
 
 .SMALL[
-```{r 03a-dplyr-basics-12 }
+```{r 05-work-with-dplyr-and-geoms-12 }
 gss_sm |> 
   group_by(bigregion, religion) |> #<<
   summarize(n = n()) #<<
@@ -437,7 +437,7 @@ gss_sm |>
 - .SMALL.squish3[use .kjh-green[**`tally()`**]]
 
 .SMALL[
-```{r 03a-dplyr-basics-13 }
+```{r 05-work-with-dplyr-and-geoms-13 }
 gss_sm |> 
   group_by(bigregion, religion) |> 
   tally() #<<
@@ -454,7 +454,7 @@ gss_sm |>
 - .SMALL.squish3[use .kjh-green[**`count()`**]]
 
 .SMALL[
-```{r 03a-dplyr-basics-14 }
+```{r 05-work-with-dplyr-and-geoms-14 }
 gss_sm |> 
   count(bigregion, religion) #<<
 ```
@@ -471,7 +471,7 @@ gss_sm |>
 
 .pull-left[
 
-```{r 03a-dplyr-basics-22 }
+```{r 05-work-with-dplyr-and-geoms-15 }
 rel_by_region <- gss_sm |> 
   count(bigregion, religion) |> 
   mutate(pct = round((n/sum(n))*100, 1)) 
@@ -486,7 +486,7 @@ Hm, did I sum over right group?
 --
 .pull-right[
 
-```{r 03a-dplyr-basics-23 }
+```{r 05-work-with-dplyr-and-geoms-16 }
 ## Each region should sum to ~100
 rel_by_region |> 
   group_by(bigregion) |> 
@@ -504,7 +504,7 @@ No! What has gone wrong here?
 
 .pull-left[
 
-```{r 03a-dplyr-basics-24 }
+```{r 05-work-with-dplyr-and-geoms-17 }
 rel_by_region <- gss_sm |> 
   count(bigregion, religion) |> #<< 
   mutate(pct = round((n/sum(n))*100, 1)) 
@@ -512,7 +512,7 @@ rel_by_region <- gss_sm |>
 
 .SMALL.squish3[.kjh-green[**`count()`**] returns ungrouped results, so there are no groups carry forward to the .kjh-green[**`mutate()`**] step.]
 
-```{r 03a-dplyr-basics-25 }
+```{r 05-work-with-dplyr-and-geoms-18 }
 rel_by_region |> 
   summarize(total = sum(pct))
 ```
@@ -524,14 +524,14 @@ rel_by_region |>
 --
 .pull-right[
 
-```{r 03a-dplyr-basics-26 }
+```{r 05-work-with-dplyr-and-geoms-19 }
 rel_by_region <- gss_sm |> 
   group_by(bigregion, religion) |> #<<
   tally() |> #<<
   mutate(pct = round((n/sum(n))*100, 1)) 
 ```
 
-```{r 03a-dplyr-basics-27 }
+```{r 05-work-with-dplyr-and-geoms-20 }
 # Check
 rel_by_region |> 
   group_by(bigregion) |> 
@@ -577,7 +577,7 @@ rel_by_region |>
 
 # Pass your pipeline on to a .kjh-yellow[table]
 
-```{r 03a-dplyr-basics-15, eval = FALSE}
+```{r 05-work-with-dplyr-and-geoms-21, eval = FALSE}
 gss_sm |> 
   count(bigregion, religion) |> 
   pivot_wider(names_from = bigregion, values_from = n) |>  #<<
@@ -586,7 +586,7 @@ gss_sm |>
 
 
 .small[
-```{r 03a-dplyr-basics-16, echo = FALSE}
+```{r 05-work-with-dplyr-and-geoms-22, echo = FALSE}
 gss_sm |> 
   count(bigregion, religion) |> 
   pivot_wider(names_from = bigregion, values_from = n) |> 
@@ -600,7 +600,7 @@ gss_sm |>
 # Pass your pipeline on to a .kjh-yellow[graph]
 
 .SMALL[
-```{r 03a-dplyr-basics-17, fig.height=4, fig.width=15}
+```{r 05-work-with-dplyr-and-geoms-23, fig.height=4, fig.width=15}
 gss_sm |> 
   group_by(bigregion, religion) |> 
   tally() |> 
@@ -638,7 +638,7 @@ class: title title-1
 # Let's put that table in an object
 
 
-```{r}
+```{r 05-work-with-dplyr-and-geoms-24 }
 rel_by_region <- gss_sm |> 
   group_by(bigregion, religion) |> 
   tally() |> 
@@ -653,7 +653,7 @@ rel_by_region
 
 # We might write ...
 
-```{r}
+```{r 05-work-with-dplyr-and-geoms-25 }
 p <- ggplot(data = rel_by_region, 
                 mapping = aes(x = bigregion, 
                               y = pct, 
@@ -668,7 +668,7 @@ p_out <- p + geom_col(position = "dodge") +
 
 # We might write ...
 
-```{r, echo = FALSE, fig.height=7, fig.width=12}
+```{r 05-work-with-dplyr-and-geoms-26, echo = FALSE, fig.height=7, fig.width=12}
 p_out
 ```
 
@@ -677,7 +677,7 @@ p_out
 
 # Is this an effective graph? .kjh-red[Not really!]
 
-```{r, echo = FALSE, fig.height=7, fig.width=12}
+```{r 05-work-with-dplyr-and-geoms-27, echo = FALSE, fig.height=7, fig.width=12}
 p_out
 ```
 
@@ -685,7 +685,7 @@ p_out
 
 # Try .kjh-lblue[faceting] instead
 
-```{r}
+```{r 05-work-with-dplyr-and-geoms-28 }
 p <- ggplot(data = rel_by_region, 
                 mapping = aes(x = pct, #<<
                               y = reorder(religion, -pct), #<<
@@ -707,7 +707,7 @@ p_out_facet <- p + geom_col() +
 
 # Try .kjh-lblue[faceting] instead
 
-```{r, echo = FALSE, fig.height = 3.5, fig.width=15}
+```{r 05-work-with-dplyr-and-geoms-29, echo = FALSE, fig.height = 3.5, fig.width=15}
 p_out_facet
 ```
 
@@ -729,7 +729,7 @@ class: right bottom main-title section-title-1
 
 # Facet Children vs Age by Race
 
-```{r, fig.width=10, fig.height=5}
+```{r 05-work-with-dplyr-and-geoms-30, fig.width=10, fig.height=5}
 p <-  ggplot(data = gss_sm,
              mapping = aes(x = age, y = childs))
 
@@ -743,7 +743,7 @@ p + geom_point(alpha = 0.2) +
 
 # We can facet by more than one variable
 
-```{r, fig.width=8, fig.height=5.5}
+```{r 05-work-with-dplyr-and-geoms-31, fig.width=8, fig.height=5.5}
 p <-  ggplot(data = gss_sm,
              mapping = aes(x = age, y = childs))
 
@@ -758,7 +758,7 @@ p + geom_point(alpha = 0.2) +
 
 # We can arrange .kjh-green[facet_wrap()] quite freely
 
-```{r, fig.width=15, fig.height=5.5}
+```{r 05-work-with-dplyr-and-geoms-32, fig.width=15, fig.height=5.5}
 p <-  ggplot(data = gss_sm,
              mapping = aes(x = age, y = childs))
 
@@ -773,7 +773,7 @@ p + geom_point(alpha = 0.2) +
 
 # .kjh-green[facet_grid()] is more like a true crosstab
 
-```{r, fig.width=11, fig.height=6.5, warning = FALSE}
+```{r 05-work-with-dplyr-and-geoms-33, fig.width=11, fig.height=6.5, warning = FALSE}
 p + geom_point(alpha = 0.2) + 
   geom_smooth() +
   facet_grid(sex ~ race) #<< 
@@ -785,7 +785,7 @@ p + geom_point(alpha = 0.2) +
 
 # Both can be exended to multi-way views
 
-```{r, fig.width=11, fig.height=6.5, warning = FALSE}
+```{r 05-work-with-dplyr-and-geoms-34, fig.width=11, fig.height=6.5, warning = FALSE}
 p_out <- p + geom_point(alpha = 0.2) + 
   geom_smooth() +
   facet_grid(bigregion ~ race + sex) #<< 
@@ -795,7 +795,7 @@ p_out <- p + geom_point(alpha = 0.2) +
 ---
 layout: false
 
-```{r, echo=FALSE, warning=FALSE, fig.width=12, fig.height=8}
+```{r 05-work-with-dplyr-and-geoms-35, echo=FALSE, warning=FALSE, fig.width=12, fig.height=8}
 p_out
 ```
 
@@ -830,7 +830,7 @@ class: title title-1
 
 ###  The elements of filtering and summarizing 
 
-```{r}
+```{r 05-work-with-dplyr-and-geoms-36 }
 gss_sm |> 
   group_by(bigregion, religion) |> 
   tally() |> 
@@ -881,7 +881,7 @@ class: right bottom main-title section-title-1
 ---
 # .kjh-pink[`organdata`] is in the `socviz` package
 
-```{r}
+```{r 05-work-with-dplyr-and-geoms-37 }
 organdata
 ```
 
@@ -889,7 +889,7 @@ organdata
 
 # First looks
 
-```{r, fig.width=10, fig.height=6}
+```{r 05-work-with-dplyr-and-geoms-38, fig.width=10, fig.height=6}
 p <- ggplot(data = organdata,
             mapping = aes(x = year, y = donors))
 p + geom_point()
@@ -899,7 +899,7 @@ p + geom_point()
 
 # First looks
 
-```{r, fig.width=10, fig.height=6}
+```{r 05-work-with-dplyr-and-geoms-39, fig.width=10, fig.height=6}
 p <- ggplot(data = organdata,
             mapping = aes(x = year, y = donors))
 p + geom_line() 
@@ -909,7 +909,7 @@ p + geom_line()
 
 # First looks
 
-```{r, fig.width=10, fig.height=6}
+```{r 05-work-with-dplyr-and-geoms-40, fig.width=10, fig.height=6}
 p <- ggplot(data = organdata,
             mapping = aes(x = year, y = donors))
 p + geom_line(aes(group = country)) 
@@ -920,7 +920,7 @@ p + geom_line(aes(group = country))
 
 # First looks
 
-```{r, fig.width=21, fig.height=8}
+```{r 05-work-with-dplyr-and-geoms-41, fig.width=21, fig.height=8}
 p <- ggplot(data = organdata,
             mapping = aes(x = year, y = donors))
 p + geom_line() + 
@@ -940,7 +940,7 @@ class: right bottom main-title section-title-1
 
 # Boxplots: .kjh-green[`geom_boxplot()`]
 
-```{r, fig.width = 15, fig.height=5}
+```{r 05-work-with-dplyr-and-geoms-42, fig.width = 15, fig.height=5}
 ## Pipeline the data directly; then it's implicitly the first argument to `ggplot()`
 organdata |> 
   ggplot(mapping = aes(x = country, y = donors)) + 
@@ -951,7 +951,7 @@ organdata |>
 
 # Put categories on the y-axis!
 
-```{r, fig.width=10, fig.height=6}
+```{r 05-work-with-dplyr-and-geoms-43, fig.width=10, fig.height=6}
 organdata |> 
   ggplot(mapping = aes(x = donors, y = country)) + #<<
   geom_boxplot() +
@@ -962,7 +962,7 @@ organdata |>
 
 # Reorder y by the mean of x
 
-```{r, fig.width=10, fig.height=6}
+```{r 05-work-with-dplyr-and-geoms-44, fig.width=10, fig.height=6}
 organdata |> 
   ggplot(mapping = aes(x = donors, y = reorder(country, donors, na.rm = TRUE))) + #<<
   geom_boxplot() +
@@ -973,7 +973,7 @@ organdata |>
 
 # (Reorder y by any statistic you like)
 
-```{r, fig.width=10, fig.height=6}
+```{r 05-work-with-dplyr-and-geoms-45, fig.width=10, fig.height=6}
 organdata |> 
   ggplot(mapping = aes(x = donors, y = reorder(country, donors, sd, na.rm = TRUE))) + #<<
   geom_boxplot() +
@@ -984,7 +984,7 @@ organdata |>
 
 # .kjh-green[geom_boxplot()] knows `color` and `fill`
 
-```{r, fig.width=10, fig.height=6}
+```{r 05-work-with-dplyr-and-geoms-46, fig.width=10, fig.height=6}
 organdata |> 
   ggplot(mapping = aes(x = donors, y = reorder(country, donors, na.rm = TRUE), fill = world)) + #<<
   geom_boxplot() +
@@ -996,7 +996,7 @@ organdata |>
 
 # These strategies are quite general
 
-```{r, fig.width=10, fig.height=5.5}
+```{r 05-work-with-dplyr-and-geoms-47, fig.width=10, fig.height=5.5}
 organdata |> 
   ggplot(mapping = aes(x = donors, y = reorder(country, donors, na.rm = TRUE), color = world)) + 
   geom_point(size = rel(3)) + #<<
@@ -1008,7 +1008,7 @@ organdata |>
 
 # .kjh-green[geom-jitter()] can help with overplotting
 
-```{r, fig.width=10, fig.height=6}
+```{r 05-work-with-dplyr-and-geoms-48, fig.width=10, fig.height=6}
 organdata |> 
   ggplot(mapping = aes(x = donors, y = reorder(country, donors, na.rm = TRUE), color = world)) + 
   geom_jitter(size = rel(3)) + #<<
@@ -1019,7 +1019,7 @@ organdata |>
 
 # Adjust with a `postion` argument
 
-```{r, fig.width=10, fig.height=6}
+```{r 05-work-with-dplyr-and-geoms-49, fig.width=10, fig.height=6}
 organdata |> 
   ggplot(mapping = aes(x = donors, y = reorder(country, donors, na.rm = TRUE),
                        color = world)) + 
@@ -1039,7 +1039,7 @@ class: right bottom main-title section-title-1
 
 # Summarize a bunch of variables
 
-```{r}
+```{r 05-work-with-dplyr-and-geoms-50 }
 by_country <- organdata |>  
   group_by(consent_law, country)  |> 
     summarize(donors_mean= mean(donors, na.rm = TRUE),
@@ -1070,7 +1070,7 @@ class: title title-1
 
 # Use .kjh-green[across()] and .kjh-green[where()] instead
 
-```{r}
+```{r 05-work-with-dplyr-and-geoms-51 }
 by_country <- organdata |> 
   group_by(consent_law, country) |>
     summarize(across(where(is.numeric),#<<
@@ -1085,7 +1085,7 @@ head(by_country)
 
 # Use .kjh-green[across()] and .kjh-green[where()] instead
 
-```{r}
+```{r 05-work-with-dplyr-and-geoms-52 }
 by_country <- organdata |> 
   group_by(consent_law, country) |>
     summarize(across(where(is.numeric),
@@ -1119,7 +1119,7 @@ by_country |>
 --
 
 .pull-right.w55[
-```{r, echo=FALSE}
+```{r 05-work-with-dplyr-and-geoms-53, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-consent1", "png"))
 
@@ -1155,7 +1155,7 @@ by_country |>
 --
 
 .pull-right.w55[
-```{r, echo=FALSE}
+```{r 05-work-with-dplyr-and-geoms-54, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-consent2", "png"))
 ```
@@ -1190,7 +1190,7 @@ by_country |>
 --
 
 .pull-right.w55[
-```{r, echo=FALSE}
+```{r 05-work-with-dplyr-and-geoms-55, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-consent2a", "png"))
 ```
@@ -1227,7 +1227,7 @@ by_country |>
 --
 
 .pull-right.w55[
-```{r, echo=FALSE}
+```{r 05-work-with-dplyr-and-geoms-56, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-consent3", "png"))
 ```
@@ -1260,7 +1260,7 @@ by_country |>
 --
 
 .pull-right.w50[
-```{r, echo=FALSE}
+```{r 05-work-with-dplyr-and-geoms-57, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-consent4", "png"))
 ```
@@ -1292,7 +1292,7 @@ by_country |>
 --
 
 .pull-right.w55[
-```{r, echo=FALSE}
+```{r 05-work-with-dplyr-and-geoms-58, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-geomtext", "png"))
 ```
@@ -1321,7 +1321,7 @@ by_country |>
 --
 
 .pull-right.w55[
-```{r, echo=FALSE}
+```{r 05-work-with-dplyr-and-geoms-59, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-geomtext2", "png"))
 ```
@@ -1350,7 +1350,7 @@ by_country |>
 --
 
 .pull-right.w55[
-```{r, echo=FALSE}
+```{r 05-work-with-dplyr-and-geoms-60, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-geomtext3", "png"))
 ```
@@ -1372,7 +1372,7 @@ class: right bottom main-title section-title-1
 
 # .kjh-pink[`elections_historic`] is in .kjh-grey[`socviz`] 
 
-```{r}
+```{r 05-work-with-dplyr-and-geoms-61 }
 elections_historic
 ```
 
@@ -1387,7 +1387,7 @@ elections_historic
 
 # Keep things neat
 
-```{r}
+```{r 05-work-with-dplyr-and-geoms-62 }
 ## The packages we'll use in addition to ggplot
 library(ggrepel) #<<
 library(scales) #<<
@@ -1425,7 +1425,7 @@ p + geom_hline(yintercept = 0.5,
 --
 
 .pull-right.w55[
-```{r, echo=FALSE}
+```{r 05-work-with-dplyr-and-geoms-63, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-presplot1", "png"))
 ```
@@ -1459,7 +1459,7 @@ p + geom_hline(yintercept = 0.5,
 --
 
 .pull-right.w55[
-```{r, echo=FALSE}
+```{r 05-work-with-dplyr-and-geoms-64, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-presplot2", "png"))
 ```
@@ -1469,7 +1469,7 @@ p + geom_hline(yintercept = 0.5,
 
 # The labeling is with respect to the plot size
 
-```{r}
+```{r 05-work-with-dplyr-and-geoms-65 }
 p <- ggplot(data = elections_historic, 
             mapping  = aes(x = popular_pct, 
                            y = ec_pct,
@@ -1492,7 +1492,7 @@ p_out <- p +
 layout:false
 class: middle center
 
-```{r, echo = FALSE, fig.width=15, fig.height=8.5}
+```{r 05-work-with-dplyr-and-geoms-66, echo = FALSE, fig.width=15, fig.height=8.5}
 p_out
 ```
 
@@ -1505,7 +1505,7 @@ class: title title-1
 
 # Adjust the Scales
 
-```{r}
+```{r 05-work-with-dplyr-and-geoms-67 }
 p <- ggplot(data = elections_historic, 
             mapping  = aes(x = popular_pct, 
                            y = ec_pct,
@@ -1527,7 +1527,7 @@ p_out <- p + geom_hline(yintercept = 0.5,
 layout:false
 class: middle center
 
-```{r, echo = FALSE, fig.width=15, fig.height=8.5}
+```{r 05-work-with-dplyr-and-geoms-68, echo = FALSE, fig.width=15, fig.height=8.5}
 p_out
 ```
 
@@ -1540,7 +1540,7 @@ class: title title-1
 
 # Add the labels
 
-```{r}
+```{r 05-work-with-dplyr-and-geoms-69 }
 p <- ggplot(data = elections_historic, 
             mapping  = aes(x = popular_pct, 
                            y = ec_pct,
@@ -1570,7 +1570,7 @@ p_out <- p + geom_hline(yintercept = 0.5,
 layout:false
 class: middle center
 
-```{r, echo = FALSE, fig.width=15, fig.height=8.5}
+```{r 05-work-with-dplyr-and-geoms-70, echo = FALSE, fig.width=15, fig.height=8.5}
 p_out
 ```
 
@@ -1607,7 +1607,7 @@ by_country |>
 --
 
 .pull-right.w50[
-```{r, echo=FALSE}
+```{r 05-work-with-dplyr-and-geoms-71, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-subset1", "png"))
 ```
@@ -1641,7 +1641,7 @@ by_country |>
 --
 
 .pull-right.w50[
-```{r, echo=FALSE}
+```{r 05-work-with-dplyr-and-geoms-72, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-subset2", "png"))
 ```
@@ -1652,7 +1652,7 @@ by_country |>
 # Option 2: Use `dplyr` to subset first
 
 
-```{r}
+```{r 05-work-with-dplyr-and-geoms-73 }
 df_hl <- by_country |> 
   filter(gdp_mean > 25000 | 
            health_mean < 1500 | 
@@ -1666,7 +1666,7 @@ df_hl
 # Option 2: Use `dplyr` to subset first
 
 
-```{r}
+```{r 05-work-with-dplyr-and-geoms-74 }
 df_hl <- by_country |> 
   filter(gdp_mean > 25000 | 
            health_mean < 1500 | 
@@ -1701,7 +1701,7 @@ by_country |>
 --
 
 .pull-right.w50[
-```{r, echo=FALSE}
+```{r 05-work-with-dplyr-and-geoms-75, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-subset3", "png"))
 ```
@@ -1743,7 +1743,7 @@ organdata |>
 --
 
 .pull-right.w50[
-```{r, echo=FALSE}
+```{r 05-work-with-dplyr-and-geoms-76, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-annotate1", "png"))
 ```
@@ -1779,7 +1779,7 @@ organdata |>
 --
 
 .pull-right.w50[
-```{r, echo=FALSE}
+```{r 05-work-with-dplyr-and-geoms-77, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-annotate2", "png"))
 ```
@@ -1897,7 +1897,7 @@ organdata |>
 --
 
 .pull-right.w50[
-```{r, echo=FALSE}
+```{r 05-work-with-dplyr-and-geoms-78, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-scalefn1", "png"))
 ```
@@ -1931,7 +1931,7 @@ organdata |>
 --
 
 .pull-right.w50[
-```{r, echo=FALSE}
+```{r 05-work-with-dplyr-and-geoms-79, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-scalecolordiscrete", "png"))
 ```
@@ -1965,7 +1965,7 @@ organdata |>
 --
 
 .pull-right.w50[
-```{r, echo=FALSE}
+```{r 05-work-with-dplyr-and-geoms-80, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-guidesfn", "png"))
 ```
@@ -1976,7 +1976,7 @@ organdata |>
 
 # The .kjh-green[`theme()`] function
 
-```{r, echo=FALSE}
+```{r 05-work-with-dplyr-and-geoms-81, echo=FALSE}
 kjhslides::kjh_set_classic_theme(4)
 ```
 
@@ -2008,13 +2008,13 @@ organdata |>
 --
 
 .pull-right.w50[
-```{r, echo=FALSE}
+```{r 05-work-with-dplyr-and-geoms-82, echo=FALSE}
   knitr::include_graphics(
   knitr::fig_chunk("codefig-themefn", "png"))
 ```
 ]
 
-```{r, echo=FALSE}
+```{r 05-work-with-dplyr-and-geoms-83, echo=FALSE}
 kjhslides::kjh_set_slide_theme()
 ```
 

@@ -363,7 +363,7 @@ class: title title-1
 
 # Loading the tidyverse libraries
 
-```{r loadtv, message = TRUE}
+```{r 02-about-r-1, message = TRUE}
 library(tidyverse)
 ```
 
@@ -408,7 +408,7 @@ library(tidyverse)
 
 Code you can type and run:
 
-```{r 02-about-r-1}
+```{r 02-about-r-2 }
 ## Inside code chunks, lines beginning with a # character are comments
 ## Comments are ignored by R
 
@@ -420,7 +420,7 @@ Output:
 
 .smaller[Equivalent to running the code above, typing `my_numbers` at the console, and hitting enter.]
 
-```{r 02-about-r-2}
+```{r 02-about-r-3 }
 my_numbers 
 ```
 
@@ -430,7 +430,7 @@ my_numbers
 
 By convention, code output in documents is prefixed by `##`
 
-```{r 02-about-r-3}
+```{r 02-about-r-4 }
 my_numbers 
 ```
 
@@ -440,7 +440,7 @@ my_numbers
 
 Also by convention, outputting vectors, etc, gets a counter keeping track of the number of elements. For example,
 
-```{r 02-about-r-4}
+```{r 02-about-r-5 }
 letters
 ```
 
@@ -467,15 +467,15 @@ class: title title-1
 - Arithmetic
 
 
-```{r 02-about-r-5}
+```{r 02-about-r-6 }
 (31 * 12) / 2^4
 ```
 
-```{r 02-about-r-6}
+```{r 02-about-r-7 }
 sqrt(25)
 ```
 
-```{r 02-about-r-7}
+```{r 02-about-r-8 }
 log(100)
 
 log10(100)
@@ -490,7 +490,7 @@ log10(100)
 
 - Logic
 
-```{r 02-about-r-8}
+```{r 02-about-r-9 }
 4 < 10
 4 > 2 & 1 > 0.5 # The "&" means "and"
 4 < 2 | 1 > 0.5 # The "|" means "or"
@@ -506,19 +506,19 @@ Logical equality and inequality (yielding a .kjh-green[`TRUE`] or .kjh-red[`FALS
 
 .medium[
 
-```{r 02-about-r-9}
+```{r 02-about-r-10 }
 ## A logical test
 2 == 2 # Write `=` twice
 ```
 
-```{r 02-about-r-10, eval = FALSE}
+```{r 02-about-r-11, eval = FALSE}
 ## This will cause an error, because R will think you are trying to assign a value
 2 = 2
 
 ## Error in 2 = 2 : invalid (do_set) left-hand side to assignment
 ```
 
-```{r 02-about-r-11}
+```{r 02-about-r-12 }
 3 != 7 # Write `!` and then `=` to make `!=`
 ```
 ]
@@ -532,7 +532,7 @@ class: title title-1
 
 # 1. .kjh-yellow[Everything in R has a name]
 
-```{r 02-about-r-19}
+```{r 02-about-r-13 }
 my_numbers # We created this a few minutes ago
 
 letters  # This one is built-in
@@ -546,7 +546,7 @@ pi  # Also built-in
 
 Or it's a _really_ bad idea to try to use them 
 
-```{r 02-about-r-20, eval = FALSE}
+```{r 02-about-r-14, eval = FALSE}
 
 ## Don't name objects with terms fo logical values, 
 ## or missing and null-value indicators
@@ -575,19 +575,19 @@ function
 There are a few built-in objects:
 
 
-```{r 02-about-r-21}
+```{r 02-about-r-15 }
 letters
 ```
 
 --
 
-```{r 02-about-r-22}
+```{r 02-about-r-16 }
 pi
 ```
 
 --
 
-```{r 02-about-r-23}
+```{r 02-about-r-17 }
 
 LETTERS
 ```
@@ -604,7 +604,7 @@ In fact, this is mostly what we will be doing.
 
 Objects are created by .kjh-pink[_assigning_] a thing to a name:
 
-```{r 02-about-r-24}
+```{r 02-about-r-18 }
 ## name... gets ... this stuff
 my_numbers <- c(1, 2, 3, 1, 3, 5, 25, 10)
 
@@ -647,7 +647,7 @@ We can create an object with the .kjh-green[**`c()`**] function and the *assignm
 
 - You can use ".kjh-green[**`=`**]" as well as ".kjh-green[**`<-`**]" for assignment
 
-```{r 02-about-r-25}
+```{r 02-about-r-19 }
 my_numbers = c(1, 2, 3, 1, 3, 5, 25)
 
 my_numbers
@@ -680,7 +680,7 @@ class: title title-1
 # 4. Do things to objects with .kjh-green[functions]
 
 
-```{r create_objects_again}
+```{r 02-about-r-20 }
 
 ## this object... gets ... the output of this function
 my_numbers <- c(1, 2, 3, 1, 3, 5, 25, 10)
@@ -688,18 +688,18 @@ my_numbers <- c(1, 2, 3, 1, 3, 5, 25, 10)
 your_numbers <- c(5, 31, 71, 1, 3, 21, 6, 52)
 ```
 
-```{r 02-get-started-3}
+```{r 02-about-r-21 }
 my_numbers
 ```
 
 - Functions can be identified by the parentheses after their names.
 
-```{r 02-get-started-4}
+```{r 02-about-r-22 }
 my_numbers 
 ```
 
 
-```{r this_will_error, eval = FALSE}
+```{r 02-about-r-23, eval = FALSE}
 ## If you run this you'll get an error
 mean()
 ```
@@ -740,7 +740,7 @@ mean()
 # What .kjh-green[functions] usually do
 
 .large[
-```{r 02-about-r-26}
+```{r 02-about-r-24 }
 ## Get the mean of what? Of x.
 ## You need to tell the function what x is
 mean(x = my_numbers)
@@ -753,7 +753,7 @@ mean(x = your_numbers)
 
 If you don't _name_ the arguments, R assumes you are providing them in the order the function expects.
 
-```{r 02-about-r-27}
+```{r 02-about-r-25 }
 mean(your_numbers)
 ```
 
@@ -763,11 +763,11 @@ mean(your_numbers)
 
 What arguments? Which order? Read the function's help page
 
-```{r 02-about-r-28, eval=FALSE}
+```{r 02-about-r-26, eval=FALSE}
 help(mean)
 ```
 
-```{r 02-about-r-29, eval = FALSE}
+```{r 02-about-r-27, eval = FALSE}
 ## quicker
 ?mean
 ```
@@ -783,7 +783,7 @@ How to read an R help page ...
 
 Arguments often tell the function what to do in specific circumstances
 
-```{r 02-about-r-30}
+```{r 02-about-r-28 }
 missing_numbers <- c(1:10, NA, 20, 32, 50, 104, 32, 147, 99, NA, 45)
 
 mean(missing_numbers)
@@ -795,7 +795,7 @@ mean(missing_numbers, na.rm = TRUE)
 
 Or select from one of several options
 
-```{r 02-about-r-31}
+```{r 02-about-r-29 }
 ## Look at ?mean to see what `trim` does
 mean(missing_numbers, na.rm = TRUE, trim = 0.1)
 ```
@@ -809,7 +809,7 @@ mean(missing_numbers, na.rm = TRUE, trim = 0.1)
 .pull-left.w80[
 There are all kinds of functions. They return different things.
 
-```{r 02-about-r-32}
+```{r 02-about-r-30 }
 summary(my_numbers)
 ```
 
@@ -818,7 +818,7 @@ summary(my_numbers)
 
 .pull-left.w80[You can assign the output of a function to a name, which turns it into an object. (Otherwise it'll send its output to the console.)
 
-```{r 02-about-r-33}
+```{r 02-about-r-31 }
 my_summary <- summary(my_numbers)
 
 my_summary
@@ -831,7 +831,7 @@ my_summary
 
 .pull-left.w80[Objects hang around in your work environment until they are overwritten by you, or are deleted.
 
-```{r 02-about-r-34, eval = FALSE}
+```{r 02-about-r-32, eval = FALSE}
 ## rm() function removes objects
 rm(my_summary)
 
@@ -846,7 +846,7 @@ my_summary
 # Functions can be .kjh-yellow[nested]
 
 .pull-left.w80[
-```{r 02-about-r-35}
+```{r 02-about-r-33 }
 c(1:20)
 ```
 ]
@@ -854,13 +854,13 @@ c(1:20)
 --
 
 .pull-left.w80[
-```{r 02-about-r-37}
+```{r 02-about-r-34 }
 summary(c(1:20))
 ```
 ]
 
 .pull-left.w80[
-```{r 02-about-r-38}
+```{r 02-about-r-35 }
 names(summary(c(1:20)))
 ```
 ]
@@ -868,7 +868,7 @@ names(summary(c(1:20)))
 
 
 .pull-left.w80[
-```{r 02-about-r-39}
+```{r 02-about-r-36 }
 length(names(summary(c(1:20))))
 ```
 ]
@@ -884,7 +884,7 @@ length(names(summary(c(1:20))))
 Instead of nesting functions in parentheses, we can use the .kjh-pink[_pipe operator_] to join them together:
 
 
-```{r 02-about-r-40}
+```{r 02-about-r-37 }
 c(1:20) |> summary() |> names() |>  length()
 ```
 
@@ -897,7 +897,7 @@ Read this operator as "_.kjh-pink[**and then**]_"
 Better, vertical space is free in R:
 
 
-```{r 02-about-r-41}
+```{r 02-about-r-38 }
 c(1:20) |> 
   summary() |> 
   names() |> 
@@ -986,7 +986,7 @@ All programming languages gain power and convenience by having libraries or pack
 
 --
 
-```{r 02-about-r-42}
+```{r 02-about-r-39 }
 ## A package containing a dataset rather than functions
 library(gapminder)
 
@@ -1003,7 +1003,7 @@ gapminder
 
 .SMALL[
 
-```{r 02-about-r-43, eval = FALSE}
+```{r 02-about-r-40, eval = FALSE}
 ## Do at least once for each package. Once done, not needed each time.
 install.packages("palmerpenguins", repos = "http://cran.rstudio.com")
 
@@ -1016,7 +1016,7 @@ update.packages(repos = "http://cran.rstudio.com")
 ]
 
 .SMALL[
-```{r 02-about-r-44}
+```{r 02-about-r-41 }
 ## To load a package, usually at the start of your RMarkdown document or script file
 library(palmerpenguins)
 penguins
@@ -1031,13 +1031,13 @@ penguins
 --
 
 .pull-left.w70[
-```{r 02-about-r-45, message = FALSE, echo = FALSE}
+```{r 02-about-r-42, message = FALSE, echo = FALSE}
 gtsummary::theme_gtsummary_journal(journal = "jama")
 #gtsummary::theme_gtsummary_compact()
 ```
 
 .less-medium[
-```{r 02-about-r-46}
+```{r 02-about-r-43 }
 ## A little glimpse of what we'll do soon
 penguins |> 
   select(species, body_mass_g, sex) |> 
@@ -1062,7 +1062,7 @@ Related concepts of _namespaces_ and _environments_.
 # Scope of names
  
 .small[
-```{r 02-about-r-47}
+```{r 02-about-r-44 }
 x <- c(1:10)
 y <- c(90:100)
 
@@ -1082,7 +1082,7 @@ mean()
 ]
 --
 .small[
-```{r 02-about-r-48}
+```{r 02-about-r-45 }
 mean(x) # argument names are internal to functions
 
 mean(x = x)
@@ -1110,7 +1110,7 @@ The object inspector in RStudio is your friend.
 
 You can ask an object what it is. 
 
-```{r 02-about-r-49}
+```{r 02-about-r-46 }
 class(my_numbers)
 typeof(my_numbers)
 ```
@@ -1124,7 +1124,7 @@ Objects can have more than one (nested) class:
 
 --
 
-```{r 02-about-r-50}
+```{r 02-about-r-47 }
 summary(my_numbers)
 
 my_smry <- summary(my_numbers) # remember, outputs can be assigned to a name, creating an object
@@ -1139,7 +1139,7 @@ class(my_smry) # equivalent to the previous line
 # 5. Objects come in .kjh-yellow[types] and .kjh-yellow[classes]
 
 
-```{r 02-about-r-51}
+```{r 02-about-r-48 }
 typeof(my_smry)
 attributes(my_smry)
 
@@ -1164,7 +1164,7 @@ names(my_smry)
 
 .pull-right[
 
-```{r 02-about-r-52}
+```{r 02-about-r-49 }
 my_int <- c(1, 3, 5, 6, 10)
 is.integer(my_int)
 is.double(my_int)
@@ -1198,7 +1198,7 @@ is.logical(my_lgl)
 
 .pull-right.tiny[
 
-```{r 02-about-r-53}
+```{r 02-about-r-50 }
 ## Factors are for storing categorical variables
 x <- factor(c("Yes", "No", "No", "Maybe", "Yes", "Yes"))
 x
@@ -1235,7 +1235,7 @@ Objects can be manually or automatically coerced from one class to another. Take
 
 --
 
-```{r 02-get-started-9}
+```{r 02-about-r-51 }
 class(my_numbers)
 
 my_new_vector <- c(my_numbers, "Apple")
@@ -1247,7 +1247,7 @@ class(my_new_vector)
 
 --
 
-```{r 02-about-r-54}
+```{r 02-about-r-52 }
 my_dbl <- c(2.1, 4.77, 30.111, 3.14519)
 is.double(my_dbl)
 
@@ -1263,7 +1263,7 @@ my_dbl
 # Tibbles are a .kjh-yellow[list] of .kjh-green[vectors] of various .kjh-pink[types]
 
 .SMALL[
-```{r 02-about-r-55}
+```{r 02-about-r-53 }
 gapminder # tibbles and data frames can contain vectors of different types
 
 class(gapminder)
@@ -1295,13 +1295,13 @@ Some classes build on and enhance the properties of simpler classes.
 
 Base R's trusty .kjh-lblue[**`data.frame`**]
   
-```{r titanic1}
+```{r 02-about-r-54 }
 library(socviz)
 titanic
 class(titanic)
 ```
 
-```{r titanic2}
+```{r 02-about-r-55 }
 ## The `$` idiom picks out a named column here; 
 ## more generally, the named element of a list
 titanic$percent  
@@ -1314,7 +1314,7 @@ titanic$percent
 
 The Tidyverse's enhanced .kjh-lblue[**`tibble`**]
 
-```{r titanic3}
+```{r 02-about-r-56 }
 ## tibbles are build on data frames 
 class(titanic)
 
@@ -1329,7 +1329,7 @@ class(titanic_tb)
 
 # All of this will matter later on
 
-```{r 02-about-r-56}
+```{r 02-about-r-57 }
 gss_sm
 ```
 
@@ -1355,7 +1355,7 @@ gss_sm
 
 See if you can predict what the following operations do: 
 
-```{r 02-about-r-57}
+```{r 02-about-r-58 }
 my_numbers
 
 result1 <- my_numbers + 1
@@ -1364,26 +1364,26 @@ result1 <- my_numbers + 1
 
 --
 
-```{r 02-about-r-58}
+```{r 02-about-r-59 }
 result1
 ```
 
 --
 
-```{r 02-about-r-59}
+```{r 02-about-r-60 }
 result2 <- my_numbers + my_numbers
 
 ```
 
 --
 
-```{r 02-about-r-60}
+```{r 02-about-r-61 }
 result2
 ```
 
 --
 
-```{r 02-about-r-61, warning=TRUE}
+```{r 02-about-r-62, warning=TRUE}
 two_nums <- c(5, 10)
 
 result3 <- my_numbers + two_nums
@@ -1392,7 +1392,7 @@ result3 <- my_numbers + two_nums
 
 --
 
-```{r 02-about-r-62}
+```{r 02-about-r-63 }
 result3
 ```
 
@@ -1400,7 +1400,7 @@ result3
 
 # 6. .kjh-yellow[Arithmetic on vectors]
 
-```{r 02-about-r-63, warning=TRUE}
+```{r 02-about-r-64, warning=TRUE}
 three_nums <- c(1, 5, 10)
 
 result4 <- my_numbers + three_nums
@@ -1409,7 +1409,7 @@ result4 <- my_numbers + three_nums
 
 --
 
-```{r 02-about-r-64}
+```{r 02-about-r-65 }
 result4
 ```
 
@@ -1446,7 +1446,7 @@ class: center middle main-title section-title-1
 
 Like before:
 
-```{r}
+```{r 02-about-r-66 }
 gapminder
 ```
 
@@ -1473,7 +1473,7 @@ p + geom_point()
 --
 
 .pull-right.w60[
-```{r, echo=FALSE}
+```{r 02-about-r-67, echo=FALSE}
 knitr::include_graphics(
   knitr::fig_chunk("codefig-plot-2", "png")
 )
@@ -1487,7 +1487,7 @@ knitr::include_graphics(
 .pull-left.w40[
 
 
-```{r, message=FALSE, eval = FALSE, echo = TRUE}
+```{r 02-about-r-68, message=FALSE, eval = FALSE, echo = TRUE}
 library(tidyverse)
 
 library(gapminder)
@@ -1503,7 +1503,7 @@ library(gapminder)
 
 .pull-left.w40[
 
-```{r, message=FALSE, eval = FALSE, echo = TRUE}
+```{r 02-about-r-69, message=FALSE, eval = FALSE, echo = TRUE}
 
 p <- ggplot(data = gapminder, 
             mapping = aes(x = gdpPercap, 
@@ -1521,7 +1521,7 @@ p <- ggplot(data = gapminder,
 
 .pull-left.w40[
 
-```{r, message=FALSE, eval = FALSE, echo = TRUE}
+```{r 02-about-r-70, message=FALSE, eval = FALSE, echo = TRUE}
 
 
 p + geom_point()
