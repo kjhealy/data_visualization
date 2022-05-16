@@ -28,6 +28,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 This page contains information for seminar participants. Please read it and follow the instructions below to download and install the necessary software and course materials.
 
+# The Course Packet
+
+[Click here to download the course packet as a zip file.](https://github.com/kjhealy/data_visualization/archive/refs/heads/main.zip) See below for more details.
+
 # Course Overview
 
 ### Sign-up and Registration
@@ -93,7 +97,7 @@ If you do not have one already, it will be useful to create a GitHub account and
 
 ### Download the Course Packet
 
-The course packet will be available before the course begins. It is an RStudio project containing PDFs of the slides for the course together with code for almost all of the graphs we will draw, and some additional datasets and other material. After you have installed R and RStudio, download the course packet (link to follow soon) and uncompress it on your computer. Double-clicking the file named `dataviz.Rproj` should launch the project in RStudio.
+The [course packet](https://github.com/kjhealy/data_visualization/archive/refs/heads/main.zip) can be downloaded as a zip file: [click here to download it](https://github.com/kjhealy/data_visualization/archive/refs/heads/main.zip). It is an RStudio project containing PDFs of the slides for the course together with code for almost all of the graphs we will draw, along with a starter file for your course notes, some additional datasets we may use, and other material. After you have installed R and RStudio, download the course packet and uncompress it on your computer. Once the packet is uncompressed into a folder named `data_visualization`, double-clicking the file inside that folder named `dataviz.Rproj` should launch the project in RStudio.
 
 # About the Instructor
 
