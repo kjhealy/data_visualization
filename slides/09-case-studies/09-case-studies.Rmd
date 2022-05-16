@@ -743,20 +743,20 @@ cavax |>
       scale_size(breaks=c(20, 40, 75, 100, 300),
                    range=c(1,10)) +
       scale_x_discrete(labels = special_x_labs) + 
-      labs(size = "Number of Kindergarteners in each School",
+      labs(size = "Number of kindergarteners in each school",
            x = NULL, y = "Percent", 
            title = "Vaccination Exemptions in California Kindergartens") +
-        theme(legend.position = "bottom") ->
+        theme(legend.position = "bottom", 
+              plot.title = element_text(size = rel(1.4), 
+                                        face = "bold")) ->
   p_bee_main
  
 ```
 
 ---
-
----
 layout: false
 
-```{r, echo = FALSE, fig.height = 9, fig.width=15}
+```{r, echo = FALSE, fig.height = 8, fig.width=15}
 p_bee_main
 ```
 
