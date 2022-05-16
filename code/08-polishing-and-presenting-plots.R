@@ -1,25 +1,5 @@
-## ----note, include=FALSE---------------------------------------------------------------------------------------------------------------------------
-## NB: By default the  template will create a new subdirectory with its files inside.
 
-
-## ----packages, include=FALSE-----------------------------------------------------------------------------------------------------------------------
-library(flipbookr)
-library(here)
-library(tidyverse)
-library(kjhslides)
-
-
-## ----setup, include=FALSE--------------------------------------------------------------------------------------------------------------------------
-## Configure the slides
-
-kjh_register_tenso()    # Default fonts. Comment out if you don't have Tenso and Berkeley fonts.
-kjh_set_knitr_opts()    
-kjh_set_slide_theme()   # ggplot theme to go with slides. Set tenso = FALSE if necessary.
-kjh_set_xaringan_opts()
-
-
-
-## ----08-polishing-and-presenting-plots-1, message = FALSE------------------------------------------------------------------------------------------
+## ----08-polishing-and-presenting-plots-1, message = FALSE---------------------
 library(here)       # manage file paths
 library(tidyverse)  # your friend and mine
 library(socviz)     # data and some useful functions
@@ -29,12 +9,12 @@ library(scales)      # scale adjustments and enhancements
 library(ggforce)    # useful enhancements to ggplot
 
 
-## ----08-polishing-and-presenting-plots-2-----------------------------------------------------------------------------------------------------------
+## ----08-polishing-and-presenting-plots-2--------------------------------------
 asasec <- as_tibble(asasec)
 asasec
 
 
-## ----08-polishing-and-presenting-plots-3, echo = FALSE, fig.height=6, fig.width=10-----------------------------------------------------------------
+## ----08-polishing-and-presenting-plots-3, echo = FALSE, fig.height=6, fig.width=10----
 asasec |> 
   filter(Year == 2014) |> 
   ggplot(mapping = aes(x = Members, 
@@ -45,7 +25,7 @@ asasec |>
 
 
 
-## ----08-polishing-and-presenting-plots-4, echo = FALSE, fig.height=6, fig.width=10-----------------------------------------------------------------
+## ----08-polishing-and-presenting-plots-4, echo = FALSE, fig.height=6, fig.width=10----
 asasec |> 
   filter(Year == 2014) |> 
   ggplot(mapping = aes(x = Members, 
@@ -74,7 +54,7 @@ asasec |>
 
 
 
-## ----reveal-asasteps, include = FALSE--------------------------------------------------------------------------------------------------------------
+## ----reveal-asasteps, include = FALSE-----------------------------------------
 asasec |> 
   filter(Year == 2014) |> 
   ggplot(mapping = aes(x = Members, 
@@ -102,34 +82,44 @@ asasec |>
 
 
 
-## ----08-polishing-and-presenting-plots-5, echo = FALSE---------------------------------------------------------------------------------------------
+## ----08-polishing-and-presenting-plots-5, echo = FALSE------------------------
 kjh_set_classic_theme()
 
 
-## ----reveal-scalemanual, include = FALSE-----------------------------------------------------------------------------------------------------------
-p <- ggplot(data = organdata,
-            mapping = aes(x = roads, 
-                          y = donors, 
-                          color = world)) + 
-  geom_point(size = 4)
-
-p
-
+## ----reveal-scalemanual, include = FALSE--------------------------------------
+organdata |> 
+  ggplot(mapping = aes(x = roads,
+                       y = donors, 
+                       color = world)) + 
+  geom_point(size = 4) -> 
+  p
 
 
-## ----reveal-scalemanual2, include = FALSE----------------------------------------------------------------------------------------------------------
-p + scale_color_manual(
+
+
+## ---- eval = FALSE------------------------------------------------------------
+## p <- organdata |>
+##   ggplot(mapping = aes(x = roads,
+##                        y = donors,
+##                        color = world)) +
+##   geom_point(size = 4)
+
+
+## ----reveal-scalemanual2, include = FALSE-------------------------------------
+p + 
+  scale_color_manual(
   values = c("red", "green", "blue"))
 
 
 
-## ----reveal-scalemanual3, include = FALSE----------------------------------------------------------------------------------------------------------
-p + scale_color_manual(
+## ----reveal-scalemanual3, include = FALSE-------------------------------------
+p + 
+  scale_color_manual(
   values = c("#1B9E77","#D95F02", "#7570B3"))
 
 
 
-## ----reveal-scalemanual4, include = FALSE----------------------------------------------------------------------------------------------------------
+## ----reveal-scalemanual4, include = FALSE-------------------------------------
 
 colkey <- c("Corporatist" = "pink", 
             "Liberal" = "goldenrod", 
@@ -141,24 +131,24 @@ p + scale_color_manual(
 
 
 
-## ----08-polishing-and-presenting-plots-6, echo = FALSE, fig.height=5.5, fig.width=7----------------------------------------------------------------
+## ----08-polishing-and-presenting-plots-6, echo = FALSE, fig.height=5.5, fig.width=7----
 opar <- par(mar = c(5.1, 4.1, 4.1, 2.1))
 par(mar=c(0,4,0,0))
 RColorBrewer::display.brewer.all(type = "qual")
 par(opar)
 
 
-## ----08-polishing-and-presenting-plots-7, echo = FALSE, fig.height=5.5, fig.width=4----------------------------------------------------------------
+## ----08-polishing-and-presenting-plots-7, echo = FALSE, fig.height=5.5, fig.width=4----
 par(mar=c(0,4,0,0))
 RColorBrewer::display.brewer.all(type = "seq")
 
 
-## ----08-polishing-and-presenting-plots-8, echo = FALSE, fig.height=5.5, fig.width=6----------------------------------------------------------------
+## ----08-polishing-and-presenting-plots-8, echo = FALSE, fig.height=5.5, fig.width=6----
 par(mar=c(0,4,0,0))
 RColorBrewer::display.brewer.all(type = "div")
 
 
-## ----08-polishing-and-presenting-plots-9, eval = FALSE, fig.show="hold", out.width="50%"-----------------------------------------------------------
+## ----08-polishing-and-presenting-plots-9, eval = FALSE, fig.show="hold", out.width="50%"----
 ## p + geom_point(size = 2) +
 ##   scale_color_brewer(palette = "Set2") +
 ##   labs(title = "Set2")
@@ -176,39 +166,39 @@ RColorBrewer::display.brewer.all(type = "div")
 ##   labs(title = "Accent")
 
 
-## ----08-polishing-and-presenting-plots-10, echo = FALSE, fig.height=4, fig.width=6-----------------------------------------------------------------
+## ----08-polishing-and-presenting-plots-10, echo = FALSE, fig.height=4, fig.width=6----
 p + geom_point(size = 3) + 
   scale_color_brewer(palette = "Set2") +
   labs(title = "Set2")
 
 
-## ----08-polishing-and-presenting-plots-11, echo = FALSE, fig.height=4, fig.width=6-----------------------------------------------------------------
+## ----08-polishing-and-presenting-plots-11, echo = FALSE, fig.height=4, fig.width=6----
 p + geom_point(size = 3) + 
   scale_color_brewer(palette = "Pastel2") +
   labs(title = "Pastel2")
 
 
-## ----08-polishing-and-presenting-plots-12, echo = FALSE, fig.height=4, fig.width=6-----------------------------------------------------------------
+## ----08-polishing-and-presenting-plots-12, echo = FALSE, fig.height=4, fig.width=6----
 p + geom_point(size = 3) + 
   scale_color_brewer(palette = "Dark2") +
   labs(title = "Dark2")
 
 
-## ----08-polishing-and-presenting-plots-13, echo = FALSE, fig.height=4, fig.width=6-----------------------------------------------------------------
+## ----08-polishing-and-presenting-plots-13, echo = FALSE, fig.height=4, fig.width=6----
 p + geom_point(size = 3) + 
   scale_color_brewer(palette = "Accent") +
   labs(title = "Accent")
 
 
-## ----08-polishing-and-presenting-plots-14, fig.height = 8, fig.width = 16, echo = FALSE------------------------------------------------------------
+## ----08-polishing-and-presenting-plots-14, fig.height = 8, fig.width = 16, echo = FALSE----
 colorspace::hcl_palettes(plot = TRUE)
 
 
-## ----08-polishing-and-presenting-plots-15, echo = FALSE--------------------------------------------------------------------------------------------
+## ----08-polishing-and-presenting-plots-15, echo = FALSE-----------------------
 kjh_set_slide_theme()
 
 
-## ----08-polishing-and-presenting-plots-16, echo = FALSE, fig.width=15, fig.height=8.5--------------------------------------------------------------
+## ----08-polishing-and-presenting-plots-16, echo = FALSE, fig.width=15, fig.height=8.5----
 # Democratic Blue and Republican Red
 party_colors <- c("#2E74C0", "#CB454A")
 party_colors <- c("royalblue1", "red2")
@@ -245,7 +235,7 @@ ggplot(data = subset(county_data,
 
 
 
-## ----reveal-fliptrump, include = FALSE-------------------------------------------------------------------------------------------------------------
+## ----reveal-fliptrump, include = FALSE----------------------------------------
 # Brighter Blue and Red
 party_colors <- c("royalblue1", "red2")
 
@@ -277,7 +267,7 @@ ggplot(data = subset(county_data,
  
 
 
-## ----08-polishing-and-presenting-plots-17, echo = FALSE--------------------------------------------------------------------------------------------
+## ----08-polishing-and-presenting-plots-17, echo = FALSE-----------------------
 county_data <- as_tibble(county_data) |> 
   filter(!is.na(name) & name %nin% as.character(c(1:52)))
 
@@ -443,39 +433,39 @@ p_layer_6 <- ggplot(data = subset(county_data,
 
 
 
-## ----08-polishing-and-presenting-plots-18, echo = FALSE, fig.width=15, fig.height=8.5--------------------------------------------------------------
+## ----08-polishing-and-presenting-plots-18, echo = FALSE, fig.width=15, fig.height=8.5----
 p_layer_1
 
 
-## ----08-polishing-and-presenting-plots-19, echo = FALSE, fig.width=15, fig.height=8.5--------------------------------------------------------------
+## ----08-polishing-and-presenting-plots-19, echo = FALSE, fig.width=15, fig.height=8.5----
 p_layer_2
 
 
-## ----08-polishing-and-presenting-plots-20, echo = FALSE, fig.width=15, fig.height=8.5--------------------------------------------------------------
+## ----08-polishing-and-presenting-plots-20, echo = FALSE, fig.width=15, fig.height=8.5----
 p_layer_3
 
 
-## ----08-polishing-and-presenting-plots-21, echo = FALSE, fig.width=15, fig.height=8.5--------------------------------------------------------------
+## ----08-polishing-and-presenting-plots-21, echo = FALSE, fig.width=15, fig.height=8.5----
 p_layer_4
 
 
-## ----08-polishing-and-presenting-plots-22, echo = FALSE, fig.width=15, fig.height=8.5--------------------------------------------------------------
+## ----08-polishing-and-presenting-plots-22, echo = FALSE, fig.width=15, fig.height=8.5----
 p_layer_5
 
 
-## ----08-polishing-and-presenting-plots-23, echo = FALSE, fig.width=15, fig.height=8.5--------------------------------------------------------------
+## ----08-polishing-and-presenting-plots-23, echo = FALSE, fig.width=15, fig.height=8.5----
 p_layer_6
 
 
-## ----08-polishing-and-presenting-plots-24, echo = FALSE, fig.width=15, fig.height=8.5--------------------------------------------------------------
+## ----08-polishing-and-presenting-plots-24, echo = FALSE, fig.width=15, fig.height=8.5----
 p_layer_5
 
 
-## ----08-polishing-and-presenting-plots-25----------------------------------------------------------------------------------------------------------
+## ----08-polishing-and-presenting-plots-25-------------------------------------
 kjh_set_classic_theme(3)
 
 
-## ----codefig-themes1, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5----------------------------------------------------------------
+## ----codefig-themes1, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5----
 
 p <- organdata |> 
   drop_na(world) |> 
@@ -490,51 +480,51 @@ p
 
 
 
-## ----08-polishing-and-presenting-plots-26, echo=FALSE----------------------------------------------------------------------------------------------
+## ----08-polishing-and-presenting-plots-26, echo=FALSE-------------------------
   knitr::include_graphics(
   knitr::fig_chunk("codefig-themes1", "png"))
 
 
-## ----codefig-theme2, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5-----------------------------------------------------------------
+## ----codefig-theme2, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5----
 p + theme_bw()
 
 
-## ----08-polishing-and-presenting-plots-27, echo=FALSE----------------------------------------------------------------------------------------------
+## ----08-polishing-and-presenting-plots-27, echo=FALSE-------------------------
   knitr::include_graphics(
   knitr::fig_chunk("codefig-theme2", "png"))
 
 
-## ----codefig-theme3, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5-----------------------------------------------------------------
+## ----codefig-theme3, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5----
 p + theme_minimal()
 
 
-## ----08-polishing-and-presenting-plots-28, echo=FALSE----------------------------------------------------------------------------------------------
+## ----08-polishing-and-presenting-plots-28, echo=FALSE-------------------------
   knitr::include_graphics(
   knitr::fig_chunk("codefig-theme3", "png"))
 
 
-## ----codefig-themedark, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5--------------------------------------------------------------
+## ----codefig-themedark, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5----
 p + theme_dark()
 
 
-## ----08-polishing-and-presenting-plots-29, echo=FALSE----------------------------------------------------------------------------------------------
+## ----08-polishing-and-presenting-plots-29, echo=FALSE-------------------------
   knitr::include_graphics(
   knitr::fig_chunk("codefig-themedark", "png"))
 
 
-## ----codefig-themeadditive, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5----------------------------------------------------------
+## ----codefig-themeadditive, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5----
 
 p + theme_bw() +
   theme(legend.position = "top")
 
 
 
-## ----08-polishing-and-presenting-plots-30, echo=FALSE----------------------------------------------------------------------------------------------
+## ----08-polishing-and-presenting-plots-30, echo=FALSE-------------------------
   knitr::include_graphics(
   knitr::fig_chunk("codefig-themeadditive", "png"))
 
 
-## ----codefig-elementtext, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5------------------------------------------------------------
+## ----codefig-elementtext, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5----
 
 p + theme(plot.title = 
             element_text(size = rel(3),
@@ -543,12 +533,12 @@ p + theme(plot.title =
 
 
 
-## ----08-polishing-and-presenting-plots-31, echo=FALSE----------------------------------------------------------------------------------------------
+## ----08-polishing-and-presenting-plots-31, echo=FALSE-------------------------
   knitr::include_graphics(
   knitr::fig_chunk("codefig-elementtext", "png"))
 
 
-## ----codefig-elementline, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5------------------------------------------------------------
+## ----codefig-elementline, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5----
 
 p + theme(panel.grid.major.y = 
             element_line(color = "red"),
@@ -558,39 +548,39 @@ p + theme(panel.grid.major.y =
 
 
 
-## ----08-polishing-and-presenting-plots-32, echo=FALSE----------------------------------------------------------------------------------------------
+## ----08-polishing-and-presenting-plots-32, echo=FALSE-------------------------
   knitr::include_graphics(
   knitr::fig_chunk("codefig-elementline", "png"))
 
 
-## ----08-polishing-and-presenting-plots-33, echo = FALSE, fig.width=12, fig.height=8----------------------------------------------------------------
+## ----08-polishing-and-presenting-plots-33, echo = FALSE, fig.width=12, fig.height=8----
 p_layer_4
 
 
-## ----08-polishing-and-presenting-plots-34----------------------------------------------------------------------------------------------------------
+## ----08-polishing-and-presenting-plots-34-------------------------------------
 library(ggthemes)
 theme_set(theme_fivethirtyeight())
 
 
 
-## ----08-polishing-and-presenting-plots-35, echo = FALSE, fig.width=12, fig.height=8----------------------------------------------------------------
+## ----08-polishing-and-presenting-plots-35, echo = FALSE, fig.width=12, fig.height=8----
 p_layer_4
 
 
-## ----08-polishing-and-presenting-plots-36----------------------------------------------------------------------------------------------------------
+## ----08-polishing-and-presenting-plots-36-------------------------------------
 theme_set(theme_economist())
 
 
 
-## ----08-polishing-and-presenting-plots-37, echo = FALSE, fig.width=12, fig.height=8----------------------------------------------------------------
+## ----08-polishing-and-presenting-plots-37, echo = FALSE, fig.width=12, fig.height=8----
 p_layer_4
 
 
-## ----08-polishing-and-presenting-plots-38----------------------------------------------------------------------------------------------------------
+## ----08-polishing-and-presenting-plots-38-------------------------------------
 theme_set(theme_stata())
 
 
 
-## ----08-polishing-and-presenting-plots-39, echo = FALSE, fig.width=12, fig.height=8----------------------------------------------------------------
+## ----08-polishing-and-presenting-plots-39, echo = FALSE, fig.width=12, fig.height=8----
 p_layer_4
 

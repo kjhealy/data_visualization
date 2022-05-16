@@ -1,25 +1,5 @@
-## ----note, include=FALSE---------------------------------------------------------------------------------------------------------------------------
-## NB: By default the  template will create a new subdirectory with its files inside.
 
-
-## ----packages, include=FALSE-----------------------------------------------------------------------------------------------------------------------
-library(flipbookr)
-library(here)
-library(tidyverse)
-library(kjhslides)
-
-
-## ----setup, include=FALSE--------------------------------------------------------------------------------------------------------------------------
-## Configure the slides
-
-kjh_register_tenso()    # Default fonts. Comment out if you don't have Tenso and Berkeley fonts.
-kjh_set_knitr_opts()    
-kjh_set_slide_theme()   # ggplot theme to go with slides. Set tenso = FALSE if necessary.
-kjh_set_xaringan_opts()
-
-
-
-## ----09-case-studies-1, message = FALSE------------------------------------------------------------------------------------------------------------
+## ----09-case-studies-1, message = FALSE---------------------------------------
 library(here)       # manage file paths
 library(tidyverse)  # your friend and mine
 library(cavax)      # california vaccination exemption data
@@ -34,7 +14,7 @@ library(socviz)     # data and some useful functions
 
 
 
-## ----09-case-studies-2, echo = FALSE---------------------------------------------------------------------------------------------------------------
+## ----09-case-studies-2, echo = FALSE------------------------------------------
 ### Quick convenience function, as we're going to make this plot several
 ### times.
 two.y <- function(x, y1, y2,
@@ -85,7 +65,7 @@ two.y <- function(x, y1, y2,
 
 
 
-## ----09-case-studies-3, echo = FALSE, fig.width=12, fig.height=6-----------------------------------------------------------------------------------
+## ----09-case-studies-3, echo = FALSE, fig.width=12, fig.height=6--------------
 par(mar=c(0,0,0,0)+.1)
 two.y(x=fredts$date,
       y1=fredts$sp500,
@@ -93,7 +73,7 @@ two.y(x=fredts$date,
       ttxt = "")
 
 
-## ----09-case-studies-4, echo = FALSE, fig.width=12, fig.height=6-----------------------------------------------------------------------------------
+## ----09-case-studies-4, echo = FALSE, fig.width=12, fig.height=6--------------
 ## 2. Change an axis
 two.y(x=fredts$date,
       y1=fredts$sp500,
@@ -104,7 +84,7 @@ two.y(x=fredts$date,
 
 
 
-## ----09-case-studies-5, echo = FALSE, fig.width=12, fig.height=6-----------------------------------------------------------------------------------
+## ----09-case-studies-5, echo = FALSE, fig.width=12, fig.height=6--------------
 ## 3. Change y1 axis limits
 two.y(x=fredts$date,
       y1=fredts$sp500,
@@ -114,12 +94,12 @@ two.y(x=fredts$date,
 
 
 
-## ----09-case-studies-6-----------------------------------------------------------------------------------------------------------------------------
+## ----09-case-studies-6--------------------------------------------------------
 fredts <- as_tibble(fredts)
 fredts
 
 
-## ----reveal-fredpivot, include = FALSE-------------------------------------------------------------------------------------------------------------
+## ----reveal-fredpivot, include = FALSE----------------------------------------
 
 fredts |> 
   select(date, sp500_i, monbase_i)  |> 
@@ -130,7 +110,7 @@ fredts |>
 
 
 
-## ----reveal-fredts1, include = FALSE---------------------------------------------------------------------------------------------------------------
+## ----reveal-fredts1, include = FALSE------------------------------------------
 fredts_m |> 
   ggplot(mapping = 
            aes(x = date, 
@@ -155,7 +135,7 @@ fredts |>
 
 
 
-## ----reveal-patchwork, include = FALSE-------------------------------------------------------------------------------------------------------------
+## ----reveal-patchwork, include = FALSE----------------------------------------
 library(patchwork)
 
 (p1 / p2) + 
@@ -164,15 +144,15 @@ library(patchwork)
   p_patch
 
 
-## ----09-case-studies-7, echo = FALSE, fig.width=12, fig.height=8-----------------------------------------------------------------------------------
+## ----09-case-studies-7, echo = FALSE, fig.width=12, fig.height=8--------------
 p_patch
 
 
-## ----09-case-studies-8-----------------------------------------------------------------------------------------------------------------------------
+## ----09-case-studies-8--------------------------------------------------------
 yahoo
 
 
-## ----reveal-yahoo, include = FALSE-----------------------------------------------------------------------------------------------------------------
+## ----reveal-yahoo, include = FALSE--------------------------------------------
  
 yahoo |> 
   ggplot(mapping = 
@@ -195,11 +175,11 @@ yahoo |>
 
 
 
-## ----09-case-studies-9, echo = FALSE, fig.width=10, fig.height=8-----------------------------------------------------------------------------------
+## ----09-case-studies-9, echo = FALSE, fig.width=10, fig.height=8--------------
 yahoo1
 
 
-## ----reveal-yahooalt, include = FALSE--------------------------------------------------------------------------------------------------------------
+## ----reveal-yahooalt, include = FALSE-----------------------------------------
 yahoo |> 
   ggplot(mapping = 
            aes(x = Year, 
@@ -216,15 +196,15 @@ yahoo |>
   yahoo2
 
 
-## ----09-case-studies-10, echo = FALSE, fig.width=10, fig.height = 6--------------------------------------------------------------------------------
+## ----09-case-studies-10, echo = FALSE, fig.width=10, fig.height = 6-----------
 yahoo2
 
 
-## ----09-case-studies-11----------------------------------------------------------------------------------------------------------------------------
+## ----09-case-studies-11-------------------------------------------------------
 studebt
 
 
-## ----09-case-studies-12----------------------------------------------------------------------------------------------------------------------------
+## ----09-case-studies-12-------------------------------------------------------
 p_ylab <- "Amount Owed, in thousands of Dollars"
 p_title <- "Outstanding Student Loans"
 p_subtitle <- "44 million borrowers owe a total of $1.3 trillion"
@@ -237,7 +217,7 @@ studebt <- studebt |>
 studebt
 
 
-## ----reveal-debt, include = FALSE------------------------------------------------------------------------------------------------------------------
+## ----reveal-debt, include = FALSE---------------------------------------------
 studebt |> 
   ggplot(mapping = 
            aes(x = pct/100, 
@@ -261,11 +241,11 @@ studebt |>
   p1_debt
 
 
-## ----09-case-studies-13, echo = FALSE, fig.width=10, fig.height=8----------------------------------------------------------------------------------
+## ----09-case-studies-13, echo = FALSE, fig.width=10, fig.height=8-------------
 p1_debt
 
 
-## ----reveal-debtalt, include = FALSE---------------------------------------------------------------------------------------------------------------
+## ----reveal-debtalt, include = FALSE------------------------------------------
 studebt |> 
   ggplot(mapping = aes(x = pct/100, 
                        y = type_label, 
@@ -296,18 +276,18 @@ studebt |>
  
 
 
-## ----09-case-studies-14, echo = FALSE, fig.height=5, fig.width=20----------------------------------------------------------------------------------
+## ----09-case-studies-14, echo = FALSE, fig.height=5, fig.width=20-------------
 p_debt2
 
 
-## ----09-case-studies-15----------------------------------------------------------------------------------------------------------------------------
+## ----09-case-studies-15-------------------------------------------------------
 # remotes::install_github("kjhealy/demog")
 # library(demog)
 
 okboomer
 
 
-## ----reveal-lineboom, include = FALSE--------------------------------------------------------------------------------------------------------------
+## ----reveal-lineboom, include = FALSE-----------------------------------------
 okboomer |> 
     filter(country == "United States")  |> 
     ggplot(aes(x = date, y = births_pct_day)) +
@@ -317,12 +297,12 @@ okboomer |>
   p_lineboom 
 
 
-## ----09-case-studies-16, echo = FALSE, fig.width=20, fig.height=6----------------------------------------------------------------------------------
+## ----09-case-studies-16, echo = FALSE, fig.width=20, fig.height=6-------------
 p_lineboom 
 
 
 
-## ----reveal-boomertile, include = FALSE------------------------------------------------------------------------------------------------------------
+## ----reveal-boomertile, include = FALSE---------------------------------------
 okboomer |>
     mutate(year_fct = 
              factor(year,  
@@ -354,18 +334,18 @@ okboomer |>
 
 
 
-## ----09-case-studies-17, echo = FALSE, fig.height=4.8, fig.width=20--------------------------------------------------------------------------------
+## ----09-case-studies-17, echo = FALSE, fig.height=4.8, fig.width=20-----------
 p_tileboom
 
 
-## ----09-case-studies-18----------------------------------------------------------------------------------------------------------------------------
+## ----09-case-studies-18-------------------------------------------------------
 # remotes::install_github("kjhealy/cavax)
 library(cavax)
 
 cavax
 
 
-## ----reveal-auxinfo, include = FALSE---------------------------------------------------------------------------------------------------------------
+## ----reveal-auxinfo, include = FALSE------------------------------------------
 library(ggbeeswarm)
 make_comma <- scales::label_comma()
 
@@ -381,7 +361,7 @@ cavax |>
   aux_info
 
 
-## ----reveal-auxinfo2, include = FALSE--------------------------------------------------------------------------------------------------------------
+## ----reveal-auxinfo2, include = FALSE-----------------------------------------
 ## This is not an efficient way to do this
 aux_info |> 
   select(mwc, info_schools, info_students) |> 
@@ -402,12 +382,12 @@ aux_info |>
  
 
 
-## ----09-case-studies-19, echo = FALSE--------------------------------------------------------------------------------------------------------------
+## ----09-case-studies-19, echo = FALSE-----------------------------------------
 kjh_set_classic_theme()
 theme_set(theme_minimal())
 
 
-## ----reveal-beemain, include = FALSE---------------------------------------------------------------------------------------------------------------
+## ----reveal-beemain, include = FALSE------------------------------------------
 cavax |> 
   filter(mwc %nin% c("Private Christian Montessori", 
                      "Charter Montessori", 
@@ -441,6 +421,6 @@ cavax |>
  
 
 
-## ----09-case-studies-20, echo = FALSE, fig.height = 8, fig.width=15--------------------------------------------------------------------------------
+## ----09-case-studies-20, echo = FALSE, fig.height = 8, fig.width=15-----------
 p_bee_main
 
