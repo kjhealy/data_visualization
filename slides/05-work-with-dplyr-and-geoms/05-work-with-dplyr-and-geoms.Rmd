@@ -1279,7 +1279,7 @@ class: right bottom main-title section-title-1
 
 
 .pull-left.w45[
-```{r geomtext, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5}
+```{r codefig-geomtext, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5}
 
 by_country |> 
   ggplot(mapping = aes(x = roads_mean, 
@@ -1294,7 +1294,7 @@ by_country |>
 .pull-right.w55[
 ```{r, echo=FALSE}
   knitr::include_graphics(
-  knitr::fig_chunk("geomtext", "png"))
+  knitr::fig_chunk("codefig-geomtext", "png"))
 ```
 ]
 
@@ -1305,7 +1305,7 @@ by_country |>
 
 
 .pull-left.w45[
-```{r geomtext2, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5}
+```{r codefig-geomtext2, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5}
 
 by_country |> 
   ggplot(mapping = aes(x = roads_mean, 
@@ -1323,7 +1323,7 @@ by_country |>
 .pull-right.w55[
 ```{r, echo=FALSE}
   knitr::include_graphics(
-  knitr::fig_chunk("geomtext2", "png"))
+  knitr::fig_chunk("codefig-geomtext2", "png"))
 ```
 ]
 
@@ -1333,7 +1333,7 @@ by_country |>
 
 
 .pull-left.w45[
-```{r geomtext3, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5}
+```{r codefig-geomtext3, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5}
 
 by_country |> 
   ggplot(mapping = aes(x = roads_mean, 
@@ -1352,7 +1352,7 @@ by_country |>
 .pull-right.w55[
 ```{r, echo=FALSE}
   knitr::include_graphics(
-  knitr::fig_chunk("geomtext3", "png"))
+  knitr::fig_chunk("codefig-geomtext3", "png"))
 ```
 ]
 
