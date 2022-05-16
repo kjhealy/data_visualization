@@ -14,11 +14,8 @@ editor_options:
 
 ```{r packages, include=FALSE}
 library(flipbookr)
-library(here)
-library(tidyverse)
 library(kjhslides)
-library(socviz)
-library(gapminder)
+library(here)
 ```
 
 
@@ -31,8 +28,12 @@ kjh_set_knitr_opts()
 kjh_set_classic_theme()
 kjh_set_xaringan_opts()
 
-```
 
+
+
+
+# Safe
+```
 
 
 class: center middle main-title section-title-1
@@ -48,6 +49,26 @@ Code Horizons, May 2022
 ]
 
 ]
+
+
+---
+
+layout: true
+class: title title-1
+
+---
+
+# Load our libraries
+
+.SMALL[
+```{r 05-work-with-dplyr-and-geoms-1, message = TRUE}
+library(here)      # manage file paths
+library(socviz)    # data and some useful functions
+library(tidyverse) # your friend and mine
+library(gapminder) # some data
+```
+]
+
 
 ---
 layout: false

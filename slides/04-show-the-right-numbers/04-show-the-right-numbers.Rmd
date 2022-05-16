@@ -28,6 +28,10 @@ kjh_set_knitr_opts()
 kjh_set_slide_theme()   # ggplot theme to go with slides. Set tenso = FALSE if necessary.
 kjh_set_xaringan_opts()
 
+
+
+
+# Safe
 ```
 
 
@@ -95,10 +99,10 @@ class: title title-1
 `r chunk_reveal("reveal-groupline", widths = c(50,50), title = "# Try to make a lineplot")`
 
 ```{r reveal-groupline, include = FALSE}
-p <- ggplot(data = gapminder,
-            mapping = aes(x = year,
-                          y = gdpPercap))
-p + geom_line()        
+gapminder |> 
+  ggplot(mapping = aes(x = year,
+                       y = gdpPercap)) + 
+  geom_line()        
 ```
 
 ---
@@ -107,12 +111,10 @@ p + geom_line()
 `r chunk_reveal("reveal-groupline2", widths = c(50,50), title = "# Try to make a lineplot")`
 
 ```{r reveal-groupline2, include = FALSE}
-p <- ggplot(data = gapminder,
-            mapping = aes(x = year,
-                          y = gdpPercap))
-
-## Geoms can take their own mappings, remember
-p + geom_line(mapping = aes(group = country))        
+gapminder |> 
+  ggplot(mapping = aes(x = year,
+                          y = gdpPercap)) + 
+  geom_line(mapping = aes(group = country))        
 ```
 
 
@@ -122,12 +124,11 @@ p + geom_line(mapping = aes(group = country))
 `r chunk_reveal("reveal-facet", widths = c(50,50), title = "# Facet the plot")`
 
 ```{r reveal-facet, include = FALSE}
-p <- ggplot(data = gapminder,
-            mapping = aes(x = year,
-                          y = gdpPercap))
-
-## Geoms can take their own mappings, remember
-p + geom_line(mapping = aes(group = country)) + 
+gapminder |> 
+  ggplot(mapping = 
+           aes(x = year,
+           y = gdpPercap)) + 
+  geom_line(mapping = aes(group = country)) + 
   facet_wrap(~ continent)
 ```
 

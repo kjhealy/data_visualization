@@ -18,12 +18,16 @@ library(kjhslides)
 
 ```{r setup, include=FALSE}
 ## Configure the slides
-
 kjh_register_tenso()    # Default fonts. Comment out if you don't have Tenso and Berkeley fonts.
 kjh_set_knitr_opts()    
 kjh_set_slide_theme()   # ggplot theme to go with slides. Set tenso = FALSE if necessary.
 kjh_set_xaringan_opts()
 
+
+
+
+
+# Safe
 ```
 
 

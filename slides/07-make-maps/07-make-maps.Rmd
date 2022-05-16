@@ -204,6 +204,8 @@ election |>
 `r chunk_reveal("reveal-elecfacet1", widths = c(45,55), title = "# Look before Mapping")`
 
 ```{r reveal-elecfacet1, include = FALSE}
+## Hex color codes for Democratic Blue and Republican Red
+party_colors <- c("#2E74C0", "#CB454A")
 
 election |> 
   filter(st %nin% "DC") |> 
@@ -241,6 +243,9 @@ class: title title-1
 .pull-left.w60[
 
 ```{r 07-make-maps-4, echo = FALSE, fig.height=6, fig.width=8}
+## Hex color codes for Democratic Blue and Republican Red
+party_colors <- c("#2E74C0", "#CB454A")
+
 p_out <- election |> 
   filter(st %nin% "DC") |> 
   ggplot(mapping = aes(x = r_points,
@@ -462,6 +467,7 @@ class: title title-1
 `r chunk_reveal("reveal-coord", widths = c(40,60), title = "# Fix the projection")`
 
 ```{r reveal-coord, include = FALSE}
+us_states <- as_tibble(map_data("state"))
 
 us_states |> 
   ggplot(mapping = aes(x = long, 
@@ -687,8 +693,9 @@ us_states_elec |>
 .pull-left.w45[
 ```{r codefig-choropartycolors, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5}
   
-## recall
-party_colors
+## Hex color codes for Democratic Blue and Republican Red
+party_colors <- c("#2E74C0", "#CB454A")
+
 
 us_states_elec |> 
   ggplot(mapping = aes(x = long, 
@@ -1040,6 +1047,9 @@ county_full
 `r chunk_reveal("reveal-countypop", widths = c(40,60), title = "# County Population Density")`
 
 ```{r reveal-countypop, include = FALSE}
+county_full <- left_join(county_map, county_data, by = "id")
+
+
 county_full |> 
   ggplot(mapping = aes(x = long, y = lat,
                           fill = pop_dens, 
@@ -1052,7 +1062,7 @@ county_full |>
                      "100-500", "500-1,000",
                       "1,000-5,000", ">5,000")) + 
   labs(fill = "Population per\nsquare mile") + 
-  theme_map() + 
+  kjhslides::kjh_theme_map() + 
   guides(fill = guide_legend(nrow = 1)) + 
   theme(legend.position = "bottom")
 ```
@@ -1090,6 +1100,8 @@ class: title title-1
 `r chunk_reveal("reveal-choroblack", widths = c(40,60), title = "# Same again for Percent Black")`
 
 ```{r reveal-choroblack, include = FALSE}
+county_full <- left_join(county_map, county_data, by = "id")
+
 county_full |> 
   ggplot(mapping = aes(x = long, y = lat,
                        fill = pct_black,  
@@ -1102,7 +1114,7 @@ county_full |>
                                "10-15%", "15-25%",
                                "25-50%", ">50%")) + 
   labs(fill = "US Population, percent Black") + 
-  theme_map() + 
+  kjhslides::kjh_theme_map() + 
   guides(fill = guide_legend(nrow = 1)) + 
   theme(legend.position = "bottom")
 ```
@@ -1300,7 +1312,7 @@ p_out <- opiates_map |>
   geom_polygon(color = "lightblue", size = 0.2) +
   coord_map(projection = "albers", lat0 = 39, lat1 = 45) +
   scale_fill_brewer(type = "seq", palette = "Oranges") +
-  theme_map() + 
+  kjhslides::kjh_theme_map() + 
   facet_wrap(~ year, ncol = 4) +
   guides(fill = guide_legend(nrow = 1)) + 
   theme(legend.position = "bottom",
@@ -1349,20 +1361,13 @@ opiates |>
 
 ```
 
-```{r 07-make-maps-47, echo = FALSE}
-st_top <- opiates |> 
-  filter(year == max(year), 
-         abbr != "DC") |> 
-  group_by(region) |> 
-  slice_max(order_by = adjusted, 
-            n = 2)
-```
-
-
 ---
 `r chunk_reveal("reveal-opiateline", widths = c(40,60), title = "# Opiates Time Series plot")`
 
 ```{r reveal-opiateline, include = FALSE}
+st_top <- opiates |>  filter(year == max(year), abbr != "DC") |> 
+  group_by(region) |> 
+  slice_max(order_by = adjusted, n = 2)
  
 opiates |> 
   ggplot(aes(x = year, 
@@ -1531,6 +1536,17 @@ nyc_license  |>
 
 ```
 
+```{r, echo = FALSE}
+nyc_fb <- nyc_license  |> 
+  filter(extract_year == 2018) |> 
+  group_by(breed_rc, zip_code) |> 
+  tally() |> 
+  mutate(freq = n / sum(n)) |> 
+  filter(breed_rc == "French Bulldog") ->
+  nyc_fb
+```
+
+
 ---
 
 # Now we have two tables again
@@ -1614,7 +1630,7 @@ fb_map %>%
              y = 40.8075-0.012, 
            label = "By Zip Code. Based on Licensing Data", 
            size = 5) + 
-    theme_nymap() + 
+    kjhslides::kjh_theme_nymap() + 
    guides(fill = 
            guide_legend(title.position = "top", 
                 label.position = "bottom",
@@ -1628,6 +1644,7 @@ fb_map %>%
 
 ```{r reveal-bulldogmap2, include = FALSE}
 library(colorspace)
+fb_map <- left_join(nyc_zips, nyc_fb, by = "zip_code")
 
 fb_map |> 
   ggplot(mapping = aes(fill = freq)) +
@@ -1646,7 +1663,7 @@ fb_map |>
            y = 40.7955, 
            label = "By Zip Code. Based on Licensing Data", 
            size = 5) + 
-  theme_nymap() + 
+  kjhslides::kjh_theme_nymap() + 
   guides(fill = 
            guide_legend(title.position = "top", 
                 label.position = "bottom",
@@ -1676,7 +1693,7 @@ fb_map |>
            y = 40.7955, 
            label = "By Zip Code. Based on Licensing Data", 
            size = 5) + 
-  theme_nymap() + 
+  kjhslides::kjh_theme_nymap() + 
   guides(fill = 
            guide_legend(title.position = "top", 
                 label.position = "bottom",
@@ -1735,6 +1752,8 @@ fb_map2 |> select(zip_code, po_name, borough, breed_rc:freq, geometry)
 `r chunk_reveal("reveal-bulldogfb2", widths = c(40,60), title = "# Now redraw the map")`
 
 ```{r reveal-bulldogfb2, include = FALSE}
+fb_map2 <- left_join(nyc_zips, nyc_fb2, by = "zip_code")
+
 fb_map2 |> 
   ggplot(mapping = aes(fill = freq)) +
   geom_sf(color = "gray80", size = 0.1) +
@@ -1752,7 +1771,7 @@ fb_map2 |>
            y = 40.7955, 
            label = "By Zip Code. Based on Licensing Data", 
            size = 5) + 
-  theme_nymap() + 
+  kjhslides::kjh_theme_nymap() + 
   guides(fill = 
            guide_legend(title.position = "top", 
                         label.position = "bottom",
@@ -1782,7 +1801,7 @@ fb_map2 |>
            y = 40.795, 
            label = "By Zip Code. Based on Licensing Data", 
            size = 5) + 
-  theme_nymap() + 
+  kjhslides::kjh_theme_nymap() + 
   guides(fill = 
            guide_legend(title.position = "top", 
                         label.position = "bottom",

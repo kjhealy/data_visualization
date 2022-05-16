@@ -185,21 +185,31 @@ kjh_set_classic_theme()
 `r chunk_reveal("reveal-scalemanual", widths = c(40,60), title = "# You can always specify scales manually")`
 
 ```{r reveal-scalemanual, include = FALSE}
-p <- ggplot(data = organdata,
-            mapping = aes(x = roads, 
-                          y = donors, 
-                          color = world)) + 
-  geom_point(size = 4)
+organdata |> 
+  ggplot(mapping = aes(x = roads,
+                       y = donors, 
+                       color = world)) + 
+  geom_point(size = 4) -> 
+  p
 
-p
 
 ```
+
+```{r, eval = FALSE}
+p <- organdata |> 
+  ggplot(mapping = aes(x = roads,
+                       y = donors, 
+                       color = world)) + 
+  geom_point(size = 4)
+```
+
 
 ---
 `r chunk_reveal("reveal-scalemanual2", widths = c(40,60), title = "# You can always specify scales manually")`
 
 ```{r reveal-scalemanual2, include = FALSE}
-p + scale_color_manual(
+p + 
+  scale_color_manual(
   values = c("red", "green", "blue"))
 
 ```
@@ -209,7 +219,8 @@ p + scale_color_manual(
 `r chunk_reveal("reveal-scalemanual3", widths = c(40,60), title = "# You can always specify scales manually")`
 
 ```{r reveal-scalemanual3, include = FALSE}
-p + scale_color_manual(
+p + 
+  scale_color_manual(
   values = c("#1B9E77","#D95F02", "#7570B3"))
 
 ```
