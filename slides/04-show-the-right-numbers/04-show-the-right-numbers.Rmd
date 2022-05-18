@@ -558,7 +558,7 @@ p_out
 ---
 class: right bottom main-title section-title-1
 
-## .huge.right.bottom.squish4[.kjh-yellow[Avoid counting up,] .kjh-lblue[when necessary]]
+## .huge.right.bottom.squish4[.kjh-yellow[Avoid counting up,]<br />.kjh-lblue[when necessary]]
 
 ---
 
@@ -595,7 +595,7 @@ p <- ggplot(data = titanic,
 p + geom_bar(stat = "identity") #<<
 ```
 
-- By default .kjh-green[`geom_bar()`] tries to count up data by category. (Really, its the .kjh-green[`stat_count()`] function that does this behind the scenes.) By saying `stat="identity"` we explicitly tell it not to do that. This also allows us to use a `y` mapping. Normally this would be the result of the counting up.
+- By default .kjh-green[`geom_bar()`] tries to count up data by category. (Really it's the .kjh-green[`stat_count()`] function that does this behind the scenes.) By saying `stat="identity"` we explicitly tell it not to do that. This also allows us to use a `y` mapping. Normally this would be the result of the counting up.
 
 ]
 
