@@ -69,6 +69,38 @@ library(gapminder) # some data
 ```
 ]
 
+---
+
+layout: true
+class: title title-1
+
+---
+
+# Nearly done with the scaffolding
+
+
+- ✅ Thought about elements of visualization
+
+--
+
+- ✅ Gotten oriented to R and RStudio
+
+--
+
+- ✅ Knitted a document 
+
+--
+
+- ✅ Written a bit of `ggplot` code
+
+--
+
+
+- ⬜ Get my data in to R
+
+--
+
+- ⬜ Make a plot with it
 
 ---
 layout: false
@@ -87,7 +119,16 @@ class: title title-1
 
 # What is .kjh-orange[tidy data]?
 
-.center[![:scale 50%](img/03_ggplot_tidy_data_only.png)]
+.center[![:scale 45%](img/03_ggplot_tidy_data_only.png)]
+
+---
+
+# What is .kjh-orange[tidy data]?
+
+.center[![:scale 45%](img/03_ggplot_tidy_data_only.png)]
+
+.center[Essentially: data in _long_ format.]
+
 
 
 ---
@@ -119,7 +160,7 @@ Very, _very_ often, the solution to some data-wrangling or data visualization pr
 
 --
 
-## .large[First, .kjh-lblue[get the data into long format].]
+## .large[.kjh-pink[First], .kjh-lblue[get the data into long format].]
 
 ## Then do the thing you want.
 
@@ -169,15 +210,16 @@ penguins |>
 
 # It's also common for .kjh-orange[_less_] good reasons
 
-.pull-left[![:scale 100%](img/03_election_spreadsheet.png)]
+.pull-left.w70[![:scale 100%](img/03_election_spreadsheet.png)]
 
-.pull-right[
+.pull-right.w30[
 
 - 😠 More than one header row
 
 - 😡 Mixed data types in some columns
 
 - 💀 Color and typography used to encode variables and their values 
+
 ]
 ---
 
@@ -203,16 +245,16 @@ _Pivoting_ from wide to long:
 edu
 ```
 
-Here the "Level of Schooling Attained" measure is spread across the columns, from `elem4` to `coll4`.
+Here, a "Level of Schooling Attained" variable is spread across the columns, from `elem4` to `coll4`.
 
 
-This is fine for a compact table, but for us it should be a single measure, say, "education". 
+This is fine for a compact table, but we need a _key_ column called "education" with the various levels of schooling, and a corresponding _value_ column containing the counts.
 ]
 ---
 
 # From wide to long with .kjh-green[`pivot_longer()`]
 
-.SMALL.squish2[We're going to put the columns `elem4:coll4` into a new column, creating a new categorical measure named `education`. The numbers currently under each column will become a  new .kjh-green[value] column corresponding to that level of education. ]
+.SMALL.squish2[We're going to put the columns `elem4:coll4` into a new column, creating a new categorical measure named .kjh-orange[`education`]. The numbers currently under each column will become a  new .kjh-orange[`value`] column corresponding to that level of education. ]
 
 ```{r 03-make-a-graph-4 }
 edu |> 
@@ -227,7 +269,9 @@ edu |>
 
 ```{r 03-make-a-graph-5 }
 edu |> 
-  pivot_longer(elem4:coll4, names_to = "education", values_to = "n")
+  pivot_longer(elem4:coll4, 
+               names_to = "education", 
+               values_to = "n")
 ```
 
 
@@ -240,10 +284,6 @@ class: center middle main-title section-title-1
 ---
 
 # Reading in CSV files
-
-CSV is not really a proper format at all!
-
---
 
 Base R has .kjh-green[`read.csv()`]
 
@@ -259,7 +299,7 @@ It is pickier and more talkative than the Base R version. Use it instead.
 
 If we're loading a file, it's coming from _somewhere_.
 
-If it's on our local disk somewhere, we will need to interact with the file system. We should try to do this in a way that avoids _absolute_ file paths. 
+If it's a file on our hard drive somewhere, we will need to interact with the file system. We should try to do this in a way that avoids _absolute_ file paths. 
 
 ```r
 # This is not portable!
@@ -417,19 +457,19 @@ class: title title-1
 --
 
 
-- .medium[Data .kjh-pink[**represented**] by visual elements,]
+- .medium[Data .kjh-pink[**represented**] by visual elements;]
 
 --
 
-- .medium[like .kjh-orange[_position_], .kjh-orange[_length_], .kjh-orange[_color_], and .kjh-orange[_size_],]
+- .medium[like .kjh-orange[_position_], .kjh-orange[_length_], .kjh-orange[_color_], and .kjh-orange[_size_];]
 
 --
 
-- .medium[Each measured on some .kjh-pink[**scale**],]
+- .medium[Each measured on some .kjh-pink[**scale**];]
 
 --
 
-- .medium[Each scale with a labeled .kjh-pink[**guide**],]
+- .medium[Each scale with a labeled .kjh-pink[**guide**];]
 
 --
 
@@ -454,6 +494,7 @@ class: center middle main-title section-title-1
 
 .center[![:scale 90%](img/03_ggplot_flow_wide_all.png)]
 
+## .kjh-large.center[We'll go through it step by step]
 
 ---
 
@@ -470,11 +511,6 @@ class: center middle main-title section-title-1
 
 ---
 
-# .kjh-lblue[`ggplot`]'s flow of action
-
-.center[![:scale 90%](img/03_ggplot_flow_wide_all.png)]
-
----
 
 # .kjh-lblue[`ggplot`]'s flow of action
 

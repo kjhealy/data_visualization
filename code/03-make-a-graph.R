@@ -13,17 +13,17 @@ library(gapminder) # some data
 
 ## ----03-make-a-graph-1--------------------------------------------------------
 library(palmerpenguins)
-penguins %>% 
-  group_by(species, island, year) %>% 
-  summarize(bill = round(mean(bill_length_mm, na.rm = TRUE),2)) %>% 
+penguins |> 
+  group_by(species, island, year) |> 
+  summarize(bill = round(mean(bill_length_mm, na.rm = TRUE),2)) |> 
   knitr::kable()
 
 
 ## ----03-make-a-graph-2--------------------------------------------------------
-penguins %>% 
-  group_by(species, island, year) %>% 
-  summarize(bill = round(mean(bill_length_mm, na.rm = TRUE), 2)) %>% 
-  pivot_wider(names_from = year, values_from = bill) %>% 
+penguins |> 
+  group_by(species, island, year) |> 
+  summarize(bill = round(mean(bill_length_mm, na.rm = TRUE), 2)) |> 
+  pivot_wider(names_from = year, values_from = bill) |> 
   knitr::kable()
 
 
@@ -32,12 +32,12 @@ edu
 
 
 ## ----03-make-a-graph-4--------------------------------------------------------
-edu %>% 
+edu |> 
   pivot_longer(elem4:coll4, names_to = "education")
 
 
 ## ----03-make-a-graph-5--------------------------------------------------------
-edu %>% 
+edu |> 
   pivot_longer(elem4:coll4, names_to = "education", values_to = "n")
 
 
@@ -127,7 +127,7 @@ p + geom_smooth() +
 ## ----codefig-functionargs, message=FALSE, fig.show="hide", fig.cap="An ill-advised linear fit", fig.width=4.8, fig.height=4.5----
 p <- ggplot(data = gapminder,
             mapping = aes(x = gdpPercap,
-                          y=lifeExp))
+                          y = lifeExp))
 p + geom_point() + 
   geom_smooth(method = "lm") 
 
@@ -219,6 +219,25 @@ p_out <- p + geom_point(alpha = 0.3) +
 
 ## ----03-make-a-graph-28, fig.width=8.5, fig.height=5--------------------------
 p_out
+
+
+## ----codefig-alphapoints, message=FALSE, fig.show="hide", fig.width=5, fig.height=4.5----
+p <- ggplot(data = gapminder, 
+            mapping = aes(x = gdpPercap, 
+                          y = lifeExp))
+p + geom_point(alpha = 0.3) + #<<
+  geom_smooth(method = "lm") +
+    scale_x_log10(labels = scales::label_dollar()) +
+    labs(x = "GDP Per Capita", 
+         y = "Life Expectancy in Years",
+         title = "Economic Growth and Life Expectancy",
+         subtitle = "Data points are country-years",
+         caption = "Source: Gapminder.")
+
+
+## ----03-make-a-graph-extra, echo=FALSE----------------------------------------
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-alphapoints", "png"))
 
 
 ## ----reveal-pergeom1, include = FALSE-----------------------------------------

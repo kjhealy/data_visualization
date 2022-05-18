@@ -27,14 +27,13 @@ fpath <- fs::dir_ls(here::here("slides"), recurse = 1, glob = "*.html") |>
 
 ## Items
 
-- [01-looking-at-data-part1.html](slides/01-looking-at-data/01-looking-at-data-part1.html)         
-- [01-looking-at-data-part2.html](slides/01-looking-at-data/01-looking-at-data-part2.html)         
-- [02-about-r.html](slides/02-about-r/02-about-r.html)                       
-- [03-make-a-graph.html](slides/03-make-a-graph/03-make-a-graph.html)                  
-- [04-show-the-right-numbers.html](slides/04-show-the-right-numbers/04-show-the-right-numbers.html)        
-- [05-work-with-dplyr-and-geoms.html](slides/05-work-with-dplyr-and-geoms/05-work-with-dplyr-and-geoms.html)     
-- [06-work-with-models.html](slides/06-work-with-models/06-work-with-models.html)              
-- [07-make-maps.html](slides/07-make-maps/07-make-maps.html)                     
-- [08-polishing-and-presenting-plots.html](slides/08-polishing-and-presenting-plots/08-polishing-and-presenting-plots.html)
-- [09-case-studies.html](slides/09-case-studies/09-case-studies.html)                  
+- [01-looking-at-data.html](01-looking-at-data/01-looking-at-data.html)   
+- [02-about-r.html](02-about-r/02-about-r.html)                       
+- [03-make-a-graph.html](03-make-a-graph/03-make-a-graph.html)                  
+- [04-show-the-right-numbers.html](04-show-the-right-numbers/04-show-the-right-numbers.html)        
+- [05-work-with-dplyr-and-geoms.html](05-work-with-dplyr-and-geoms/05-work-with-dplyr-and-geoms.html)     
+- [06-work-with-models.html](06-work-with-models/06-work-with-models.html)              
+- [07-make-maps.html](07-make-maps/07-make-maps.html)                     
+- [08-polishing-and-presenting-plots.html](08-polishing-and-presenting-plots/08-polishing-and-presenting-plots.html)
+- [09-case-studies.html](09-case-studies/09-case-studies.html)                  
  

@@ -66,7 +66,7 @@ library(socviz)         # Handy socviz functions
 layout: false
 class: main-title main-title-inv
 
-# .middle.squish4.large[.kjh-blue[ggplot implements a .kjh-green[grammar] of graphics]]
+# .middle.squish4.large[.kjh-lblue[`ggplot`] implements a .kjh-green[grammar] of graphics]
 
 
 ---
@@ -113,7 +113,7 @@ gapminder |>
 ```{r reveal-groupline2, include = FALSE}
 gapminder |> 
   ggplot(mapping = aes(x = year,
-                          y = gdpPercap)) + 
+                       y = gdpPercap)) + 
   geom_line(mapping = aes(group = country))        
 ```
 
@@ -181,7 +181,7 @@ p_out <- p + geom_line(color="gray70",
 ---
 layout: false
 
-```{r 04-show-the-right-numbers-3, echo=FALSE, fig.width=16, fig.height=5}
+```{r 04-show-the-right-numbers-3, echo=FALSE, fig.width=18, fig.height=5}
 p_out
 ```
 
@@ -202,7 +202,7 @@ class: title title-1
 
 ---
 
-# .kjh-yellow[`midwest`]
+# The .kjh-yellow[`midwest`] dataset
 
 ## County-level census data for Midwestern U.S. Counties
 
@@ -519,7 +519,7 @@ p_out <- df |>
 
 .pull-right.w45[
 
-- Something we haven't seen before, but will be using a lot: We can layer geoms one on top of the other. Here we call `geom_histogram()` twice. What happens if you comment one or other of them out?
+- Something we haven't seen before, but will be using a lot: We can layer geoms one on top of the other. Here we call .kjh-green[`geom_histogram()`] twice. What happens if you comment one or other of them out?
 - The call to .kjh-green[`guides()`] turns off the legend for the color and fill, because we don't need them. 
 
 ]
@@ -573,7 +573,7 @@ p <- ggplot(data = titanic,
 p + geom_bar(stat = "identity") #<<
 ```
 
-- By default `geom_bar()` tries to count up data by category. By saying `stat="identity"` we explicitly tell it not to do that. This also allows us to use a `y` mapping, because normally this would be determined by the counting up.
+- By default .kjh-green[`geom_bar()`] tries to count up data by category. (Really, its the .kjh-green[`stat_count()`] function that does this behind the scenes.) By saying `stat="identity"` we explicitly tell it not to do that. This also allows us to use a `y` mapping. Normally this would be the result of the counting up.
 
 ]
 
@@ -643,7 +643,7 @@ p + geom_bar(stat = "identity",
 
 ---
 
-# For convenience, use .kjh-green[geom_col()]
+# For convenience, use .kjh-green[`geom_col()`]
 
 .pull-left.w45[
 ```{r codefig-geomcol, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5}
@@ -655,7 +655,7 @@ p + geom_col(position = "dodge") + #<<
   theme(legend.position = "top")
 ```
 
-- .kjh-green[`geom_col()`] assumes `stat = "identity` by default. It's for when you want to directly plot a table of values.
+- .kjh-green[`geom_col()`] assumes `stat = "identity"` by default. It's for when you want to directly plot a table of values, rather than create a bar chart by summing over one varible categorized by another.
 
 ]
 
@@ -670,7 +670,7 @@ p + geom_col(position = "dodge") + #<<
 
 ---
 
-# Using .kjh-green[geom_col()] for thresholds
+# Using .kjh-green[`geom_col()`] for thresholds
 
 ```{r 04-show-the-right-numbers-22, echo = FALSE, message=FALSE}
 kjhslides::kjh_set_slide_theme()
@@ -685,8 +685,8 @@ oecd_sum
 
 .pull-right[
 - Data comparing U.S. average life expectancy to the rest of the OECD average. 
-- `diff` is difference in years with respect to the U.S. 
-- `hi_lo` is a flag saying whether the OECD is above or below the U.S.
+- .kjh-orange[`diff`] is difference in years with respect to the U.S. 
+- .kjh-orange[`hi_lo`] is a flag saying whether the OECD is above or below the U.S.
 
 
 ]
@@ -715,12 +715,12 @@ p_out <- p + geom_col() +
 ]
 
 .pull-right.w55[
-- .kjh-green[`geom_hline()`] draws a horizontal line with a given y-intercept.
+- .kjh-green[`geom_hline()`] doesn't take any data argument. It just draws a horizontal line with a given y-intercept.
 - `x = NULL` means "Don't label the x-axis (not even with the default value, the variable name).
 ]
 ---
 
-# Using .kjh-green[geom_col()] for thresholds
+# Using .kjh-green[`geom_col()`] for thresholds
 
 ```{r 04-show-the-right-numbers-25, echo = FALSE, fig.width=15, fig.height=4}
 p_out
