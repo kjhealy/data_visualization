@@ -202,7 +202,7 @@ class: title title-1
 
 ---
 
-# The .kjh-yellow[`midwest`] dataset
+# The .kjh-pink[`midwest`] dataset
 
 ## County-level census data for Midwestern U.S. Counties
 

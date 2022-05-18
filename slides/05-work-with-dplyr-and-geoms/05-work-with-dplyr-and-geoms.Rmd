@@ -608,7 +608,7 @@ gss_sm |>
 gss_sm |> 
   group_by(bigregion, religion) |> 
   tally() |> 
-  mutate(pct = round((n/sum(n))*100), 1) |> 
+  mutate(pct = round((n/sum(n))*100, 1)) |> 
   drop_na() |> 
   ggplot(mapping = aes(x = pct, y = reorder(religion, -pct), fill = religion)) + #<<
   geom_col() + #<<
@@ -646,11 +646,11 @@ class: title title-1
 rel_by_region <- gss_sm |> 
   group_by(bigregion, religion) |> 
   tally() |> 
-  mutate(pct = round((n/sum(n))*100), 1) |> 
+  mutate(pct = round((n/sum(n))*100, 1)) |> 
   drop_na()
 
 
-rel_by_region
+head(rel_by_region)
 ```
 
 ---
@@ -830,7 +830,7 @@ class: title title-1
 
 ---
 
-# `dplyr` and Pipelining 
+# .kjh-lblue[`dplyr`] and Pipelining 
 
 ###  The elements of filtering and summarizing 
 
@@ -868,13 +868,13 @@ class: center middle main-title section-title-1
 
 ## .kjh-lblue[Learn more about scales, guides, and themes] 
 
-- The functions that control the details of representing data and styling our plots.
+- Functions that control the details of representing data and styling our plots.
 
 --
 
 ## .kjh-lblue[Learn more about extensions to ggplot]
 
-- External packages that enhance `ggplot`'s capabilities, usually by adding support for new kinds of plot (i.e., new geoms), or new functionality (e.g. the `scales` package).
+- Packages that enhance `ggplot`'s capabilities, usually by adding support for new kinds of plot (i.e., new geoms), or new functionality (e.g., the `scales` package).
 
 ---
 
