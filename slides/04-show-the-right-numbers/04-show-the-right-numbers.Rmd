@@ -227,8 +227,6 @@ p + geom_histogram()
 
 ]
 
---
-
 .pull-right.w55[
 ```{r 04-show-the-right-numbers-5, echo=FALSE}
   knitr::include_graphics(
@@ -252,8 +250,6 @@ p + geom_histogram(bins = 10)
 
 - We can choose _either_ the number of bins _or_ the `binwidth`
 ]
-
---
 
 .pull-right.w55[
 ```{r 04-show-the-right-numbers-6, echo=FALSE}
@@ -460,6 +456,14 @@ df
 
 ---
 
+`r chunk_reveal("reveal-pivlongex", widths = c(35,65), title = "# Get the data into long format!")`
+
+```{r reveal-pivlongex, include = FALSE}
+ df |> 
+  pivot_longer(cols = pop_a:pop_total)
+```
+---
+
 # First effort: Hard to read
 
 .pull-left.w50[
@@ -470,8 +474,8 @@ df |>
   geom_histogram(mapping = aes(x = value, 
                                y = ..ncount.., #<<
                           color = name, fill = name), 
-            stat = "bin", bins = 20, size = 0.5,
-            alpha = 0.7,
+            stat = "bin", bins = 20, 
+            size = 0.5, alpha = 0.7,
             position = "identity") + 
   labs(x = "Measure", y = "Scaled Count", color = "Group", 
        fill = "Group",
@@ -491,6 +495,24 @@ df |>
 ```
 ]
 
+---
+`r chunk_reveal("reveal-pivottrick1", widths = c(45,55), title = "# A little pivot trick")`
+
+```{r reveal-pivottrick1, include = FALSE}
+# Treat pop_a to pop_total as a single variable
+df |>
+  pivot_longer(cols = pop_a:pop_total)
+```
+
+---
+`r chunk_reveal("reveal-pivottrick2", widths = c(45,55), title = "# A little pivot trick")`
+
+```{r reveal-pivottrick2, include = FALSE}
+# Just treat pop_a to pop_c as the single variable.
+# Notice that pop_total just gets repeated.
+ df |>
+  pivot_longer(cols = pop_a:pop_c)
+```
 ---
 
 # Try faceting instead
