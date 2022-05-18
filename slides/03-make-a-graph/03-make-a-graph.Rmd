@@ -115,11 +115,11 @@ class: title title-1
 
 # Get your data into long format
 
-Very, very often, the solution to some data-wrangling or data visualization problem in a Tidyverse-focused workflow is:
+Very, _very_ often, the solution to some data-wrangling or data visualization problem in a Tidyverse-focused workflow is:
 
 --
 
-## First, get the data into long format.
+## .large[First, .kjh-lblue[get the data into long format].]
 
 ## Then do the thing you want.
 
@@ -127,14 +127,14 @@ Very, very often, the solution to some data-wrangling or data visualization prob
 
 # Untidy data is common for good reasons!
 
-Storing data in long format has a lot of _repetition_ and _redundancy_ in a printed table:
+Storing and printing data in long format entails a lot of _repetition_ and _redundancy_:
 
 .small[
 ```{r 03-make-a-graph-1 }
 library(palmerpenguins)
-penguins %>% 
-  group_by(species, island, year) %>% 
-  summarize(bill = round(mean(bill_length_mm, na.rm = TRUE),2)) %>% 
+penguins |> 
+  group_by(species, island, year) |> 
+  summarize(bill = round(mean(bill_length_mm, na.rm = TRUE),2)) |> 
   knitr::kable()
 ```
 ]
@@ -143,15 +143,15 @@ penguins %>%
 
 # Untidy data is common for good reasons
 
-Wide form is _easier_ and _more efficient_ to read in print:
+A wide format is _easier_ and _more efficient_ to read in print:
 
 
 .small[
 ```{r 03-make-a-graph-2 }
-penguins %>% 
-  group_by(species, island, year) %>% 
-  summarize(bill = round(mean(bill_length_mm, na.rm = TRUE), 2)) %>% 
-  pivot_wider(names_from = year, values_from = bill) %>% 
+penguins |> 
+  group_by(species, island, year) |> 
+  summarize(bill = round(mean(bill_length_mm, na.rm = TRUE), 2)) |> 
+  pivot_wider(names_from = year, values_from = bill) |> 
   knitr::kable()
 ```
 ]
@@ -173,11 +173,11 @@ penguins %>%
 
 .pull-right[
 
-More than one header row
+- 😠 More than one header row
 
-Mixed data types in some columns
+- 😡 Mixed data types in some columns
 
-Color and typography used to encode variables and their values
+- 💀 Color and typography used to encode variables and their values 
 ]
 ---
 
@@ -196,14 +196,14 @@ An excellent article by Karl Broman and Kara Woo:
 
 # The most common .kjh-lblue[`tidyr`] operation
 
-Pivoting:
+_Pivoting_ from wide to long:
 
 .SMALL[
 ```{r 03-make-a-graph-3 }
 edu
 ```
 
-The "Level of Schooling Attained" measure is spread across the columns, from `elem4` to `coll4`.
+Here the "Level of Schooling Attained" measure is spread across the columns, from `elem4` to `coll4`.
 
 
 This is fine for a compact table, but for us it should be a single measure, say, "education". 
@@ -215,7 +215,7 @@ This is fine for a compact table, but for us it should be a single measure, say,
 .SMALL.squish2[We're going to put the columns `elem4:coll4` into a new column, creating a new categorical measure named `education`. The numbers currently under each column will become a  new .kjh-green[value] column corresponding to that level of education. ]
 
 ```{r 03-make-a-graph-4 }
-edu %>% 
+edu |> 
   pivot_longer(elem4:coll4, names_to = "education")
 ```
 
@@ -226,7 +226,7 @@ edu %>%
 .SMALL.squish2[We can name the value column to whatever we like. Here it's a number of people.]
 
 ```{r 03-make-a-graph-5 }
-edu %>% 
+edu |> 
   pivot_longer(elem4:coll4, names_to = "education", values_to = "n")
 ```
 
@@ -255,7 +255,7 @@ It is pickier and more talkative than the Base R version. Use it instead.
 
 ---
 
-# Where's my data? Using .kjh-green[here()]
+# Where's my data? Using .kjh-green[`here()`]
 
 If we're loading a file, it's coming from _somewhere_.
 
@@ -274,7 +274,7 @@ This makes it easier to share your work, move it around, etc. Projects should be
 
 ---
 
-# Where's my data? Using .kjh-green[here()]
+# Where's my data? Using .kjh-green[`here()`]
 
 The `here` package, and .kjh-green[**`here()`**] function builds paths relative to the top level of your R project. 
 
@@ -284,7 +284,7 @@ here() # this path will be different for you
 
 ---
 
-# Where's the data? Using .kjh-green[here()]
+# Where's the data? Using .kjh-green[`here()`]
 
 This seminar's files all live in an RStudio project. It looks like this:
 
@@ -296,7 +296,7 @@ I want to load files from the `data` folder, but I also want _you_ to be able to
 
 ---
 
-# Where's the data? Using .kjh-green[here()]
+# Where's the data? Using .kjh-green[`here()`]
 
  So:
 
@@ -433,7 +433,7 @@ class: title title-1
 
 --
 
-- .medium[With the plot itself also .kjh-pink[**titled**] and labeled]
+- .medium[With the plot itself also .kjh-pink[**titled**] and labeled.]
 
 ---
 
@@ -449,6 +449,8 @@ class: center middle main-title section-title-1
 ---
 
 # .kjh-lblue[`ggplot`]'s flow of action
+
+## .kjh-large.center[Here's the whole thing from start to finish]
 
 .center[![:scale 90%](img/03_ggplot_flow_wide_all.png)]
 
@@ -528,7 +530,8 @@ dim(gapminder)
 
 # Create a plot object
 
-## Data is the `gapminder` tibble.
+## Data is the .kjh-orange[`gapminder`] tibble.
+
 
 ```{r 03-make-a-graph-14 }
 p <- ggplot(data = gapminder)
@@ -536,7 +539,7 @@ p <- ggplot(data = gapminder)
 
 ## Map variables to aesthetics
 
-## Tell ggplot the variables you want represented by visual elements on the plot
+## Tell .kjh-lblue[`ggplot`] the variables you want represented by visual elements on the plot
 
 ```{r 03-make-a-graph-15 }
 p <- ggplot(data = gapminder,
@@ -548,7 +551,7 @@ p <- ggplot(data = gapminder,
 
 # Map variables to aesthetics
 
-## The `mapping = aes(...)` call links variables to things you will see on the plot.
+## The .kjh-orange[`mapping`] `=` .kjh-green[`aes(...)`] call links variables to things you will see on the plot.
 
 ## `x` and `y` represent the quantities determining position on the x and y axes.
 
@@ -558,7 +561,7 @@ p <- ggplot(data = gapminder,
 layout: false
 class: main-title main-title-inv
 
-## .middle.large.squish4[.kjh-orange[Mappings] do not _directly_ specify the particular, e.g., colors, shapes, or line styles that will appear on the plot. Rather, they establish _which variables_ in the data will be represented by _which visible elements_ on the plot.]
+## .middle.large.squish4[.kjh-orange[Mappings] do not _directly_ specify the particular, e.g., colors, shapes, or line styles that will appear on the plot. Rather, they establish .kjh-orange[_which variables_] in the data will be represented by .kjh-orange[_which visible elements_] on the plot.]
 
 ---
 
@@ -567,7 +570,7 @@ class: title title-1
 
 ---
 
-# Our plot has mappings but no geom
+# .kjh-orange[`p`] has data and mappings but no geom
 
 ```{r 03-make-a-graph-16, fig.cap='This empty plot has no geoms.', fig.width=8, fig.height=5}
 p
@@ -630,13 +633,13 @@ p + geom_smooth() +
 
 # Every .kjh-green[`geom`] is a .kjh-green[function] 
 
-## Functions take arguments
+## Functions take .kjh-orange[arguments]
 
 .pull-left.w45[
 ```{r codefig-functionargs, message=FALSE, fig.show="hide", fig.cap="An ill-advised linear fit", fig.width=4.8, fig.height=4.5}
 p <- ggplot(data = gapminder,
             mapping = aes(x = gdpPercap,
-                          y=lifeExp))
+                          y = lifeExp))
 p + geom_point() + 
   geom_smooth(method = "lm") 
 ```
@@ -787,6 +790,35 @@ p_out <- p + geom_point(alpha = 0.3) +
 ```{r 03-make-a-graph-28, fig.width=8.5, fig.height=5}
 p_out
 ```
+
+---
+
+# Setting .kjh-orange[`alpha`] is handy for overplotted data 
+
+.pull-left.w45[
+```{r codefig-alphapoints, message=FALSE, fig.show="hide", fig.width=5, fig.height=4.5}
+p <- ggplot(data = gapminder, 
+            mapping = aes(x = gdpPercap, 
+                          y = lifeExp))
+p + geom_point(alpha = 0.3) + #<<
+  geom_smooth(method = "lm") +
+    scale_x_log10(labels = scales::label_dollar()) +
+    labs(x = "GDP Per Capita", 
+         y = "Life Expectancy in Years",
+         title = "Economic Growth and Life Expectancy",
+         subtitle = "Data points are country-years",
+         caption = "Source: Gapminder.")
+```
+]
+
+--
+
+.pull-right.w55[
+```{r 03-make-a-graph-extra, echo=FALSE}
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-alphapoints", "png"))
+```
+]
 
 ---
 
