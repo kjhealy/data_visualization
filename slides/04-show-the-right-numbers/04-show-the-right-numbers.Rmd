@@ -515,7 +515,7 @@ df |>
 ```
 ---
 
-# Try faceting instead
+# Now facet with that data
 
 .pull-left.w55[
 ```{r 04-show-the-right-numbers-14 }
@@ -541,14 +541,14 @@ p_out <- df |>
 
 .pull-right.w45[
 
-- Something we haven't seen before, but will be using a lot: We can layer geoms one on top of the other. Here we call .kjh-green[`geom_histogram()`] twice. What happens if you comment one or other of them out?
+- Remember, we can layer geoms one on top of the other. Here we call .kjh-green[`geom_histogram()`] twice. What happens if you comment one or other of them out?
 - The call to .kjh-green[`guides()`] turns off the legend for the color and fill, because we don't need them. 
 
 ]
 
 ---
 
-# Try faceting instead
+# Now facet with that data
 
 ```{r 04-show-the-right-numbers-15, echo = FALSE, fig.width=15, fig.height=5}
 p_out
@@ -558,7 +558,7 @@ p_out
 ---
 class: right bottom main-title section-title-1
 
-## .huge.right.bottom.squish4.kjh-yellow[Avoid counting up, if necessary]
+## .huge.right.bottom.squish4[.kjh-yellow[Avoid counting up,] .kjh-lblue[when necessary]]
 
 ---
 
