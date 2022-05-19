@@ -47,16 +47,18 @@ gss_sm |>
   select(id, bigregion, religion) 
 
 
-## ----05-work-with-dplyr-and-geoms-8-------------------------------------------
-
+## ----reveal-onetablevar, include = FALSE--------------------------------------
 gss_sm |> 
-  group_by(bigregion) #<<
-
+  group_by(bigregion) |>  #<<
+  summarize(total = n()) 
 
 
 ## ----reveal-pipe1, include = FALSE--------------------------------------------
 gss_sm |>  
-  select(id, bigregion, religion)
+  group_by(bigregion, religion) |> 
+  summarize(total = n()) |> 
+  mutate(freq = total / sum(total),
+           pct = round((freq*100), 1))
 
 
 
@@ -73,7 +75,7 @@ gss_sm |>
   group_by(bigregion, religion) |> 
   summarize(total = n()) |> 
   mutate(freq = total / sum(total),
-           pct = round((freq*100), 1)) #<<
+         pct = round((freq*100), 1)) #<<
 
 
 ## ----05-work-with-dplyr-and-geoms-11------------------------------------------
@@ -102,6 +104,7 @@ gss_sm |>
 
 
 ## ----05-work-with-dplyr-and-geoms-15------------------------------------------
+## Calculate pct religion within region?
 rel_by_region <- gss_sm |> 
   count(bigregion, religion) |> 
   mutate(pct = round((n/sum(n))*100, 1)) 
@@ -161,7 +164,7 @@ gss_sm |>
 gss_sm |> 
   group_by(bigregion, religion) |> 
   tally() |> 
-  mutate(pct = round((n/sum(n))*100), 1) |> 
+  mutate(pct = round((n/sum(n))*100, 1)) |> 
   drop_na() |> 
   ggplot(mapping = aes(x = pct, y = reorder(religion, -pct), fill = religion)) + #<<
   geom_col() + #<<
@@ -174,11 +177,11 @@ gss_sm |>
 rel_by_region <- gss_sm |> 
   group_by(bigregion, religion) |> 
   tally() |> 
-  mutate(pct = round((n/sum(n))*100), 1) |> 
+  mutate(pct = round((n/sum(n))*100, 1)) |> 
   drop_na()
 
 
-rel_by_region
+head(rel_by_region)
 
 
 ## ----05-work-with-dplyr-and-geoms-25------------------------------------------
@@ -295,11 +298,25 @@ p <- ggplot(data = organdata,
 p + geom_line(aes(group = country)) 
 
 
-## ----05-work-with-dplyr-and-geoms-41, fig.width=21, fig.height=8--------------
+## ----05-work-with-dplyr-and-geoms-41a, fig.width=21, fig.height=8-------------
 p <- ggplot(data = organdata,
             mapping = aes(x = year, y = donors))
 p + geom_line() + 
   facet_wrap(~ country, nrow = 3)
+
+
+## ----05-work-with-dplyr-and-geoms-41b, fig.width=21, fig.height=8-------------
+p <- ggplot(data = organdata,
+            mapping = aes(x = year, y = donors))
+p + geom_line() + 
+  facet_wrap(~ reorder(country, donors, na.rm = TRUE), nrow = 3)
+
+
+## ----05-work-with-dplyr-and-geoms-41c, fig.width=21, fig.height=8-------------
+p <- ggplot(data = organdata,
+            mapping = aes(x = year, y = donors))
+p + geom_line() + 
+  facet_wrap(~ reorder(country, -donors, na.rm = TRUE), nrow = 3)
 
 
 ## ----05-work-with-dplyr-and-geoms-42, fig.width = 15, fig.height=5------------
@@ -421,7 +438,7 @@ by_country |>
                color = consent_law)) + 
   geom_point(size=3) +
   guides(color = "none") +
-  facet_wrap(~ consent_law) + #<
+  facet_wrap(~ consent_law) + #<<
   labs(x = "Donor Procurement Rate",
        y = NULL, 
        color = "Consent Law")
@@ -440,7 +457,7 @@ by_country |>
                color = consent_law)) + 
   geom_point(size=3) +
   guides(color = "none") +
-  facet_wrap(~ consent_law, ncol = 1) + #<
+  facet_wrap(~ consent_law, ncol = 1) + #<<
   labs(x = "Donor Procurement Rate",
        y = NULL, 
        color = "Consent Law")
@@ -461,7 +478,7 @@ by_country |>
   guides(color = "none") +
   facet_wrap(~ consent_law, 
              ncol = 1,
-             scales = "free_y") +  #<
+             scales = "free_y") +  #<<
   labs(x = "Donor Procurement Rate",
        y = NULL, 
        color = "Consent Law")
@@ -478,13 +495,13 @@ by_country |>
            aes(x = donors_mean, 
                y = reorder(country, donors_mean),
                color = consent_law)) + 
-  geom_pointrange(mapping = 
-                    aes(xmin = donors_mean - donors_sd,
-                        xmax = donors_mean + donors_sd)) +
+  geom_pointrange(mapping = #<<
+                    aes(xmin = donors_mean - donors_sd, #<<
+                        xmax = donors_mean + donors_sd)) + #<<
   guides(color = "none") +
   facet_wrap(~ consent_law, 
              ncol = 1,
-             scales = "free_y") +  #<<
+             scales = "free_y") +  
   labs(x = "Donor Procurement Rate",
        y = NULL, 
        color = "Consent Law")

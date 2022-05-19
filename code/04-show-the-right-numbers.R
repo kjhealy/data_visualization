@@ -20,7 +20,7 @@ gapminder |>
 ## ----reveal-groupline2, include = FALSE---------------------------------------
 gapminder |> 
   ggplot(mapping = aes(x = year,
-                          y = gdpPercap)) + 
+                       y = gdpPercap)) + 
   geom_line(mapping = aes(group = country))        
 
 
@@ -51,7 +51,7 @@ p_out <- p + geom_line(color="gray70",
          caption = "Data: Gapminder")    
 
 
-## ----04-show-the-right-numbers-3, echo=FALSE, fig.width=16, fig.height=5------
+## ----04-show-the-right-numbers-3, echo=FALSE, fig.width=18, fig.height=5------
 p_out
 
 
@@ -209,6 +209,11 @@ df <- pmap_dfc(params, rnorm, n = N) |>
 df
 
 
+## ----reveal-pivlongex, include = FALSE----------------------------------------
+ df |> 
+  pivot_longer(cols = pop_a:pop_total)
+
+
 ## ----codefig-refdist1, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5----
 df |> 
   pivot_longer(cols = pop_a:pop_total)  |> 
@@ -216,8 +221,8 @@ df |>
   geom_histogram(mapping = aes(x = value, 
                                y = ..ncount.., #<<
                           color = name, fill = name), 
-            stat = "bin", bins = 20, size = 0.5,
-            alpha = 0.7,
+            stat = "bin", bins = 20, 
+            size = 0.5, alpha = 0.7,
             position = "identity") + 
   labs(x = "Measure", y = "Scaled Count", color = "Group", 
        fill = "Group",
@@ -227,6 +232,19 @@ df |>
 ## ----04-show-the-right-numbers-13, echo=FALSE---------------------------------
   knitr::include_graphics(
   knitr::fig_chunk("codefig-refdist1", "png"))
+
+
+## ----reveal-pivottrick1, include = FALSE--------------------------------------
+# Treat pop_a to pop_total as a single variable
+df |>
+  pivot_longer(cols = pop_a:pop_total)
+
+
+## ----reveal-pivottrick2, include = FALSE--------------------------------------
+# Just treat pop_a to pop_c as the single variable.
+# Notice that pop_total just gets repeated.
+ df |>
+  pivot_longer(cols = pop_a:pop_c)
 
 
 ## ----04-show-the-right-numbers-14---------------------------------------------

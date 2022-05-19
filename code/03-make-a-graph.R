@@ -38,7 +38,9 @@ edu |>
 
 ## ----03-make-a-graph-5--------------------------------------------------------
 edu |> 
-  pivot_longer(elem4:coll4, names_to = "education", values_to = "n")
+  pivot_longer(elem4:coll4, 
+               names_to = "education", 
+               values_to = "n")
 
 
 ## ----03-make-a-graph-6--------------------------------------------------------

@@ -127,7 +127,7 @@ p_out <- p + geom_point(data = subset(gapminder,
 # And the predicted values to draw the lines  
     geom_line() +
     geom_ribbon(alpha = 0.2, color = FALSE) +
-    scale_x_log10(labels = scales::dollar)
+    scale_x_log10(labels = scales::label_dollar())
 
 
 ## ----06-work-with-models-11, echo = FALSE, fig.width=12, fig.height=7---------
@@ -158,7 +158,7 @@ out_conf
 out_conf |> 
     filter(term %nin% "(Intercept)")  |> 
     mutate(nicelabs = prefix_strip(term, "continent")) |> 
-    select(nicelabs, everything())
+    relocate(nicelabs)
 
 
 ## ----codefig-broomplot, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5----
