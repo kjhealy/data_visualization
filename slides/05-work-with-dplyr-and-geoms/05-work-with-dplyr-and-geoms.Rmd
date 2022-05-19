@@ -158,7 +158,7 @@ class: title title-1
 
 class: center middle main-title section-title-1
 
-# .huge[.kjh-yellow[Feeding data] .kjh-lblue[to `ggplot`]]
+# .huge[.kjh-yellow[Feeding data]<br /> .kjh-lblue[to `ggplot`]]
 
 ---
 
@@ -171,7 +171,7 @@ class: center middle
 
 class: right bottom main-title section-title-1
 
-## .huge.right.bottom.squish4.kjh-yellow[Crosstabulation<br />and .kjh-lblue[beyond]]
+## .huge.right.bottom.squish4.kjh-yellow[Crosstabulation<br />.kjh-lblue[and beyond]]
 
 ---
 
@@ -343,23 +343,25 @@ gss_sm |>
 
 ---
 
-# Group by .kjh-orange[_one_] column or variable
+`r chunk_reveal("reveal-onetablevar", widths = c(35,65), title = "# Count up by .kjh-orange[_one_] column or variable")`
 
-```{r 05-work-with-dplyr-and-geoms-8 }
-
+```{r reveal-onetablevar, include = FALSE}
 gss_sm |> 
-  group_by(bigregion) #<<
-
+  group_by(bigregion) |>  #<<
+  summarize(total = n()) 
 ```
 
-Grouping just changes the logical structure of the tibble. 
+Grouping changes the _logical_ structure of the tibble. It tells you what subsets of rows the next mutate or summary operation will be carried out within. 
 
 ---
-`r chunk_reveal("reveal-pipe1", widths = c(35,65), title = "# Summarizing a Table")`
+`r chunk_reveal("reveal-pipe1", widths = c(35,65), title = "# Summarize by region and religion")`
 
 ```{r reveal-pipe1, include = FALSE}
 gss_sm |>  
-  select(id, bigregion, religion)
+  group_by(bigregion, religion) |> 
+  summarize(total = n()) |> 
+  mutate(freq = total / sum(total),
+           pct = round((freq*100), 1))
 
 ```
 ---
@@ -376,11 +378,11 @@ gss_sm |>
 ```
 ]
 
-Groups are carried forward till summarized or explicitly ungrouped
+Groups are carried forward till summarized over, or explicitly ungrouped with .kjh-green[`ungroup()`]. 
 
 --
 
-Summary calculations are done on the innermost group, which then "disappears". (Notice how it's no longer a group in the output.)
+Summary calculations are done on the innermost group, which then "disappears". (Notice how .kjh-orange[`religion`] is no longer a group in the output, but .kjh-orange[`bigregion`] is.)
 
 ---
 
@@ -392,11 +394,11 @@ gss_sm |>
   group_by(bigregion, religion) |> 
   summarize(total = n()) |> 
   mutate(freq = total / sum(total),
-           pct = round((freq*100), 1)) #<<
+         pct = round((freq*100), 1)) #<<
 ```
 ]
 
-.kjh-green[**`mutate()`**] is quite clever. See how we can immediately use **`freq`**, even though we are creating it in the same .kjh-green[**`mutate()`**] expression.
+.kjh-green[**`mutate()`**] is quite clever. See how we can immediately use .kjh-orange[**`freq`**] to calculate .kjh-orange[**`pct`**], even though we are creating them both in the same .kjh-green[**`mutate()`**] expression.
 
 ---
 
@@ -417,7 +419,7 @@ We're going to be doing this .kjh-green[**`group_by()`**] ... .kjh-green[**`n()`
 
 ---
 
-# Three options for counting up rows
+# .kjh-pink[Three options] for counting up rows
 
 .pull-left-3[
 
@@ -431,14 +433,14 @@ gss_sm |>
 ```
 ]
 
-- .small.squish3[Result is a grouped tibble.]
+- .small.squish3[_The result is **grouped**._]
 ]
 
 --
 
 .pull-middle-3[
 
-- .SMALL.squish3[use .kjh-green[**`tally()`**]]
+- .SMALL.squish3[Use .kjh-green[**`tally()`**]]
 
 .SMALL[
 ```{r 05-work-with-dplyr-and-geoms-13 }
@@ -448,7 +450,7 @@ gss_sm |>
 ```
 ]
 
-- .small.squish3[Group it yourself; result is grouped.]
+- .small.squish3[_The result is **grouped**._]
 ]
 
 --
@@ -464,7 +466,7 @@ gss_sm |>
 ```
 ]
 
-- .small.squish3[One step; result is not grouped.]
+- .small.squish3[_One step; the result is **not grouped**._]
 ]
 
 ---
@@ -476,6 +478,7 @@ gss_sm |>
 .pull-left[
 
 ```{r 05-work-with-dplyr-and-geoms-15 }
+## Calculate pct religion within region?
 rel_by_region <- gss_sm |> 
   count(bigregion, religion) |> 
   mutate(pct = round((n/sum(n))*100, 1)) 
@@ -521,7 +524,7 @@ rel_by_region |>
   summarize(total = sum(pct))
 ```
 
-.SMALL.squish3[With .kjh-green[**`count()`**], the `pct` values here are the marginals for the whole table.]
+.SMALL.squish3[With .kjh-green[**`count()`**], the .kjh-orange[**`pct`**] values in this case are the marginals for the whole table.]
 
 ]
 
@@ -543,7 +546,7 @@ rel_by_region |>
 
 ```
 
-.SMALL.squish3[.kjh-green[**`group_by()`**] and .kjh-green[**`tally()`**] returns a grouped result. We get some rounding error because we used .kjh-green[**`round()`**] after summing originally.]
+.SMALL.squish3[.kjh-green[**`group_by()`**] and .kjh-green[**`tally()`**] both return a grouped result. We get some rounding error because we used .kjh-green[**`round()`**] after summing originally.]
 ]
 
 
@@ -731,7 +734,7 @@ class: right bottom main-title section-title-1
 
 ---
 
-# Facet Children vs Age by Race
+# Facet Children vs Age, by Race
 
 ```{r 05-work-with-dplyr-and-geoms-30, fig.width=10, fig.height=5}
 p <-  ggplot(data = gss_sm,
@@ -874,7 +877,7 @@ class: center middle main-title section-title-1
 
 ## .kjh-lblue[Learn more about extensions to ggplot]
 
-- Packages that enhance `ggplot`'s capabilities, usually by adding support for new kinds of plot (i.e., new geoms), or new functionality (e.g., the `scales` package).
+- Packages that enhance .kjh-lblue[`ggplot`]'s capabilities, usually by adding support for new kinds of plot (i.e., new geoms), or new functionality (e.g., the .kjh-lblue[`scales`] package).
 
 ---
 
@@ -883,7 +886,7 @@ class: right bottom main-title section-title-1
 ## .huge.right.bottom.squish4[.kjh-yellow[Some data on]<br />.kjh-lblue[Organ Donation]]
 
 ---
-# .kjh-pink[`organdata`] is in the `socviz` package
+# .kjh-pink[`organdata`] is in the .kjh-lblue[`socviz`] package
 
 ```{r 05-work-with-dplyr-and-geoms-37 }
 organdata
@@ -924,11 +927,33 @@ p + geom_line(aes(group = country))
 
 # First looks
 
-```{r 05-work-with-dplyr-and-geoms-41, fig.width=21, fig.height=8}
+```{r 05-work-with-dplyr-and-geoms-41a, fig.width=21, fig.height=8}
 p <- ggplot(data = organdata,
             mapping = aes(x = year, y = donors))
 p + geom_line() + 
   facet_wrap(~ country, nrow = 3)
+```
+
+---
+
+# First looks
+
+```{r 05-work-with-dplyr-and-geoms-41b, fig.width=21, fig.height=8}
+p <- ggplot(data = organdata,
+            mapping = aes(x = year, y = donors))
+p + geom_line() + 
+  facet_wrap(~ reorder(country, donors, na.rm = TRUE), nrow = 3)
+```
+
+---
+
+# First looks
+
+```{r 05-work-with-dplyr-and-geoms-41c, fig.width=21, fig.height=8}
+p <- ggplot(data = organdata,
+            mapping = aes(x = year, y = donors))
+p + geom_line() + 
+  facet_wrap(~ reorder(country, -donors, na.rm = TRUE), nrow = 3)
 ```
 
 
@@ -986,7 +1011,7 @@ organdata |>
 
 ---
 
-# .kjh-green[geom_boxplot()] knows `color` and `fill`
+# .kjh-green[geom_boxplot()] knows .kjh-orange[`color`] and .kjh-orange[`fill`]
 
 ```{r 05-work-with-dplyr-and-geoms-46, fig.width=10, fig.height=6}
 organdata |> 
@@ -1021,7 +1046,7 @@ organdata |>
 
 ---
 
-# Adjust with a `postion` argument
+# Adjust with a .kjh-orange[`position`] argument
 
 ```{r 05-work-with-dplyr-and-geoms-49, fig.width=10, fig.height=6}
 organdata |> 
@@ -1056,7 +1081,7 @@ by_country <- organdata |>
 head(by_country)
 ```
 
-- This works, but there's so much repetition. It's an invitation to make mistakes copying and pasting.
+- .medium[This works, but there's so much repetition! It's an open invitation to make mistakes copying and pasting.]
 
 ---
 layout: false
@@ -1072,7 +1097,7 @@ class: title title-1
 
 ---
 
-# Use .kjh-green[across()] and .kjh-green[where()] instead
+# Use .kjh-green[`across()`] and .kjh-green[`where()`] instead
 
 ```{r 05-work-with-dplyr-and-geoms-51 }
 by_country <- organdata |> 
@@ -1087,7 +1112,7 @@ head(by_country)
 
 ---
 
-# Use .kjh-green[across()] and .kjh-green[where()] instead
+# Use .kjh-green[`across()`] and .kjh-green[`where()`] instead
 
 ```{r 05-work-with-dplyr-and-geoms-52 }
 by_country <- organdata |> 
@@ -1146,13 +1171,13 @@ by_country |>
                color = consent_law)) + 
   geom_point(size=3) +
   guides(color = "none") +
-  facet_wrap(~ consent_law) + #<
+  facet_wrap(~ consent_law) + #<<
   labs(x = "Donor Procurement Rate",
        y = NULL, 
        color = "Consent Law")
 ```
 
-.pull-left.w80[The problem is that countries can only be in one category.]
+.pull-left.w80[The problem is that countries can only be in one Consent Law category.]
 
 ]
 
@@ -1179,7 +1204,7 @@ by_country |>
                color = consent_law)) + 
   geom_point(size=3) +
   guides(color = "none") +
-  facet_wrap(~ consent_law, ncol = 1) + #<
+  facet_wrap(~ consent_law, ncol = 1) + #<<
   labs(x = "Donor Procurement Rate",
        y = NULL, 
        color = "Consent Law")
@@ -1217,7 +1242,7 @@ by_country |>
   guides(color = "none") +
   facet_wrap(~ consent_law, 
              ncol = 1,
-             scales = "free_y") +  #<
+             scales = "free_y") +  #<<
   labs(x = "Donor Procurement Rate",
        y = NULL, 
        color = "Consent Law")
@@ -1248,13 +1273,13 @@ by_country |>
            aes(x = donors_mean, 
                y = reorder(country, donors_mean),
                color = consent_law)) + 
-  geom_pointrange(mapping = 
-                    aes(xmin = donors_mean - donors_sd,
-                        xmax = donors_mean + donors_sd)) +
+  geom_pointrange(mapping = #<<
+                    aes(xmin = donors_mean - donors_sd, #<<
+                        xmax = donors_mean + donors_sd)) + #<<
   guides(color = "none") +
   facet_wrap(~ consent_law, 
              ncol = 1,
-             scales = "free_y") +  #<<
+             scales = "free_y") +  
   labs(x = "Donor Procurement Rate",
        y = NULL, 
        color = "Consent Law")
@@ -1374,7 +1399,7 @@ class: right bottom main-title section-title-1
 
 ---
 
-# .kjh-pink[`elections_historic`] is in .kjh-grey[`socviz`] 
+# .kjh-pink[`elections_historic`] is in .kjh-orange[`socviz`] 
 
 ```{r 05-work-with-dplyr-and-geoms-61 }
 elections_historic
@@ -1592,7 +1617,7 @@ class: title title-1
 ---
 
 
-# Option 1: On the fly inside `ggplot`
+# Option 1: On the fly inside .kjh-lblue[`ggplot`]
 
 
 .pull-left.w50[
@@ -1619,7 +1644,7 @@ by_country |>
 
 ---
 
-# Option 1: On the fly inside `ggplot`
+# Option 1: On the fly inside .kjh-lblue[`ggplot`]
 
 
 .pull-left.w50[
@@ -1653,7 +1678,7 @@ by_country |>
 
 ---
 
-# Option 2: Use `dplyr` to subset first
+# Option 2: Use .kjh-lblue[`dplyr`] to subset first
 
 
 ```{r 05-work-with-dplyr-and-geoms-73 }
@@ -1667,7 +1692,7 @@ df_hl
 
 ---
 
-# Option 2: Use `dplyr` to subset first
+# Option 2: Use .kjh-lblue[`dplyr`] to subset first
 
 
 ```{r 05-work-with-dplyr-and-geoms-74 }
@@ -1682,7 +1707,7 @@ df_hl
 ---
 
 
-# Option 2: Use `dplyr` to subset first
+# Option 2: Use .kjh-lblue[`dplyr`] to subset first
 
 
 .pull-left.w50[
@@ -1698,7 +1723,10 @@ by_country |>
 
 ```
 
-.pull-left.w90[This makes things a little neater.]
+.pull-left.w90[This makes things a little neater.
+
+As you can see, a `geom` can be fully "autonomous". Each one can have its own .kjh-orange[`mapping`] call _and_ its own .kjh-orange[`data`] source. This can be very useful when building up plots overlaying several sources or subsets of data.
+]
 
 ]
 
@@ -1813,7 +1841,7 @@ class: title title-1
 
 ### This means you control things like color schemes _for data mappings_ through scale functions
 
-- Because those colors are representing features of your daeta.
+- Because those colors are representing features of your data.
 
 ---
 
@@ -1825,13 +1853,13 @@ class: title title-1
 
 
 - .large[We already know there are a lot of .kjh-orange[**mappings**]]. 
-- .center[.kjh-orange[`x`], .kjh-orange[`y`], .kjh-orange[`color`], .kjh-orange[`size`], .kjh-orange[`shape`], and so on.] 
+- .right[_.kjh-orange[`x`], .kjh-orange[`y`], .kjh-orange[`color`], .kjh-orange[`size`], .kjh-orange[`shape`], and so on._] 
 
 - .large[And there are many .kjh-lblue[**kinds**] of scale as well.] 
-- .center[Scales can be .kjh-lblue[discrete], .kjh-lblue[continuous], .kjh-lblue[log10], .kjh-lblue[date], .kjh-lblue[binned], and many others.]
+- .right[_.kjh-lblue[discrete], .kjh-lblue[continuous], .kjh-lblue[log10], .kjh-lblue[date], .kjh-lblue[binned], and many others._]
 
 - .large[So there's a whole zoo of scale functions.]
-- .center[The naming convention helps us keep track.]
+- .right[_The naming convention helps us keep track._]
 
 
 ---
@@ -2004,7 +2032,7 @@ organdata |>
 ```
 
 .pull-left.w95[
-.kjh-green[`theme()`] styles parts of your plot that are _not_ directly representing your data. Often the first thing people want to adjust; but logically it's the _last_ thing. Again, more detail later!
+.kjh-green[`theme()`] styles parts of your plot that are _not_ directly representing your data. Often the first thing people want to adjust; but logically it's the _last_ thing. Again, more detail soon!
 ]
 
 ]
