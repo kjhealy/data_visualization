@@ -1341,7 +1341,7 @@ by_country |>
                        y = donors_mean)) + 
   geom_point() + 
   geom_text(mapping = aes(label = country),
-            hujust = 0)
+            hjust = 0)
 
 
 ```
