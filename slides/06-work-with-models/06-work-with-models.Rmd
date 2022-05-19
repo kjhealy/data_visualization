@@ -137,7 +137,7 @@ p + geom_point(alpha=0.1) +
 
 ---
 
-# And these can be complex ... but ...
+# ... but we usually won't do this inside .kjh-lblue[`ggplot`] 
 
 
 .pull-left.w45[
@@ -223,8 +223,7 @@ class: right bottom main-title section-title-1
 
 ### .kjh-green[`predict()`] and its methods do a lot of work behind the scenes
 
-- We won't usually need to do this stuff manually. But the idea is that the generic .kjh-green[`predict()`] function has _methods_ for specific sorts of models. Give it a model and some new data and it will produce predicted values for the new data. Here's an example/
-
+- We won't usually need to do this stuff manually. But the idea is that the generic .kjh-green[`predict()`] function has _methods_ for specific sorts of models. Give it a model and some new data and it will produce predicted values for the new data. Here's an example.
 ---
 
 # The labor-intensive way
@@ -295,7 +294,7 @@ p_out <- p + geom_point(data = subset(gapminder,
 # And the predicted values to draw the lines  
     geom_line() +
     geom_ribbon(alpha = 0.2, color = FALSE) +
-    scale_x_log10(labels = scales::dollar)
+    scale_x_log10(labels = scales::label_dollar())
 ```
 
 ---
@@ -367,7 +366,7 @@ out_conf
 out_conf |> 
     filter(term %nin% "(Intercept)")  |> 
     mutate(nicelabs = prefix_strip(term, "continent")) |> 
-    select(nicelabs, everything())
+    relocate(nicelabs)
 ```
 
 
@@ -553,7 +552,7 @@ class: title title-1
 ---
 
 
-# .kjh-pink[Component] level
+# .kjh-pink[Model] level
 
 ```text
 
@@ -591,7 +590,7 @@ F-statistic: 398.7 on 6 and 1697 DF,  p-value: < 2.2e-16
 
 ---
 
-# .kjh-pink[Component] level
+# .kjh-pink[Model] level
 
 
 ```{r 06-work-with-models-22 }
