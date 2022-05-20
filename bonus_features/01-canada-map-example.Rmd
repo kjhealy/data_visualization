@@ -1,0 +1,155 @@
+---
+title: "Data Visualization - Supplementary - Canada Map Example"
+author: "Kieran Healy"
+date: "`r Sys.Date()`"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+# Install if necessary
+
+```{r}
+# install.packages("geojsonio")
+# install.packages("spdplyr")
+# install.packages("rmapshaper")
+```
+
+
+# Load our libraries
+
+```{r 07-make-maps-1, message = FALSE}
+library(here)      # manage file paths
+library(socviz)    # data and some useful functions
+library(tidyverse) # your friend and mine
+library(maps)      # Some basic maps
+library(sf)        # Simple Features Geometries and geom_sf()
+```
+
+# Setup
+
+```{r}
+here::i_am("bonus_features/01-canada-map-example.Rmd")
+```
+
+
+```{r}
+## Map theme
+theme_map <- function(base_size=9, base_family="") {
+    require(grid)
+    theme_bw(base_size=base_size, base_family=base_family) %+replace%
+        theme(axis.line=element_blank(),
+              axis.text=element_blank(),
+              axis.ticks=element_blank(),
+              axis.title=element_blank(),
+              panel.background=element_blank(),
+              panel.border=element_blank(),
+              panel.grid=element_blank(),
+              panel.spacing=unit(0, "lines"),
+              plot.background=element_blank(),
+              legend.justification = c(0,0),
+              legend.position = c(0,0)
+              )
+}
+
+theme_set(theme_map())
+```
+
+
+## Downloading and converting the map files for the first time
+
+You won't be able to run the code in this section until you have some raw shapefiles to work with. Get data from Statistics Canada. E.g., here I use  <http://www12.statcan.gc.ca/census-recensement/2011/geo/bound-limit/bound-limit-2011-eng.cfm>. There are more up-to-date shapefiles available, however. 
+
+From the linked page, choose as your options _ArcGIS .shp file_, then---for example---_Census divisions_ and _cartographic boundaries_. You'll then download a zip file. Expand this zip file into a directory in your working folder named 'data'. Then import the shapefile as below. The `EVAL` option is set to `FALSE` on the chunks in this section, so they will not be evaluated when you knit this document. To evaluate them, download the data (or equivalent) as just described, and then remove the `eval = FALSE` option from each chunk. You'll need to know what data file and layer you want. 
+
+```{r, eval = FALSE}
+canada_raw <- rgal::readOGR(dsn = here("data", "gcd_000b11a_e"), layer = "gcd_000b11a_e",
+                      use_iconv=TRUE, encoding="CP1250")
+```
+
+Convert it to GeoJSON format and simplify the polygons. These steps will take a little while.
+
+```{r, eval = FALSE}
+canada_raw_json <- geojsonio::geojson_json(canada_raw)
+canada_raw_sim <- rmapshaper::ms_simplify(canada_raw_json)
+```
+
+Save the resulting GeoJSON file, which you can work with directly from here on
+
+```{r, eval = FALSE}
+geojsonio::geojson_write(canada_raw_sim, file = here("data", "canada_cd_sim.geojson")
+```
+
+## Working with the GeoJSON file in the tidyverse
+
+I've included a processed file in the `data/` folder. We read this GeoJSON file back in as an `sf` object.
+
+```{r}
+canada_cd <- sf::st_read(here("data", "canada_cd_sim.geojson"), quiet = TRUE)
+
+canada_cd
+```
+
+Transform the coordinates to a Lambert Conformal Conic Projection. (See  https://www.statcan.gc.ca/pub/92-195-x/2011001/other-autre/mapproj-projcarte/m-c-eng.htm).
+
+```{r}
+canada_cd <- sf::st_transform(canada_cd, crs = "+proj=lcc +lat_1=49 +lat_2=77 +lon_0=-91.52 +x_0=0 +y_0=0 +datum=NAD83 +units=m +no_defs")
+
+canada_cd
+```
+
+
+Make a vector of repeated colors---just to fill in the map, for decoration only, as I don't have any Canadian data to merge in at present.
+
+```{r, layout = 'l-screen-inset'}
+
+map_colors <-  RColorBrewer::brewer.pal(8, "Pastel1")
+map_colors <- rep(map_colors, 37)
+
+
+## Draw the map
+p <- ggplot(data = canada_cd, 
+            mapping = aes(fill = PRUID))
+p_out <- p + geom_sf(color = "gray60", 
+                    size = 0.1) + 
+  scale_fill_manual(values = map_colors) + 
+  guides(fill = "none") + 
+  theme_map() + 
+  theme(panel.grid.major = element_line(color = "white"),
+        legend.key = element_rect(color = "gray40", size = 0.1))
+
+ggsave(here("figures", "canada.pdf"), p_out, height = 12, width = 15)
+
+p_out
+```
+
+# Some data
+
+```{r}
+can_fam <- read_csv(here("data", "can_fam.csv")) |>
+  mutate(PRUID = as.factor(PRUID))
+
+can_fam
+
+canada_cd <- left_join(canada_cd, can_fam, by = "PRUID")
+
+canada_cd
+
+p <- ggplot(data = subset(canada_cd, year == 2017), 
+            mapping = aes(fill = (lone_parent_families/total_census_families)*100))
+            
+p_out <- p + geom_sf(color = "gray60", 
+                    size = 0.1) + 
+  scale_fill_viridis_c(option = "D") + 
+  theme_map() + 
+  theme(panel.grid.major = element_line(color = "white"),
+        legend.position = "right") + 
+  labs(title = "Percent Lone Parent Families by Province or Territory", 
+       fill = "Percent")
+
+ggsave(here("figures", "canada_fam.pdf"), p_out, height = 8, width = 12)
+ggsave(here("figures", "canada_fam.png"), p_out, height = 8, width = 12, dpi = 300)
+
+```
+
+
