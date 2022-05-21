@@ -63,7 +63,7 @@ You won't be able to run the code in this section until you have some raw shapef
 From the linked page, choose as your options _ArcGIS .shp file_, then---for example---_Census divisions_ and _cartographic boundaries_. You'll then download a zip file. Expand this zip file into a directory in your working folder named 'data'. Then import the shapefile as below. The `EVAL` option is set to `FALSE` on the chunks in this section, so they will not be evaluated when you knit this document. To evaluate them, download the data (or equivalent) as just described, and then remove the `eval = FALSE` option from each chunk. You'll need to know what data file and layer you want. 
 
 ```{r, eval = FALSE}
-canada_raw <- rgal::readOGR(dsn = here("data", "gcd_000b11a_e"), layer = "gcd_000b11a_e",
+canada_raw <- rgdal::readOGR(dsn = here("data", "gcd_000b11a_e"), layer = "gcd_000b11a_e",
                       use_iconv=TRUE, encoding="CP1250")
 ```
 
