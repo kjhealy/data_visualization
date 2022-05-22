@@ -7,7 +7,7 @@ author:
   url: https://kieranhealy.org
   affiliation: Duke University
   affiliation_url: https://sociology.duke.edu
-date: "`Code Horizons, September 2021`"
+date: "`Code Horizons, May 2022`"
 output: md_document
 ---
 
