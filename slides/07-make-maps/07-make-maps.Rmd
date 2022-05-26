@@ -1617,7 +1617,7 @@ theme_nymap <- function(base_size=9, base_family="") {
 ```{r reveal-bulldogmap, include = FALSE}
 fb_map %>% 
     ggplot(mapping = aes(fill = freq)) +
-    geom_sf(color = "gray80", size = 0.1) + #<<
+    geom_sf(color = "gray30", size = 0.1) + #<<
     scale_fill_viridis_c(option = "A") +
     labs(fill = "Percent of All French Bulldogs") +
     annotate(geom = "text", 
@@ -1648,7 +1648,7 @@ fb_map <- left_join(nyc_zips, nyc_fb, by = "zip_code")
 
 fb_map |> 
   ggplot(mapping = aes(fill = freq)) +
-  geom_sf(color = "gray80", size = 0.1) +
+  geom_sf(color = "gray30", size = 0.1) +
   scale_fill_continuous_sequential(
     palette = "Oranges",
     labels = scales::label_percent()) +
@@ -1678,7 +1678,7 @@ layout: false
 ```{r 07-make-maps-59, echo = FALSE, fig.width=12, fig.height=8}
 fb_map |> 
   ggplot(mapping = aes(fill = freq)) +
-  geom_sf(color = "gray80", size = 0.1) +
+  geom_sf(color = "gray30", size = 0.1) +
   scale_fill_continuous_sequential(
     palette = "Oranges",
     labels = scales::label_percent()) +
@@ -1756,7 +1756,7 @@ fb_map2 <- left_join(nyc_zips, nyc_fb2, by = "zip_code")
 
 fb_map2 |> 
   ggplot(mapping = aes(fill = freq)) +
-  geom_sf(color = "gray80", size = 0.1) +
+  geom_sf(color = "gray30", size = 0.1) +
   scale_fill_continuous_sequential(
     palette = "Oranges", 
     labels = scales::label_percent()) +
@@ -1786,7 +1786,7 @@ layout: false
 ```{r 07-make-maps-61, echo = FALSE, fig.width=12, fig.height=8}
 fb_map2 |> 
   ggplot(mapping = aes(fill = freq)) +
-  geom_sf(color = "gray80", size = 0.1) +
+  geom_sf(color = "gray30", size = 0.1) +
   scale_fill_continuous_sequential(
     palette = "Oranges", 
     labels = scales::label_percent()) +
