@@ -352,12 +352,12 @@ midwest |>
   ggplot(mapping = aes(x = area,
                        fill = state, 
                        color = state)) + 
-  geom_density(mapping = aes(y = ..ndensity..), #<<
+  geom_density(mapping = aes(y = after_stat(ndensity)), #<<
                alpha = 0.4)
 
 ```
 
-- `..ndensity..` here is not in our data! It's _computed_. Histogram and density geoms have default statistics, but you can ask them to do more. The `stat_` functions associated with each `geom_` do this work behind the scenes.
+- `after_stat(ndensity)` here is not in our data! It's _computed_. Histogram and density geoms have default statistics, but you can ask them to do more. The `stat_` functions associated with each `geom_` do this work behind the scenes.
 
 ]
 
@@ -472,7 +472,7 @@ df |>
   pivot_longer(cols = pop_a:pop_total)  |> 
   ggplot() + 
   geom_histogram(mapping = aes(x = value, 
-                               y = ..ncount.., #<<
+                               y = after_stat(ncount), #<<
                           color = name, fill = name), 
             stat = "bin", bins = 20, 
             size = 0.5, alpha = 0.7,
@@ -482,7 +482,7 @@ df |>
        title = "Comparing Subgroups: Histograms")
 ```
 
-- Again, `..ncount..` is computed. The periods on either side are just a naming convention to show that the measure is computed by the `stat_` function (and to make sure it doesn't clash with any actual names in your data.)
+- Again, `after_stat(ncount)` is computed. The periods on either side are just a naming convention to show that the measure is computed by the `stat_` function (and to make sure it doesn't clash with any actual names in your data.)
 
 ]
 
@@ -523,11 +523,11 @@ p_out <- df |>
   pivot_longer(cols = pop_a:pop_c) |>
   ggplot() + 
   geom_histogram(mapping = aes(x = pop_total, #<<
-                               y = ..ncount..), 
+                               y = after_stat(ncount)), 
                 bins = 20, alpha = 0.7,
                 fill = "gray40", size = 0.5) + 
   geom_histogram(mapping = aes(x = value, #<<
-                               y = ..ncount.., 
+                               y = after_stat(ncount), 
                           color = name, fill = name), 
             stat = "bin", bins = 20, size = 0.5,
             alpha = 0.5) + 

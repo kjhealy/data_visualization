@@ -402,7 +402,7 @@ layout: false
 
 class: right bottom main-title section-title-1
 
-## .huge.right.squish4.bottom.kjh-yellow[Unicorns …]
+## .huge.right.squish4.bottom.kjh-yellow[Unicorns (and monsters)]
 
 ---
 layout: false

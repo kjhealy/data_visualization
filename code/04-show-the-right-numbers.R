@@ -136,7 +136,7 @@ midwest |>
   ggplot(mapping = aes(x = area,
                        fill = state, 
                        color = state)) + 
-  geom_density(mapping = aes(y = ..ndensity..), #<<
+  geom_density(mapping = aes(y = after_stat(ndensity)), #<<
                alpha = 0.4)
 
 
@@ -219,7 +219,7 @@ df |>
   pivot_longer(cols = pop_a:pop_total)  |> 
   ggplot() + 
   geom_histogram(mapping = aes(x = value, 
-                               y = ..ncount.., #<<
+                               y = after_stat(ncount), #<<
                           color = name, fill = name), 
             stat = "bin", bins = 20, 
             size = 0.5, alpha = 0.7,
@@ -252,11 +252,11 @@ p_out <- df |>
   pivot_longer(cols = pop_a:pop_c) |>
   ggplot() + 
   geom_histogram(mapping = aes(x = pop_total, #<<
-                               y = ..ncount..), 
+                               y = after_stat(ncount)), 
                 bins = 20, alpha = 0.7,
                 fill = "gray40", size = 0.5) + 
   geom_histogram(mapping = aes(x = value, #<<
-                               y = ..ncount.., 
+                               y = after_stat(ncount), 
                           color = name, fill = name), 
             stat = "bin", bins = 20, size = 0.5,
             alpha = 0.5) + 
