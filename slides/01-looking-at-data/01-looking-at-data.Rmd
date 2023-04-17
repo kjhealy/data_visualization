@@ -56,7 +56,7 @@ class: title title-1
 
 --
 
-## 10:30am to 12:30pm US EST
+## 10:00am to 12:30pm US EST
 
 --
 
@@ -64,7 +64,7 @@ class: title title-1
 
 --
 
-## 1:30pm to 3:00pm 
+## 1:30pm to 3:30pm 
 
 ---
 
