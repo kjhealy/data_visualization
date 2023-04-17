@@ -116,7 +116,7 @@ fredts_m |>
            aes(x = date, 
                y = score,
                color = series)) + 
-  geom_line(size = 2) + 
+  geom_line(linewidth = 2) + 
   labs(x = "Date", y = "Index",
         color = "Series") + 
   theme(axis.title.x = element_blank(),
@@ -129,7 +129,7 @@ fredts |>
   ggplot(mapping = 
           aes(x = date, 
               y = sp500_i - monbase_i)) + 
-  geom_line(size = 1.5) + 
+  geom_line(linewidth = 1.5) + 
   labs(x = "Date", y = "Difference") -> 
   p2
 
@@ -159,7 +159,7 @@ yahoo |>
            aes(x = Employees, 
                y = Revenue)) +
   geom_path(color = "gray40", 
-            size = rel(2)) +
+            linewidth = rel(2)) +
   geom_label(aes(color = Mayer, 
                 label = Year),
             size = rel(5), 
@@ -185,9 +185,9 @@ yahoo |>
            aes(x = Year, 
                y = Revenue/Employees)) + 
   geom_vline(xintercept = 2012, 
-             size = rel(0.5), 
+             linewidth = rel(0.5), 
              linetype = "dotted") +
-  geom_line(color = "royalblue", size = rel(2)) +
+  geom_line(color = "royalblue", linewidth = rel(2)) +
   annotate("text", x = 2012.6, y = 0.44,
            label = "Mayer\n becomes\n CEO", size = rel(5)) +
   labs(title = "Yahoo Revenue to Employee Ratio, 2004-2014",
@@ -291,7 +291,7 @@ okboomer
 okboomer |> 
     filter(country == "United States")  |> 
     ggplot(aes(x = date, y = births_pct_day)) +
-    geom_line(size = 0.5) +
+    geom_line(linewidth = 0.5) +
     labs(x = "Year",
          y = "Average daily births per million") ->
   p_lineboom 

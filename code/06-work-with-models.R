@@ -624,7 +624,7 @@ out_hap |>
                        y = prop,
                        ymin = prop_low, 
                        ymax = prop_upp)) +
-  geom_line(size = 1.2) +
+  geom_line(linewidth = 1.2) +
   geom_ribbon(alpha = 0.3) +
   scale_x_continuous(breaks = 
                        seq(1978, 2018, 4)) +
@@ -650,7 +650,7 @@ out_hap |>
                        y = prop,
                        ymin = prop_low, 
                        ymax = prop_upp)) +
-  geom_line(size = 1.2) +
+  geom_line(linewidth = 1.2) +
   geom_ribbon(alpha = 0.3) +
   scale_x_continuous(breaks = 
                        seq(1978, 2018, 4)) +
@@ -762,7 +762,7 @@ p <- out_yrd |>
 p_out <- p + 
   geom_ribbon(mapping = aes(color = NULL),
               alpha = 0.3) +
-  geom_line(size = rel(1.25)) + 
+  geom_line(linewidth = rel(1.25)) + 
   scale_y_continuous(labels = label_percent()) +
   scale_color_brewer(type = "qual", palette = "Dark2") +
   scale_fill_brewer(type = "qual", palette = "Dark2") +

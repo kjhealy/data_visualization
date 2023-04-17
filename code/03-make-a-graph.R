@@ -214,7 +214,7 @@ p <- ggplot(data = gapminder,
 p_out <- p + geom_point(alpha = 0.3) +
     geom_smooth(color = "orange", 
                 se = FALSE, 
-                size = 8, 
+                linewidth = 8, 
                 method = "lm") +
     scale_x_log10()
 

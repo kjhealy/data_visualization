@@ -584,10 +584,10 @@ p <- ggplot(data = elections_historic,
                           label = winner_label))
 
 p + geom_hline(yintercept = 0.5, 
-               size = 1.4, 
+               linewidth = 1.4, 
                color = "gray80") +
     geom_vline(xintercept = 0.5, 
-               size = 1.4, 
+               linewidth = 1.4, 
                color = "gray80") +
     geom_point()
 
@@ -605,9 +605,9 @@ p <- ggplot(data = elections_historic,
                           label = winner_label))
 
 p + geom_hline(yintercept = 0.5, 
-               size = 1.4, color = "gray80") +
+               linewidth = 1.4, color = "gray80") +
   geom_vline(xintercept = 0.5, 
-             size = 1.4, color = "gray80") +
+             linewidth = 1.4, color = "gray80") +
   geom_point() + 
   geom_text_repel()
 
@@ -626,10 +626,10 @@ p <- ggplot(data = elections_historic,
 
 p_out <- p + 
   geom_hline(yintercept = 0.5, 
-             size = 1.4, 
+             linewidth = 1.4, 
              color = "gray80") +
   geom_vline(xintercept = 0.5, 
-             size = 1.4, 
+             linewidth = 1.4, 
              color = "gray80") +
   geom_point() + 
   geom_text_repel() #<<
@@ -646,10 +646,10 @@ p <- ggplot(data = elections_historic,
                            y = ec_pct,
                            label = winner_label))
 p_out <- p + geom_hline(yintercept = 0.5, 
-                        size = 1.4, 
+                        linewidth = 1.4, 
                         color = "gray80") +
     geom_vline(xintercept = 0.5, 
-               size = 1.4, 
+               linewidth = 1.4, 
                color = "gray80") +
     geom_point() +
     geom_text_repel() +
@@ -667,10 +667,10 @@ p <- ggplot(data = elections_historic,
                            y = ec_pct,
                            label = winner_label))
 p_out <- p + geom_hline(yintercept = 0.5, 
-                        size = 1.4, 
+                        linewidth = 1.4, 
                         color = "gray80") +
   geom_vline(xintercept = 0.5, 
-             size = 1.4, 
+             linewidth = 1.4, 
              color = "gray80") +
   geom_point() +
   geom_text_repel(mapping = aes(family = "Tenso Slide")) +#<<
