@@ -41,7 +41,7 @@ class: center middle main-title section-title-1
 **Data Visualization: Session 6**
 
 .light[Kieran Healy<br>
-Code Horizons, May 2022
+Code Horizons, April 2023
 ]
 
 ]
@@ -1151,7 +1151,7 @@ mod_plot <- function(data,
 
 # Add it using .kjh-green[`map2()`] or .kjh-green[`pmap()`]
 
-- When we have two arguments to feed a function we can used .kjh-green[`map2()`]. The general case is .kjh-green[`pmap()`], for passing along any number of arguments in a list.
+- When we have two arguments to feed a function we can use .kjh-green[`map2()`]. The general case is .kjh-green[`pmap()`], for passing along any number of arguments in a list.
 
 ```{r 06-work-with-models-56 }
 out_tidy <- gapminder |>
@@ -1462,7 +1462,7 @@ out_hap |>
                        y = prop,
                        ymin = prop_low, 
                        ymax = prop_upp)) +
-  geom_line(size = 1.2) +
+  geom_line(linewidth = 1.2) +
   geom_ribbon(alpha = 0.3) +
   scale_x_continuous(breaks = 
                        seq(1978, 2018, 4)) +
@@ -1497,7 +1497,7 @@ out_hap |>
                        y = prop,
                        ymin = prop_low, 
                        ymax = prop_upp)) +
-  geom_line(size = 1.2) +
+  geom_line(linewidth = 1.2) +
   geom_ribbon(alpha = 0.3) +
   scale_x_continuous(breaks = 
                        seq(1978, 2018, 4)) +
@@ -1661,7 +1661,7 @@ p <- out_yrd |>
 p_out <- p + 
   geom_ribbon(mapping = aes(color = NULL),
               alpha = 0.3) +
-  geom_line(size = rel(1.25)) + 
+  geom_line(linewidth = rel(1.25)) + 
   scale_y_continuous(labels = label_percent()) +
   scale_color_brewer(type = "qual", palette = "Dark2") +
   scale_fill_brewer(type = "qual", palette = "Dark2") +

@@ -44,7 +44,7 @@ class: center middle main-title section-title-1
 **Data Visualization: Session 4**
 
 .light[Kieran Healy<br>
-Code Horizons, May 2022
+Code Horizons, April 2023
 ]
 
 ]
@@ -167,7 +167,7 @@ p <- ggplot(data = gapminder,
 
 p_out <- p + geom_line(color="gray70", 
               mapping=aes(group = country)) +
-    geom_smooth(size = 1.1,
+    geom_smooth(linewidth = 1.1,
                 method = "loess",
                 se = FALSE) +
     scale_y_log10(labels=scales::label_dollar()) +
@@ -725,7 +725,7 @@ p <- ggplot(data = oecd_sum,
                           fill = hi_lo))
 
 p_out <- p + geom_col() + 
-  geom_hline(yintercept = 0, size = 1.2) + #<<
+  geom_hline(yintercept = 0, linewidth = 1.2) + #<<
   guides(fill = "none") + 
   labs(x = NULL, #<<
        y = "Difference in Years", 
