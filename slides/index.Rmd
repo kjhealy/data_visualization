@@ -25,7 +25,7 @@ fpath <- fs::dir_ls(here::here("slides"), recurse = 1, glob = "*.html") |>
 
 ```
 
-## Items
+## HTML version of Slides
 
 - [01-looking-at-data.html](01-looking-at-data/01-looking-at-data.html)   
 - [02-about-r.html](02-about-r/02-about-r.html)                       

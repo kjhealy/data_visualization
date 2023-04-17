@@ -1,6 +1,6 @@
 SSH_USER = kjhealy@kjhealy.co
 DOCUMENT_ROOT = ~/public/kjhealy.co/public_html/dv
-PUBLIC_DIR = site_slides/
+PUBLIC_DIR = slides/
 
 
 pdfs:
@@ -19,7 +19,6 @@ clean:
 	find slides -type f -name '*.html' -prune -print -exec rm -f {} +
 	find code -type f -name '*.R' -prune -print -exec rm -f {} +
 	find pdf_slides -type f -name '*.pdf' -prune -print -exec rm -f {} +
-
 
 deploy:
 	rsync --exclude='.DS_Store' -Prvzce 'ssh -p 22' --delete-after $(PUBLIC_DIR) $(SSH_USER):$(DOCUMENT_ROOT)
