@@ -5,7 +5,7 @@ description: |
 author:
 - name: Kieran Healy
   url: https://kieranhealy.org
-date: "Code Horizons, May 2022"
+date: "Code Horizons, April 2023"
 output: distill::distill_article
 ---
 
@@ -59,9 +59,9 @@ We will be working with the most recent stable versions of R and RStudio, as wel
 ### Install R and RStudio on your Laptop
 
 - Begin by installing R (<http://cloud.r-project.org>). Choose the version appropriate for your computing platform:
-  - [macOS with an Intel processor](https://cran.r-project.org/bin/macosx/base/R-4.2.0.pkg)
-  - [macOS with an Apple Silicon (M1) processor](https://cran.r-project.org/bin/macosx/big-sur-arm64/base/R-4.2.0-arm64.pkg)
-  - [Windows](https://cran.r-project.org/bin/windows/base/R-4.2.0-win.exe), 
+  - [macOS with an Apple Silicon (M1 or M2) processor](https://cran.r-project.org/bin/macosx/big-sur-arm64/base/R-4.2.3-arm64.pkg)
+  - [macOS with an Intel processor](https://cran.r-project.org/bin/macosx/base/R-4.2.3.pkg)
+  - [Windows](https://cran.r-project.org/bin/windows/base/R-4.2.3-win.exe), 
   - [Linux](https://cloud.r-project.org/bin/linux/).
 - Next, install RStudio (<http://rstudio.com>). Follow the links to download the [free RStudio Desktop edition](https://rstudio.com/products/rstudio/download/#download) recommended for your system.
 
@@ -72,7 +72,7 @@ We will be working with the most recent stable versions of R and RStudio, as wel
 ```R
 ## Code to run at the RStudio console begins here
 
-my_packages <- c("tidyverse", "broom", "coefplot", "cowplot", 
+my_packages <- c("tidyverse", "broom", "cowplot", 
                   "drat", "gapminder", "GGally", "ggforce", 
                   "ggrepel", "ggraph", "ggridges", "graphlayouts", 
                   "here", "marginaleffects", "margins", "maps", "mapproj", 
@@ -92,7 +92,7 @@ install.packages(data_packages, repos = "https://kjhealy.github.io/drat/")
 
 ```
 
-If you do not have one already, it will be useful to create a GitHub account and obtain a GitHub Personal Access Token. (This is not required for the course, it will just be helpful to have one.) To get set up, read and _carefully follow_ the instructions in Parts I and II of [Happy Git With R](https://happygitwithr.com), and then also the instructions in [Appendix B](https://happygitwithr.com/github-pat.html) of the same document. Again, this is an optional step only.
+If you do not have one already, over the longer term as an R user it will be useful to create a GitHub account and obtain a GitHub Personal Access Token. (This is not required for the course, it will just be helpful to have one.) To get set up, read and _carefully follow_ the instructions in Parts I and II of [Happy Git With R](https://happygitwithr.com), and then also the instructions in [Appendix B](https://happygitwithr.com/github-pat.html) of the same document. Again, this is an optional step only.
 
 
 ### Download the Course Packet
