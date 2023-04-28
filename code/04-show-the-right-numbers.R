@@ -222,7 +222,7 @@ df |>
                                y = after_stat(ncount), #<<
                           color = name, fill = name), 
             stat = "bin", bins = 20, 
-            size = 0.5, alpha = 0.7,
+            linewidth = 0.5, alpha = 0.7,
             position = "identity") + 
   labs(x = "Measure", y = "Scaled Count", color = "Group", 
        fill = "Group",
@@ -254,11 +254,11 @@ p_out <- df |>
   geom_histogram(mapping = aes(x = pop_total, #<<
                                y = after_stat(ncount)), 
                 bins = 20, alpha = 0.7,
-                fill = "gray40", size = 0.5) + 
+                fill = "gray40", linewidth = 0.5) + 
   geom_histogram(mapping = aes(x = value, #<<
                                y = after_stat(ncount), 
                           color = name, fill = name), 
-            stat = "bin", bins = 20, size = 0.5,
+            stat = "bin", bins = 20, linewidth = 0.5,
             alpha = 0.5) + 
   guides(color = "none", fill = "none") + #<<
   labs(x = "Measure", y = "Scaled Count", 
