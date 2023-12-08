@@ -8,4 +8,9 @@ slides/**/*_files/
 slides/libs/
 slides/*/libs/
 slides/**/*.html
-Makefile
+
+/.quarto/
+/_site/
+/_freeze/
+
+/.luarc.json
