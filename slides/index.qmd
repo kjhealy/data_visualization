@@ -1,0 +1,43 @@
+---
+title: "Index"
+author: "Kieran Healy"
+date: '2022-05-16'
+output: html_document
+---
+
+```{r}
+#| label: "setup"
+#| include: FALSE
+knitr::opts_chunk$set(echo = TRUE)
+suppressMessages(library(tidyverse))
+suppressMessages(library(here))
+```
+
+```{r}
+#| echo: FALSE
+fnames <- fs::dir_ls(here::here("slides"), recurse = 1, glob = "*.html") |> 
+  fs::path_file() |> 
+  as_vector()
+
+fpath <- fs::dir_ls(here::here("slides"), recurse = 1, glob = "*.html") |> 
+  fs::path_dir() |> 
+  as_vector()
+
+#tibble::tibble(a = fnames, b =fpath, c = fnames)
+
+
+```
+
+## HTML version of Slides
+
+- [01-looking-at-data.html (1)](01-looking-at-data/01-looking-at-data-part1.html)
+- [01-looking-at-data.html (2)](01-looking-at-data/01-looking-at-data-part2.html)
+- [02-about-r.html](02-about-r/02-about-r.html)                       
+- [03-make-a-graph.html](03-make-a-graph/03-make-a-graph.html)                  
+- [04-show-the-right-numbers.html](04-show-the-right-numbers/04-show-the-right-numbers.html)        
+- [05-work-with-dplyr-and-geoms.html](05-work-with-dplyr-and-geoms/05-work-with-dplyr-and-geoms.html)     
+- [06-work-with-models.html](06-work-with-models/06-work-with-models.html)              
+- [07-make-maps.html](07-make-maps/07-make-maps.html)                     
+- [08-polishing-and-presenting-plots.html](08-polishing-and-presenting-plots/08-polishing-and-presenting-plots.html)
+- [09-case-studies.html](09-case-studies/09-case-studies.html)                  
+ 

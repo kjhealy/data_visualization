@@ -1,0 +1,2332 @@
+---
+title: "Data Visualization - 5. Dplyr and Geoms"
+author: "Kieran Healy"
+date: "`r Sys.Date()`"
+output: kjhslides::kjh_slides_reader
+editor_options: 
+  chunk_output_type: console
+---
+
+
+```{r}
+#| label: "packages"
+#| include: FALSE
+library(flipbookr)
+library(here)
+library(tidyverse)
+library(kjhslides)
+```
+
+
+```{r}
+#| label: "setup"
+#| include: FALSE
+## Configure the slides
+kjh_register_tenso()    # Default fonts. Comment out if you don't have Tenso and Berkeley fonts.
+kjh_set_knitr_opts()    
+kjh_set_slide_theme()   # ggplot theme to go with slides. Set tenso = FALSE if necessary.
+
+
+
+
+
+
+# Safe
+```
+
+
+
+
+
+# Work with [dplyr]{.fg-lblue} and [ggplot]{.fg-yellow}
+
+
+
+**Data Visualization: Session 5**
+
+.light[Kieran Healy<br>
+Code Horizons, April 2023
+]
+
+]
+
+
+---
+
+
+
+
+---
+
+# Load our libraries
+
+
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-1"
+#| message: TRUE
+library(here)      # manage file paths
+library(socviz)    # data and some useful functions
+library(tidyverse) # your friend and mine
+```
+]
+
+---
+
+# Tidyverse components, again
+
+.pull-left.w45[
+
+- [**`library`**]{.fg-green}`(tidyverse)`
+- `Loading tidyverse: ggplot2`
+- `Loading tidyverse: tibble`
+- `Loading tidyverse: tidyr`
+- `Loading tidyverse: readr`
+- `Loading tidyverse: purrr`
+- `Loading tidyverse: dplyr`
+]
+
+--
+
+.pull-right.w55[
+- Call the package and ...
+- `<|` **Draw graphs**
+- `<|` **Nicer data tables**
+- `<|` **Tidy your data**
+- `<|` **Get data into R**
+- `<|` **Fancy Iteration**
+- `<|` **Action verbs for tables**
+
+]
+
+---
+
+
+# Other tidyverse components
+
+.top[.pull-left.w15[   
+- `forcats`
+- `haven`
+- `lubridate`
+- `readxl`
+- `stringr`
+- `reprex`
+]]
+
+--
+
+.top[.pull-right.w85[
+- `<|` **Deal with factors**
+- `<|` **Import Stata, SPSS, etc**
+- `<|` **Dates, Durations, Times**
+- `<|` **Import from spreadsheets**
+- `<|` **Strings and Regular Expressions**
+- `<|` **Make reproducible examples**
+]]
+
+--
+.left.bottom[.footnote[Not all of these are attached when we do `library(tidyverse)`]]
+
+
+---
+layout: false
+class: main-title main-title-inv center middle 
+
+
+![](img/05_ggplots_flow_of_action_lg.png)
+
+---
+
+class: main-title main-title-inv center middle 
+
+![](img/05_layers_nolabels.png)
+
+
+---
+
+class: main-title main-title-inv center middle 
+
+![](img/05_layers_lower3.png)
+
+
+---
+
+class: main-title main-title-inv center middle 
+
+![](img/05_layers_all_labeled.png)
+
+
+---
+
+
+
+
+---
+
+
+
+# .huge[[Feeding data]{.fg-yellow}<br /> [to `ggplot`]{.fg-lblue}]
+
+---
+
+layout: false
+class: center middle
+
+## .middle.huge.squish4[[Transform and summarize first.]{.fg-orange}<br />[Then send your clean tables to ggplot.]{.fg-lblue}]
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.bottom.squish4[Crosstabulation<br />.kjh-lblue[and beyond]{.fg-yellow}]
+
+---
+
+
+
+
+---
+
+
+# U.S. General Social Survey data: [`gss_sm`]{.fg-pink}
+
+```{r }
+#| label: "05-work-with-dplyr-and-geoms-2"
+gss_sm  
+```
+
+- We often want summary tables or graphs of data like this.
+
+---
+
+
+# Two-way tables: Row percents
+
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-3"
+#| echo: FALSE
+gss_sm |> 
+  janitor::tabyl(bigregion, religion) |> 
+  janitor::adorn_totals(where = "col") |> 
+  janitor::adorn_percentages() |> 
+  janitor::adorn_pct_formatting(affix_sign = FALSE) |> 
+  knitr::kable()  
+
+```
+
+---
+
+# Two-way tables: Column percents
+
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-4"
+#| echo: FALSE
+
+gss_sm |> 
+  janitor::tabyl(bigregion, religion) |> 
+  janitor::adorn_totals(where = "row") |> 
+  janitor::adorn_percentages(denominator = "col") |> 
+  janitor::adorn_pct_formatting(affix_sign = FALSE) |> 
+  knitr::kable()  
+```
+
+---
+
+# Two-way tables: Full marginals
+
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-5"
+#| echo: FALSE
+
+gss_sm |> 
+  janitor::tabyl(bigregion, religion) |> 
+  janitor::adorn_percentages(denominator = "all") |> 
+  janitor::adorn_pct_formatting(affix_sign = FALSE) |> 
+  knitr::kable()  
+```
+
+---
+
+# [dplyr]{.fg-yellow} lets you work with tibbles
+
+.pull-left-wide[
+- Remember, tibbles are tables of data where the columns can be of different types, such as numeric, logical, character, factor, etc.]
+
+--
+
+.pull-left-wide[
+- We'll use dplyr to _transform_ and _summarize_ our data.
+]
+
+--
+.pull-left-wide[
+
+- We'll use the pipe operator, [**`|>`**]{.fg-pink}, to chain together sequences of actions on our tables.
+
+]
+---
+
+layout: false
+class: center
+
+:::{.huge}
+ `dplyr` draws on the logic and language of  [database queries]{.fg-green}, where the focus is on manipulating tables 
+:::
+
+---
+
+
+
+
+---
+
+# Some [actions]{.fg-orange} to take on a single table 
+
+.pull-left.w80[
+- [**Group**]{.fg-orange} the data at the level we want, such as “_Religion by Region_” or _“Children by School_”.
+
+- [**Subset**]{.fg-orange} either the rows or columns of or table.
+
+- [**Mutate**]{.fg-orange} the data. That is, change something at the _current_ level of grouping.  Mutating adds new columns to the table, or changes the content of an existing column. It never changes the number of rows.
+
+- [**Summarize**]{.fg-orange} or aggregate the data. That is, make something new at a _higher_ level of grouping. E.g., calculate means or counts by some grouping variable. This will generally result in a smaller, _summary_ table.
+]
+
+---
+
+# Each [action]{.fg-orange} is implemented by a [function]{.fg-green} 
+
+--
+.pull-left-wide[
+- **Group** using  [**`group_by()`**]{.fg-green}.
+]
+
+--
+
+.pull-left-wide[
+- **Subset** has one action for rows and one for columns. We [**`filter()`**]{.fg-green} rows and [**`select()`**]{.fg-green} columns. 
+]
+--
+.pull-left-wide[
+- **Mutate** tables (i.e. add new columns, or re-make existing ones) using [**`mutate()`**]{.fg-green}.
+]
+--
+
+.pull-left-wide[
+- **Summarize** tables (i.e. perform aggregating calculations) using [**`summarize()`**]{.fg-green}.
+]
+
+---
+
+
+
+# .huge[[Example:]{.fg-lblue}<br/>[The GSS]{.fg-yellow}]
+
+
+
+---
+
+# U.S. General Social Survey data: [`gss_sm`]{.fg-pink}
+
+```{r }
+#| label: "05-work-with-dplyr-and-geoms-6"
+gss_sm
+```
+
+Notice again how the tibble already tells us a lot.
+
+
+
+---
+
+# Summarizing a Table
+
+- Here's what we're going to do:
+
+![](img/05_dplyr_pipe_example.png)
+
+---
+
+# Summarizing a Table
+
+- We're just taking a look at the relevant columns here. We don't need to narrow it like this to do our summary, though.
+
+
+```{r }
+#| label: "05-work-with-dplyr-and-geoms-7"
+gss_sm |> 
+  select(id, bigregion, religion) 
+```
+
+
+---
+
+`r chunq_reveal("reveal-onetablevar",  lcolw="35", rcolw="65", title = "# Count up by [_one_]{.fg-orange} column or variable")`
+
+```{r}
+#| label: "reveal-onetablevar"
+#| include: FALSE
+gss_sm |> 
+  group_by(bigregion) |>  #<<
+  summarize(total = n()) 
+```
+
+Grouping changes the _logical_ structure of the tibble. It tells you what subsets of rows the next mutate or summary operation will be carried out within. 
+
+---
+`r chunq_reveal("reveal-pipe1",  lcolw="35", rcolw="65", title = "# Summarize by region and religion")`
+
+```{r}
+#| label: "reveal-pipe1"
+#| include: FALSE
+gss_sm |>  
+  group_by(bigregion, religion) |> 
+  summarize(total = n()) |> 
+  mutate(freq = total / sum(total),
+           pct = round((freq*100), 1))
+
+```
+---
+
+# Pipelines carry assumptions forward
+
+.small[
+```{r }
+#| label: "05-work-with-dplyr-and-geoms-9"
+gss_sm |> 
+  group_by(bigregion, religion) |> #<<
+  summarize(total = n()) |> 
+  mutate(freq = total / sum(total),
+           pct = round((freq*100), 1))
+```
+]
+
+Groups are carried forward till summarized over, or explicitly ungrouped with [`ungroup()`]{.fg-green}. 
+
+--
+
+Summary calculations are done on the innermost group, which then "disappears". (Notice how [`religion`]{.fg-orange} is no longer a group in the output, but [`bigregion`]{.fg-orange} is.)
+
+---
+
+# Pipelines carry assumptions forward
+
+.small[
+```{r }
+#| label: "05-work-with-dplyr-and-geoms-10"
+gss_sm |> 
+  group_by(bigregion, religion) |> 
+  summarize(total = n()) |> 
+  mutate(freq = total / sum(total),
+         pct = round((freq*100), 1)) #<<
+```
+]
+
+[**`mutate()`**]{.fg-green} is quite clever. See how we can immediately use [**`freq`**]{.fg-orange} to calculate [**`pct`**]{.fg-orange}, even though we are creating them both in the same [**`mutate()`**]{.fg-green} expression.
+
+---
+
+# Convenience functions
+
+.small[
+
+```{r }
+#| label: "05-work-with-dplyr-and-geoms-11"
+gss_sm |> 
+  group_by(bigregion, religion) |> #<<
+  summarize(total = n()) |> #<<
+  mutate(freq = total / sum(total),
+           pct = round((freq*100), 1)) 
+```
+]
+
+We're going to be doing this [**`group_by()`**]{.fg-green} ... [**`n()`**]{.fg-green} step a lot. Some shorthand for it would be useful.
+
+---
+
+# [Three options]{.fg-pink} for counting up rows
+
+.pull-left-3[
+
+- .SMALL.squish3[Do it yourself with [**`n()`**]{.fg-green}]
+
+
+```{r }
+#| label: "05-work-with-dplyr-and-geoms-12"
+gss_sm |> 
+  group_by(bigregion, religion) |> #<<
+  summarize(n = n()) #<<
+```
+]
+
+- .small.squish3[_The result is **grouped**._]
+]
+
+--
+
+.pull-middle-3[
+
+- .SMALL.squish3[Use [**`tally()`**]{.fg-green}]
+
+
+```{r }
+#| label: "05-work-with-dplyr-and-geoms-13"
+gss_sm |> 
+  group_by(bigregion, religion) |> 
+  tally() #<<
+```
+]
+
+- .small.squish3[_The result is **grouped**._]
+]
+
+--
+
+.pull-right-3[
+
+- .SMALL.squish3[use [**`count()`**]{.fg-green}]
+
+
+```{r }
+#| label: "05-work-with-dplyr-and-geoms-14"
+gss_sm |> 
+  count(bigregion, religion) #<<
+```
+]
+
+- .small.squish3[_One step; the result is **not grouped**._]
+]
+
+---
+
+
+
+# Pipelined tables can be quickly checked
+
+.pull-left[
+
+```{r }
+#| label: "05-work-with-dplyr-and-geoms-15"
+## Calculate pct religion within region?
+rel_by_region <- gss_sm |> 
+  count(bigregion, religion) |> 
+  mutate(pct = round((n/sum(n))*100, 1)) 
+
+rel_by_region
+```
+
+Hm, did I sum over right group?
+
+]
+
+--
+.pull-right[
+
+```{r }
+#| label: "05-work-with-dplyr-and-geoms-16"
+## Each region should sum to ~100
+rel_by_region |> 
+  group_by(bigregion) |> 
+  summarize(total = sum(pct)) 
+
+```
+
+No! What has gone wrong here?
+
+]
+
+---
+
+# Pipelined tables can be quickly checked
+
+.pull-left[
+
+```{r }
+#| label: "05-work-with-dplyr-and-geoms-17"
+rel_by_region <- gss_sm |> 
+  count(bigregion, religion) |> #<< 
+  mutate(pct = round((n/sum(n))*100, 1)) 
+```
+
+.SMALL.squish3[[**`count()`**]{.fg-green} returns ungrouped results, so there are no groups carry forward to the [**`mutate()`**]{.fg-green} step.]
+
+```{r }
+#| label: "05-work-with-dplyr-and-geoms-18"
+rel_by_region |> 
+  summarize(total = sum(pct))
+```
+
+.SMALL.squish3[With [**`count()`**]{.fg-green}, the [**`pct`**]{.fg-orange} values in this case are the marginals for the whole table.]
+
+]
+
+--
+.pull-right[
+
+```{r }
+#| label: "05-work-with-dplyr-and-geoms-19"
+rel_by_region <- gss_sm |> 
+  group_by(bigregion, religion) |> #<<
+  tally() |> #<<
+  mutate(pct = round((n/sum(n))*100, 1)) 
+```
+
+```{r }
+#| label: "05-work-with-dplyr-and-geoms-20"
+# Check
+rel_by_region |> 
+  group_by(bigregion) |> 
+  summarize(total = sum(pct))
+
+```
+
+.SMALL.squish3[[**`group_by()`**]{.fg-green} and [**`tally()`**]{.fg-green} both return a grouped result. We get some rounding error because we used [**`round()`**]{.fg-green} after summing originally.]
+]
+
+
+---
+
+# Two lessons
+
+## Check your tables!
+
+-     Pipelines feed their content forward, so you need to make sure your results are not incorrect.
+
+--
+
+- Often, complex tables and graphs can be disturbingly plausible even when wrong.
+
+--
+
+- So, figure out what the result should be and test it!
+
+--
+
+- Starting with simple or toy cases can help with this process.
+
+---
+
+# Two lessons
+
+## Inspect your pipes!
+
+- Understand pipelines by running them forward or peeling them back a step at a time.
+
+- This is a _very_ effective way to understand your own and other people's code.
+
+---
+
+# Pass your pipeline on to a [table]{.fg-yellow}
+
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-21"
+#| eval: FALSE
+gss_sm |> 
+  count(bigregion, religion) |> 
+  pivot_wider(names_from = bigregion, values_from = n) |>  #<<
+  kable()  
+```
+
+
+.small[
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-22"
+#| echo: FALSE
+gss_sm |> 
+  count(bigregion, religion) |> 
+  pivot_wider(names_from = bigregion, values_from = n) |> 
+  knitr::kable()  
+```
+]
+
+
+---
+
+# Pass your pipeline on to a [graph]{.fg-yellow}
+
+
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-23"
+#| fig.height: 4
+#| fig.width: 15
+gss_sm |> 
+  group_by(bigregion, religion) |> 
+  tally() |> 
+  mutate(pct = round((n/sum(n))*100, 1)) |> 
+  drop_na() |> 
+  ggplot(mapping = aes(x = pct, y = reorder(religion, -pct), fill = religion)) + #<<
+  geom_col() + #<<
+    labs(x = "Percent", y = NULL) +
+    guides(fill = "none") + 
+    facet_wrap(~ bigregion, nrow = 1)
+```
+]
+
+---
+
+layout: false
+class: center middle
+
+## .middle.huge.squish4[[Use `dplyr` pipelines to create summary tables.]{.fg-orange}<br />[Then send your clean tables to `ggplot`.]{.fg-lblue}]
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.bottom.squish4[[Facets]{.fg-lblue} [are often<br />better than]{.fg-yellow} [Guides]{.fg-lblue}]
+
+
+---
+
+
+
+
+---
+
+# Let's put that table in an object
+
+
+```{r }
+#| label: "05-work-with-dplyr-and-geoms-24"
+rel_by_region <- gss_sm |> 
+  group_by(bigregion, religion) |> 
+  tally() |> 
+  mutate(pct = round((n/sum(n))*100, 1)) |> 
+  drop_na()
+
+
+head(rel_by_region)
+```
+
+---
+
+# We might write ...
+
+```{r }
+#| label: "05-work-with-dplyr-and-geoms-25"
+p <- ggplot(data = rel_by_region, 
+                mapping = aes(x = bigregion, 
+                              y = pct, 
+                              fill = religion))
+p_out <- p + geom_col(position = "dodge") +
+    labs(x = "Region",
+         y = "Percent", 
+         fill = "Religion") 
+```
+
+---
+
+# We might write ...
+
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-26"
+#| echo: FALSE
+#| fig.height: 7
+#| fig.width: 12
+p_out
+```
+
+
+---
+
+# Is this an effective graph? [Not really!]{.fg-red}
+
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-27"
+#| echo: FALSE
+#| fig.height: 7
+#| fig.width: 12
+p_out
+```
+
+---
+
+# Try [faceting]{.fg-lblue} instead
+
+```{r }
+#| label: "05-work-with-dplyr-and-geoms-28"
+p <- ggplot(data = rel_by_region, 
+                mapping = aes(x = pct, #<<
+                              y = reorder(religion, -pct), #<<
+                              fill = religion))
+p_out_facet <- p + geom_col() +
+  guides(fill = "none") + 
+  facet_wrap(~ bigregion, nrow = 1) +
+  labs(x = "Percent",
+       y = NULL) 
+
+```
+
+- Putting categories on the y-axis is a very useful trick.
+
+- Faceting reduces the number of guides the viewer needs to consult. 
+
+---
+
+
+# Try [faceting]{.fg-lblue} instead
+
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-29"
+#| echo: FALSE
+#| fig.height: 3.5
+#| fig.width: 15
+p_out_facet
+```
+
+### [Try putting categories on the y-axis. (And reorder them by x.)]{.fg-green}
+
+### [Try faceting variables instead of mapping them to color or shape.]{.fg-lblue}
+
+### [Try to minimize the need for guides and legends.]{.fg-pink}
+
+
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.bottom.squish4[[Two kinds of]{.fg-yellow} [facet]{.fg-lblue}]
+
+---
+
+# Facet Children vs Age, by Race
+
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-30"
+#| fig.width: 10
+#| fig.height: 5
+p <-  ggplot(data = gss_sm,
+             mapping = aes(x = age, y = childs))
+
+p + geom_point(alpha = 0.2) + 
+  geom_smooth() +
+  facet_wrap(~ race)
+
+```
+
+---
+
+# We can facet by more than one variable
+
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-31"
+#| fig.width: 8
+#| fig.height: 5.5
+p <-  ggplot(data = gss_sm,
+             mapping = aes(x = age, y = childs))
+
+p + geom_point(alpha = 0.2) + 
+  geom_smooth() +
+  facet_wrap(~ sex + race) #<< 
+
+```
+
+
+---
+
+# We can arrange [facet_wrap()]{.fg-green} quite freely
+
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-32"
+#| fig.width: 15
+#| fig.height: 5.5
+p <-  ggplot(data = gss_sm,
+             mapping = aes(x = age, y = childs))
+
+p + geom_point(alpha = 0.2) + 
+  geom_smooth() +
+  facet_wrap(~ sex + race, nrow = 1) #<< 
+
+```
+
+
+---
+
+# [facet_grid()]{.fg-green} is more like a true crosstab
+
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-33"
+#| fig.width: 11
+#| fig.height: 6.5
+#| warning: FALSE
+p + geom_point(alpha = 0.2) + 
+  geom_smooth() +
+  facet_grid(sex ~ race) #<< 
+
+```
+
+
+---
+
+# Both can be exended to multi-way views
+
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-34"
+#| fig.width: 11
+#| fig.height: 6.5
+#| warning: FALSE
+p_out <- p + geom_point(alpha = 0.2) + 
+  geom_smooth() +
+  facet_grid(bigregion ~ race + sex) #<< 
+
+```
+
+---
+layout: false
+
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-35"
+#| echo: FALSE
+#| warning: FALSE
+#| fig.width: 12
+#| fig.height: 8
+p_out
+```
+
+---
+
+
+
+# .huge[[What we've]{.fg-lblue} [built-up]{.fg-yellow}]
+
+---
+
+
+
+---
+
+# Core Grammar
+
+![](img/05_builtup_1.png)
+
+---
+
+# Grouped data; faceting
+
+- Along with a few peeks at scale transformations, guide adjustments, and theme adjustment 
+
+![](img/05_builtup_2.png)
+
+
+---
+
+# [`dplyr`]{.fg-lblue} and Pipelining 
+
+###  The elements of filtering and summarizing 
+
+```{r }
+#| label: "05-work-with-dplyr-and-geoms-36"
+gss_sm |> 
+  group_by(bigregion, religion) |> 
+  tally() |> 
+  mutate(freq = n / sum(n),
+         pct = round((freq*100), 1)) 
+```
+
+---
+
+
+
+
+---
+
+
+
+# .huge[[Extend your]{.fg-lblue} [`ggplot` vocabulary]{.fg-yellow}]
+
+
+
+---
+
+# We'll move forward in three ways
+
+## [Learn more geoms]{.fg-lblue} 
+
+- [`geom_point()`]{.fg-green}, [`geom_line()`]{.fg-green}, [`geom_col()`]{.fg-green},  [`geom_histogram()`]{.fg-green}, [`geom_density()`]{.fg-green}, [`geom_jitter()`]{.fg-green}, 
+[`geom_boxplot()`]{.fg-green}, [`geom_pointrange()`]{.fg-green},...
+
+--
+
+## [Learn more about scales, guides, and themes]{.fg-lblue} 
+
+- Functions that control the details of representing data and styling our plots.
+
+--
+
+## [Learn more about extensions to ggplot]{.fg-lblue}
+
+- Packages that enhance [`ggplot`]{.fg-lblue}'s capabilities, usually by adding support for new kinds of plot (i.e., new geoms), or new functionality (e.g., the [`scales`]{.fg-lblue} package).
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.bottom.squish4[[Some data on]{.fg-yellow}<br />[Organ Donation]{.fg-lblue}]
+
+---
+# [`organdata`]{.fg-pink} is in the [`socviz`]{.fg-lblue} package
+
+```{r }
+#| label: "05-work-with-dplyr-and-geoms-37"
+organdata
+```
+
+---
+
+# First looks
+
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-38"
+#| fig.width: 10
+#| fig.height: 6
+p <- ggplot(data = organdata,
+            mapping = aes(x = year, y = donors))
+p + geom_point()
+```
+
+---
+
+# First looks
+
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-39"
+#| fig.width: 10
+#| fig.height: 6
+p <- ggplot(data = organdata,
+            mapping = aes(x = year, y = donors))
+p + geom_line() 
+```
+
+---
+
+# First looks
+
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-40"
+#| fig.width: 10
+#| fig.height: 6
+p <- ggplot(data = organdata,
+            mapping = aes(x = year, y = donors))
+p + geom_line(aes(group = country)) 
+```
+
+
+---
+
+# First looks
+
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-41a"
+#| fig.width: 21
+#| fig.height: 8
+p <- ggplot(data = organdata,
+            mapping = aes(x = year, y = donors))
+p + geom_line() + 
+  facet_wrap(~ country, nrow = 3)
+```
+
+---
+
+# First looks
+
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-41b"
+#| fig.width: 21
+#| fig.height: 8
+p <- ggplot(data = organdata,
+            mapping = aes(x = year, y = donors))
+p + geom_line() + 
+  facet_wrap(~ reorder(country, donors, na.rm = TRUE), nrow = 3)
+```
+
+---
+
+# First looks
+
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-41c"
+#| fig.width: 21
+#| fig.height: 8
+p <- ggplot(data = organdata,
+            mapping = aes(x = year, y = donors))
+p + geom_line() + 
+  facet_wrap(~ reorder(country, -donors, na.rm = TRUE), nrow = 3)
+```
+
+
+---
+
+
+
+class: right bottom main-title section-title-1
+
+## .huge.right.bottom.squish4[[Showing continuous measures]{.fg-yellow} [by category]{.fg-lblue}]
+
+---
+
+# Boxplots: [`geom_boxplot()`]{.fg-green}
+
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-42"
+#| fig.width: 15
+#| fig.height: 5
+## Pipeline the data directly; then it's implicitly the first argument to `ggplot()`
+organdata |> 
+  ggplot(mapping = aes(x = country, y = donors)) + 
+  geom_boxplot()
+```
+
+---
+
+# Put categories on the y-axis!
+
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-43"
+#| fig.width: 10
+#| fig.height: 6
+organdata |> 
+  ggplot(mapping = aes(x = donors, y = country)) + #<<
+  geom_boxplot() +
+  labs(y = NULL)
+```
+
+---
+
+# Reorder y by the mean of x
+
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-44"
+#| fig.width: 10
+#| fig.height: 6
+organdata |> 
+  ggplot(mapping = aes(x = donors, y = reorder(country, donors, na.rm = TRUE))) + #<<
+  geom_boxplot() +
+  labs(y = NULL)
+```
+
+---
+
+# (Reorder y by any statistic you like)
+
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-45"
+#| fig.width: 10
+#| fig.height: 6
+organdata |> 
+  ggplot(mapping = aes(x = donors, y = reorder(country, donors, sd, na.rm = TRUE))) + #<<
+  geom_boxplot() +
+  labs(y = NULL)
+```
+
+---
+
+# [geom_boxplot()]{.fg-green} knows [`color`]{.fg-orange} and [`fill`]{.fg-orange}
+
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-46"
+#| fig.width: 10
+#| fig.height: 6
+organdata |> 
+  ggplot(mapping = aes(x = donors, y = reorder(country, donors, na.rm = TRUE), fill = world)) + #<<
+  geom_boxplot() +
+  labs(y = NULL)
+```
+
+
+---
+
+# These strategies are quite general
+
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-47"
+#| fig.width: 10
+#| fig.height: 5.5
+organdata |> 
+  ggplot(mapping = aes(x = donors, y = reorder(country, donors, na.rm = TRUE), color = world)) + 
+  geom_point(size = rel(3)) + #<<
+  labs(y = NULL)
+```
+
+
+---
+
+# [geom-jitter()]{.fg-green} can help with overplotting
+
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-48"
+#| fig.width: 10
+#| fig.height: 6
+organdata |> 
+  ggplot(mapping = aes(x = donors, y = reorder(country, donors, na.rm = TRUE), color = world)) + 
+  geom_jitter(size = rel(3)) + #<<
+  labs(y = NULL)
+```
+
+---
+
+# Adjust with a [`position`]{.fg-orange} argument
+
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-49"
+#| fig.width: 10
+#| fig.height: 6
+organdata |> 
+  ggplot(mapping = aes(x = donors, y = reorder(country, donors, na.rm = TRUE),
+                       color = world)) + 
+  geom_jitter(size = rel(3), position = position_jitter(height = 0.1)) + #<<
+  labs(y = NULL)
+```
+
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.bottom.squish4[[Summarize better]{.fg-yellow}<br /> [with **`dplyr`**]{.fg-lblue}]
+
+
+---
+
+# Summarize a bunch of variables
+
+```{r }
+#| label: "05-work-with-dplyr-and-geoms-50"
+by_country <- organdata |>  
+  group_by(consent_law, country)  |> 
+    summarize(donors_mean= mean(donors, na.rm = TRUE),
+              donors_sd = sd(donors, na.rm = TRUE),
+              gdp_mean = mean(gdp, na.rm = TRUE),
+              health_mean = mean(health, na.rm = TRUE),
+              roads_mean = mean(roads, na.rm = TRUE),
+              cerebvas_mean = mean(cerebvas, na.rm = TRUE))
+
+head(by_country)
+```
+
+- .medium[This works, but there's so much repetition! It's an open invitation to make mistakes copying and pasting.]
+
+---
+layout: false
+class: main-title main-title-inv
+
+# .middle.squish4.huge[[DRY:]{.fg-lblue}] <br /> .middle.squish4.large[Don't Repeat Yourself]{.fg-orange}
+
+
+---
+
+
+
+
+---
+
+# Use [`across()`]{.fg-green} and [`where()`]{.fg-green} instead
+
+```{r }
+#| label: "05-work-with-dplyr-and-geoms-51"
+by_country <- organdata |> 
+  group_by(consent_law, country) |>
+    summarize(across(where(is.numeric),#<<
+                     list(mean = mean, 
+                          sd = sd),
+                      na.rm = TRUE))
+head(by_country)              
+              
+```
+
+---
+
+# Use [`across()`]{.fg-green} and [`where()`]{.fg-green} instead
+
+```{r }
+#| label: "05-work-with-dplyr-and-geoms-52"
+by_country <- organdata |> 
+  group_by(consent_law, country) |>
+    summarize(across(where(is.numeric),
+                     list(mean = mean, 
+                          sd = sd),
+                      na.rm = TRUE), 
+              .groups = "drop") #<<
+head(by_country)              
+              
+```
+
+---
+
+# Plot our summary data
+
+
+.pull-left.w45[
+```{r}
+#| label: "codefig-consent1"
+#| message: FALSE
+#| fig.show: "hide"
+#| fig.width: 8
+#| fig.height: 5
+by_country |> 
+  ggplot(mapping = 
+           aes(x = donors_mean, 
+               y = reorder(country, donors_mean),
+               color = consent_law)) + 
+  geom_point(size=3) +
+  labs(x = "Donor Procurement Rate",
+       y = NULL, 
+       color = "Consent Law")
+```
+]
+
+--
+
+.pull-right.w55[
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-53"
+#| echo: FALSE
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-consent1", "png"))
+
+```
+
+]
+
+
+---
+
+# What about faceting it instead?
+
+.pull-left.w45[
+
+```{r}
+#| label: "codefig-consent2"
+#| message: FALSE
+#| fig.show: "hide"
+#| fig.width: 8
+#| fig.height: 5
+by_country |> 
+  ggplot(mapping = 
+           aes(x = donors_mean, 
+               y = reorder(country, donors_mean),
+               color = consent_law)) + 
+  geom_point(size=3) +
+  guides(color = "none") +
+  facet_wrap(~ consent_law) + #<<
+  labs(x = "Donor Procurement Rate",
+       y = NULL, 
+       color = "Consent Law")
+```
+
+.pull-left.w80[The problem is that countries can only be in one Consent Law category.]
+
+]
+
+--
+
+.pull-right.w55[
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-54"
+#| echo: FALSE
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-consent2", "png"))
+```
+]
+
+
+---
+
+# What about faceting it instead?
+
+.pull-left.w45[
+```{r}
+#| label: "codefig-consent2a"
+#| message: FALSE
+#| fig.show: "hide"
+#| fig.width: 5
+#| fig.height: 9
+by_country |> 
+  ggplot(mapping = 
+           aes(x = donors_mean, 
+               y = reorder(country, donors_mean),
+               color = consent_law)) + 
+  geom_point(size=3) +
+  guides(color = "none") +
+  facet_wrap(~ consent_law, ncol = 1) + #<<
+  labs(x = "Donor Procurement Rate",
+       y = NULL, 
+       color = "Consent Law")
+```
+
+.pull-left.w80[Restricting to one column doesn't fix it.]
+
+]
+
+
+
+--
+
+.pull-right.w55[
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-55"
+#| echo: FALSE
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-consent2a", "png"))
+```
+]
+
+
+
+---
+
+# Allow the y-scale to vary
+
+.pull-left.w45[
+```{r}
+#| label: "codefig-consent3"
+#| message: FALSE
+#| fig.show: "hide"
+#| fig.width: 8
+#| fig.height: 6
+by_country |> 
+  ggplot(mapping = 
+           aes(x = donors_mean, 
+               y = reorder(country, donors_mean),
+               color = consent_law)) + 
+  geom_point(size=3) +
+  guides(color = "none") +
+  facet_wrap(~ consent_law, 
+             ncol = 1,
+             scales = "free_y") +  #<<
+  labs(x = "Donor Procurement Rate",
+       y = NULL, 
+       color = "Consent Law")
+```
+
+.pull.left.w90[Normally the point of a facet is to preserve comparability between panels by not allowing the scales to vary. But for categorical measures it can be useful to allow this.]
+
+]
+
+
+--
+
+.pull-right.w55[
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-56"
+#| echo: FALSE
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-consent3", "png"))
+```
+]
+
+---
+
+# Again, these methods are general
+
+.pull-left.w50[
+```{r}
+#| label: "codefig-consent4"
+#| message: FALSE
+#| fig.show: "hide"
+#| fig.width: 8
+#| fig.height: 6
+by_country |> 
+  ggplot(mapping = 
+           aes(x = donors_mean, 
+               y = reorder(country, donors_mean),
+               color = consent_law)) + 
+  geom_pointrange(mapping = #<<
+                    aes(xmin = donors_mean - donors_sd, #<<
+                        xmax = donors_mean + donors_sd)) + #<<
+  guides(color = "none") +
+  facet_wrap(~ consent_law, 
+             ncol = 1,
+             scales = "free_y") +  
+  labs(x = "Donor Procurement Rate",
+       y = NULL, 
+       color = "Consent Law")
+```
+]
+
+--
+
+.pull-right.w50[
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-57"
+#| echo: FALSE
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-consent4", "png"))
+```
+]
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.bottom.squish4[Plot text directly]{.fg-yellow}
+
+---
+
+# [`geom_text()`]{.fg-green} for basic labels
+
+
+
+.pull-left.w45[
+```{r}
+#| label: "codefig-geomtext"
+#| message: FALSE
+#| fig.show: "hide"
+#| fig.width: 4.8
+#| fig.height: 4.5
+
+by_country |> 
+  ggplot(mapping = aes(x = roads_mean, 
+                       y = donors_mean)) + 
+  geom_text(mapping = aes(label = country))
+
+```
+]
+
+--
+
+.pull-right.w55[
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-58"
+#| echo: FALSE
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-geomtext", "png"))
+```
+]
+
+
+---
+
+# It's not very flexible
+
+
+.pull-left.w45[
+```{r}
+#| label: "codefig-geomtext2"
+#| message: FALSE
+#| fig.show: "hide"
+#| fig.width: 4.8
+#| fig.height: 4.5
+
+by_country |> 
+  ggplot(mapping = aes(x = roads_mean, 
+                       y = donors_mean)) + 
+  geom_point() + 
+  geom_text(mapping = aes(label = country),
+            hjust = 0)
+
+
+```
+]
+
+--
+
+.pull-right.w55[
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-59"
+#| echo: FALSE
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-geomtext2", "png"))
+```
+]
+
+---
+
+# There are tricks, but they're limited
+
+
+.pull-left.w45[
+```{r}
+#| label: "codefig-geomtext3"
+#| message: FALSE
+#| fig.show: "hide"
+#| fig.width: 4.8
+#| fig.height: 4.5
+
+by_country |> 
+  ggplot(mapping = aes(x = roads_mean, 
+                       y = donors_mean)) + 
+  geom_point() + 
+  geom_text(mapping = aes(x = roads_mean + 2, 
+                          label = country),
+            hjust = 0)
+
+
+```
+]
+
+--
+
+.pull-right.w55[
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-60"
+#| echo: FALSE
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-geomtext3", "png"))
+```
+]
+
+---
+
+# We'll use [`ggrepel`]{.fg-lblue} instead
+
+### The [`ggrepel`]{.fg-lblue} package provides [`geom_text_repel()`]{.fg-green} and [`geom_label_repel()`]{.fg-green}
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.bottom.squish4[U.S. Historic<br/>Presidential Elections]{.fg-yellow}
+
+---
+
+# [`elections_historic`]{.fg-pink} is in [`socviz`]{.fg-orange} 
+
+```{r }
+#| label: "05-work-with-dplyr-and-geoms-61"
+elections_historic
+```
+
+---
+
+# We'll draw a plot like this
+
+![](img/05_electionplot_sample.png)
+
+
+---
+
+# Keep things neat
+
+```{r }
+#| label: "05-work-with-dplyr-and-geoms-62"
+## The packages we'll use in addition to ggplot
+library(ggrepel) #<<
+library(scales) #<<
+
+p_title <- "Presidential Elections: Popular & Electoral College Margins"
+p_subtitle <- "1824-2016"
+p_caption <- "Data for 2016 are provisional."
+x_label <- "Winner's share of Popular Vote"
+y_label <- "Winner's share of Electoral College Votes"
+```
+
+---
+
+# Base Layer, Lines, Points
+
+
+.pull-left.w45[
+```{r}
+#| label: "codefig-presplot1"
+#| message: FALSE
+#| fig.show: "hide"
+#| fig.width: 5
+#| fig.height: 4.5
+p <- ggplot(data = elections_historic, 
+            mapping = aes(x = popular_pct, 
+                          y = ec_pct,
+                          label = winner_label))
+
+p + geom_hline(yintercept = 0.5, 
+               linewidth = 1.4, 
+               color = "gray80") +
+    geom_vline(xintercept = 0.5, 
+               linewidth = 1.4, 
+               color = "gray80") +
+    geom_point()
+
+```
+]
+
+--
+
+.pull-right.w55[
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-63"
+#| echo: FALSE
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-presplot1", "png"))
+```
+]
+
+---
+
+# Add the labels
+
+
+.pull-left.w45[
+```{r}
+#| label: "codefig-presplot2"
+#| message: FALSE
+#| fig.show: "hide"
+#| fig.width: 5
+#| fig.height: 4.5
+p <- ggplot(data = elections_historic, 
+            mapping = aes(x = popular_pct, 
+                          y = ec_pct,
+                          label = winner_label))
+
+p + geom_hline(yintercept = 0.5, 
+               linewidth = 1.4, color = "gray80") +
+  geom_vline(xintercept = 0.5, 
+             linewidth = 1.4, color = "gray80") +
+  geom_point() + 
+  geom_text_repel()
+
+```
+
+.pull-left.w85[This looks messy because [`geom_text_repel()`]{.fg-green} uses the dimensions of the available graphics device to iteratively figure out the labels. Let's allow it to draw on the whole slide.]
+
+]
+
+--
+
+.pull-right.w55[
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-64"
+#| echo: FALSE
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-presplot2", "png"))
+```
+]
+
+---
+
+# The labeling is with respect to the plot size
+
+```{r }
+#| label: "05-work-with-dplyr-and-geoms-65"
+p <- ggplot(data = elections_historic, 
+            mapping  = aes(x = popular_pct, 
+                           y = ec_pct,
+                           label = winner_label))
+
+p_out <- p + 
+  geom_hline(yintercept = 0.5, 
+             linewidth = 1.4, 
+             color = "gray80") +
+  geom_vline(xintercept = 0.5, 
+             linewidth = 1.4, 
+             color = "gray80") +
+  geom_point() + 
+  geom_text_repel() #<<
+
+```
+
+---
+
+layout:false
+class: middle center
+
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-66"
+#| echo: FALSE
+#| fig.width: 15
+#| fig.height: 8.5
+p_out
+```
+
+---
+
+
+
+
+---
+
+# Adjust the Scales
+
+```{r }
+#| label: "05-work-with-dplyr-and-geoms-67"
+p <- ggplot(data = elections_historic, 
+            mapping  = aes(x = popular_pct, 
+                           y = ec_pct,
+                           label = winner_label))
+p_out <- p + geom_hline(yintercept = 0.5, 
+                        linewidth = 1.4, 
+                        color = "gray80") +
+    geom_vline(xintercept = 0.5, 
+               linewidth = 1.4, 
+               color = "gray80") +
+    geom_point() +
+    geom_text_repel() +
+    scale_x_continuous(labels = label_percent()) + #<<
+    scale_y_continuous(labels = label_percent()) #<<
+```
+
+---
+
+layout:false
+class: middle center
+
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-68"
+#| echo: FALSE
+#| fig.width: 15
+#| fig.height: 8.5
+p_out
+```
+
+---
+
+
+
+
+---
+
+# Add the labels
+
+```{r }
+#| label: "05-work-with-dplyr-and-geoms-69"
+p <- ggplot(data = elections_historic, 
+            mapping  = aes(x = popular_pct, 
+                           y = ec_pct,
+                           label = winner_label))
+p_out <- p + geom_hline(yintercept = 0.5, 
+                        linewidth = 1.4, 
+                        color = "gray80") +
+  geom_vline(xintercept = 0.5, 
+             linewidth = 1.4, 
+             color = "gray80") +
+  geom_point() +
+  geom_text_repel(mapping = aes(family = "Tenso Slide")) +#<<
+  scale_x_continuous(labels = label_percent()) +
+  scale_y_continuous(labels = label_percent()) +
+  labs(x = x_label, y = y_label,  #<<
+       title = p_title, 
+       subtitle = p_subtitle,
+       caption = p_caption)   
+  
+  
+  
+```
+
+
+---
+
+layout:false
+class: middle center
+
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-70"
+#| echo: FALSE
+#| fig.width: 15
+#| fig.height: 8.5
+p_out
+```
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.bottom.squish4[[Labeling points<br />of interest]{.fg-yellow}]
+
+---
+
+
+
+
+---
+
+
+# Option 1: On the fly inside [`ggplot`]{.fg-lblue}
+
+
+.pull-left.w50[
+```{r}
+#| label: "codefig-subset1"
+#| message: FALSE
+#| fig.show: "hide"
+#| fig.width: 4.8
+#| fig.height: 4.5
+by_country |> 
+  ggplot(mapping = aes(x = gdp_mean,
+                       y = health_mean)) +
+  geom_point() + 
+  geom_text_repel(data = subset(by_country, gdp_mean > 25000), 
+                  mapping = aes(label = country))
+
+
+```
+]
+
+--
+
+.pull-right.w50[
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-71"
+#| echo: FALSE
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-subset1", "png"))
+```
+]
+
+---
+
+# Option 1: On the fly inside [`ggplot`]{.fg-lblue}
+
+
+.pull-left.w50[
+```{r}
+#| label: "codefig-subset2"
+#| message: FALSE
+#| fig.show: "hide"
+#| fig.width: 4.8
+#| fig.height: 4.5
+
+by_country |> 
+  ggplot(mapping = aes(x = gdp_mean,
+                       y = health_mean)) +
+  geom_point() + 
+  geom_text_repel(data = subset(by_country, 
+                                gdp_mean > 25000 |
+                                  health_mean < 1500 |
+                                  country %in% "Belgium"), 
+                  mapping = aes(label = country))
+
+
+```
+
+.pull-left.w90[Stuffing everything into the [`subset()`]{.fg-green} call might get messy]
+
+]
+
+--
+
+.pull-right.w50[
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-72"
+#| echo: FALSE
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-subset2", "png"))
+```
+]
+
+---
+
+# Option 2: Use [`dplyr`]{.fg-lblue} to subset first
+
+
+```{r }
+#| label: "05-work-with-dplyr-and-geoms-73"
+df_hl <- by_country |> 
+  filter(gdp_mean > 25000 | 
+           health_mean < 1500 | 
+           country %in% "Belgium")
+
+df_hl
+```
+
+---
+
+# Option 2: Use [`dplyr`]{.fg-lblue} to subset first
+
+
+```{r }
+#| label: "05-work-with-dplyr-and-geoms-74"
+df_hl <- by_country |> 
+  filter(gdp_mean > 25000 | 
+           health_mean < 1500 | 
+           country %in% "Belgium")
+
+df_hl
+```
+
+---
+
+
+# Option 2: Use [`dplyr`]{.fg-lblue} to subset first
+
+
+.pull-left.w50[
+```{r}
+#| label: "codefig-subset3"
+#| message: FALSE
+#| fig.show: "hide"
+#| fig.width: 4.8
+#| fig.height: 4.5
+
+by_country |> 
+  ggplot(mapping = aes(x = gdp_mean,
+                       y = health_mean)) +
+  geom_point() + 
+  geom_text_repel(data = df_hl, 
+                  mapping = aes(label = country))
+
+
+```
+
+.pull-left.w90[This makes things a little neater.
+
+As you can see, a `geom` can be fully "autonomous". Each one can have its own [`mapping`]{.fg-orange} call _and_ its own [`data`]{.fg-orange} source. This can be very useful when building up plots overlaying several sources or subsets of data.
+]
+
+]
+
+--
+
+.pull-right.w50[
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-75"
+#| echo: FALSE
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-subset3", "png"))
+```
+]
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.bottom.squish4[[Write and draw]{.fg-yellow}<br>[inside the plot area]{.fg-lblue}]
+
+---
+
+
+
+
+---
+
+# [`annotate()`]{.fg-green} can imitate geoms
+
+
+.pull-left.w50[
+```{r}
+#| label: "codefig-annotate1"
+#| message: FALSE
+#| fig.show: "hide"
+#| fig.width: 4.8
+#| fig.height: 4.5
+
+organdata |> 
+  ggplot(mapping = aes(x = roads, 
+                       y = donors)) + 
+  geom_point() + 
+  annotate(geom = "text", 
+           family = "Tenso Slide",
+           x = 157, 
+           y = 33,
+           label = "A surprisingly high \n recovery rate.",
+           hjust = 0)
+
+```
+]
+
+--
+
+.pull-right.w50[
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-76"
+#| echo: FALSE
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-annotate1", "png"))
+```
+]
+
+---
+
+# [`annotate()`]{.fg-green} can imitate geoms
+
+
+
+.pull-left.w50[
+```{r}
+#| label: "codefig-annotate2"
+#| message: FALSE
+#| fig.show: "hide"
+#| fig.width: 4.8
+#| fig.height: 4.5
+
+organdata |> 
+  ggplot(mapping = aes(x = roads, 
+                       y = donors)) + 
+  geom_point() +
+  annotate(geom = "rect", 
+           xmin = 125, xmax = 155,
+           ymin = 30, ymax = 35,
+           fill = "red", 
+           alpha = 0.2) + 
+  annotate(geom = "text", 
+           x = 157, y = 33,
+           family = "Tenso Slide",
+           label = "A surprisingly high \n recovery rate.", 
+           hjust = 0)
+
+```
+]
+
+--
+
+.pull-right.w50[
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-77"
+#| echo: FALSE
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-annotate2", "png"))
+```
+]
+
+
+---
+
+
+
+# .huge[[Scales, Guides, Themes]{.fg-lblue}]
+
+---
+
+
+
+
+---
+
+# Every [mapped variable]{.fg-lblue} has a [scale]{.fg-orange}
+
+### Aesthetic mappings link quantities or categories in your data to things you can see on the graph. Thus, they have a  scale associated with that representation.
+
+### Scale functions manage this relationship. Remember: not just `x` and `y` but also `color`, `fill`, `shape`, `size`, and `alpha` are scales.
+
+- If it can represent your data, it has a scale, and a _scale function_ to manage it.
+
+### This means you control things like color schemes _for data mappings_ through scale functions
+
+- Because those colors are representing features of your data.
+
+---
+
+# Naming conventions for scale functions
+
+- In general, scale functions are named like this:
+
+- .center.large[[`scale\\\_`]{.fg-green}[`<MAPPING>`]{.fg-orange}[`\\\_`]{.fg-green}[`<KIND>`]{.fg-lblue}[`()`]{.fg-green}]
+
+
+- .large[We already know there are a lot of [**mappings**]{.fg-orange}]. 
+- .right[_[`x`]{.fg-orange}, [`y`]{.fg-orange}, [`color`]{.fg-orange}, [`size`]{.fg-orange}, [`shape`]{.fg-orange}, and so on._] 
+
+- .large[And there are many [**kinds**]{.fg-lblue} of scale as well.] 
+- .right[_[discrete]{.fg-lblue}, [continuous]{.fg-lblue}, [log10]{.fg-lblue}, [date]{.fg-lblue}, [binned]{.fg-lblue}, and many others._]
+
+- .large[So there's a whole zoo of scale functions.]
+- .right[_The naming convention helps us keep track._]
+
+
+---
+
+# Naming conventions for scale functions
+
+- .large.center[[`scale\\\_`]{.fg-green}[`mapping`]{.fg-orange}[`\\\_`]{.fg-green}[`kind`]{.fg-lblue}[`()`]{.fg-green}]
+
+- .center[[`scale\\\_`]{.fg-green}[`x`]{.fg-orange}[`\\\_`]{.fg-green}[`continuous`]{.fg-lblue}[`()`]{.fg-green}]
+
+- .center[[`scale\\\_`]{.fg-green}[`y`]{.fg-orange}[`\\\_`]{.fg-green}[`continous`]{.fg-lblue}[`()`]{.fg-green}]
+
+- .center[[`scale\\\_`]{.fg-green}[`x`]{.fg-orange}[`\\\_`]{.fg-green}[`discrete`]{.fg-lblue}[`()`]{.fg-green}]
+
+- .center[[`scale\\\_`]{.fg-green}[`y`]{.fg-orange}[`\\\_`]{.fg-green}[`discrete`]{.fg-lblue}[`()`]{.fg-green}]
+
+- .center[[`scale\\\_`]{.fg-green}[`x`]{.fg-orange}[`\\\_`]{.fg-green}[`log10`]{.fg-lblue}[`()`]{.fg-green}]
+
+- .center[[`scale\\\_`]{.fg-green}[`x`]{.fg-orange}[`\\\_`]{.fg-green}[`sqrt`]{.fg-lblue}[`()`]{.fg-green}]
+
+
+---
+
+# Naming conventions for scale functions
+
+- .large.center[[`scale\\\_`]{.fg-green}[`mapping`]{.fg-orange}[`\\\_`]{.fg-green}[`kind`]{.fg-lblue}[`()`]{.fg-green}]
+
+- .center[[`scale\\\_`]{.fg-green}[`color`]{.fg-orange}[`\\\_`]{.fg-green}[`discrete`]{.fg-lblue}[`()`]{.fg-green}]
+
+- .center[[`scale\\\_`]{.fg-green}[`color`]{.fg-orange}[`\\\_`]{.fg-green}[`gradient`]{.fg-lblue}[`()`]{.fg-green}]
+
+- .center[[`scale\\\_`]{.fg-green}[`color`]{.fg-orange}[`\\\_`]{.fg-green}[`gradient2`]{.fg-lblue}[`()`]{.fg-green}]
+
+- .center[[`scale\\\_`]{.fg-green}[`color`]{.fg-orange}[`\\\_`]{.fg-green}[`brewer`]{.fg-lblue}[`()`]{.fg-green}]
+
+- .center[[`scale\\\_`]{.fg-green}[`fill`]{.fg-orange}[`\\\_`]{.fg-green}[`discrete`]{.fg-lblue}[`()`]{.fg-green}]
+
+- .center[[`scale\\\_`]{.fg-green}[`fill`]{.fg-orange}[`\\\_`]{.fg-green}[`gradient`]{.fg-lblue}[`()`]{.fg-green}]
+
+- .center[[`scale\\\_`]{.fg-green}[`fill`]{.fg-orange}[`\\\_`]{.fg-green}[`gradient2`]{.fg-lblue}[`()`]{.fg-green}]
+
+- .center[[`scale\\\_`]{.fg-green}[`fill`]{.fg-orange}[`\\\_`]{.fg-green}[`brewer`]{.fg-lblue}[`()`]{.fg-green}]
+
+---
+
+# Scale functions in practice
+
+- Scale functions take arguments appropriate to their mapping and kind
+
+
+.pull-left.w50[
+```{r}
+#| label: "codefig-scalefn1"
+#| message: FALSE
+#| fig.show: "hide"
+#| fig.width: 4.8
+#| fig.height: 4.5
+
+organdata |> 
+  ggplot(mapping = aes(x = roads,
+                       y = donors,
+                       color = world)) + 
+  geom_point() +
+  scale_y_continuous(breaks = c(5, 15, 25),
+                     labels = c("Five", 
+                                "Fifteen", 
+                                "Twenty Five"))
+
+```
+]
+
+--
+
+.pull-right.w50[
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-78"
+#| echo: FALSE
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-scalefn1", "png"))
+```
+]
+
+---
+
+# More usefully ...
+
+
+.pull-left.w50[
+```{r}
+#| label: "codefig-scalecolordiscrete"
+#| message: FALSE
+#| fig.show: "hide"
+#| fig.width: 4.8
+#| fig.height: 4.5
+
+organdata |> 
+  ggplot(mapping = aes(x = roads,
+                       y = donors,
+                       color = world)) + 
+  geom_point() +
+  scale_color_discrete(labels =
+                         c("Corporatist", 
+                           "Liberal",
+                           "Social Democratic", 
+                           "Unclassified")) +
+  labs(x = "Road Deaths",
+       y = "Donor Procurement",
+       color = "Welfare State")
+
+```
+]
+
+--
+
+.pull-right.w50[
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-79"
+#| echo: FALSE
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-scalecolordiscrete", "png"))
+```
+]
+
+---
+
+# The [`guides()`]{.fg-green} function
+
+.pull-left.w45[
+```{r}
+#| label: "codefig-guidesfn"
+#| message: FALSE
+#| fig.show: "hide"
+#| fig.width: 4.8
+#| fig.height: 5.5
+
+organdata |> 
+  ggplot(mapping = aes(x = roads,
+                       y = donors,
+                       color = consent_law)) + 
+  geom_point() +
+  facet_wrap(~ consent_law, ncol = 1) +
+  guides(color = "none") + 
+  labs(x = "Road Deaths",
+       y = "Donor Procurement")
+
+```
+
+.pull-left.w90[- Control overall properties of the guide labels.
+- Common use: turning it off.
+- We'll see more advanced uses later.]
+
+]
+
+--
+
+.pull-right.w50[
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-80"
+#| echo: FALSE
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-guidesfn", "png"))
+```
+]
+
+
+---
+
+# The [`theme()`]{.fg-green} function
+
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-81"
+#| echo: FALSE
+kjhslides::kjh_set_classic_theme(4)
+```
+
+
+.pull-left.w45[
+```{r}
+#| label: "codefig-themefn"
+#| message: FALSE
+#| fig.show: "hide"
+#| fig.width: 5
+#| fig.height: 4.5
+## Using the "classic" ggplot theme here
+organdata |> 
+  ggplot(mapping = aes(x = roads,
+                       y = donors,
+                       color = consent_law)) + 
+  geom_point() +
+  labs(title = "By Consent Law",
+    x = "Road Deaths",
+    y = "Donor Procurement", 
+    color = "Legal Regime:") + 
+  theme(legend.position = "bottom", 
+        plot.title = element_text(color = "darkred",
+                                  face = "bold"))
+
+```
+
+.pull-left.w95[
+[`theme()`]{.fg-green} styles parts of your plot that are _not_ directly representing your data. Often the first thing people want to adjust; but logically it's the _last_ thing. Again, more detail soon!
+]
+
+]
+
+--
+
+.pull-right.w50[
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-82"
+#| echo: FALSE
+  knitr::include_graphics(
+  knitr::fig_chunk("codefig-themefn", "png"))
+```
+]
+
+```{r}
+#| label: "05-work-with-dplyr-and-geoms-83"
+#| echo: FALSE
+kjhslides::kjh_set_slide_theme()
+```
+

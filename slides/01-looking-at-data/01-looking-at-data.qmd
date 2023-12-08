@@ -1,0 +1,1034 @@
+---
+title: "Data Visualization - 1. Looking at Data"
+author: "Kieran Healy"
+date: "`r Sys.Date()`"
+output: kjhslides::kjh_slides_reader
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| label: "packages"
+#| include: FALSE
+library(flipbookr)
+library(here)
+library(tidyverse)
+library(kjhslides)
+```
+
+
+```{r}
+#| label: "setup"
+#| include: FALSE
+
+kjh_register_tenso()
+kjh_set_knitr_opts()
+kjh_set_slide_theme()
+
+
+
+
+
+
+
+# Safe
+```
+
+
+
+# [Data Visualization]{.fg-yellow}<br />with R and [ggplot2]{.fg-lblue}
+
+
+
+**Data Visualization: Session 1**
+
+.light[Kieran Healy<br>
+Code Horizons, April 2023]
+
+]
+
+---
+
+
+
+
+---
+
+# Housekeeping
+
+&nbsp;
+
+--
+
+## 10:00am to 12:30pm US EST
+
+--
+
+## Break from 12:30:pm to 1:30pm
+
+--
+
+## 1:30pm to 3:30pm 
+
+---
+
+## .pull-left.w80[Use the Zoom chat to ask questions, or raise a hand with ![:scale 5%](img/01_stock_zoom_raise_hand.png)]
+
+---
+
+# In between class sessions
+
+<br />
+
+## <figure alt="Slack logo" title="Slack logo">![:scale 90%](img/01_stock_slack_logo.png)</figure>
+
+???
+
+- Slack is super useful
+
+---
+
+# My Setup and Yours
+
+&nbsp;
+
+--
+
+## Talking, Slides, and Live-Coding in RStudio 
+
+## Follow along and take notes in RStudio yourself    
+
+## The course packet is also an RStudio project 
+
+---
+
+# Get up and Running
+
+![](img/01_rstudio_logo.png)
+
+---
+
+layout: false
+class: main-title main-title-inv
+
+![](img/01_up_and_running_01.png)
+
+---
+
+layout: false
+class: main-title main-title-inv
+
+
+![](img/01_up_and_running_02.png)
+
+---
+
+
+
+
+---
+
+# Try [knitting]{.fg-yellow} your notes
+
+![](img/01_up_and_running_03.png)
+
+.w80.large[
+- **Don't worry if it's not clear what's happening at this point.**]
+
+
+---
+
+# Now write the following code
+
+.pull-left.w35[
+
+Write this out inside the "code chunk" in your notes.
+
+```{r}
+#| label: "codefig-first-plot"
+#| message: FALSE
+#| fig.show: "hide"
+#| fig.width: 5.8
+#| fig.height: 5.5
+library(tidyverse)
+library(gapminder)
+
+p <- ggplot(data = gapminder, 
+            mapping = aes(x = gdpPercap, 
+                          y = lifeExp))  
+
+
+p + geom_point()
+```
+
+... And knit your document again.
+
+]
+
+--
+
+.pull-right.w60[
+```{r}
+#| label: "01-looking-at-data-1"
+#| echo: FALSE
+knitr::include_graphics(
+  knitr::fig_chunk("codefig-first-plot", "png")
+)
+```
+]
+
+
+---
+
+
+
+
+
+---
+
+# .huge.squish4[You should<br />.kjh-yellow[look at]{.fg-lblue}<br />your data]
+
+---
+
+
+class: right bottom main-title section-title-1
+
+---
+
+## .huge.right.squish4.bottom[Seeing things]{.fg-yellow}
+
+---
+layout: false
+
+![](img/01_anscombes_quartet.png)
+
+.right.w90.small[Anscombe's Quartet]
+
+
+---
+layout: false
+
+![](img/01_jackman_outlier.png)
+
+---
+layout: false
+
+![](img/01_desmond_estimates.png)
+
+.right.w90.small[Desmond, Papachristos & Kirk (2016)]
+
+
+---
+layout: false
+
+![](img/01_zoorob_main.png)   
+
+.right.w90.small[Zoorob (2020)]
+
+---
+layout: false
+
+![](img/01_zoorob_fits.png)
+
+.right.w90.small[Zoorob (2020)]
+
+---
+layout: false
+
+![](img/01_correlations.png)
+
+.right.w90.small[]
+
+---
+layout: false
+
+![](img/01_datasaurus_dozen.gif)
+
+.right.w90.small[Cairo; Matejka & Fitzmaurice]
+
+---
+layout: false
+
+![](img/01_pew_teeth_graph_redrawn.png)
+
+.right.w90.small[Pew Research]
+
+.small[A. In recent years, the rate of cavities has increased in many countries]<br/>
+.small[B. In some countries, people brush their teeth more frequently than in other countries]<br/>
+.small[C. The more sugar people eat, the more likely they are to get cavities]<br/>
+.small[D. In recent years, the consumption of sugar has increased in many countries]
+
+---
+layout: false
+
+![](img/01_pew_teeth_graph_redrawn.png)
+
+.right.w90.small[Pew Research]
+
+.small[A. In recent years, the rate of cavities has increased in many countries]<br/>
+.small[B. In some countries, people brush their teeth more frequently than in other countries]<br/>
+.small[[**C. The more sugar people eat, the more likely they are to get cavities**]{.fg-pink}]<br/>
+.small[D. In recent years, the consumption of sugar has increased in many countries]
+
+---
+layout: false
+
+![](img/01_pew_teeth_graph_redrawn_62pct.png)
+
+.right.w90.small[Pew Research]
+
+.small[A. In recent years, the rate of cavities has increased in many countries]<br/>
+.small[B. In some countries, people brush their teeth more frequently than in other countries]<br/>
+.small[[**C. The more sugar people eat, the more likely they are to get cavities**]{.fg-pink}]<br/>
+.small[D. In recent years, the consumption of sugar has increased in many countries]
+
+
+---
+
+class: right bottom main-title section-title-1
+
+## .right.bottom.huge[[Not]{.fg-lblue} [Seeing Things]{.fg-yellow}]
+
+
+---
+layout: false
+
+![](img/01_excel_3d_column_chart.png)
+
+.right.w90.small[]
+
+---
+layout: false
+
+![](img/01_excel_3d_column_chart_values.png)
+
+.right.w90.small[]
+
+
+---
+
+
+
+
+---
+layout: false
+class: main-title main-title-inv
+
+## .middle.squish4.huge[Bad Taste]
+
+--
+
+## .middle.squish4.huge[Bad Data]{.fg-lblue}
+
+--
+
+## .middle.squish4.huge[Bad Perception]{.fg-pink}
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.squish4.bottom.kjh-grey[Taste:] .huge.right.squish4.bottom[ Simplify, Simplify?]{.fg-yellow}
+
+---
+
+
+---
+
+# Tufte's "Data to Ink Ratio"
+
+.left[![:scale 35%](img/01_tufte_cover.png)]
+
+---
+layout: false
+
+![](img/01_chartjunk_life_expectancy.png)
+
+---
+layout: false
+
+![](img/01_holmes_monstrous_costs.png)
+
+.right.w90.small[Nigel Holmes]
+
+---
+layout: false
+
+![](img/01_holmes_monstrous_bar_chart.png)
+
+.right.w90.small[]
+
+---
+layout: false
+
+![](img/01_chartjunk_before.png)
+
+.right.w90.small[Darkhorse Analytics]
+
+---
+layout: false
+
+![](img/01_chartjunk_after.png)
+
+.right.w90.small[Darkhorse Analytics]
+
+
+---
+layout: false
+
+![](img/01_tufte_boxplots.png)
+
+.right.w90.small[]
+
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.squish4.bottom.kjh-grey[Data:] .huge.right.squish4.bottom[ Junk-Free Junk Charts]{.fg-yellow}
+
+---
+layout: false
+
+![](img/01_democracy_nyt_version.png)
+
+.right.w90.small[New York Times]
+
+
+
+---
+layout: false
+
+![](img/01_democracy_voeten_version_2.png)
+
+.right.w90.small[Erik Voeten]
+
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.squish4.bottom.kjh-grey[Perception:] .huge.right.squish4.bottom[Seeing and Not Seeing]{.fg-yellow}
+
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.squish4.bottom[Edges & Contrasts]{.fg-lblue}
+
+---
+layout: false
+
+![](img/01_perception_hermann_grid_effect.png)
+
+.right.w90.small[]
+
+---
+layout: false
+
+![](img/01_illusion_fraser_column_1.png)
+
+.right.w90.small[]
+
+---
+layout: false
+
+![](img/01_illusion_fraser_diamond.png)
+
+.right.w90.small[credit]
+
+---
+layout: false
+
+![](img/01_perception_circles.gif)
+
+.right.w90.small[]
+
+
+---
+layout: false
+
+![](img/01_mach_bands_separated.png)
+
+.right.w90.small[]
+
+
+---
+layout: false
+
+![](img/01_mach_bands_comparison.png)
+
+.right.w90.small[]
+
+
+---
+layout: false
+
+![](img/01_perception_contrast_01.png)
+
+.right.w90.small[]
+
+
+---
+layout: false
+
+![](img/01_perception_contrast_02.png)
+
+.right.w90.small[]
+
+
+---
+layout: false
+
+![](img/01_perception_adelson_checker_single.png)
+
+.right.w90.small[Edward Adelson]
+
+
+---
+layout: false
+
+![](img/01_perception_adelson_checkershow_2.png)
+
+.right.w90.small[Edward Adelson]
+
+
+
+---
+layout: false
+
+![](img/01_perception_adelson_checker_movie.mp4)
+
+.right.w90.small[Edward Adelson]
+
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.squish4.bottom[Luminance and Color]{.fg-lblue}
+
+
+---
+layout: false
+
+![](img/01_illusion_troxler_effect_dot.png)
+
+.right.w90.small[Troxler effect]
+
+
+---
+layout: false
+
+![](img/01_lilac_chaser.gif)
+
+.right.w90.small["Lilac Chaser"]
+
+
+---
+layout: false
+
+![](img/01_luminance_contrast_1.png)
+
+.right.w90.small[Colin Ware]
+
+
+---
+layout: false
+
+![](img/01_luminance_contrast_2.png)
+
+.right.w90.small[Colin Ware]
+
+---
+layout: false
+
+![](img/01_perception_heatmap_colors.png)
+
+.right.w90.small[]
+
+
+---
+layout: false
+
+![](img/01_perception_heatmap_movie.mp4)
+
+.right.w90.small[]
+
+
+---
+layout: false
+
+![](img/01_perception_heatmap_colors_marked.png)
+
+.right.w90.small[]
+
+
+---
+layout: false
+
+.center.middle[![:scale 85%](img/01_luminance_rainbow.png)]
+
+.right.w90.small[]
+
+---
+layout: false
+
+.center.middle[![:scale 85%](img/01_luminance_rainbow_colormaps.png)]
+
+.right.w90.small[]
+
+---
+layout: false
+
+![](img/01_luminance_perceptually_uniform_sequential.png)
+
+.right.w90.small[]
+
+---
+layout: false
+
+![](img/01_dorian_rainbow_spectrum.png)
+
+.right.w90.small[]
+
+
+---
+layout: false
+
+![](img/01_dorian_hclrainbow_spectrum.png)
+
+.right.w90.small[]
+
+---
+layout: false
+
+![](img/01_luminance_balanced_sequential.png)
+
+.right.w90.small[]
+
+---
+layout: false
+
+![](img/01_luminance_balanced_diverging_categorical.png)
+
+.right.w90.small[]
+
+
+---
+layout: false
+
+![](img/01_dorian_rainbow.png)
+
+.right.w90.small[National Weather Service]
+
+
+---
+layout: false
+
+![](img/01_dorian_hclrainbow.png)
+
+.right.w90.small[Achim Zeileis]
+
+
+---
+layout: false
+
+![](img/01_dorian_rainbow_gray.png)
+
+.right.w90.small[Achim Zeileis]
+
+
+---
+layout: false
+
+![](img/01_dorian_hclrainbow_gray.png)
+
+.right.w90.small[Achim Zeileis]
+
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.squish4.bottom[Pre-Attentive Processing]{.fg-lblue}
+
+
+---
+layout: false
+
+![](img/01_preattentive_col_20.png)
+
+.right.w90.small[]
+
+
+---
+layout: false
+
+![](img/01_preattentive_col_100.png)
+
+.right.w90.small[]
+
+
+---
+layout: false
+
+![](img/01_preattentive_shp_20.png)
+
+.right.w90.small[]
+
+
+---
+layout: false
+
+![](img/01_preattentive_shp_100.png)
+
+.right.w90.small[]
+
+
+---
+layout: false
+
+![](img/01_preattentive_col_shp_100.png)
+
+.right.w90.small[]
+
+
+---
+layout: false
+
+![](img/01_preattentive_easy_hard_blank.png)
+
+.right.w90.small[Colin Ware]
+
+
+
+---
+layout: false
+
+![](img/01_preattentive_easy_hard.png)
+
+.right.w90.small[Colin Ware]
+
+
+---
+layout: false
+
+![](img/01_preattentive_easy_hard_labeled.png)
+
+.right.w90.small[Colin Ware]
+
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.squish4.bottom[&nbsp; &nbsp; Gestalt Inferences <br />and Design]{.fg-lblue}
+
+
+
+---
+layout: false
+
+![](img/01_gestalt_cave_interfaces.png)
+
+.right.w90.small[George Cave]
+
+---
+layout: false
+
+![](img/01_gestalt_cave_codings.png)
+
+.right.w90.small[George Cave]
+
+---
+layout: false
+
+![](img/01_gestalt_cave_clarity.png)
+
+.right.w90.small[George Cave]
+
+
+
+---
+layout: false
+
+![](img/01_gestalt_comparisons.png)
+
+.right.w90.small[]
+
+
+
+
+---
+
+
+
+# .huge.squish4[Encodings or .kjh-yellow[mappings]{.fg-lblue}<br />for data]
+
+
+---
+layout: false
+class: main-title main-title-inv
+
+# .middle.squish4.huge[What's a graph, anyway?]{.fg-orange}
+
+---
+
+![](img/01_cleveland_encode.png)
+
+---
+layout: false
+
+![](img/01_cleveland_decode.png)
+
+.right.w90.small[]
+
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.squish4.bottom.squish4[Visual tasks in<br /> .kjh-lblue[decoding graphs]{.fg-yellow}]
+
+
+
+---
+
+layout: false
+
+![](img/01_cleveland_stacked_column.png)
+
+---
+layout: false
+
+![](img/01_cleveland_length_baseline.png)
+
+.right.w90.small[William Cleveland]
+
+
+---
+layout: false
+
+![](img/01_cleveland_curves_1.png)
+
+.right.w90.small[William Cleveland]
+
+
+---
+layout: false
+
+![](img/01_cleveland_curves_2.png)
+
+.right.w90.small[William Cleveland]
+
+
+---
+layout: false
+
+![](img/01_cleveland_tasks.png)
+
+.right.w90.small[William Cleveland]
+
+
+---
+layout: false
+
+![](img/01_cleveland_pie_bar.png)
+
+.right.w90.small[William Cleveland]
+
+
+---
+layout: false
+
+![](img/01_cleveland_bostock_summary.png)
+
+.right.w90.small[William Cleveland and Michael Bostock]
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.squish4.bottom[A rough hierarchy<br /> .kjh-lblue[of mappings for data]{.fg-yellow}]
+
+
+---
+layout: false
+
+![](img/01_munzer_mappings_continuous.png)
+
+.right.w90.small[Tamara Munzer]
+
+
+---
+layout: false
+
+![](img/01_munzer_mappings_categorical.png)
+
+.right.w90.small[Tamara Munzer]
+
+
+---
+
+
+
+# .huge.squish4[Honesty & .kjh-yellow[judgment]{.fg-lblue}]
+
+
+
+---
+layout: false
+
+![](img/01_honesty_bar_1.png)
+
+.right.w90.small[]
+
+---
+layout: false
+
+![](img/01_honesty_bar_2.png)
+
+.right.w90.small[]
+
+---
+layout: false
+
+![](img/01_honesty_law_1.png)
+
+.right.w90.small[]
+
+
+---
+layout: false
+
+![](img/01_honesty_law_2.png)
+
+.right.w90.small[]
+
+---
+
+
+
+# .huge.squish4[[Graphing]{.fg-lblue}<br/>[in practice]{.fg-yellow}]
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.squish4.bottom[Workhorses]{.fg-yellow}
+
+---
+layout: false
+
+![](img/01_workhorse_histogram.png)
+
+.right.w90.small[]
+
+---
+layout: false
+
+![](img/01_workhorse_scatterplot.png)
+
+.right.w90.small[]
+
+---
+layout: false
+
+![](img/01_workhorse_trend.png)
+
+.right.w90.small[]
+
+
+---
+layout: false
+
+![](img/01_workhorse_dot_range.png)
+
+.right.w90.small[]
+
+
+---
+layout: false
+
+![](img/01_workhorse_facet_row_1.png)
+
+.right.w90.small[]
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.squish4.bottom[Show Ponies]{.fg-yellow}
+
+
+---
+layout: false
+
+![](img/01_show_pony_congress.png)
+
+.right.w90.small[]
+
+
+---
+layout: false
+
+![](img/01_show_pony_congress_zoom.png)
+
+.right.w90.small[]
+
+
+---
+layout: false
+
+![](img/01_show_pony_pbe_by_school_type_bee.png)
+
+.right.w90.small[]
+
+
+---
+layout: false
+
+.center.middle[![:scale 77%](img/01_show_pony_france_blackposter.png)]
+
+.right.w90.small[]
+
+
+---
+layout: false
+
+![](img/01_breedposter_display_top25_orange.png)
+
+.right.w90.small[]
+
+
+---
+
+class: right bottom main-title section-title-1
+
+## .huge.right.squish4.bottom[Unicorns …]{.fg-yellow}
+
+---
+layout: false
+
+![](img/01_unicorn_minard_lg.png)
+
+.right.w90.small[]
+
+
+---
+layout: false
+
+![](img/01_unicorn_swedishmortality_mfratio.gif)
+
+.right.w90.small[]
+
+
+---
+layout: false
+
+![](img/01_unicorn_synteny_map_of_the_pig_and_human_genomes.png)
+
+.right.w90.small[… or monsters]
+
