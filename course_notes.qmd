@@ -1,85 +1,42 @@
 ---
-title: "Data Visualization Notes"
-author: "<YOUR NAME HERE>"
-date: "April 2023"
-output: html_document
+title: "Course Notes"
+author: "Your Name Here"
+format: html
 ---
 
+## Quarto
 
-This document is part of the RStudio project containing slides and code for our data visualization course. You can use it to take notes, write your code, and produce a good-looking, reproducible document that records the work you have done. At the very top of this file is a section of *metadata*, or information about what the file is and what it does. The metadata is delimited by three dashes at the start and another three at the end. You should change the title, author, and date to the values that suit you. Keep the `output` line as it is for now, however. Each line in the metadata has a structure. First the *key* ("title", "author", etc), then a colon, and then the *value* associated with the key.  
+This is a quarto file. Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
 
-## This Document is an RMarkdown File
+## Setup
 
-Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>. It lets you do two things. (1) It's a way of writing in plain text but with a few formatting instructions for marking up e.g. **bold** or *italic* text. (2) It allows you to alternate between passages of prose, like this, and "chunks" of R code that can be processed by RStudio. By marking up the plain text and processing the code, you can turn a plain-text document containing R Code into a formatted document containing the output of that code.  
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. A *code chunk* is a specially delimited section of the file. You can add one by moving the cursor to a blank line choosing Code > Insert Chunk from the RStudio menu. When you do, an empty chunk will appear in your file.
-
-```{r }
-
-```
-
-Code chunks are delimited by three backticks (found to the left of the 1 key on US and UK keyboards) at the start and end. The opening backticks also have a pair of braces and the letter `r`, to indicate what language the chunk is written in. You write your code inside the code chunks. Write your notes and other material around them, as here. 
-
-## Load Packages
-
-To begin, we must load some packages we will be using. If we do not load them, R will not be able to find the functions contained in these libraries. Think of these packages like books in a library or tools in a toolkit. You have to install them once (as you might acquire a book for your library or acquire a tool for your workshop). Then, for each work session---like this one---you load them into your workspace (as you might take a book off a shelf or put a tool on a workbench) .
-
-The `tidyverse` package includes `ggplot` and other tools. We also load the `socviz`, `here`, and `gapminder` packages
+Here we load some packages that we'll be using.
 
 ```{r}
-#| label: "setup"
-#| include: FALSE
-knitr::opts_chunk$set(echo = TRUE)
-
-library(tidyverse)
-
-library(gapminder)
 library(here)
 library(socviz)
+library(gapminder)
+library(tidyverse)
 ```
-
-Here, the braces at the start of the code chunk have some additional options set in them. There is the language, `r`, as before. This is required. Then there is the word `setup`, which is a label for your code chunk. Labels are useful to briefly say what the chunk does. Label names must be unique (no two chunks in the same document can have the same label) and cannot contain spaces. Then, after the comma, an option is set: `include=FALSE`. This tells R to run this code but not to include the output in the final document. 
-
-If you have not installed these required packages yet, make sure you have an internet connection and install them now.
 
 ```{r}
-#| label: "01-introduction-2"
-#| eval: FALSE
-#| echo: TRUE
-## To install these packages, change eval = FALSE to eval = TRUE 
-## in the line above. You only need to do this once. Alternatively, 
-## copy the code below and paste it into the Console window.
-
-my_packages <- c("tidyverse", "broom", "coefplot", "cowplot", "drat",
-                 "gapminder", "GGally", "ggrepel", "ggridges", "gridExtra",
-                 "here", "interplot", "margins", "maps", "mapproj",
-                 "mapdata", "MASS", "quantreg", "rlang", "scales", "socviz",
-                 "survey", "srvyr", "viridis", "viridisLite", "devtools")
-
-install.packages(my_packages, repos = "http://cran.rstudio.com")
-
+here::i_am("course_notes.qmd") # relative to the course packet.
 ```
 
-(Notice how the options in this chunk do the opposite of the previous one. We set `echo = TRUE` to show the code, but `eval = FALSE` means it is not evaluated, or actually run. This is because, in this case, you probably have these packages installed already, and we do not need or want to install them every time you knit this document.)
 
+## Running Code
 
-When you click the **Knit** button in RStudio a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
 
 ```{r}
-#| label: "look"
-gapminder
+1 + 1
 ```
 
-The remainder of this document contains topic headings and an empty code chunk to get you started. Try knitting this document now by clicking the "Knit" button in the RStudio toolbar, or choosing File > Knit Document from the RStudio menu.
+You can add options to executable code like this 
 
-
-## Look at your Data!
-
-Write your first bit of R code in the "chunk" below.
-
-```{r }
-#| label: "01-introduction-3"
-      
+```{r}
+#| echo: false
+2 * 2
 ```
 
-The chunk is the bit between the backticks.
+The `echo: false` option disables the printing of code (only output is displayed).

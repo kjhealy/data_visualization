@@ -1,8 +1,15 @@
 ---
 title: "Data Visualization - 5. Dplyr and Geoms"
-author: "Kieran Healy"
-date: "`r Sys.Date()`"
-output: kjhslides::kjh_slides_reader
+format: kjhslides-revealjs
+engine: knitr
+filters:
+  - invert-h1
+  - line-highlight
+  - include-code-files
+author:
+  - name: Kieran Healy
+    affiliation: "Code Horizons"
+date: last-modified
 editor_options: 
   chunk_output_type: console
 ---
