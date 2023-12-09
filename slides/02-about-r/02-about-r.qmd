@@ -43,259 +43,210 @@ kjh_set_slide_theme()
 
 
 
-# Finding your way in<br />[R]{.fg-lblue} and [RStudio]{.fg-lblue}
 
-
-
-**Data Visualization: Session 2**
-
-.light[Kieran Healy<br>
-Code Horizons, April 2023]
-
-]
+# [Getting to know]{.fg-yellow} [R and RStudio]{.fg-lblue}
 
 
 ---
 
-layout: false
-class: center middle main-title main-title-inv
-
-# .middle.huge.squish4[We want to<br />[draw graphs]{.fg-orange}<br />[reproducibly]{.fg-green}]
-
-
----
-layout: false
-
-.left[![:scale 30%](img/02_r_logo.png)]
-
-.right[![:scale 50%](img/02_rstudio_logo.png)]
-
+:::{.huge}
+ We want to [draw graphs]{.fg-orange} [reproducibly]{.fg-green}  
+:::
 
 ---
 
+:::: {.columns}
+::: {.column width="50%"}
+![](img/02_r_logo.png)
+:::
 
+::: {.column width="50%" .right}
+![](img/02_rstudio_logo.png)
+:::
+::::
 
+## Abstraction in software
 
----
+:::: {.columns}
+::: {.column width="50%"}
+### Less
 
-# Abstraction in software
+- Easy things are awkward
+- Hard things are straightforward
+- Really hard things are possible
 
-.pull-left[
+:::
 
-## Less
+::: {.column width="50%" .right}
+
+:::
+::::
+
+## Abstraction in software
+
+:::: {.columns}
+::: {.column width="50%"}
+### Less
 
 - Easy things are awkward
 
 - Hard things are straightforward
 
 - Really hard things are possible
-]
 
+:::
 
-.pull-right[
-
-## More
+::: {.column width="50%"}
+### More
 
 - Easy things are trivial
 
-- Hard things are very awkward
+- Hard things are awkward
 
 - Really hard things are impossible
-]
+
+:::
+::::
+
+## Compare  
+
+- D3
+- Grid
+- ggplot
+- Stata
+- Excel
 
 
-.center.large[Compare:  D3, Grid, ggplot, Stata,  Excel]
+## Two ways to use R and ggplot
 
-
----
-
-# Two ways to use R and ggplot
-
-## 1. Do everything in R from start to finish
-
+### 1. Do everything in R from start to finish
 
 `Raw data |> Read, Clean, Analyse |> Tidy table |>  Make figures`
 
---
 
-## 2. Just hand ggplot a table of results
+## Two ways to use R and ggplot
+
+### 1. Do everything in R from start to finish
+
+`Raw data |> Read, Clean, Analyse |> Tidy table |>  Make figures`
+
+### 2. Just hand ggplot a table of results
 
 `Stata/SAS/etc |> Tidy table |> Read in to R |> Make figures`
 
 
----
+# The [RStudio]{.fg-lblue} IDE
 
+## An IDE for R {background-image="img/02_ide_control_room.png" background-size="cover"}
 
-
-# .huge[The [RStudio]{.fg-lblue} IDE]
-
----
-layout: false 
-class: bottom
-background-image: url("img/02_ide_control_room.png")
-background-size: cover
-
-## .huge.right.bottom.squish4.kjh-grey[An IDE for R]
-
----
-layout: false
-class: bottom
-background-image: url("img/02_ide_kitchen.png")
-background-size: cover
-
-## .huge.right.bottom.squish4.kjh-grey[An IDE for Meals]
-
-
----
-layout: false
-
-![](img/02_ide_rstudio_startup.png)
-
-.right.w90.small[RStudio at startup]
-
----
-layout: false
-
-![](img/02_ide_rstudio_schematic.png)
-
-.right.w90.small[RStudio schematic overview]
-
----
-layout: false
-
-![](img/02_ide_rstudio_schematic_overlay.png)
-
-.right.w90.small[RStudio schematic overview]
+## An IDE for Meals {background-image="img/02_ide_kitchen.png" background-size="cover"}
 
 ---
 
-layout: false
-class: center middle
-
-## .middle.huge.squish4[Think in terms of<br />[Data]{.fg-orange} + [Transformations]{.fg-green}, written out as code, rather than a series of point-and-click steps]
-
+![RStudio at startup](img/02_ide_rstudio_startup.png)
 
 ---
 
-layout: false
-class: center middle
-
-## .middle.huge.squish4[Our starting [data]{.fg-orange} + our [code]{.fg-green} is what's "real" in our projects, not the final output or any intermediate objects]
+![RStudio schematic overview](img/02_ide_rstudio_schematic.png)
 
 ---
-layout: false
 
-![](img/02_ide_rstudio_startup.png)
-
-.right.w90.small[RStudio at startup]
+![RStudio schematic overview](img/02_ide_rstudio_schematic_overlay.png)
 
 ---
-layout: false
 
-![](img/02_ide_rstudio_sshot_1.png)
-
-.right.w90.small[RStudio at startup]
-
----
-layout: false
-
-![](img/02_ide_rstudio_sshot_2.png)
-
-.right.w90.small[RStudio at startup]
+:::{.large .center}
+Think in terms of [Data]{.fg-orange} + [Transformations]{.fg-green}, written out as code, rather than a series of point-and-click steps  
+:::
 
 ---
-layout: false
 
-![](img/02_ide_rstudio_sshot_3.png)
-
-.right.w90.small[RStudio at startup]
-
----
-layout: false
-
-![](img/02_ide_rstudio_sshot_4.png)
-
-.right.w90.small[RStudio at startup]
+:::{.large .center}
+Our starting [data]{.fg-orange} + our [code]{.fg-green} is what's "real" in our projects, not the final output or any intermediate objects
+:::
 
 
 ---
 
 
+![RStudio at startup](img/02_ide_rstudio_startup.png)
 
-# .large.squish4[Use [RMarkdown]{.fg-yellow} to [produce]{.fg-orange} and [reproduce]{.fg-green}  work]
+---
+
+
+![RStudio at startup](img/02_ide_rstudio_sshot_1.png)
 
 ---
 
 
-
+![RStudio at startup](img/02_ide_rstudio_sshot_2.png)
 
 ---
 
-# Where we want to end up
+
+![RStudio at startup](img/02_ide_rstudio_sshot_3.png)
+
+---
+
+
+![RStudio at startup](img/02_ide_rstudio_sshot_4.png)
+
+
+# Use [RMarkdown]{.fg-yellow} to [produce]{.fg-orange} and [reproduce]{.fg-green}  work
+
+## Where we want to end up
 
 ![PDF out](img/02_lorem_covid_latex.png){fig-align="center" width=90%}  
 
----
-
-# Where we want to end up
+## Where we want to end up
 
 ![HTML out](img/02_lorem_covid_html.png){fig-align="center" width=45%}  
 
----
-
-# Where we want to end up
+## Where we want to end up
 
 ![Word out](img/02_lorem_covid_word.png){fig-align="center" width=100%}  
 
----
+## How to get there?
 
-# How to get there?
+:::: {.columns}
+::: {.column width="30%"}
+  ![](img/02_covid_r_script.png) 
+:::
 
-![](img/02_covid_r_script.png){fig-align="center" width=35%} 
-
-.pull-right[
-
+::: {.column width="70%" .right}
 - We could write an **R script** with some notes inside, using it to create some figures and tables, paste them into our document.
-
 - This will work, but we can do better.
 
-]
+:::
+::::
 
----
-
-# We can [make]{.fg-yellow} this ...
-
+## We can [make]{.fg-yellow} this ...
 
 ![](img/02_lorem_ipsum_goal.png){fig-align="center" width=100%}  
 
-
-.pull-right.large[This is what we want to end up with. Nicely-formatted text, plots, and tables. In [an "Office" approach]{.fg-red} we write the document and paste in the figures and tables.]
-
----
-
-# ... by [writing]{.fg-green} this
+## ... by [writing]{.fg-green} this
 
 ![](img/02_lorem_ipsum_raw.png){fig-align="center" width=100%}  
 
-.pull-right.large[In a [literate programming]{.fg-red} approach, chunks of code contained in documents are processed and then replaced with their output when the output document is produced.]
+## The [code]{.fg-pink} gets replaced by its [output]{.fg-green}
+
+:::: {.columns}
+::: {.column width="50%"}
+![](img/02_lorem_ipsum_raw.png)
+:::
+
+::: {.column width="50%" .right}
+![](img/02_lorem_ipsum_goal.png)
+:::
+::::
+
+
+
+
 
 ---
 
-# The [`code`]{.fg-pink} gets replaced by its [output]{.fg-green}
-
-
-![](img/02_lorem_ipsum_raw.png){fig-align="center" width=100%}
-
-![](img/02_lorem_ipsum_goal.png){fig-align="center" width=100%}
-
----
-
-layout: false
-class: center
-
-![:scale 85% "Markdown document"](img/02_lorem_covid_markdown.png)
-
-
+![Markdown document](img/02_lorem_covid_markdown.png){fig-align="center" width=90%}
 
 ---
 
@@ -305,58 +256,49 @@ class: center
 
 ![](img/02_lorem_covid_triple.png){fig-align="center" width=140%}  
 
---
-
-.right.large[
-
 - This approach has its limitations, but it's _very_ useful and has many benefits.
 
-]
-
-
 ---
 
-![](img/02_knit_rmd_tall.png){fig-align="center" width=44%}  
+## Basic markdown summary
+
+:::{.custom-small-table}
+
+| Desired style  | Use the following Markdown annotation | 
+| -------------- | ------------------------------------- | 
+| **Heading 1**  | `# Heading 1`                                    |
+| **Heading 2**  | `## Heading 2`                                   |
+| Heading 3      | `### Heading 3` (Actual heading styles will vary.) |
+| Paragraph      | Just start typing                            |
+| **Bold**       | `**Bold**`                                   |
+| *Italic*       | `*Italic*`                                   |
+| Images         | `[Alternate text for image](path/image.jpg)` |
+| [Hyperlinks](https://www.visualizingsociety.com) | `[Link text](https://www.visualizingsociety.com/)` |
+| Unordered Lists      |   |
+| - First    | `- First` |
+| - Second.  |  `- Second` |
+| - Third    |`- Third`   |
+| Ordered Lists      |   |
+| 1. First    | `1. First` |
+| 2. Second.  |  `2. Second` |
+| 3. Third    |`3. Third`   |
+| Footnote.¹ |  `Footnote[^notelabel]`  |
+|  ¹The note's content. | `[^notelabel] The note's content.`  |
+
+:::
 
 
-.pull-right[- When learning these workflows, stick with the defaults at the beginning. Later, you can customize the look of the output in all kinds of ways.
-
-- The slides for this course were written in RMarkdown. Many of the resources for R that you'll find online (including websites and full-length books) were as well.]
-
-
----
-
-
-
-
----
-
-# The right frame of mind
+## The right frame of mind
 
 - This is like learning how to drive a car, or how to cook in a kitchen ... or learning to speak a language.
-
---
-
 - After some orientation to what's where, you will learn best by _doing_.
-
---
-
 - Software is a pain, but you won't crash the car or burn your house down. 
-
-???
-
-- Don't be afraid of the IDE or code. Expect to be frustrated, and don't be surprised when things go wrong. Things will go wrong _constantly_. The software is a very powerful, very obedient, and _very_ dumb robot.
-
-- But every time things "don't work", and every time you diagnose and fix them, you will become a little more adept at noticing and fixing these errors. And you will start to accumulate practical knowledge of common failures.
-
-- So be like Jacques and keep at it.
 
 ---
 
-layout: false
-class: main-title main-title-inv center middle
-
-# .huge.squish4[TYPE OUT<br />YOUR CODE<br />[BY HAND]{.fg-orange}]
+:::{.huge}
+TYPE OUT<br />YOUR CODE<br />[BY HAND]{.fg-orange}
+:::
 
 ---
 
@@ -364,23 +306,11 @@ class: main-title main-title-inv center middle
 
 ---
 
-
-
-
----
-
 :::{.huge}
- <br />GETTING <br />O[R]{.fg-lblue}IENTED 
+ GETTING O[R]{.fg-lblue}IENTED 
 :::
 
----
-
-
-
-
----
-
-# Loading the tidyverse libraries
+## Loading the tidyverse libraries
 
 ```{r}
 #| label: "02-about-r-1"
@@ -389,48 +319,42 @@ library(tidyverse)
 ```
 
 - The tidyverse has several components. 
-
 - We'll return to this message about Conflicts later.
-
 - Again, the code and messages you see here is actual R output, produced at the same time as the slide.
 
----
+## Tidyverse components
 
-# Tidyverse components
-
-.pull-left[
-
-- [**`library`**]{.fg-green}`(tidyverse)`
+:::: {.columns}
+::: {.column width="55%"}
+  - [**`library`**]{.fg-green}`(tidyverse)`
 - `Loading tidyverse: ggplot2`
 - `Loading tidyverse: tibble`
 - `Loading tidyverse: tidyr`
 - `Loading tidyverse: readr`
 - `Loading tidyverse: purrr`
 - `Loading tidyverse: dplyr`
-]
+:::
 
---
-
-.pull-right[
-- Load the package and ...
+::: {.column width="45%" .left}
+  - Call the package and ...
 - `<|` **Draw graphs**
 - `<|` **Nicer data tables**
 - `<|` **Tidy your data**
 - `<|` **Get data into R**
 - `<|` **Fancy Iteration**
 - `<|` **Action verbs for tables**
+:::
+::::
 
-]
 
----
-
-# What R looks like
+## What R looks like
 
 
 Code you can type and run:
 
+
 ```{r }
-#| label: "02-about-r-2"
+#| label: "02-about-r-3"
 ## Inside code chunks, lines beginning with a # character are comments
 ## Comments are ignored by R
 
@@ -438,111 +362,118 @@ my_numbers <- c(1, 1, 2, 4, 1, 3, 1, 5) # Anything after a # character is ignore
 
 ```
 
+
 Output:
-
-.smaller[Equivalent to running the code above, typing `my_numbers` at the console, and hitting enter.]
-
-```{r }
-#| label: "02-about-r-3"
-my_numbers 
-```
-
----
-
-# What R looks like
-
-By convention, code output in documents is prefixed by `##`
 
 ```{r }
 #| label: "02-about-r-4"
 my_numbers 
 ```
 
+This is equivalent to running the code above, typing `my_numbers` at the console, and hitting enter.
 
+## What R looks like
 
---
+By convention, code output in documents is prefixed by `##`
+
 
 Also by convention, outputting vectors, etc, gets a counter keeping track of the number of elements. For example,
-
-```{r }
-#| label: "02-about-r-5"
-letters
-```
-
-
-
----
-
-layout: false
-class: center middle
-
-# .center.middle.huge.squish4[SOME THINGS<br />TO KNOW<br />ABOUT [R]{.fg-orange}] 
-
----
-
-
-
-
----
-
-# 0. [It's a calculator]{.fg-yellow}
-
-.pull-left[
-
-- Arithmetic
 
 
 ```{r }
 #| label: "02-about-r-6"
+letters
+```
+
+# Some things to know about [R]{.fg-green}
+
+## 0. [It's a calculator]{.fg-yellow}
+
+:::: {.columns}
+::: {.column width="50%"}
+  - Arithmetic
+
+```{r }
+#| label: "02-about-r-7"
 (31 * 12) / 2^4
 ```
 
 ```{r }
-#| label: "02-about-r-7"
+#| label: "02-about-r-8"
 sqrt(25)
 ```
 
 ```{r }
-#| label: "02-about-r-8"
+#| label: "02-about-r-9"
 log(100)
 
 log10(100)
 
 ```
 
-]
+:::
 
---
+::: {.column width="50%" .right}
 
-.pull-right[
+:::
+::::
 
-- Logic
+
+
+## 0. [It's a calculator]{.fg-yellow}
+
+:::: {.columns}
+::: {.column width="50%"}
+  - Arithmetic
 
 ```{r }
-#| label: "02-about-r-9"
+#| label: "02-about-r-7a"
+(31 * 12) / 2^4
+```
+
+```{r }
+#| label: "02-about-r-8a"
+sqrt(25)
+```
+
+```{r }
+#| label: "02-about-r-9a"
+log(100)
+
+log10(100)
+
+```
+
+:::
+
+::: {.column width="50%" .right}
+ - Logic
+
+```{r }
+#| label: "02-about-r-10"
 4 < 10
 4 > 2 & 1 > 0.5 # The "&" means "and"
 4 < 2 | 1 > 0.5 # The "|" means "or"
 4 < 2 | 1 < 0.5
 ```
-]
 
----
+:::
+::::
 
-# 0. [It's a calculator]{.fg-yellow}
 
-Logical equality and inequality (yielding a [`TRUE`]{.fg-green} or [`FALSE`]{.fg-red} result) is done with `==` and `!=`. Other logical operators include `<`, `>`, `<=`, `>=`, and `!` for negation. We'll use these in plots to filter data, test conditions, and so on.
+## Boolean and Logical operators
 
-.medium[
+Logical equality and inequality (yielding a [`TRUE`]{.fg-green} or [`FALSE`]{.fg-red} result) is done with `==` and `!=`. Other logical operators include `<`, `>`, `<=`, `>=`, and `!` for negation.
+
 
 ```{r }
-#| label: "02-about-r-10"
+#| label: "02-about-r-11"
 ## A logical test
 2 == 2 # Write `=` twice
 ```
 
 ```{r}
-#| label: "02-about-r-11"
+#| label: "02-about-r-12"
 #| eval: FALSE
 ## This will cause an error, because R will think you are trying to assign a value
 2 = 2
@@ -551,22 +482,153 @@ Logical equality and inequality (yielding a [`TRUE`]{.fg-green} or [`FALSE`]{.fg
 ```
 
 ```{r }
-#| label: "02-about-r-12"
+#| label: "02-about-r-13"
 3 != 7 # Write `!` and then `=` to make `!=`
 ```
-]
 
----
+## [Watch out!]{.fg-red}
 
+Here's a gotcha. You might think you could write `3 < 5 & 7` and have it be interpreted as "Three is less than five and also less than seven [True or False?]":
 
-
-
----
-
-# 1. [Everything in R has a name]{.fg-yellow}
 
 ```{r }
-#| label: "02-about-r-13"
+#| label: "02-about-r-14"
+3 < 5 & 7
+```
+
+
+It seems to work!
+
+## [Watch out!]{.fg-red}
+
+But now try `3 < 5 & 1`, where your intention is "Three is less than five and also less than one [True or False?]"
+
+
+```{r }
+#| label: "02-about-r-15"
+3 < 5 & 1
+```
+
+- What's happening is that `3 < 5` is evaluated first, and resolves to [TRUE]{.fg-green}, leaving us with the expression [`TRUE`]{.fg-green} `& 1`. 
+- R interprets this as [`TRUE`]{.fg-green} `& as.logical(1)`. 
+- In Boolean algebra, `1` resolves to  [`TRUE`]{.fg-green}. Any other number is [`FALSE`]{.fg-red}. So,
+
+## [Watch out!]{.fg-red}
+
+```{r }
+#| label: "02-about-r-16"
+TRUE & as.logical(1)
+```
+
+```{r }
+#| label: "02-about-r-17"
+3 < 5 & 3 < 1
+```
+
+- You have to make your comparisons explicit.
+
+## Logic and floating point arithmetic
+
+Let's evaluate `0.6 + 0.2 == 0.8`
+
+
+## Logic and floating point arithmetic
+
+Let's evaluate `0.6 + 0.2 == 0.8`
+
+```{r }
+#| label: "02-about-r-18"
+0.6 + 0.2 == 0.8
+```
+
+## Logic and floating point arithmetic
+
+Let's evaluate `0.6 + 0.2 == 0.8`
+
+```{r }
+#| label: "02-about-r-18a"
+0.6 + 0.2 == 0.8
+```
+
+Now let's try `0.6 + 0.3 == 0.9`
+
+## Logic and floating point arithmetic
+
+Let's evaluate `0.6 + 0.2 == 0.8`
+
+```{r }
+#| label: "02-about-r-18b"
+0.6 + 0.2 == 0.8
+```
+
+Now let's try `0.6 + 0.3 == 0.9`
+
+```{r }
+#| label: "02-about-r-19"
+0.6 + 0.3 == 0.9
+```
+
+Er. That's not right.
+
+## Welcome to floating point math!
+
+:::: {.columns}
+::: {.column width="70%"}
+  In Base 10, you can't precisely express fractions like $\frac{1}{3}$ and $\frac{1}{9}$. They come out as repeating decimals: 0.3333... or 0.1111... You _can_ cleanly represent fractions that use a prime factor of the base, which in the case of Base 10 are 2 and 5. 
+:::
+
+::: {.column width="30%" .right}
+  
+:::
+::::
+
+
+## Welcome to floating point math!
+
+:::: {.columns}
+::: {.column width="70%"}
+  In Base 10, you can't precisely express fractions like $\frac{1}{3}$ and $\frac{1}{9}$. They come out as repeating decimals: 0.3333... or 0.1111... You _can_ cleanly represent fractions that use a prime factor of the base, which in the case of Base 10 are 2 and 5. 
+  
+Computers represent numbers as binary (i.e. Base 2) floating-points. In Base 2, the only prime factor is 2. So $\frac{1}{5}$ or $\frac{1}{10}$ in binary would be repeating.  
+:::
+
+::: {.column width="30%" .right}
+  
+:::
+::::
+
+
+## Logic and floating point arithmetic
+
+When you do binary math on repeating numbers and convert back to decimals you get tiny leftovers, and this can mess up _logical_ comparisons of equality. The `all.equal()` function exists for this purpose.
+
+
+```{r }
+#| label: "02-about-r-20"
+print(.1 + .2)
+print(.1 + .2, digits=18)
+
+all.equal(.1 + .2, 0.3)
+```
+
+See e.g. [https://0.30000000000000004.com](https://0.30000000000000004.com) 
+
+---
+
+:::{.huge}
+More later on why this might bite you, and how to deal with it  
+:::
+
+::: aside
+For now, "Be very careful about doing logical comparisons on floating-point numbers" is not a bad rule.  
+:::
+
+
+## 1. [Everything in R has a name]{.fg-yellow}
+
+
+```{r }
+#| label: "02-about-r-21"
 my_numbers # We created this a few minutes ago
 
 letters  # This one is built-in
@@ -574,28 +636,20 @@ letters  # This one is built-in
 pi  # Also built-in
 ```
 
----
-
-# Some names are forbidden
+## Some names are forbidden
 
 Or it's a _really_ bad idea to try to use them 
 
+
 ```{r}
-#| label: "02-about-r-14"
+#| label: "02-about-r-22"
 #| eval: FALSE
-
-## Don't name objects with terms fo logical values, 
-## or missing and null-value indicators
-
 TRUE
 FALSE
 Inf
 NaN 
 NA 
 NULL
-
-## Don't name objects with terms that are also
-## built-in functions for programming and flow-control
 
 for
 if
@@ -604,47 +658,36 @@ break
 function
 ```
 
----
-
-# 2. [Everything is an object]{.fg-yellow}
+## 2. [Everything is an object]{.fg-yellow}
 
 There are a few built-in objects:
 
 
 ```{r }
-#| label: "02-about-r-15"
+#| label: "02-about-r-23"
 letters
 ```
 
---
-
 ```{r }
-#| label: "02-about-r-16"
+#| label: "02-about-r-24"
 pi
 ```
 
---
-
 ```{r }
-#| label: "02-about-r-17"
+#| label: "02-about-r-25"
 
 LETTERS
 ```
 
----
-
-# 3. [You can create objects]{.fg-yellow} 
-
---
+## 3. [You can create objects]{.fg-yellow} 
 
 In fact, this is mostly what we will be doing.
 
---
+Objects are created by [assigning]{.fg-red} a thing to a name:
 
-Objects are created by [_assigning_]{.fg-pink} a thing to a name:
 
 ```{r }
-#| label: "02-about-r-18"
+#| label: "02-about-r-26"
 ## name... gets ... this stuff
 my_numbers <- c(1, 2, 3, 1, 3, 5, 25, 10)
 
@@ -652,77 +695,49 @@ my_numbers <- c(1, 2, 3, 1, 3, 5, 25, 10)
 your_numbers <- c(5, 31, 71, 1, 3, 21, 6, 52)
 ```
 
---
-
 The [**`c()`**]{.fg-green} function _combines_ or _concatenates_ things
 
-
-The **assignment operator**, [**`<-`**]{.fg-pink}, performs the action of creating objects.
-
-???
-
+::: {.notes}
 The core thing we do in R is _create objects_ by _assigning a thing to a name_. That thing is usually the output of some _function_. There are a lot of built-in functions.
 
-We can create an object with the [**`c()`**]{.fg-green} function and the *assignment operator*, `<-`. 
+We can create an object with the `c()` function and the *assignment operator*, `<-`. The `c()` function concatenates things together.
+:::
 
+## The assignment operator
 
----
-
-# The assignment operator
-
-- The [assignment operator]{.fg-pink} performs the action of creating objects:
-
---
-
+- The assignment operator performs the action of creating objects
 - Use a keyboard shortcut to write it:
-
-- Press [**`option`**]{.fg-green} _and_ [**`-`**]{.fg-green} on a Mac
-
-- Press [**`alt`**]{.fg-green} _and_ [**`-`**]{.fg-green} on Windows
+- Press `option` _and_ `-` on a Mac
+- Press `alt` _and_ `-` on Windows
 
 
----
+## Assignment with [**`=`**]{.fg-green}
 
-# Assignment with [**`=`**]{.fg-green}
+- You can use [**`=`**]{.fg-pink} as well as [**`<-`**]{.fg-pink} for assignment.
 
-- You can use "[**`=`**]{.fg-green}" as well as "[**`<-`**]{.fg-green}" for assignment
 
 ```{r }
-#| label: "02-about-r-19"
+#| label: "02-about-r-27"
 my_numbers = c(1, 2, 3, 1, 3, 5, 25)
 
 my_numbers
 ```
 
-
---
-
-On the other hand, "[**`=`**]{.fg-green}" has a different meaning when used in functions.
-
---
-
-I'm going to use "[**`<-`**]{.fg-green}" for assigment throughout. Just be consistent either way.
-
----
-
-# Assignment with [**`=`**]{.fg-green}
-
-![](img/02_gordon_assignment.png)
-
-???
-
---- 
+- On the other hand, [**`=`**]{.fg-pink} has a different meaning when used in functions.
+- I'm going to use [**`<-`**]{.fg-pink} for assignment throughout. 
+- Be consistent either way.
 
 
 
+## Assignment with [**`=`**]{.fg-green}
 
----
+![](img/02_gordon_assignment.png){width=100% fig-align="center"}
 
-# 4. Do things to objects with [functions]{.fg-green}
+## 4. [Do things to objects with functions]{.fg-yellow}
 
 
 ```{r }
-#| label: "02-about-r-20"
+#| label: "02-about-r-28"
 
 ## this object... gets ... the output of this function
 my_numbers <- c(1, 2, 3, 1, 3, 5, 25, 10)
@@ -731,112 +746,98 @@ your_numbers <- c(5, 31, 71, 1, 3, 21, 6, 52)
 ```
 
 ```{r }
-#| label: "02-about-r-21"
+#| label: "02-about-r-29"
 my_numbers
 ```
+
+## 4. [Do things to objects with functions]{.fg-yellow}
 
 - Functions can be identified by the parentheses after their names.
 
 ```{r }
-#| label: "02-about-r-22"
+#| label: "02-about-r-30"
 my_numbers 
 ```
 
 
+
 ```{r}
-#| label: "02-about-r-23"
+#| label: "02-about-r-31"
 #| eval: FALSE
 ## If you run this you'll get an error
 mean()
 ```
 
----
 
-# What [functions]{.fg-green} usually do
+## What functions usually do
 
-- They take [**inputs**]{.fg-orange} to [**arguments**]{.fg-pink}
+- They take [**inputs**]{.fg-pink} to [**arguments**]{.fg-orange}
+- They perform [**actions**]{.fg-red}
+- They produce, or return, [**outputs**]{.fg-green}
 
-- They perform [**actions**]{.fg-green}
 
-- They produce, or return, [**outputs**]{.fg-lblue}
+### mean[(]{.fg-red}[x]{.fg-orange} `=` [my_numbers]{.fg-pink}[)]{.fg-red}
 
---
+## What functions usually do
 
-.pull-left[
+- They take [**inputs**]{.fg-pink} to [**arguments**]{.fg-orange}
+- They perform [**actions**]{.fg-red}
+- They produce, or return, [**outputs**]{.fg-green}
 
-### [`x`]{.fg-lblue} [`<-`]{.fg-green} [`c(`]{.fg-green}[1, 2, 3, 1, 3, 5, 25, 10]{.fg-orange}[`)`]{.fg-green}
 
-### [`x`]{.fg-blue}
+### mean[(]{.fg-red}[x]{.fg-orange} `=` [my_numbers]{.fg-pink}[)]{.fg-red}
 
-### [`[1]{.fg-blue}  1  2  3  1  3  5 25 10`]
+### [1] [6.25]{.fg-green}
 
-]
---
+## What functions usually do
 
-.pull-right[
-
-### [**`mean`(**]{.fg-green}[`x`]{.fg-pink} `=` [`my_numbers`]{.fg-orange}[**)**]{.fg-green}
-
-### [`[1]{.fg-lblue} 6.25`]
-
-]
-
----
-
-# What [functions]{.fg-green} usually do
-
-.large[
 ```{r }
-#| label: "02-about-r-24"
+#| label: "02-about-r-32"
 ## Get the mean of what? Of x.
 ## You need to tell the function what x is
 mean(x = my_numbers)
 
 mean(x = your_numbers)
 ```
-]
 
---
+## What functions usually do
 
 If you don't _name_ the arguments, R assumes you are providing them in the order the function expects.
 
+
 ```{r }
-#| label: "02-about-r-25"
+#| label: "02-about-r-33"
 mean(your_numbers)
 ```
 
----
 
-# What [functions]{.fg-green} usually do
+
+## What functions usually do
 
 What arguments? Which order? Read the function's help page
 
 ```{r}
-#| label: "02-about-r-26"
+#| label: "02-about-r-34"
 #| eval: FALSE
 help(mean)
 ```
 
 ```{r}
-#| label: "02-about-r-27"
+#| label: "02-about-r-35"
 #| eval: FALSE
 ## quicker
 ?mean
 ```
 
---
 
-How to read an R help page ... 
+- How to read an R help page? 
 
----
+## What functions usually do
 
-# What [functions]{.fg-green} usually do
-
-
-Arguments often tell the function what to do in specific circumstances
+- Arguments often tell the function what to do in specific circumstances
 
 ```{r }
-#| label: "02-about-r-28"
+#| label: "02-about-r-36"
 missing_numbers <- c(1:10, NA, 20, 32, 50, 104, 32, 147, 99, NA, 45)
 
 mean(missing_numbers)
@@ -844,51 +845,45 @@ mean(missing_numbers)
 mean(missing_numbers, na.rm = TRUE)
 ```
 
---
-
 Or select from one of several options
 
+
 ```{r }
-#| label: "02-about-r-29"
+#| label: "02-about-r-37"
 ## Look at ?mean to see what `trim` does
 mean(missing_numbers, na.rm = TRUE, trim = 0.1)
 ```
 
-
----
-
-# What [functions]{.fg-green} usually do
+## What functions usually do
 
 
-.pull-left.w80[
 There are all kinds of functions. They return different things.
 
 ```{r }
-#| label: "02-about-r-30"
+#| label: "02-about-r-38"
 summary(my_numbers)
 ```
 
-]
---
+## What functions usually do
 
-.pull-left.w80[You can assign the output of a function to a name, which turns it into an object. (Otherwise it'll send its output to the console.)
+You can assign the output of a function to a name, which turns it into an object. (Otherwise it'll send its output to the console.)
+
 
 ```{r }
-#| label: "02-about-r-31"
+#| label: "02-about-r-39"
 my_summary <- summary(my_numbers)
 
 my_summary
 ```
 
-]
----
 
-# What [functions]{.fg-green} usually do
 
-.pull-left.w80[Objects hang around in your work environment until they are overwritten by you, or are deleted.
+## What functions usually do
+
+Objects hang around in your work environment until they are overwritten by you, or are deleted.
 
 ```{r}
-#| label: "02-about-r-32"
+#| label: "02-about-r-40"
 #| eval: FALSE
 ## rm() function removes objects
 rm(my_summary)
@@ -898,96 +893,81 @@ my_summary
 ## Error: object 'my_summary' not found
 ```
 
-]
----
+## Functions can be [nested]{.fg-yellow}
 
-# Functions can be [nested]{.fg-yellow}
 
-.pull-left.w80[
 ```{r }
-#| label: "02-about-r-33"
+#| label: "02-about-r-41"
 c(1:20)
 ```
-]
-
---
-
-.pull-left.w80[
-```{r }
-#| label: "02-about-r-34"
-summary(c(1:20))
-```
-]
-
-.pull-left.w80[
-```{r }
-#| label: "02-about-r-35"
-names(summary(c(1:20)))
-```
-]
---
-
-
-.pull-left.w80[
-```{r }
-#| label: "02-about-r-36"
-length(names(summary(c(1:20))))
-```
-]
-
---
-
-.pull-left.w80[Nested functions are evaluated from the inside out.]
-
----
-
-# Use the pipe operator: [**`|>`**]{.fg-pink}
-
-Instead of nesting functions in parentheses, we can use the [_pipe operator_]{.fg-pink} to join them together:
-
 
 ```{r }
-#| label: "02-about-r-37"
-c(1:20) |> summary() |> names() |>  length()
+#| label: "02-about-r-42"
+mean(c(1:20))
 ```
 
---
+```{r }
+#| label: "02-about-r-43"
+summary(mean(c(1:20)))
+```
 
-Read this operator as "_[**and then**]{.fg-pink}_"
+```{r }
+#| label: "02-about-r-44"
+names(summary(mean(c(1:20))))
+```
 
---
+```{r }
+#| label: "02-about-r-45"
+length(names(summary(mean(c(1:20)))))
+```
+
+Nested functions are evaluated from the inside out.
+
+
+## Use the pipe operator: [|>]{.fg-green}
+
+Instead of deeply nesting functions in parentheses, we can use the _pipe operator_:
+
+```{r }
+#| label: "02-about-r-46"
+c(1:20) |> mean() |> summary() |> names() |>  length()
+```
+
+Read this operator as "_[**and then**]{.fg-green}_"
+
+## Use the pipe operator: [|>]{.fg-green}
+
 
 Better, vertical space is free in R:
 
 
 ```{r }
-#| label: "02-about-r-38"
+#| label: "02-about-r-47"
 c(1:20) |> 
+  mean() |> 
   summary() |> 
   names() |> 
   length()
 ```
 
----
+## Pipelines make code more [readable]{.fg-green}
 
-# Pipelines make code more [readable]{.fg-green}
+- Not great, Bob:
 
-Not great, Bob:
+:::{.smallcode}
 
-```r
+```{.r}
   serve(stir(pour_in_pan(whisk(crack_eggs(get_from_fridge(eggs), into = "bowl"), len = 40), temp = "med-high")))
 ```
+:::
 
---
+- Notice how the first thing you read is the last operation performed.
 
-Notice how the first thing you read is the last operation performed.
+## Pipelines make code more [readable]{.fg-green}
 
---
+- We can use vertical space and indents, but it's really not much better:
 
-Really not much better:
-
-.medium[
-```r
+```{.r}
 serve(
   stir(
     pour_in_pan(
@@ -1000,14 +980,13 @@ serve(
   )
 )
 ```
-]
----
 
-# Pipelines make code more [readable]{.fg-green}
 
-Much nicer:
+## Pipelines make code more [readable]{.fg-green}
 
-.medium[
+- Much nicer:
+
+
 ```r
 eggs |> 
   get_from_fridge() |> 
@@ -1018,58 +997,52 @@ eggs |>
   serve()
 
 ```
-]
---
 
-.pull-left.w60[We'll still use nested parentheses quite a bit, often in the context of a function working inside a pipeline. But it's good not to have too many levels of nesting.]
-
----
+- We'll still use nested parentheses quite a bit, often in the context of a function working inside a pipeline. But it's good not to have too many levels of nesting.
 
 
-# The [magrittr]{.fg-yellow} pipe: [`%>%`]{.fg-pink}
+## The other pipe: [`%>%`]{.fg-green}
 
-- The pipe operator [**`|>`**]{.fg-pink} was not part of Base R until very recently. Pipling was originally introduced in a package called `magrittr`, where it was written [**`%>%`**]{.fg-pink} and behaved in very nearly* the same way as the base pipe now does. 
+- The Base R pipe operator, [**`|>`**]{.fg-green} is a relatively recent addition to R. 
+- Piping operations were originally introduced in a package called called `magrittr`, where it took the form [**`%>%`**]{.fg-green}
 
---
+## The other pipe: [`%>%`]{.fg-green}
 
-- The magrittr pipe continues to work. A lot of existing code uses it (e.g., my book!).
+- The Base R pipe operator, [**`|>`**]{.fg-green} is a relatively recent addition to R. 
+- Piping operations were originally introduced in a package called called `magrittr`, where it took the form [**`%>%`**]{.fg-green}
+- It's been so successful, a version of it has been incorporated into Base R. It _mostly_ but does not _quite_ work the same way as [**`%>%`**]{.fg-green} in every case.
 
---
 
-- _Sidenote:_ There are bunch of special operators in R that have the naming convention [**`%something%`**]{.fg-pink}. For example [**`%\*%`**]{.fg-pink} means "matrix multiply". We'll see more of them as we go. In this context the **`% %`** is sometimes pronounced "grapes".  
+## The other pipe: [`%>%`]{.fg-green}
 
-.footnote.tiny[.kjh-darkgrey[\*With the new pipe, you can only pass an object to the _first_ argument in a function. This is fine for most tidyverse pipelines, where the first argument is usually (implicitly) the data. But it does mean that most Base R functions will continue not to be easily piped, as most of them do not follow the convention of passing the current data as the first argument]]
+- The Base R pipe operator, [**`|>`**]{.fg-green} is a relatively recent addition to R. 
+- Piping operations were originally introduced in a package called called `magrittr`, where it took the form [**`%>%`**]{.fg-green}
+- It's been so successful, a version of it has been incorporated into Base R. It _mostly_ but does not _quite_ work the same way as [**`%>%`**]{.fg-green} in every case. We'll use the Base R pipe in this course, but you'll see the Magrittr pipe a lot out in the world.
 
----
 
-# Functions are bundled into [packages]{.fg-yellow}
+::: aside
+With the Base R pipe, you can only pass an object to the _first_ argument in a function. This is fine for most tidyverse pipelines, where the first argument is usually (implicitly) the data. But it does mean that most Base R functions will continue not to be easily piped, as most of them do not follow the convention of passing the current data as the first argument  
+:::
 
---
+## Functions are bundled into [packages]{.fg-yellow}
 
-All programming languages gain power and convenience by having libraries or packages of functions that extend the core abilities of the language. In R, packages are loaded into your working environment using the [**`library()`**]{.fg-green} function.
 
---
+Packages are loaded into your working environment using the `library()` function:
 
 ```{r }
-#| label: "02-about-r-39"
+#| label: "02-about-r-48"
 ## A package containing a dataset rather than functions
 library(gapminder)
 
 gapminder
 ```
 
----
+## Functions are bundled into [packages]{.fg-yellow}
 
-# Functions are bundled into [packages]{.fg-yellow}
-
---
-
-.SMALL.squish2[You need only _install_ a package once (and occasionally update it). But you must _load_ the package in each R session before you can access its contents.]
-
-
+You need only _install_ a package once (and occasionally update it):
 
 ```{r}
-#| label: "02-about-r-40"
+#| label: "02-about-r-49"
 #| eval: FALSE
 ## Do at least once for each package. Once done, not needed each time.
 install.packages("palmerpenguins", repos = "http://cran.rstudio.com")
@@ -1079,63 +1052,53 @@ update.packages(repos = "http://cran.rstudio.com")
 
 ```
 
+## Functions are bundled into [packages]{.fg-yellow}
 
-]
-
+But you must _load_ the package in each R session before you can access its contents:
 
 ```{r }
-#| label: "02-about-r-41"
+#| label: "02-about-r-50"
 ## To load a package, usually at the start of your RMarkdown document or script file
 library(palmerpenguins)
 penguins
 ```
-]
----
 
-# Grabbing a single function with [**`::`**]{.fg-green}
 
-.pull-left.w70["Reach in" to an unloaded package and grab a function directly, using [`<package>::<function>`]{.fg-green}]
 
---
+## Grabbing a single function with [`::`]{.fg-yellow}
 
-.pull-left.w70[
+"Reach in" to an unloaded package and grab a function directly, using `<package>::<function>`
+
 ```{r}
-#| label: "02-about-r-42"
+#| label: "02-about-r-51"
 #| message: FALSE
 #| echo: FALSE
 gtsummary::theme_gtsummary_journal(journal = "jama")
 #gtsummary::theme_gtsummary_compact()
 ```
 
-.less-medium[
+## Grabbing a single function with [`::`]{.fg-yellow}
+
 ```{r }
-#| label: "02-about-r-43"
+#| label: "02-about-r-52"
 ## A little glimpse of what we'll do soon
 penguins |> 
   select(species, body_mass_g, sex) |> 
   gtsummary::tbl_summary(by = species) #<<
 ```
-]
-]
----
 
-# Remember this warning about conflicts?
 
-![:scale 80% "Conflicts"](img/02_function_masking.png)
+## Remember those conflicts?
 
-Notice how some functions in different packages have the same names.
+![](img/02_function-masking.png){with=90%}
 
---
+- Notice how some functions in different packages have the same names.
+- Related concepts of _namespaces_ and _environments_.
 
-Related concepts of _namespaces_ and _environments_.
-
----
-
-# Scope of names
+## The scope of names
  
-.small[
 ```{r }
-#| label: "02-about-r-44"
+#| label: "02-about-r-53"
 x <- c(1:10)
 y <- c(90:100)
 
@@ -1143,20 +1106,17 @@ x
 
 y
 ```
-]
---
 
-.small[
-```r
+```{.r}
 mean()
 
 ## Error in mean.default() : argument "x" is missing, with no default
 ```
-]
---
-.small[
+
+## The scope of names
+
 ```{r }
-#| label: "02-about-r-45"
+#| label: "02-about-r-54"
 mean(x) # argument names are internal to functions
 
 mean(x = x)
@@ -1168,39 +1128,32 @@ x
 y
 
 ```
-]
 
----
-
-# 5. Objects come in [types]{.fg-yellow} and [classes]{.fg-yellow}
+## 5. Objects come in [types]{.fg-yellow} and [classes]{.fg-yellow}
 
 I'm going to speak somewhat loosely here for now, and gloss over some distinctions between object classes and data structures, as well as kinds of objects and their attributes.
 
---
+## 5. Objects come in [types]{.fg-yellow} and [classes]{.fg-yellow}
+
+I'm going to speak somewhat loosely here for now, and gloss over some distinctions between object classes and data structures, as well as kinds of objects and their attributes.
 
 The object inspector in RStudio is your friend.
 
---
-
-You can ask an object what it is. 
+You can ask an object what it is at the console, too:
 
 ```{r }
-#| label: "02-about-r-46"
+#| label: "02-about-r-55"
 class(my_numbers)
 typeof(my_numbers)
 ```
 
 
----
-
-# 5. Objects come in [types]{.fg-yellow} and [classes]{.fg-yellow}
+## 5. Objects come in [types]{.fg-yellow} and [classes]{.fg-yellow}
 
 Objects can have more than one (nested) class:
 
---
-
 ```{r }
-#| label: "02-about-r-47"
+#| label: "02-about-r-56"
 summary(my_numbers)
 
 my_smry <- summary(my_numbers) # remember, outputs can be assigned to a name, creating an object
@@ -1210,13 +1163,11 @@ class(summary(my_numbers)) # functions can be nested, and are evaluated from the
 class(my_smry) # equivalent to the previous line
 ```
 
----
-
-# 5. Objects come in [types]{.fg-yellow} and [classes]{.fg-yellow}
+## 5. Objects come in [types]{.fg-yellow} and [classes]{.fg-yellow}
 
 
 ```{r }
-#| label: "02-about-r-48"
+#| label: "02-about-r-57"
 typeof(my_smry)
 attributes(my_smry)
 
@@ -1225,24 +1176,39 @@ class(my_smry)
 names(my_smry)
 ```
 
----
+## Kinds of [vector]{.fg-green}
 
-# A [vector]{.fg-green} is a fundamental kind of object
+:::: {.columns}
+::: {.column width="40%"}
+![](img/02_summary-tree-atomic.png){width=90%}
 
-.pull-left.small.kjh-darkgrey[
+::::: aside
+Hadley Wickham, _Advanced R_
+:::::
 
-[![:scale 80% "Vectors 1"](img/02_summary_tree_atomic.png)]  
+:::
 
-- From Hadley Wickham, _Advanced R_
+::: {.column width="60%" .right}
 
-]
+:::
+::::
 
---
 
-.pull-right[
+## Kinds of [vector]{.fg-green}
 
+:::: {.columns}
+::: {.column width="40%"}
+![](img/02_summary-tree-atomic.png){width=90%}
+  
+::::: aside
+  Hadley Wickham, _Advanced R_  
+:::::
+
+:::
+
+::: {.column width="60%" .right}
 ```{r }
-#| label: "02-about-r-49"
+#| label: "02-about-r-58"
 my_int <- c(1, 3, 5, 6, 10)
 is.integer(my_int)
 is.double(my_int)
@@ -1258,43 +1224,43 @@ is.logical(my_lgl)
 
 ```
 
-]
+:::
+::::
 
----
+## Kinds of [vector]{.fg-green} 
 
-# The most common types of [vector]{.fg-green}
 
-.pull-left.tiny.kjh-darkgrey[
+:::: {.columns}
+::: {.column width="40%"}
+  ![](img/02_summary-tree-s3.png)
+:::
 
-[![:scale 90% "Vectors 2"](img/02_summary_tree_s3.png)]  
+::: {.column width="60%" .right}
 
-- From Hadley Wickham, _Advanced R_
-
-]
-
---
-
-.pull-right.tiny[
+::::: {.smallcode}
 
 ```{r }
-#| label: "02-about-r-50"
-## Factors are for storing categorical variables
-x <- factor(c("Yes", "No", "No", "Maybe", "Yes", "Yes"))
+#| label: "02-about-r-59"
+## Factors are for storing undordered or ordered categorical variables
+x <- factor(c("Yes", "No", "No", "Maybe", "Yes", "Yes", "Yes", "No"))
 x
 
 summary(x) # Alphabetical order by default
 
-typeof(x)       # A factor is a vector of integers 
-attributes(x)   # ... with labels for its "levels" 
+typeof(x)       # Underneath, a factor is a type of integer ...
+attributes(x)   # ... with labels for its numbers, or "levels" 
 levels(x)
 is.ordered(x)
 
 ```
 
-]
+:::::
 
-???
+:::
+::::
 
+
+::: {.notes}
 HW: 
 
 Categorical data, where values come from a fixed set of levels recorded in factor vectors.
@@ -1305,17 +1271,14 @@ Date-times (with second or sub-second resolution), which are stored in POSIXct v
 
 Durations, which are stored in difftime vectors.
 
----
+:::
 
+## Vector types can't be heterogenous 
 
-# Individual vectors can't be heterogenous 
-
-Objects can be manually or automatically coerced from one class to another. Take care!
-
---
+- Objects can be manually or automatically coerced from one class to another. Take care.
 
 ```{r }
-#| label: "02-about-r-51"
+#| label: "02-about-r-60"
 class(my_numbers)
 
 my_new_vector <- c(my_numbers, "Apple")
@@ -1325,10 +1288,12 @@ my_new_vector # vectors are homogeneous/atomic
 class(my_new_vector)
 ```
 
---
+## Vector types can't be heterogenous 
+
+- Objects can be manually or automatically coerced from one class to another. Take care.
 
 ```{r }
-#| label: "02-about-r-52"
+#| label: "02-about-r-61"
 my_dbl <- c(2.1, 4.77, 30.111, 3.14519)
 is.double(my_dbl)
 
@@ -1338,143 +1303,180 @@ my_dbl
 
 ```
 
-
----
-
-# Tibbles are a [list]{.fg-yellow} of [vectors]{.fg-green} of various [types]{.fg-pink}
-
+## A table of data is a kind of [list]{.fg-yellow}
 
 ```{r }
-#| label: "02-about-r-53"
+#| label: "02-about-r-62"
 gapminder # tibbles and data frames can contain vectors of different types
 
 class(gapminder)
 typeof(gapminder) # hmm
 
 ```
-]
 
-Underneath, most complex R objects are some kind of list with different components.
+## A table of data is a kind of [list]{.fg-yellow}
 
-
-???
+- Lists _can_ be heterogenous. Underneath, most complex R objects are some kind of list with different components.
 
 - A _data frame_ is a list of vectors of the same length, where the vectors can be of different types (e.g. numeric, character, logical, etc)
 
 - A _tibble_ is an enhanced data frame 
 
+::: {.notes}
 Tibbles have an enhanced print method, never coerce strings to factors, and provide stricter subsetting methods. (HW)
 
 Again the object inspector is helpful here
 
----
+:::
 
-# Classes can be nested
+## Some classes are versions of others
 
-Some classes build on and enhance the properties of simpler classes.
 
-.pull-left[
+:::: {.columns}
+::: {.column width="50%"}
+- Base R's trusty `data.frame`
 
-Base R's trusty [**`data.frame`**]{.fg-lblue}
-  
+:::::{.smallcode}
+
 ```{r }
-#| label: "02-about-r-54"
+#| label: "02-about-r-63a"
 library(socviz)
 titanic
 class(titanic)
 ```
 
 ```{r }
-#| label: "02-about-r-55"
+#| label: "02-about-r-64a"
 ## The `$` idiom picks out a named column here; 
 ## more generally, the named element of a list
 titanic$percent  
 ```
 
-]
---
+:::::
 
-.pull-right[
+:::
 
-The Tidyverse's enhanced [**`tibble`**]{.fg-lblue}
+::: {.column width="50%" .right}
+:::
+::::
+
+## Some classes are versions of others
+
+:::: {.columns}
+::: {.column width="50%"}
+- Base R's trusty `data.frame`
+
+:::::{.smallcode}
 
 ```{r }
-#| label: "02-about-r-56"
-## tibbles are build on data frames 
+#| label: "02-about-r-63"
+library(socviz)
+titanic
 class(titanic)
+```
 
+```{r }
+#| label: "02-about-r-64"
+## The `$` idiom picks out a named column here; 
+## more generally, the named element of a list
+titanic$percent  
+```
+:::::
+
+:::
+::: {.column width="50%" .right}
+
+- The Tidyverse's enhanced `tibble`
+
+::::{.smallcode}
+
+```{r }
+#| label: "02-about-r-65"
+## tibbles are build on data frames 
 titanic_tb <- as_tibble(titanic) 
-
 titanic_tb
 class(titanic_tb)
 ```
- 
-]
----
+::::
 
-# All of this will matter later on
+:::
+
+::::
+
+- A data frame and a tibble are both fundamentally a list of vectors of the same length, where the vectors can be of different types (e.g. numeric, character, logical, etc)
+
+
+## All of this will be clearer in use
 
 ```{r }
-#| label: "02-about-r-57"
+#| label: "02-about-r-66"
 gss_sm
 ```
 
---
 
-.pull-left.w80.squish2[Tidyverse tools are generally _type safe_, meaning their functions return the same type of thing every time, or fail if they cannot do this. So it's good to know about the various data types.]
 
----
+- Tidyverse tools are generally _type safe_, meaning their functions return the same type of thing every time, or fail if they cannot do this. So it's good to know about the various data types.
 
-# 6. [Arithmetic on vectors]{.fg-yellow}
 
-.pull-left.w60[In R, all numbers are vectors of different sorts. Even single numbers ("scalars") are conceptually vectors of length 1.]
+## 6. [Arithmetic on vectors]{.fg-yellow}
 
---
+- In R, all numbers are vectors of different sorts. Even single numbers ("scalars") are conceptually vectors of length 1.
 
-.pull-left.w60[Arithmetic on vectors\* follows a series of _recycling rules_ that favor ease of expression of vectorized, "elementwise" operations.]
+- Arithmetic on vectors (and arrays generally) follows a series of _recycling rules_ that favor ease of expression of vectorized, "elementwise" operations.
 
-.pull-left.w60.footnote.small[*And arrays, too.]
+- See if you can predict what the following operations do: 
 
----
-
-# 6. [Arithmetic on vectors]{.fg-yellow}
-
-See if you can predict what the following operations do: 
+## 6. [Arithmetic on vectors]{.fg-yellow}
 
 ```{r }
-#| label: "02-about-r-58"
+#| label: "02-about-r-67"
 my_numbers
 
 result1 <- my_numbers + 1
 
 ```
 
---
+## 6. [Arithmetic on vectors]{.fg-yellow}
 
 ```{r }
-#| label: "02-about-r-59"
+#| label: "02-about-r-67a"
+my_numbers
+
+result1 <- my_numbers + 1
+
+```
+
+
+```{r }
+#| label: "02-about-r-68"
 result1
 ```
 
---
+## 6. [Arithmetic on vectors]{.fg-yellow}
 
 ```{r }
-#| label: "02-about-r-60"
+#| label: "02-about-r-69"
 result2 <- my_numbers + my_numbers
 
 ```
 
---
+## 6. [Arithmetic on vectors]{.fg-yellow}
 
 ```{r }
-#| label: "02-about-r-61"
+#| label: "02-about-r-69a"
+result2 <- my_numbers + my_numbers
+
+```
+
+```{r }
+#| label: "02-about-r-70"
 result2
 ```
 
---
+## 6. [Arithmetic on vectors]{.fg-yellow}
 
 ```{r}
-#| label: "02-about-r-62"
+#| label: "02-about-r-71"
 #| warning: TRUE
 two_nums <- c(5, 10)
 
@@ -1482,19 +1484,28 @@ result3 <- my_numbers + two_nums
 
 ```
 
---
+## 6. [Arithmetic on vectors]{.fg-yellow}
+
+```{r}
+#| label: "02-about-r-71a"
+#| warning: TRUE
+two_nums <- c(5, 10)
+
+result3 <- my_numbers + two_nums
+
+```
+
 
 ```{r }
-#| label: "02-about-r-63"
+#| label: "02-about-r-72"
 result3
 ```
 
----
 
-# 6. [Arithmetic on vectors]{.fg-yellow}
+## 6. [Arithmetic on vectors]{.fg-yellow}
 
 ```{r}
-#| label: "02-about-r-64"
+#| label: "02-about-r-73"
 #| warning: TRUE
 three_nums <- c(1, 5, 10)
 
@@ -1502,43 +1513,41 @@ result4 <- my_numbers + three_nums
 
 ```
 
---
+## 6. [Arithmetic on vectors]{.fg-yellow}
+
+```{r}
+#| label: "02-about-r-73a"
+#| warning: TRUE
+three_nums <- c(1, 5, 10)
+
+result4 <- my_numbers + three_nums
+
+```
+
 
 ```{r }
-#| label: "02-about-r-65"
+#| label: "02-about-r-74"
 result4
 ```
 
-Note that you got a **warning** here. R will still do what you told it do, though! Don't ignore warnings until you understand what they mean.
+Note that you get a _warning_ here. It'll still do it, though! Don't ignore warnings until you understand what they mean.
 
----
 
-# 7. [R will be]{.fg-yellow} [frustrating]{.fg-red}
-
---
+## 7. R will be [frustrating]{.fg-red}
 
 - The IDE tries its best to help you. Learn to attend to what it is trying to say.
 
-.left[![:scale 70% "Error 1"](img/02_error_object_length_warning.png)]  
+![](img/02_error_object_length_warning.png){width=50%}
 
---
+![](img/02_error_missing_comma.png){width=50%}
 
-.left[![:scale 60% "Error 2"](img/02_error_missing_comma.png)]  
-
---
-
-.left[![:scale 60% "Error 3"](img/02_error_extra_paren.png)]  
-
-
----
+![](img/02_error_extra_paren.png){width=50%}
 
 
 
-# .huge[Let's Go!]{.fg-lblue}
+# [Let's Go!]{.fg-lblue}
 
----
-
-# Time to make a plot
+## Time to make a plot
 
 Like before:
 
@@ -1547,19 +1556,14 @@ Like before:
 gapminder
 ```
 
----
-
 # Like before
-
-.pull-left.w35[
-
 
 ```{r}
 #| label: "codefig-plot-2"
 #| message: FALSE
-#| fig.show: "hide"
 #| fig.width: 5.8
 #| fig.height: 5.5
+#| output-location: column
 library(tidyverse)
 library(gapminder)
 
@@ -1570,26 +1574,7 @@ p <- ggplot(data = gapminder,
 p + geom_point()
 ```
 
-]
-
---
-
-.pull-right.w60[
-```{r}
-#| label: "02-about-r-67"
-#| echo: FALSE
-knitr::include_graphics(
-  knitr::fig_chunk("codefig-plot-2", "png")
-)
-```
-]
-
----
-
-# What we did
-
-.pull-left.w40[
-
+## What we did
 
 ```{r}
 #| label: "02-about-r-68"
@@ -1600,16 +1585,10 @@ library(tidyverse)
 
 library(gapminder)
 ```
-]
-
-.pull-right.w60[
 
 - Load the packages we need: `tidyverse` and `gapminder`
-]
 
---
-
-.pull-left.w40[
+## What we did
 
 ```{r}
 #| label: "02-about-r-69"
@@ -1623,15 +1602,10 @@ p <- ggplot(data = gapminder,
 ```
 ]
 
-.pull-right.w60[
-
 - New object named [**`p`**]{.fg-lblue} [`gets`]{.fg-pink} the output of the [`ggplot()` _function_]{.fg-green}, given these [_arguments_]{.fg-orange}
 - Notice how one of the arguments, [`mapping`]{.fg-orange}, is itself taking the output of a function named [`aes()`]{.fg-green}
-] 
 
---
-
-.pull-left.w40[
+## What we did
 
 ```{r}
 #| label: "02-about-r-70"
@@ -1643,47 +1617,30 @@ p <- ggplot(data = gapminder,
 p + geom_point()
 
 ```
-]
 
-.pull-right.w60[
 - Show me the output of the [**`p`**]{.fg-lblue} object and the [`geom_point()`]{.fg-green} function.
 - The [`+`]{.fg-pink} here acts just like the [`|>`]{.fg-pink} pipe, but for ggplot functions only. (This is an accident of history.)
-]
+
+
+## And what is R doing?
+
+R objects are just lists of [stuff to use]{.fg-orange} or [things to do]{.fg-green}
+
+## Objects are like Bento Boxes {background-image="img/02_r_object_bento_box.png" background-size="cover"}
 
 ---
 
-# And what is R doing?
+![The `p` object](img/02_r_objects_p_bleep.png)
 
-- .huge[R objects are just lists of [stuff to use]{.fg-orange} or [things to do]{.fg-green}]
-
----
-layout: false
-class: bottom
-background-image: url("img/02_r_object_bento_box.png")
-background-size: cover
-
-## .huge.right.bottom.squish4.kjh-grey[Objects are like Bento Boxes]
-
----
-layout: false
-
-![](img/02_r_objects_p_bleep.png)
-
-.right.w90.huge[The [`p`]{.fg-lblue} object]
-
----
-layout: false
-
-![](img/02_r_object_inspector_panel.png)
-
-.right.w90.huge[Peek in with the object inspector]
 
 
 ---
-layout: false
- 
-![](img/02_r_ide_object_inspector.png)
 
-.right.w90.huge[Peek in with the object inspector]
-   
+![Peek in with the object inspector](img/02_r_object_inspector_panel.png)
+
+
+---
+
+![Peek in with the object inspector](img/02_r_ide_object_inspector.png)
+
 
