@@ -45,29 +45,9 @@ kjh_set_slide_theme()   # ggplot theme to go with slides. Set tenso = FALSE if n
 ```
 
 
-
-
-
 # Work with [Models]{.fg-yellow}
 
-
-
-**Data Visualization: Session 6**
-
-.light[Kieran Healy<br>
-Code Horizons, April 2023
-]
-
-]
-
----
-
-
-
-
----
-
-# Load our libraries
+## Load our packages
 
 
 ```{r}
@@ -84,23 +64,16 @@ library(scales)    # Format our axes and guides
 ```
 ]
 
----
+## We know [`ggplot`]{.fg-lblue} can work with models
 
+- We know because `geoms` often do calculations in the background, via their `stat` functions.
 
-
-
----
-
-# We know [`ggplot`]{.fg-lblue} can work with models
-
-
-.pull-left.w45[
 ```{r}
 #| label: "codefig-model1"
 #| message: FALSE
-#| fig.show: "hide"
 #| fig.width: 4.8
 #| fig.height: 4.5
+#| output-location: column 
 p <- gapminder |> 
   ggplot(mapping = aes(x = log(gdpPercap), 
                        y = lifeExp))  
@@ -115,34 +88,14 @@ p + geom_point(alpha=0.1) +
   labs(title = "Robust and OLS fits")
 ```
 
-- We know because `geoms` often do calculations in the background, via their `stat` functions.
+## And these can be complex ...
 
-]
-
---
-
-.pull-right.w55[
-```{r}
-#| label: "06-work-with-models-2"
-#| echo: FALSE
-  knitr::include_graphics(
-  knitr::fig_chunk("codefig-model1", "png"))
-```
-]
-
-
----
-
-# And these can be complex ...
-
-
-.pull-left.w45[
 ```{r}
 #| label: "codefig-model2"
 #| message: FALSE
-#| fig.show: "hide"
 #| fig.width: 4.8
 #| fig.height: 4.5
+#| output-location: column
 
 p + geom_point(alpha=0.1) +
     geom_smooth(color = "tomato", 
@@ -152,31 +105,15 @@ p + geom_point(alpha=0.1) +
                 se = FALSE)
 
 ```
-]
 
---
+## ... but we usually won't do this in [`ggplot`]{.fg-lblue} 
 
-.pull-right.w55[
-```{r}
-#| label: "06-work-with-models-3"
-#| echo: FALSE
-  knitr::include_graphics(
-  knitr::fig_chunk("codefig-model2", "png"))
-```
-]
-
----
-
-# ... but we usually won't do this inside [`ggplot`]{.fg-lblue} 
-
-
-.pull-left.w45[
 ```{r}
 #| label: "codefig-model3"
 #| message: FALSE
-#| fig.show: "hide"
 #| fig.width: 4.8
 #| fig.height: 4.5
+#| output-location: column
 
 p + geom_point(alpha=0.1) +
     geom_quantile(color = "tomato", 
@@ -186,42 +123,18 @@ p + geom_point(alpha=0.1) +
                   quantiles = c(0.20, 0.5, 0.85))
 
 ```
-]
-
---
-
-.pull-right.w55[
-```{r}
-#| label: "06-work-with-models-4"
-#| echo: FALSE
-  knitr::include_graphics(
-  knitr::fig_chunk("codefig-model3", "png"))
-```
-
-]
-
 
 ---
 
-layout: false
-class: center middle
-
-## .middle.huge.squish4[[Transform and summarize first.]{.fg-orange}<br />[Then send your clean tables to ggplot.]{.fg-lblue}]
-
----
+:::{.huge}
+Transform and summarize first.]{.fg-orange}<br />Then send your clean tables to ggplot.  
+:::
 
 
-
-# .huge[[Look inside]{.fg-lblue} [the box]{.fg-yellow}]
-
----
+# [Look inside]{.fg-lblue} [the box]{.fg-yellow}
 
 
-
-
----
-
-# Again, objects are Bento Boxes of To-Do lists
+## Objects are To-Do List Bento Boxes
 
 
 ```{r }
@@ -229,9 +142,7 @@ class: center middle
 gapminder
 ```
 
----
-
-# Fit a model
+## Fit a model
 
 ```{r }
 #| label: "06-work-with-models-6"
@@ -242,30 +153,19 @@ summary(out)
 ```
 
 
----
+## Poke around inside
 
-# Poke around inside
+![Use the Object Inspector to take a look](img/06_lm_object_schematic.png)
 
-- Use the Object Inspector to take a look
+# [Predict from models:]{.fg-yellow}<br /> [DIY method]{.fg-lblue}
 
-.left[![:scale 20%](img/06_lm_object_schematic.png)]
+## Behind the curtain
 
----
+- [`predict()`]{.fg-green} and its methods do a lot of work behind the scenes
+-  We won't usually need to do this stuff manually. But the idea is that the generic [`predict()`]{.fg-green} function has _methods_ for specific sorts of models. Give it a model and some new data and it will produce predicted values for the new data. Here's an example.
 
-class: right bottom main-title section-title-1
 
-## .huge.right.bottom.squish4[[Predict from models:]{.fg-yellow}<br /> [DIY method]{.fg-lblue}]
-
----
-
-# Behind the curtain
-
-### [`predict()`]{.fg-green} and its methods do a lot of work behind the scenes
-
-- We won't usually need to do this stuff manually. But the idea is that the generic [`predict()`]{.fg-green} function has _methods_ for specific sorts of models. Give it a model and some new data and it will produce predicted values for the new data. Here's an example.
----
-
-# The labor-intensive way
+## The labor-intensive way
 
 ```{r }
 #| label: "06-work-with-models-7"
@@ -284,9 +184,7 @@ pred_df <- expand_grid(gdpPercap = (seq(from = min_gdp,
 pred_df
 ```
 
----
-
-# The labor-intensive way
+## The labor-intensive way
 
 ```{r }
 #| label: "06-work-with-models-8"
@@ -298,9 +196,7 @@ head(pred_out)
 
 ```
 
----
-
-# The labor-intensive way
+## The labor-intensive way
 
 ```{r }
 #| label: "06-work-with-models-9"
@@ -312,9 +208,9 @@ pred_df <- cbind(pred_df, pred_out)
 head(pred_df)
 ```
 
----
+## The labor-intensive way
 
-# The labor-intensive way
+::: {.smallcode}
 
 ```{r }
 #| label: "06-work-with-models-10"
@@ -340,8 +236,9 @@ p_out <- p + geom_point(data = subset(gapminder,
     scale_x_log10(labels = scales::label_dollar())
 ```
 
+:::
+
 ---
-layout: false
 
 ```{r}
 #| label: "06-work-with-models-11"
@@ -352,24 +249,9 @@ p_out
 ```
 
 
-.right.w90.small[Fitted lines and original values]
+# [Use]{.fg-lblue} [`broom`]{.fg-yellow} [to tidy models]{.fg-lblue}
 
-
----
-
-
-
-
----
-
-
-
-# .huge[[Use]{.fg-lblue} [`broom`]{.fg-yellow} [to tidy models]{.fg-lblue}]
-
-
----
-
-# We can't [do]{.fg-yellow} anything with this
+## We can't [do]{.fg-yellow} anything with this
 
 ```{r }
 #| label: "06-work-with-models-12"
@@ -379,10 +261,7 @@ out <- lm(formula = lifeExp ~ gdpPercap + log(pop) + continent,
 summary(out)
 ```
 
-
----
-
-# Tidy regression output with [broom]{.fg-yellow}
+## Tidy regression output with [broom]{.fg-yellow}
 
 ```{r }
 #| label: "06-work-with-models-13"
@@ -396,9 +275,7 @@ tidy(out)
 
 That's a _lot_ nicer. Now it's just a tibble. We know those.
 
----
-
-# Tidy regression output with [broom]{.fg-yellow}
+## Tidy regression output with [broom]{.fg-yellow}
 
 
 ```{r }
@@ -408,9 +285,7 @@ out_conf
 ```
 
 
----
-
-# Tidy regression output with [broom]{.fg-yellow}
+## Tidy regression output with [broom]{.fg-yellow}
 
 
 ```{r }
@@ -422,18 +297,15 @@ out_conf |>
 ```
 
 
----
-
-# Tidy regression output with [broom]{.fg-yellow}
+## Tidy regression output with [broom]{.fg-yellow}
 
 
-.pull-left.w55[
 ```{r}
 #| label: "codefig-broomplot"
 #| message: FALSE
-#| fig.show: "hide"
 #| fig.width: 4.8
 #| fig.height: 4.5
+#| output-location: column
 out_conf |> 
     filter(term %nin% "(Intercept)") |> 
     mutate(nicelabs = prefix_strip(term, "continent")) |> 
@@ -447,32 +319,18 @@ out_conf |>
        y = NULL, 
        title = "Severely Misspecified")
 ```
-]
 
---
 
-.pull-right.w45[
-```{r}
-#| label: "06-work-with-models-17"
-#| echo: FALSE
-  knitr::include_graphics(
-  knitr::fig_chunk("codefig-broomplot", "png"))
-```
-]
+## Three ways to tidy
 
----
+::: {.incremental}
+- [Component level]{.fg-lblue}: [`tidy()`]{.fg-green}
+- [Observation level]{.fg-orange}: [`augment()`]{.fg-green}
+- [Model level]{.fg-pink}: [`glance()`]{.fg-green}
+:::
 
-# Three ways to tidy
 
-### [Component level]{.fg-lblue}: [`tidy()`]{.fg-green}
-
-### [Observation level]{.fg-orange}: [`augment()`]{.fg-green}
-
-### [Model level]{.fg-pink}: [`glance()`]{.fg-green}
-
----
-
-# [Component]{.fg-lblue} level
+## [Component]{.fg-lblue} level
 
 ```text
 
@@ -508,9 +366,7 @@ Multiple R-squared:  0.585,	Adjusted R-squared:  0.5835
 F-statistic: 398.7 on 6 and 1697 DF,  p-value: < 2.2e-16
 ```
 
----
-
-# [Observation]{.fg-orange} level
+## [Observation]{.fg-orange} level
 
 ```text
 
@@ -551,18 +407,14 @@ F-statistic: 398.7 on 6 and 1697 DF,  p-value: < 2.2e-16
 ```
 
 
----
-
-# [Observation]{.fg-orange} level
+## [Observation]{.fg-orange} level
 
 ```{r }
 #| label: "06-work-with-models-18"
 augment(out)
 ```
 
----
-
-# [Observation]{.fg-orange} level
+## [Observation]{.fg-orange} level
 
 - For OLS models: 
 
@@ -575,9 +427,7 @@ augment(out)
 - [.std.resid]{.fg-orange} — The standardized residuals.
 
 
----
-
-# [Observation]{.fg-orange} level
+## [Observation]{.fg-orange} level
 
 ```{r }
 #| label: "06-work-with-models-19"
@@ -597,7 +447,6 @@ p_out <- p + geom_point()
 ```
 
 ---
-layout: false
 
 ```{r}
 #| label: "06-work-with-models-21"
@@ -608,17 +457,9 @@ p_out
 ```
 
 
-.right.w90.small[I told you it was misspecified]
+(I told you it was misspecified)
 
----
-
-
-
-
----
-
-
-# [Model]{.fg-pink} level
+## [Model]{.fg-pink} level
 
 ```text
 
@@ -654,9 +495,7 @@ F-statistic: 398.7 on 6 and 1697 DF,  p-value: < 2.2e-16
 ```
 ]
 
----
-
-# [Model]{.fg-pink} level
+## [Model]{.fg-pink} level
 
 
 ```{r }
@@ -666,20 +505,9 @@ glance(out)
 
 The usefulness of [`glance()`]{.fg-green} becomes clearer when dealing with ensembles of models.
 
----
+# Example
 
-class: right bottom main-title section-title-1
-
-## .huge.right.bottom.squish4[[Another example]{.fg-yellow}]
-
----
-
-
-
-
----
-
-# A Kaplan-Meier Curve
+## A Kaplan-Meier Curve
 
 ```{r }
 #| label: "06-work-with-models-23"
@@ -691,9 +519,7 @@ head(lung)
 tail(lung)
 ```
 
----
-
-# A Kaplan-Meier Curve
+## A Kaplan-Meier Curve
 
 First we fit the model:
 
@@ -706,9 +532,7 @@ summary(out_cph)
 
 ```
 
----
-
-# A Kaplan-Meier Curve
+## A Kaplan-Meier Curve
 
 Then we create the survival curve, which is _nearly_ tidy out of the box:
 
@@ -724,9 +548,7 @@ summary(out_surv)
 
 ```
 
----
-
-# A Kaplan-Meier Curve
+## A Kaplan-Meier Curve
 
 Then we tidy it and draw the plot.
 
@@ -745,7 +567,6 @@ p_out <- out_tidy |>
 ```
 
 ---
-layout: false
 
 ```{r}
 #| label: "06-work-with-models-27"
@@ -756,33 +577,19 @@ p_out
 ```
 
 
-.right.w90.small[Kaplan-Meier Plot]
+Kaplan-Meier Plot
+
+
+# [Grouped Analysis with]{.fg-yellow} [`broom`]{.fg-lblue}
 
 ---
 
+:::{.huge}
+[Pipelines show their real power]{.fg-orange} [when used iteratively]{.fg-lblue}
+:::
 
 
-
----
-
-class: right bottom main-title section-title-1
-
-## .huge.right.bottom.squish4[[Grouped Analysis with]{.fg-yellow} [`broom`]{.fg-lblue}]
-
----
-layout: false
-class: main-title main-title-inv
-
-# .middle.squish4.large[[Pipelines show their real power]{.fg-orange} [when used iteratively]{.fg-lblue}]
-
----
-
-
-
-
----
-
-# Iteration without tears (or explicit loops)
+## Iteration without tears (or explicit loops)
 
 - You might be familiar with code that looks like this:
 
@@ -799,7 +606,7 @@ for (i in 1:5) {
 
 ---
 
-# Iteration without tears (or explicit loops)
+## Iteration without tears (or explicit loops)
 
 - We can also write, e.g., 
 
@@ -815,9 +622,7 @@ for (i in 1:length(x)) {
 
 - This way we can refer to each element of x in turn, and do the same thing do it.
 
----
-
-# Iteration without tears (or explicit loops)
+## Iteration without tears (or explicit loops)
 
 - The more complicated the thing we want to do, the more likely we are to use functions to help us out.
 
@@ -831,9 +636,7 @@ for (i in 1:5) {
 ```
 
 
----
-
-# Isn't this like ... Vectorized arithmetic?
+## Isn't this like ... Vectorized arithmetic?
 
 - The simplest cases are not that different from the vectorized arithmetic we saw before. 
 
@@ -848,13 +651,13 @@ a + b
 
 ```
 
---
 
+::::: {.fragment fragment-index=2}
 R's vectorized rules add `b` to every element of `a`. In a sense, the [**`+`**]{.fg-green} operation can be thought of as a function that takes each element of `a` and does something with it. In this case "add `b`".  
+    
+:::::
 
----
-
-# Repeatedly applying a function 
+## Repeatedly applying a function 
 
 We can make this explicit by writing a function:
 
@@ -878,9 +681,7 @@ add_b(x = a)
 
 In effect we take the vector **`a`** and feed it to the [`add_b()`]{.fg-green} function one element at a time.
 
----
-
-# Repeatedly applying a function 
+## Repeatedly applying a function 
 
 
 Again, R's vectorized approach means it automatically applies [`add_b()`]{.fg-green} to every element of the x we give it.
@@ -895,9 +696,7 @@ add_b(x = 10)
 add_b(x = c(1, 99, 1000))
 ```
 
----
-
-# [Iterating]{.fg-green} in a pipeline
+## [Iterating]{.fg-green} in a pipeline
 Some operations can't directly be vectorized in this way, most often because the function we want to apply only knows what to do if it is handed, say, a vector. It doesn't understand what to do if it's handed a list of vectors or a tibble of them, etc. This is when we might find ourselves manually iterating---writing out every single step explicitly. 
 
 ```{r }
@@ -913,9 +712,7 @@ gapminder |>
 
 That's tedious to write! Computers are supposed to allow us to avoid that sort of thing.
 
----
-
-# [Iterating]{.fg-green} in a pipeline
+## [Iterating]{.fg-green} in a pipeline
 
 So how would we iterate this? What we want is to apply the [**`n_distinct()`**]{.fg-green} function to each column of `gapminder`. But we can't easily write a loop inside a pipeline. We want a way to iterate that lets us repeatedly apply a function without explicitly writing a loop. 
 
@@ -930,11 +727,12 @@ gapminder |>
             n_distinct(population))
 ```
 
-.smaller.kjh-darkgrey[Using [**`n_distinct()`**]{.fg-green} in this context is an idea I got from Rebecca Barter's discussion of `purrr`.]
+::: aside
+Using [**`n_distinct()`**]{.fg-green} in this context is an idea I got from Rebecca Barter's discussion of `purrr`.  
+:::
 
----
 
-# [Iterating]{.fg-green} in a pipeline
+## [Iterating]{.fg-green} in a pipeline
 
 In real life, you'd use [**across()**]{.fg-green}, like this:
 
@@ -944,36 +742,24 @@ gapminder |>
   summarize(across(everything(), n_distinct))
 ```
 
----
-
-# [Iterating]{.fg-green} in a pipeline
+## [Iterating]{.fg-green} in a pipeline
 
 But you could also say "Feed each column of [`gapminder`]{.fg-pink} in turn to the [`n_distinct()`]{.fg-green} function". 
 
 This is what the [`map()`]{.fg-green} function is for.
-
-.pull-left[
-
 
 ```{r }
 #| label: "06-work-with-models-39"
   map(gapminder, n_distinct)
 ```
 
-]
-
-.pull-right[
 Read it as "Feed each column of `gapminder` to the [**`n_distinct()`**]{.fg-green} function.
 
 (This is pretty much what [**`across()`**]{.fg-green} is doing more nicely.)
-]
 
 
----
 
-# [Iterating]{.fg-green} in a pipeline
-
-.pull-left[
+## [Iterating]{.fg-green} in a pipeline
 
 Or, in pipeline form:
 
@@ -983,17 +769,9 @@ gapminder |>
   map(n_distinct)
 ```
 
-]
-
-.pull-right[
-
 You can see we are getting a _list_ back.
 
-]
-
----
-
-# [Iterating]{.fg-green} in a pipeline
+## [Iterating]{.fg-green} in a pipeline
 
 Or, in pipeline form:
 
@@ -1009,10 +787,7 @@ result$continent
 result[[2]]
 ```
 
-
----
-
-# [Iterating]{.fg-green} in a pipeline
+## [Iterating]{.fg-green} in a pipeline
 
 But we know [**`n_distinct()`**]{.fg-green} should always return an integer. So we use [**`map_int()`**]{.fg-green} instead of the generic [**`map()`**]{.fg-green}.
 
@@ -1027,20 +802,12 @@ The thing about the [**`map()`**]{.fg-green} family is that it can deal with all
 
 
 ---
-layout: false
-class: main-title main-title-inv middle
 
-# .middle.squish4.large[[So what's the use]{.fg-orange} [of all that stuff?]{.fg-lblue}]
+:::{.huge}
+[So what's the use]{.fg-orange} [of all that stuff?]{.fg-lblue}  
+:::
 
----
-
-
-
-
----
-
-
-# Grouped analysis and [list columns]{.fg-orange}
+## Grouped analysis and [list columns]{.fg-orange}
 
 Let's say I want to fit a simple model to data for all countries in Europe in 1977.
 
@@ -1058,10 +825,7 @@ fit <- lm(lifeExp ~ log(gdpPercap), data = eu77)
 summary(fit)
 ```
 
-
----
-
-# Grouped analysis and [list columns]{.fg-orange}
+## Grouped analysis and [list columns]{.fg-orange}
 
 What if I want to do that for all Continent-Year combinations? I'm not going to write a loop!
 
@@ -1078,9 +842,7 @@ out_le
 
 Think of nesting as a kind of "super-grouping". Look in the object inspector.
 
----
-
-# Grouped analysis and [list columns]{.fg-orange}
+## Grouped analysis and [list columns]{.fg-orange}
 
 Europe '77 is still in there.
 
@@ -1091,9 +853,7 @@ out_le |>
   unnest(cols = c(data))
 ```
 
----
-
-# Grouped analysis and [list columns]{.fg-orange}
+## Grouped analysis and [list columns]{.fg-orange}
 
 ```{r}
 #| label: "06-work-with-models-47"
@@ -1117,9 +877,7 @@ out_le <- gapminder |>
     mutate(model = map(data, fit_ols)) #<<
 ```
 
----
-
-# Grouped analysis and [list columns]{.fg-orange}
+## Grouped analysis and [list columns]{.fg-orange}
 
 - Now we have a new column. Each row of the [`model`]{.fg-orange} column contains a full regression for that continent-year.
 
@@ -1129,9 +887,7 @@ out_le
 ```
 
 
----
-
-# Grouped analysis and [list columns]{.fg-orange}
+## Grouped analysis and [list columns]{.fg-orange}
 
 We can tidy the nested models, too.
 
@@ -1152,9 +908,7 @@ out_tidy
 ```
 
 
----
-
-# Grouped analysis and [list columns]{.fg-orange}
+## Grouped analysis and [list columns]{.fg-orange}
 
 We can get the tidied results out into the main table if we like.
 
@@ -1168,9 +922,7 @@ out_tidy <- out_tidy |>
 out_tidy
 ```
 
----
-
-# Plot what we have
+## Plot what we have
 
 ```{r }
 #| label: "06-work-with-models-52"
@@ -1192,7 +944,6 @@ p_out <- p +
 
 
 ---
-layout: false
 
 ```{r}
 #| label: "06-work-with-models-53"
@@ -1202,18 +953,10 @@ layout: false
 p_out
 ```
 
-
-.right.w90.small[Repeated Estimates of log GDP on Life Expectancy by Continent]
-
-
----
+Repeated Estimates of log GDP on Life Expectancy by Continent
 
 
-
-
----
-
-# And there's more ... 
+## And there's more ... 
 
 Let's go back to this stage:
 
@@ -1233,9 +976,7 @@ out_tidy <- gapminder |>
 out_tidy
 ```
 
----
-
-# A function to draw a coef plot
+## A function to draw a coef plot
 
 ```{r }
 #| label: "06-work-with-models-55"
@@ -1254,9 +995,7 @@ mod_plot <- function(data,
 }
 ```
 
----
-
-# Add it using [`map2()`]{.fg-green} or [`pmap()`]{.fg-green}
+## Add it using [`map2()`]{.fg-green} or [`pmap()`]{.fg-green}
 
 - When we have two arguments to feed a function we can use [`map2()`]{.fg-green}. The general case is [`pmap()`]{.fg-green}, for passing along any number of arguments in a list.
 
@@ -1277,32 +1016,30 @@ out_tidy
 
 - Now, every element of [`ggout`]{.fg-orange} is ...
 
----
+## A plot!
 
-# A plot!
-
-.pull-left[
+:::: {.columns}
+::: {.column width="50%"}
 ```{r}
 #| label: "06-work-with-models-57"
 #| fig.height: 3
 #| fig.width: 6
 out_tidy$ggout[[8]]
 ```
-]
+:::
 
-
-.pull-right[
+::: {.column width="50%" .right}
 ```{r}
 #| label: "06-work-with-models-58"
 #| fig.height: 3
 #| fig.width: 6
 out_tidy$ggout[[18]]
 ```
-]
 
----
+:::
+::::
 
-# We don't just put them in there for fun
+## We don't just put them in there for fun
 
 - We can e.g. [`walk`]{.fg-green} the plots out to disk
 
@@ -1326,9 +1063,7 @@ pwalk(
                        
 ```
 
----
-
-# Peek in the [`figures/`]{.fg-orange} folder
+## Peek in the [`figures/`]{.fg-orange} folder
 
 ```{r }
 #| label: "06-work-with-models-60"
@@ -1338,59 +1073,35 @@ fs::dir_ls(here("figures")) |>
 
 ---
 
-class: right bottom main-title section-title-1
-
-## .huge.right.bottom.squish4[[Get model-based graphics]{.fg-yellow} [right]{.fg-lblue}]
-
----
-layout: false
-class: main-title main-title-inv
-
-## .squish4.large.right[[Present findings in substantive terms]{.fg-green}]
-
---
-
-## .squish4.large.right[[Show degrees of confidence or uncertainty]{.fg-lblue}]
-
---
-## .squish4.large.right[[Show the data when you can]{.fg-pink}]
-
-
----
-layout: false
-class: main-title main-title-inv
-
-## .squish4.huge.top.center[[These points apply .kjh-orange[just as well]{.fg-blue} to  presenting data in _any_ format: tables, models, text, whatever. [Graphs are not special here!]{.fg-pink}]]
+:::{.huge}
+[Get model-based graphics]{.fg-yellow} [right]{.fg-lblue}  
+:::
 
 ---
 
-
-
-# .huge.squish4[[Plot Marginal Effects]{.fg-lblue}]
-
----
-
-class: right bottom main-title section-title-1
-
-## .huge.right.bottom.squish4[[The]{.fg-yellow} [`marginaleffects`]{.fg-lblue} [package]{.fg-yellow}]
+:::{.huge}
+- [Present findings in substantive terms]{.fg-green}
+- [Show degrees of confidence or uncertainty]{.fg-lblue}
+- [Show the data when you can]{.fg-pink}
+:::
 
 ---
 
+:::{.huge}
+[But these points apply .kjh-orange[just as well]{.fg-blue} to  presenting data in _any_ format: tables, models, text, whatever. [Graphs are not special here!]{.fg-pink}]
+  
+:::
 
+# [Plot Marginal Effects]{.fg-lblue} with the [`marginaleffects`]{.fg-lblue} package
 
-
----
-
-# An example from the GSS
+## An example from the GSS
 
 ```{r }
 #| label: "06-work-with-models-61"
 gss_sm
 ```
 
----
-
-# Set up our model
+## Set up our model
 
 ```{r }
 #| label: "06-work-with-models-62"
@@ -1405,9 +1116,7 @@ tidy(out_bo)
 
 ```
 
----
-
-# Calculate the Marginal Effects
+## Calculate the Marginal Effects
 
 ```{r }
 #| label: "06-work-with-models-63"
@@ -1419,9 +1128,7 @@ bo_mfx <- marginaleffects(out_bo)
 as_tibble(bo_mfx)
 ```
 
----
-
-# Calculate the AMEs
+## Calculate the AMEs
 
 - And this gives us the Average Marginal Effects
 
@@ -1431,27 +1138,22 @@ summary(bo_mfx) |>
   as_tibble()
 ```
 
----
-
-# Alternatively, do it with [`broom`]{.fg-lblue}
+## Alternatively, do it with [`broom`]{.fg-lblue}
 
 ```{r }
 #| label: "06-work-with-models-65"
 tidy(bo_mfx)
 ```
 
----
-
-# Which gets us back to familiar territory
+## Which gets us back to familiar territory
 
 
-.pull-left.w40[
 ```{r}
 #| label: "codefig-meffects"
 #| message: FALSE
-#| fig.show: "hide"
 #| fig.width: 7
 #| fig.height: 3.5
+#| output-location: column
 
 tidy(bo_mfx) |> 
   ggplot(mapping = aes(x = estimate, 
@@ -1466,34 +1168,13 @@ tidy(bo_mfx) |>
        y = NULL)
 
 ```
-]
 
---
-
-.pull-right.w60[
-```{r}
-#| label: "06-work-with-models-66"
-#| echo: FALSE
-  knitr::include_graphics(
-  knitr::fig_chunk("codefig-meffects", "png"))
-```
-]
-
----
-
-
-
-
----
-
-# [`marginaleffects`]{.fg-lblue} can do a lot more
+## [`marginaleffects`]{.fg-lblue} can do a lot more
 
 ![](img/06_marginaleffects_package.png)
 
 
----
-
-# [`marginaleffects`]{.fg-lblue} can do a lot more
+## [`marginaleffects`]{.fg-lblue} can do a lot more
 
 - .medium[It includes a range of plotting methods, to produce graphics directly.] 
 
@@ -1501,32 +1182,14 @@ tidy(bo_mfx) |>
 
 - .medium[Also check out [`modelsummary`]{.fg-lblue}, by the same author, for quick and flexible summaries of models and datasets. Again, this sort of package is very convenient to use directly. But with just a little facility with R and tidyverse-style idioms and patterns, you'll get even more out of it. You'll better understand how to adapt it and why its functions work as they do.] 
 
----
+# [Complex Surveys]{.fg-lblue} with the [`survey`]{.fg-lblue} [and]{.fg-yellow} [`srvyr`]{.fg-lblue} packages
 
 
+## Working with complex surveys
 
-# .huge[[Complex Surveys]{.fg-lblue}]
+- As always, our question is "What's the smoothest way for me to get a [tidy table of results]{.fg-orange} I need to hand off to [`ggplot`]{.fg-lblue}?"
 
-
----
-
-class: right bottom main-title section-title-1
-
-## .huge.right.bottom.squish4[[Using the]{.fg-yellow} [`survey`]{.fg-lblue} [and]{.fg-yellow} [`srvyr`]{.fg-lblue} [packages]{.fg-yellow}]
-
-
----
-
-
-
-
----
-
-# Working with complex surveys
-
-As always, our question is "What's the smoothest way for me to get the [tidy table of results]{.fg-orange} I need to hand off to [`ggplot`]{.fg-lblue}?"
-
-For complex surveys, we use [`survey`]{.fg-lblue}, the standard package for survey analysis in R, and [`srvyr`]{.fg-lblue}, a helper package designed to integrate what [`survey`]{.fg-lblue} can do with the Tiydverse framework. 
+- For complex surveys, we use [`survey`]{.fg-lblue}, the standard package for survey analysis in R, and [`srvyr`]{.fg-lblue}, a helper package designed to integrate what [`survey`]{.fg-lblue} can do with the Tiydverse framework. 
 
 ```{r }
 #| label: "06-work-with-models-67"
@@ -1535,9 +1198,7 @@ library(survey)
 library(srvyr)
 ```
 
----
-
-# Example: The GSS again
+## Example: The GSS again
 
 This time, a small piece of the full GSS from the early 1970s to 2018.
 
@@ -1546,10 +1207,7 @@ This time, a small piece of the full GSS from the early 1970s to 2018.
 gss_lon
 ```
 
----
-
-
-# Add the weighting information
+## Add the weighting information
 
 ```{r }
 #| label: "06-work-with-models-69"
@@ -1568,9 +1226,7 @@ gss_svy <- gss_lon |>
 gss_svy # Now it's no longer simply a tibble
 ```
 
----
-
-# Trends in the [`happy`]{.fg-orange} measure
+## Trends in the [`happy`]{.fg-orange} measure
 
 ```{r }
 #| label: "06-work-with-models-70"
@@ -1583,16 +1239,14 @@ out_hap
 
 Once again, it's now a tidy tibble, and we know what to do with those.
 
----
+## Trends in the [`happy`]{.fg-orange} measure
 
-
-.pull-left.w45[
 ```{r}
 #| label: "codefig-gssaltfig"
 #| message: FALSE
-#| fig.show: "hide"
 #| fig.width: 4.8
 #| fig.height: 4.5
+#| output-location: column
 out_hap |>  
   filter(happy == "Not Too Happy") |> 
   ggplot(mapping = aes(x = year, 
@@ -1612,22 +1266,8 @@ out_hap |>
     caption = "Data: GSS.")
 
 ```
-]
 
---
-
-.pull-right.w55[
-```{r}
-#| label: "06-work-with-models-71"
-#| echo: FALSE
-  knitr::include_graphics(
-  knitr::fig_chunk("codefig-gssaltfig", "png"))
-```
-]
-
----
-
-# With a proper aspect ratio
+## With a proper aspect ratio
 
 ```{r}
 #| label: "06-work-with-models-72"
@@ -1653,14 +1293,7 @@ out_hap |>
     caption = "Data: GSS.")
 ```
 
----
-
-
-
-
----
-
-# A more complex example
+## A more complex example
 
 ```{r }
 #| label: "06-work-with-models-73"
@@ -1670,9 +1303,7 @@ gss_svy |>
   summarize(prop = survey_mean(na.rm = TRUE)) 
 ```
 
----
-
-# Let's put that in an object
+## Let's put that in an object
 
 ```{r }
 #| label: "06-work-with-models-74"
@@ -1684,9 +1315,7 @@ out_yrd <- gss_svy |>
 
 ```
 
----
-
-# Check the sums
+## Check the sums
 
 ```{r }
 #| label: "06-work-with-models-75"
@@ -1695,9 +1324,7 @@ out_yrd |>
   summarize(tot = sum(prop))
 ```
 
----
-
-# Set up the plot
+## Set up the plot
 
 ```{r }
 #| label: "06-work-with-models-76"
@@ -1716,17 +1343,14 @@ dodge_w <- position_dodge(width = 0.9)
 ```
 
 
----
+## Draw the plot
 
-# Draw the plot
-
-.pull-left.w45[
 ```{r}
 #| label: "codefig-barplotreplace"
 #| message: FALSE
-#| fig.show: "hide"
 #| fig.width: 4.8
 #| fig.height: 4.5
+#| output-location: column
 p + geom_col(position = dodge_w, alpha = 0.2) +
     geom_errorbar(position = dodge_w, width = 0.2) +
     scale_x_discrete(labels = wrap_format(10)) +
@@ -1743,22 +1367,8 @@ p + geom_col(position = dodge_w, alpha = 0.2) +
     facet_wrap(~ year, ncol = 2) 
 
 ```
-]
 
---
-
-.pull-right.w55[
-```{r}
-#| label: "06-work-with-models-77"
-#| echo: FALSE
-  knitr::include_graphics(
-  knitr::fig_chunk("codefig-barplotreplace", "png"))
-```
-]
-
----
-
-# In full (but switch to rows)
+## In full (but switch to rows)
 
 ```{r }
 #| label: "06-work-with-models-78"
@@ -1783,7 +1393,6 @@ p_out <- p +
 ```
 
 ---
-layout: false
 
 ```{r}
 #| label: "06-work-with-models-79"
@@ -1793,18 +1402,13 @@ layout: false
 p_out
 ```
 
---
-
-##  .large.center[Is this figure [effective]{.fg-red}? Not really!]
-
 ---
 
+:::{.huge}
+Is this figure [effective]{.fg-red}? Not really!  
+:::
 
-
-
----
-
-# Let's try a different view
+## Let's try a different view
 
 ```{r }
 #| label: "06-work-with-models-80"
@@ -1833,7 +1437,6 @@ p_out <- p +
 ```
 
 ---
-layout: false
 
 ```{r}
 #| label: "06-work-with-models-81"
@@ -1843,35 +1446,12 @@ layout: false
 p_out
 ```
 
----
-
-
-
-
----
-
-# Two other good packages: [`ggeffects`]{.fg-lblue}
+## Two other good packages: [`ggeffects`]{.fg-lblue}
 
 ![](img/06_ggeffects_package.png)
 
----
-
-# Two other good packages: [`interactions`]{.fg-lblue}
+## Two other good packages: [`interactions`]{.fg-lblue}
 
 ![](img/06_ggeffects_package.png)
-
----
-
-
-
-
----
-layout: false
-class: main-title main-title-inv middle
-
-# .middle.squish4.medium[[Look for packages]{.fg-orange} [that work tidily]{.fg-lblue}]
-
----
-
 
 
