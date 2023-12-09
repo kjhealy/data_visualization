@@ -49,24 +49,10 @@ kjh_set_slide_theme()   # ggplot theme to go with slides. Set tenso = FALSE if n
 ```
 
 
-
-
 # Show the [Right Numbers]{.fg-yellow}
 
 
-
-**Data Visualization: Session 4**
-
-.light[Kieran Healy<br>
-Code Horizons, April 2023
-]
-
-]
-
-
----
-
-# Set up our workspace
+## Load the packages we need
 
 ```{r }
 #| label: "04-show-the-right-numbers-1"
@@ -77,70 +63,56 @@ library(socviz)         # Handy socviz functions
 ```
 
 
----
-layout: false
-class: main-title main-title-inv
-
-# .middle.squish4.large[[`ggplot`]{.fg-lblue} implements a [grammar]{.fg-green} of graphics]
 
 
----
-layout: false
-class: main-title main-title-inv
 
-### .middle.large.squish3[[The grammar is a set of rules for how to .kjh-lblue[produce graphics from data]{.fg-blue}, by _[mapping]{.fg-green}_ data to or _[representing]{.fg-green}_ it by geometric [objects]{.fg-orange} (like points and lines) that have aesthetic [attributes]{.fg-orange} (like position, color, size, and shape), together with further rules for transforming data if needed, for adjusting scales and their guides, and for projecting results onto some coordinate system.]]
+# [`ggplot`]{.fg-lblue} implements a [grammar]{.fg-green} of graphics
 
----
-layout: false
-class: bottom
-background-image: url("img/04_chomsky.png")
-background-size: cover
 
-### .right.bottom.squish4.kjh-grey[Like other rules of syntax,<br />the grammar limits what you can validly say,<br />but it doesn't automatically make what you say<br />sensible or meaningful]
+## A grammar of graphics 
 
----
+The grammar is a set of rules for how to .kjh-lblue[produce graphics from data]{.fg-blue}, by _[mapping]{.fg-green}_ data to or _[representing]{.fg-green}_ it by geometric [objects]{.fg-orange} (like points and lines) that have aesthetic [attributes]{.fg-orange} (like position, color, size, and shape), together with further rules for transforming data if needed, for adjusting scales and their guides, and for projecting results onto some coordinate system.
 
-class: right bottom main-title section-title-1
 
-## .huge.right.bottom.squish4[Grouped data and the .kjh-lblue[`group`]{.fg-yellow} aesthetic]
+## {background-image="img/04_chomsky.png" background-size="cover"}
+
+
+[**Like other rules of syntax, the grammar**<br />**limits what you can validly say**<br/>**but it doesn't automatically make**<br/>**what you say**<br />**sensible or meaningful**]{.fg-offwhite}
+
+
+
+# Grouped data and the [`group`]{.fg-yellow} aesthetic
 
 ---
 
-
-
-
----
-
-`r chunq_reveal("reveal-groupline",  lcolw="50", rcolw="50", title = "# Try to make a lineplot")`
+`r chunq_reveal("reveal-groupline",  lcolw="50", rcolw="50", title = "Try to make a lineplot")`
 
 ```{r}
 #| label: "reveal-groupline"
 #| include: FALSE
-gapminder |> 
-  ggplot(mapping = aes(x = year,
+p <- ggplot(data = gapminder, 
+            mapping = aes(x = year,
                        y = gdpPercap)) + 
-  geom_line()        
+  geom_line()
+
+p
 ```
 
----
-
-
-`r chunq_reveal("reveal-groupline2",  lcolw="50", rcolw="50", title = "# Try to make a lineplot")`
+`r chunq_reveal("reveal-groupline2",  lcolw="50", rcolw="50", title = "Try to make a lineplot")`
 
 ```{r}
 #| label: "reveal-groupline2"
 #| include: FALSE
-gapminder |> 
-  ggplot(mapping = aes(x = year,
+p <- ggplot(data = gapminder, 
+            mapping = aes(x = year,
                        y = gdpPercap)) + 
-  geom_line(mapping = aes(group = country))        
+  geom_line(mapping = aes(group = country)) 
+
+p
+
 ```
 
-
----
-
-
-`r chunq_reveal("reveal-facet",  lcolw="50", rcolw="50", title = "# Facet the plot")`
+`r chunq_reveal("reveal-facet",  lcolw="50", rcolw="50", title = "Facet the plot")`
 
 ```{r}
 #| label: "reveal-facet"
@@ -154,32 +126,22 @@ gapminder |>
 ```
 
 
----
-
-# Faceting is a very powerful tool
-
-### A facet is not a geom; it's a way of arranging repeated geoms by some additional variable
-
---
-
-### Facets use R's "formula" syntax: [`facet_wrap(~ continent)`]{.fg-green} 
-
---
-
-### Read the [**`~`**]{.fg-pink} as "on" or "by"
-
---
-
-### You can also use this syntax: [`facet_wrap(vars(continent))`]{.fg-green}
-
---
-
-### This is newer, and consistent with other ways of referring to variables within tidyverse functions.
+# Faceting is very powerful 
 
 
----
+## Faceting 
 
-# Facets in action
+- A facet is not a geom; it's a way of arranging repeated geoms by some additional variable
+- Facets use R's "formula" syntax: [`facet_wrap(~ continent)`]{.fg-green} 
+- Read the [**`~`**]{.fg-pink} as "on" or "by"
+
+## Faceting 
+
+- You can also use this syntax: [`facet_wrap(vars(continent))`]{.fg-green}
+- This is newer, and consistent with other ways of referring to variables within tidyverse functions.
+
+
+## Facets in action
 
 ```{r }
 #| label: "04-show-the-right-numbers-2"
@@ -189,7 +151,7 @@ p <- ggplot(data = gapminder,
 
 p_out <- p + geom_line(color="gray70", 
               mapping=aes(group = country)) +
-    geom_smooth(linewidth = 1.1,
+    geom_smooth(size = 1.1,
                 method = "loess",
                 se = FALSE) +
     scale_y_log10(labels=scales::label_dollar()) +
@@ -201,7 +163,7 @@ p_out <- p + geom_line(color="gray70",
 ```
 
 ---
-layout: false
+
 
 ```{r}
 #| label: "04-show-the-right-numbers-3"
@@ -211,43 +173,30 @@ layout: false
 p_out
 ```
 
+::: aside
+  A more polished faceted plot.
+:::
 
-.right.w90.small[A more polished faceted plot.]
+# [One-variable]{.fg-lblue} [summaries]{.fg-yellow}
 
+## The [`midwest`]{.fg-pink} dataset
 
----
-
-class: right bottom main-title section-title-1
-
-## .huge.right.bottom.squish4[[One-variable]{.fg-lblue} [summaries]{.fg-yellow}]
-
----
-
-
-
-
----
-
-# The [`midwest`]{.fg-pink} dataset
-
-## County-level census data for Midwestern U.S. Counties
+- County-level census data for Midwestern U.S. Counties
 
 ```{r }
 #| label: "04-show-the-right-numbers-4"
 midwest
 ```
 
----
+## [`stat_`]{.fg-green} functions behind the scenes
 
-# [`stat_`]{.fg-green} functions work behind the scenes
-
-.pull-left.w45[
 ```{r}
 #| label: "codefig-histogram"
 #| message: TRUE
-#| fig.show: "hide"
 #| fig.width: 4.8
 #| fig.height: 4.5
+#| output-location: column
+
 p <- ggplot(data = midwest, 
             mapping = aes(x = area))
 
@@ -255,31 +204,19 @@ p + geom_histogram()
 
 ```
 
-- Here the default [`stat_`]{.fg-green} function for this geom has to make a choice. It is letting us know we might want to override it.
-
-]
-
-.pull-right.w55[
-```{r}
-#| label: "04-show-the-right-numbers-5"
-#| echo: FALSE
-  knitr::include_graphics(
-  knitr::fig_chunk("codefig-histogram", "png"))
-```
-]
+Here the default [`stat_`]{.fg-green} function for this geom has to make a choice. It is letting us know we might want to override it.
 
 
----
 
-# [`stat_`]{.fg-green} functions work behind the scenes
+## [`stat_`]{.fg-green} functions behind the scenes
 
-.pull-left.w45[
 ```{r}
 #| label: "codefig-histogram2"
 #| message: TRUE
-#| fig.show: "hide"
 #| fig.width: 4.8
 #| fig.height: 4.5
+#| output-location: column
+
 p <- ggplot(data = midwest, 
             mapping = aes(x = area))
 
@@ -288,29 +225,16 @@ p + geom_histogram(bins = 10)
 ```
 
 - We can choose _either_ the number of bins _or_ the `binwidth`
-]
 
-.pull-right.w55[
-```{r}
-#| label: "04-show-the-right-numbers-6"
-#| echo: FALSE
-  knitr::include_graphics(
-  knitr::fig_chunk("codefig-histogram2", "png"))
-```
-]
+## Compare two distributions
 
----
-
-# Compare two distributions
-
-
-.pull-left.w45[
 ```{r}
 #| label: "codefig-subset"
 #| message: FALSE
-#| fig.show: "hide"
 #| fig.width: 4.8
 #| fig.height: 4.5
+#| output-location: column
+#| 
 
 ## Two state codes
 oh_wi <- c("OH", "WI")
@@ -326,93 +250,50 @@ midwest |>
 
 - Here we do the whole thing in a [pipeline]{.fg-red} using the pipe and the `dplyr` verb [`filter()`]{.fg-green} to subset rows of the data by some condition.
 - Experiment with leaving the `position` argument out, or changing it to `"dodge"`.
-]
-
---
-
-.pull-right.w55[
-```{r}
-#| label: "04-show-the-right-numbers-7"
-#| echo: FALSE
-  knitr::include_graphics(
-  knitr::fig_chunk("codefig-subset", "png"))
-```
-]
-
----
-
-# [geom_hist()]{.fg-green}'s counterpart, [geom_density()]{.fg-green}
 
 
-.pull-left.w45[
+
+## [geom_density()]{.fg-green}
+
 ```{r}
 #| label: "codefig-density1"
 #| message: FALSE
-#| fig.show: "hide"
 #| fig.width: 4.8
 #| fig.height: 4.5
+#| output-location: column
+
 p <- ggplot(data = midwest, 
             mapping = aes(x = area))
 
 p + geom_density()
 ```
-]
-
---
-
-.pull-right.w55[
-```{r}
-#| label: "04-show-the-right-numbers-8"
-#| echo: FALSE
-  knitr::include_graphics(
-  knitr::fig_chunk("codefig-density1", "png"))
-```
-]
-
----
-
-# [geom_hist()]{.fg-green}'s counterpart, [geom_density()]{.fg-green}
 
 
-.pull-left.w45[
+## [geom_density()]{.fg-green}
+
 ```{r}
 #| label: "codefig-density2"
 #| message: FALSE
-#| fig.show: "hide"
 #| fig.width: 4.8
 #| fig.height: 4.5
+#| output-location: column
+
 p <- ggplot(data = midwest,
             mapping = aes(x = area, 
                           fill = state, 
                           color = state))
 p + geom_density(alpha = 0.3)
 ```
-]
-
---
-
-.pull-right.w55[
-```{r}
-#| label: "04-show-the-right-numbers-9"
-#| echo: FALSE
-  knitr::include_graphics(
-  knitr::fig_chunk("codefig-density2", "png"))
-```
-]
 
 
----
+## [geom_density()]{.fg-green}
 
-# [geom_hist()]{.fg-green}'s counterpart, [geom_density()]{.fg-green}
-
-
-.pull-left.w45[
 ```{r}
 #| label: "codefig-density3"
 #| message: FALSE
-#| fig.show: "hide"
 #| fig.width: 4.8
 #| fig.height: 4.5
+#| output-location: column
 
 midwest |>
   filter(state %in% oh_wi) |> 
@@ -424,20 +305,7 @@ midwest |>
 
 ```
 
-- `after_stat(ndensity)` here is not in our data! It's _computed_. Histogram and density geoms have default statistics, but you can ask them to do more. The `stat_` functions associated with each `geom_` do this work behind the scenes.
-
-]
-
---
-
-.pull-right.w55[
-```{r}
-#| label: "04-show-the-right-numbers-10"
-#| echo: FALSE
-  knitr::include_graphics(
-  knitr::fig_chunk("codefig-density3", "png"))
-```
-]
+- `ndensity` here is not in our data! It's _computed_. Histogram and density geoms have default statistics, but you can ask them to do more. The `after_stat` functions can do this work for us.
 
 
 ```{r}
@@ -502,34 +370,19 @@ df <- pmap_dfc(params, rnorm, n = N) |>
 
 ```
 
----
-class: right bottom main-title section-title-1
+# Compare .kjh-lblue[subgroups]{.fg-yellow} to a reference distribution
 
-## .huge.right.bottom.squish4[Compare .kjh-lblue[subgroups]{.fg-yellow} to a reference distribution]
+## Some made-up data
 
----
-
-
-
-
----
-
-# Some made-up data
-
-.pull-left[
 - Consider 3,000 observations of some unit (e.g., a county) with summary measures for each group, and the population average.
-]
 
-.pull-right[
 ```{r }
 #| label: "04-show-the-right-numbers-12"
 df
 ```
-]
 
----
 
-`r chunq_reveal("reveal-pivlongex",  lcolw="35", rcolw="65", title = "# Get the data into long format!")`
+`r chunq_reveal("reveal-pivlongex",  lcolw="35", rcolw="65", title = "## Get the data into long format!")`
 
 ```{r}
 #| label: "reveal-pivlongex"
@@ -537,17 +390,17 @@ df
  df |> 
   pivot_longer(cols = pop_a:pop_total)
 ```
----
 
-# First effort: Hard to read
 
-.pull-left.w50[
+## First effort: Hard to read
+
+
 ```{r}
 #| label: "codefig-refdist1"
 #| message: FALSE
-#| fig.show: "hide"
 #| fig.width: 4.8
 #| fig.height: 4.5
+#| output-location: column
 df |> 
   pivot_longer(cols = pop_a:pop_total)  |> 
   ggplot() + 
@@ -564,21 +417,7 @@ df |>
 
 - Again, `after_stat(ncount)` is computed.
 
-]
-
---
-
-.pull-right.w50[
-```{r}
-#| label: "04-show-the-right-numbers-13"
-#| echo: FALSE
-  knitr::include_graphics(
-  knitr::fig_chunk("codefig-refdist1", "png"))
-```
-]
-
----
-`r chunq_reveal("reveal-pivottrick1",  lcolw="45", rcolw="55", title = "# A little pivot trick")`
+`r chunq_reveal("reveal-pivottrick1",  lcolw="45", rcolw="55", title = "## A little pivot trick")`
 
 ```{r}
 #| label: "reveal-pivottrick1"
@@ -588,8 +427,7 @@ df |>
   pivot_longer(cols = pop_a:pop_total)
 ```
 
----
-`r chunq_reveal("reveal-pivottrick2",  lcolw="45", rcolw="55", title = "# A little pivot trick")`
+`r chunq_reveal("reveal-pivottrick2",  lcolw="45", rcolw="55", title = "## A little pivot trick")`
 
 ```{r}
 #| label: "reveal-pivottrick2"
@@ -599,11 +437,12 @@ df |>
  df |>
   pivot_longer(cols = pop_a:pop_c)
 ```
----
 
-# Now facet with that data
 
-.pull-left.w55[
+## Now facet with that data
+
+:::: {.columns}
+::: {.column width="60%"}
 ```{r }
 #| label: "04-show-the-right-numbers-14"
 p_out <- df |>
@@ -624,18 +463,17 @@ p_out <- df |>
        subtitle = "Reference distribution shown in gray") + 
   facet_wrap(~ name, nrow = 1) 
 ```
-]
+:::
 
-.pull-right.w45[
-
+::: {.column width="40%" .right}
 - Remember, we can layer geoms one on top of the other. Here we call [`geom_histogram()`]{.fg-green} twice. What happens if you comment one or other of them out?
 - The call to [`guides()`]{.fg-green} turns off the legend for the color and fill, because we don't need them. 
 
-]
+:::
+::::
 
----
 
-# Now facet with that data
+## Now facet with that data
 
 ```{r}
 #| label: "04-show-the-right-numbers-15"
@@ -646,20 +484,10 @@ p_out
 ```
 
 
----
-class: right bottom main-title section-title-1
 
-## .huge.right.bottom.squish4[[Avoid counting up,]{.fg-yellow}<br />[when necessary]{.fg-lblue}]
+# [Avoid counting up,]{.fg-yellow}<br />[when necessary]{.fg-lblue}
 
----
-
-
-
-
----
-
-# Sometimes no counting is required
-
+## Sometimes no counting is needed
 
 ```{r}
 #| label: "04-show-the-right-numbers-16"
@@ -667,26 +495,23 @@ class: right bottom main-title section-title-1
 ggplot2::theme_set(ggplot2::theme_classic())
 ```
 
-
 ```{r }
 #| label: "04-show-the-right-numbers-17"
 titanic
 ```
 
-
 - Here we just have a summary table and want to plot a few numbers directly in a bar chart.
 
----
+## [geom_bar()]{.fg-green} wants to count up
 
-# [geom_bar()]{.fg-green} wants to count up
 
-.pull-left.w45[
 ```{r}
 #| label: "codefig-titanic1"
 #| message: FALSE
-#| fig.show: "hide"
 #| fig.width: 4.8
 #| fig.height: 4.5
+#| output-location: column
+
 p <- ggplot(data = titanic,
             mapping = aes(x = fate, 
                           y = percent, 
@@ -696,30 +521,15 @@ p + geom_bar(stat = "identity") #<<
 
 - By default [`geom_bar()`]{.fg-green} tries to count up data by category. (Really it's the [`stat_count()`]{.fg-green} function that does this behind the scenes.) By saying `stat="identity"` we explicitly tell it not to do that. This also allows us to use a `y` mapping. Normally this would be the result of the counting up.
 
-]
 
---
+## [geom_bar()]{.fg-green} stacks bars by default
 
-.pull-right.w55[
-```{r}
-#| label: "04-show-the-right-numbers-18"
-#| echo: FALSE
-  knitr::include_graphics(
-  knitr::fig_chunk("codefig-titanic1", "png"))
-```
-]
-
----
-
-# [geom_bar()]{.fg-green} stacks bars by default
-
-.pull-left.w45[
 ```{r}
 #| label: "codefig-titanic2"
 #| message: FALSE
-#| fig.show: "hide"
 #| fig.width: 4.8
 #| fig.height: 4.5
+#| output-location: column
 p <- ggplot(data = titanic,
             mapping = aes(x = fate, 
                           y = percent, 
@@ -729,31 +539,16 @@ p + geom_bar(stat = "identity",
 ```
 
 - Position arguments adjust whether the things drawn are placed on top of one another (`"stack"`), side-by-side (`"dodge"`), or taken as-is (`"identity"`).
+  
 
-]
+## A quick [theme()]{.fg-green} adjustment
 
---
-
-.pull-right.w55[
-```{r}
-#| label: "04-show-the-right-numbers-19"
-#| echo: FALSE
-  knitr::include_graphics(
-  knitr::fig_chunk("codefig-titanic2", "png"))
-```
-]
-
----
-
-# A quick [theme()]{.fg-green} adjustment
-
-.pull-left.w45[
 ```{r}
 #| label: "codefig-titanic3"
 #| message: FALSE
-#| fig.show: "hide"
 #| fig.width: 4.8
 #| fig.height: 4.5
+#| output-location: column
 p <- ggplot(data = titanic,
             mapping = aes(x = fate, 
                           y = percent, 
@@ -765,30 +560,15 @@ p + geom_bar(stat = "identity",
 
 - The [`theme()`]{.fg-green} function controls the styling of parts of the plot that don't belong to its "grammatical" structure. That is, that are not contributing to directly representing data.
 
-]
 
---
+## For convenience, use [`geom_col()`]{.fg-green}
 
-.pull-right.w55[
-```{r}
-#| label: "04-show-the-right-numbers-20"
-#| echo: FALSE
-  knitr::include_graphics(
-  knitr::fig_chunk("codefig-titanic3", "png"))
-```
-]
-
----
-
-# For convenience, use [`geom_col()`]{.fg-green}
-
-.pull-left.w45[
 ```{r}
 #| label: "codefig-geomcol"
 #| message: FALSE
-#| fig.show: "hide"
 #| fig.width: 4.8
 #| fig.height: 4.5
+#| output-location: column
 p <- ggplot(data = titanic,
             mapping = aes(x = fate, 
                           y = percent, 
@@ -799,22 +579,8 @@ p + geom_col(position = "dodge") + #<<
 
 - [`geom_col()`]{.fg-green} assumes `stat = "identity"` by default. It's for when you want to directly plot a table of values, rather than create a bar chart by summing over one varible categorized by another.
 
-]
 
---
-
-.pull-right.w55[
-```{r}
-#| label: "04-show-the-right-numbers-21"
-#| echo: FALSE
-  knitr::include_graphics(
-  knitr::fig_chunk("codefig-geomcol", "png"))
-```
-]
-
----
-
-# Using [`geom_col()`]{.fg-green} for thresholds
+## Using [`geom_col()`]{.fg-green} for thresholds
 
 ```{r}
 #| label: "04-show-the-right-numbers-22"
@@ -823,27 +589,28 @@ p + geom_col(position = "dodge") + #<<
 kjhslides::kjh_set_slide_theme()
 ```
 
-
-.pull-left[
+:::: {.columns}
+::: {.column width="45%"}
 ```{r }
 #| label: "04-show-the-right-numbers-23"
 oecd_sum
 ```
-]
 
-.pull-right[
+:::
+
+::: {.column width="55%" .right}
 - Data comparing U.S. average life expectancy to the rest of the OECD average. 
 - [`diff`]{.fg-orange} is difference in years with respect to the U.S. 
 - [`hi_lo`]{.fg-orange} is a flag saying whether the OECD is above or below the U.S.
 
+:::
+::::
 
-]
 
----
+## Using [geom_col()]{.fg-green} for thresholds
 
-# Using [geom_col()]{.fg-green} for thresholds
-
-.pull-left.w45[
+:::: {.columns}
+::: {.column width="45%"}
 ```{r }
 #| label: "04-show-the-right-numbers-24"
 p <- ggplot(data = oecd_sum, 
@@ -852,7 +619,7 @@ p <- ggplot(data = oecd_sum,
                           fill = hi_lo))
 
 p_out <- p + geom_col() + 
-  geom_hline(yintercept = 0, linewidth = 1.2) + #<<
+  geom_hline(yintercept = 0, size = 1.2) + #<<
   guides(fill = "none") + 
   labs(x = NULL, #<<
        y = "Difference in Years", 
@@ -861,15 +628,17 @@ p_out <- p + geom_col() +
        OECD average life expectancies, 1960-2015",
        caption = "Data: OECD.")
 ```
-]
 
-.pull-right.w55[
+:::
+
+::: {.column width="55%" .right}
 - [`geom_hline()`]{.fg-green} doesn't take any data argument. It just draws a horizontal line with a given y-intercept.
 - `x = NULL` means "Don't label the x-axis (not even with the default value, the variable name).
-]
----
 
-# Using [`geom_col()`]{.fg-green} for thresholds
+:::
+::::
+
+## Using [`geom_col()`]{.fg-green} for thresholds
 
 ```{r}
 #| label: "04-show-the-right-numbers-25"
@@ -878,4 +647,5 @@ p_out <- p + geom_col() +
 #| fig.height: 4
 p_out
 ```
+
 
