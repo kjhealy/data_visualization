@@ -1,0 +1,1831 @@
+---
+title: "Data Visualization - 7. Make Maps"
+format: kjhslides-revealjs
+engine: knitr
+filters:
+  - invert-h1
+  - line-highlight
+  - include-code-files
+author:
+  - name: Kieran Healy
+    affiliation: "Code Horizons"
+date: last-modified
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| label: "note"
+#| include: FALSE
+## NB: By default the  template will create a new subdirectory with its files inside.
+```
+
+
+```{r}
+#| label: "packages"
+#| include: FALSE
+library(flipbookr)
+library(here)
+library(tidyverse)
+library(kjhslides)
+```
+
+
+```{r}
+#| label: "setup"
+#| include: FALSE
+## Configure the slides
+
+kjh_register_tenso()    # Default fonts. Comment out if you don't have Tenso and Berkeley fonts.
+kjh_set_knitr_opts()    
+kjh_set_slide_theme()   # ggplot theme to go with slides. Set tenso = FALSE if necessary.
+
+
+```
+
+
+# [Making]{.fg-yellow} [Maps]{.fg-lblue}
+
+## Load our packages
+
+```{r}
+#| label: "07-make-maps-1"
+#| message: FALSE
+library(here)      # manage file paths
+library(socviz)    # data and some useful functions
+library(tidyverse) # your friend and mine
+library(maps)      # Some basic maps
+library(sf)        # Simple Features Geometries and geom_sf()
+library(ggforce)   # Useful enhancements to ggplot
+```
+
+---
+
+
+
+# [Choropleths]{.fg-lblue}
+
+
+---
+
+
+![State-level; vote share; diverging; binned into four categories.](img/07_election_state_1.png)
+
+
+
+---
+
+![County level; winner only](img/07_election_county.png)
+
+
+---
+
+![County level vote share; diverging; binned into six categories](img/07_election_county_share.png)
+
+
+---
+
+![County level vote share; diverging continuous; purple midpoint](img/07_election_county_purple.png)
+
+
+
+---
+
+![County level vote share; purple midpoint; county area deformed in proportion to population. By Mark Newman](img/07_election_county_purple_pop.png)
+
+
+---
+
+![Electoral college cartogram (NYT)](img/07_election_electoral_college_cartogram.png)
+
+
+
+---
+
+![Pretty, Big, and Pretty Empty](img/07_federal_lands_cred_sm.png)
+
+---
+
+![Pretty, Big, and Pretty Empty](img/07_federal_lands_admin_sm.png)
+
+---
+
+
+## Aside: What the hell's that?
+
+![](img/07_nevada_sm_clip.png)
+
+
+## Zoom and Enhance
+
+![Suprisingly, not a coding error on my part.](img/07_federal_checkerboard_sm.png)
+
+
+---
+
+## It's the [Transcontinental Railroad]{.fg-pink}
+
+![Making its way through the [Great Basin]{.fg-lblue}, America's largest [endorheic watershed]{.fg-orange}. The checkerboard is a deliberate assignation of property rights along the borders of the railway line.](img/07_trans_pacific_route.png)
+
+---
+
+## Still with us, too
+
+![Not identical, as Interstate 80 was able to go through some parts the railroad had to go around. OK, now back to scheduled programming.](img/07_interstate_80_route.png)
+
+
+
+# [Maps as]{.fg-yellow} [polygons]{.fg-lblue}
+
+## Packages
+
+```{r}
+library(here)       # manage file paths
+library(socviz)     # data and some useful functions
+library(tidyverse)  # your friend and mine
+library(maps)       # Some basic maps
+library(ggforce)    # ggplot extensions
+```
+
+## Take a look at this data
+
+```{r }
+#| label: "07-make-maps-6"
+## This is from the map library
+# library(maps)
+
+us_states <- map_data("state")
+
+dim(us_states)
+
+## Making it a tibble prevents crashes 
+## in the slide rendering later on
+us_states <- as_tibble(us_states)
+
+us_states
+
+```
+
+## What is this, at root?
+
+```{r }
+#| label: "07-make-maps-7"
+us_states
+
+```
+
+- It's a series of rows defining `x` and `y` coordinatates on a plane. 
+- If we join those points up as lines while respecting their `group` (i.e. so `ggplot` knows when to "lift the pen", as with the `gapminder` line plot), we will get an outline map of states in the U.S. 
+
+## Like this, with [`geom_polygon()`]{.fg-green}
+
+```{r}
+#| label: "codefig-poly1"
+#| message: FALSE
+#| fig.width: 6
+#| fig.height: 4.5
+#| output-location: column
+  
+us_states |>
+  ggplot(mapping = aes(x = long, 
+                       y = lat, 
+                       group = group)) +
+  geom_polygon(fill = "white", 
+               color = "black") +
+  labs(title = "This looks horrible")
+
+```
+
+
+## We can show a [`fill`]{.fg-orange}, too, like any geom
+
+```{r}
+#| label: "codefig-poly2"
+#| message: FALSE
+#| fig.width: 6
+#| fig.height: 4.5
+#| output-location: column
+
+us_states |>
+  ggplot(mapping = aes(x = long, 
+                       y = lat,
+                       fill = region,#<<
+                       group = group)) +
+  geom_polygon(color = "black") + 
+  guides(fill = "none") + #<<
+  labs(title = "Still looks horrible", 
+       caption = "Set fill = none 
+         to stop ggplot from 
+         producing a key
+         with 50 entries")
+
+```
+
+## We need to do two things
+
+- 1: Fix the [map projection]{.fg-lblue}
+- 2: [Add some data]{.fg-orange} to fill with.
+
+## For now, we'll do it the direct way
+
+- [To make explicit what's happening, and to emphasize how [_it's all just points and lines made from tables_]{.fg-pink} we'll first do it at the level of the [`ggplot`]{.fg-lblue} grammar with a geom that just draws shapes, [`geom_polygon()`]{.fg-green}. After that, we'll introduce a new package, [`sf`]{.fg-lblue} and a new geom, [`geom_sf()`]{.fg-green} that will handle this for us, and more.]{.large}
+
+
+`r chunq_reveal("reveal-coord",  lcolw="50", rcolw="50", smallcode = TRUE, title = "Fix the projection")`
+
+```{r}
+#| label: "reveal-coord"
+#| include: FALSE
+us_states <- as_tibble(map_data("state"))
+
+us_states |>
+  ggplot(mapping = aes(x = long, 
+                       y = lat,
+                       fill = region,
+                       group = group)) +
+  geom_polygon(color = "black") + 
+  guides(fill = "none") +
+  coord_map(projection = "albers", 
+            lat0 = 39, 
+            lat1 = 45) 
+```
+
+## U.S. Map Projections
+
+![A selection of projections](img/09_four_us_projections.png)
+
+
+## U.S. Map Projections
+
+![Albers is the standard](img/09_us_albers.png)
+
+---
+
+
+```{r}
+#| label: "07-make-maps-10"
+#| echo: FALSE
+#| fig.height: 8
+#| fig.width: 15
+us_states |>
+  ggplot(mapping = aes(x = long, 
+                       y = lat,
+                       fill = region,#<<
+                       group = group)) +
+  geom_polygon(color = "black") + 
+  coord_map(projection = "albers", #<
+            lat0 = 39,  #<
+            lat1 = 45) + #<
+  guides(fill = "none")
+```
+
+
+- Our U.S. Map again, now transformed
+
+## Next, some data
+
+We can merge our state-level `election` data with the `us_states` table, but we need to do a little work.
+
+:::: {.columns}
+::: {.column width="50%"}
+```{r }
+#| label: "07-make-maps-11"
+us_states
+```
+
+:::
+
+::: {.column width="50%" .right}
+```{r }
+#| label: "07-make-maps-12"
+election
+```
+
+:::
+::::
+
+- To merge, or [_join_]{.fg-pink} these tables, they need to have a column in common to act as a _key_.
+
+
+## Recode to make a key
+
+```{r }
+#| label: "07-make-maps-13"
+election <- election |>
+  mutate(region = tolower(state)) |> 
+  relocate(region)
+
+election
+```
+
+## Now we can join them
+
+:::: {.columns}
+::: {.column width="50%"}
+```{r }
+#| label: "07-make-maps-14"
+us_states
+```
+
+:::
+
+::: {.column width="50%" .right}
+```{r }
+#| label: "07-make-maps-15"
+election
+```
+
+:::
+::::
+
+## This is a [_left join_]{.fg-pink}
+
+```{r }
+#| label: "07-make-maps-16"
+us_states_elec <- left_join(us_states, election, by = "region")
+
+us_states_elec
+```
+
+
+Now our `us_states_elec` table has both the line-drawing information and (very redundantly) the election data merged in, with rows repeated as necessary.
+
+
+## Choropleths
+
+```{r}
+#| label: "codefig-choroparty"
+#| message: FALSE
+#| fig.width: 4.8
+#| fig.height: 4.5
+#| output-location: column
+
+us_states_elec |>
+  ggplot(mapping = aes(x = long, 
+                       y = lat,
+                       fill = party,#<<
+                       group = group)) + 
+  geom_polygon(color = "gray90", 
+               size = 0.1) +
+  coord_map(projection = "albers", 
+            lat0 = 39, lat1 = 45) +
+  guides(fill = "none")
+
+
+```
+
+
+
+## Let's turn off the gridlines
+
+This is a [_theme function_]{.fg-pink}.
+
+```{r }
+#| label: "07-make-maps-18"
+theme_map <- function(base_size=9, base_family="") {
+    require(grid)
+    theme_bw(base_size=base_size, base_family=base_family) %+replace%
+        theme(axis.line=element_blank(),
+              axis.text=element_blank(),
+              axis.ticks=element_blank(),
+              axis.title=element_blank(),
+              panel.background=element_blank(),
+              panel.border=element_blank(),
+              panel.grid=element_blank(),
+              panel.spacing=unit(0, "lines"),
+              plot.background=element_blank(),
+              legend.justification = c(0,0),
+              legend.position = c(0,0)
+              )
+}
+```
+
+## Add the theme function at the end
+
+```{r}
+#| label: "codefig-choropartytheme"
+#| message: FALSE
+#| fig.width: 4.8
+#| fig.height: 4.5
+#| output-location: column
+
+us_states_elec |> 
+  ggplot(mapping = aes(x = long, 
+                       y = lat,
+                       fill = party,#<<
+                       group = group)) + 
+  geom_polygon(color = "gray90", 
+               size = 0.1) +
+  coord_map(projection = "albers", 
+            lat0 = 39, lat1 = 45) +
+  theme_map()
+```
+
+## Fix the Party Colors
+
+```{r}
+#| label: "codefig-choropartycolors"
+#| message: FALSE
+#| fig.width: 4.8
+#| fig.height: 4.5
+#| output-location: column
+  
+## Hex color codes for Democratic Blue and Republican Red
+party_colors <- c("#2E74C0", "#CB454A")
+
+
+us_states_elec |> 
+  ggplot(mapping = aes(x = long, 
+                       y = lat,
+                       fill = party,#<<
+                       group = group)) + 
+  geom_polygon(color = "gray90", 
+               size = 0.1) +
+  scale_fill_manual(values = party_colors) + 
+  coord_map(projection = "albers", 
+            lat0 = 39, lat1 = 45) +
+  theme_map()
+
+```
+
+## Continuous measures are _gradients_
+
+```{r}
+#| label: "codefig-gradient1"
+#| message: FALSE
+#| fig.width: 4.8
+#| fig.height: 4.5
+#| output-location: column
+
+us_states_elec |> 
+  ggplot(mapping = aes(x = long, 
+                       y = lat,
+                       fill = pct_trump,#<<
+                       group = group)) + 
+  geom_polygon(color = "gray90", 
+               size = 0.1) +
+  coord_map(projection = "albers", 
+            lat0 = 39, lat1 = 45) +
+  labs(title = "Trump vote", 
+       fill = "Percent") +  
+  theme_map()
+
+```
+
+## Fix the gradient with a [scale function]{.fg-orange}
+
+```{r}
+#| label: "codefig-gradient2"
+#| message: FALSE
+#| fig.width: 4.8
+#| fig.height: 4.5
+#| output-location: column
+
+us_states_elec |> 
+  ggplot(mapping = aes(x = long, 
+                       y = lat,
+                       fill = pct_trump,
+                       group = group)) + 
+  geom_polygon(color = "gray90", 
+               size = 0.1) +
+  scale_fill_gradient(low = "white",  #<<
+                      high = "#CB454A") + #<<
+        labs(title = "Trump vote") +
+  coord_map(projection = "albers", 
+            lat0 = 39, lat1 = 45) +
+  labs(title = "Trump vote", 
+       fill = "Percent") +  
+  theme_map()
+
+
+```
+
+## Some gradients are [_diverging_]{.fg-yellow}
+
+```{r}
+#| label: "codefig-diverging1"
+#| message: FALSE
+#| fig.width: 4.8
+#| fig.height: 4.5
+#| output-location: column
+
+us_states_elec |> 
+  ggplot(mapping = aes(x = long, 
+                       y = lat,
+                       fill = d_points,#<<
+                       group = group)) + 
+  geom_polygon(color = "gray90", 
+               size = 0.1) +
+  scale_fill_gradient2() + #<<
+  coord_map(projection = "albers", 
+            lat0 = 39, lat1 = 45) +
+  labs(title = "Winning Margins", 
+       fill = "Percent") +  
+  theme_map()
+
+
+```
+
+## Purple America Map
+
+```{r}
+#| label: "codefig-purpleamerica"
+#| message: FALSE
+#| fig.width: 4.8
+#| fig.height: 4.5
+#| output-location: column
+
+us_states_elec |> 
+  ggplot(mapping = aes(x = long, 
+                       y = lat,
+                       fill = d_points,#<<
+                       group = group)) + 
+  geom_polygon(color = "gray90", 
+               size = 0.1) +
+  scale_fill_gradient2(low = "red",#<<
+                mid = scales::muted("purple"),#<<
+                high = "blue",#<<
+                breaks = c(-25, 0, 25, #<<
+                        50, 75)) + #<<
+  coord_map(projection = "albers", 
+            lat0 = 39, lat1 = 45) +
+  labs(title = "Winning Margins", 
+       fill = "Percent") +  
+  theme_map()
+
+
+
+```
+
+---
+
+```{r}
+#| label: "07-make-maps-25"
+#| echo: FALSE
+#| fig.width: 12
+#| fig.height: 7
+us_states_elec |> 
+  ggplot(mapping = aes(x = long, 
+                       y = lat,
+                       fill = d_points,#<<
+                       group = group)) + 
+  geom_polygon(color = "gray90", 
+               size = 0.1) +
+  scale_fill_gradient2(low = "red",#<<
+                mid = scales::muted("purple"),#<<
+                high = "blue",#<<
+                breaks = c(-25, 0, 25, #<<
+                        50, 75)) + #<<
+  coord_map(projection = "albers", 
+            lat0 = 39, lat1 = 45) +
+  labs(title = "Winning Margins", 
+       fill = "Percent") +  
+  theme_map()
+
+```
+
+
+Take a closer look at this, though.
+
+
+---
+
+![Washington, DC](img/09_dc_section.png)
+
+
+## Purple America Map, without DC
+
+```{r}
+#| label: "codefig-purpleamerica2"
+#| message: FALSE
+#| fig.width: 4.8
+#| fig.height: 4.5
+#| output-location: column
+
+us_states_elec |> 
+  filter(region %nin% "district of columbia") |> #<<
+  ggplot(mapping = aes(x = long, 
+                       y = lat,
+                       fill = d_points,
+                       group = group)) + 
+  geom_polygon(color = "gray90", 
+               size = 0.1) +
+  scale_fill_gradient2(low = "red",
+                mid = scales::muted("purple"),
+                high = "blue") +
+  coord_map(projection = "albers", 
+            lat0 = 39, lat1 = 45) +
+  labs(title = "Winning Margins", 
+       fill = "Percent") +  
+  theme_map()
+
+```
+
+---
+
+
+```{r}
+#| label: "07-make-maps-27"
+#| echo: FALSE
+#| fig.width: 12
+#| fig.height: 7
+us_states_elec |> 
+  filter(region %nin% "district of columbia") |> #<<
+  ggplot(mapping = aes(x = long, 
+                       y = lat,
+                       fill = d_points,
+                       group = group)) + 
+  geom_polygon(color = "gray90", 
+               size = 0.1) +
+  scale_fill_gradient2(low = "red",
+                mid = scales::muted("purple"),
+                high = "blue") +
+  coord_map(projection = "albers", 
+            lat0 = 39, lat1 = 45) +
+  labs(title = "Winning Margins", 
+       fill = "Percent") +  
+  theme_map()
+
+```
+
+
+More balanced.
+
+# [America's]{.fg-yellow}<br />[Ur-Choropleths]{.fg-lblue}
+
+## County-level choropleths
+
+- Conceptually identical to state ones. The tables are just bigger, because there are way more lines to draw. 
+
+```{r }
+#| label: "07-make-maps-28"
+county_map <- as_tibble(county_map)
+county_map
+```
+
+- 191,000 or so rows
+- `id` here is the county FIPS code.
+
+## County-level choropleths
+
+```{r }
+#| label: "07-make-maps-29"
+county_data <- as_tibble(county_data)
+county_data
+```
+
+## County-level choropleths
+
+- 3,195 entities, including states (FIPS `id` ends in four zeros) 
+- And the US as a whole (FIPS `id` of `0`)
+- Sample a few rows, with specific columns:
+
+```{r }
+#| label: "07-make-maps-30"
+county_data  |> 
+    select(id, name, state, pop_dens, pct_black) |>
+    sample_n(10)
+```
+
+
+## Joined table
+
+```{r }
+#| label: "07-make-maps-31"
+county_full <- as_tibble(left_join(county_map, county_data, by = "id"))
+
+county_full
+```
+
+
+`r chunq_reveal("reveal-countypop",  lcolw="50", rcolw="50", smallcode = TRUE, title = "County Population Density")`
+
+```{r}
+#| label: "reveal-countypop"
+#| include: FALSE
+county_full <- as_tibble(left_join(county_map, county_data, by = "id"))
+
+
+county_full |> 
+  ggplot(mapping = aes(x = long, y = lat,
+                          fill = pop_dens, 
+                          group = group)) + 
+  geom_polygon(color = "gray70", 
+               size = 0.1) + 
+  coord_fixed() + 
+  scale_fill_brewer(palette="Blues",
+                    labels = c("0-10", "10-50", "50-100",
+                     "100-500", "500-1,000",
+                      "1,000-5,000", ">5,000")) + 
+  labs(fill = "Population per\nsquare mile") + 
+  kjhslides::kjh_theme_map() + 
+  guides(fill = guide_legend(nrow = 1)) + 
+  theme(legend.position = "bottom")
+```
+
+---
+
+```{r}
+#| label: "07-make-maps-32"
+#| echo: FALSE
+#| fig.height: 8
+#| fig.width: 12
+county_full |> 
+  ggplot(mapping = aes(x = long, y = lat,
+                          fill = pop_dens, 
+                          group = group)) + 
+  geom_polygon(color = "gray70", 
+               size = 0.1) + 
+  coord_fixed() + 
+  scale_fill_brewer(palette="Blues",
+                    labels = c("0-10", "10-50", "50-100",
+                     "100-500", "500-1,000",
+                      "1,000-5,000", ">5,000")) + 
+  labs(fill = "Population per\nsquare mile") + 
+  theme_map() + 
+  guides(fill = guide_legend(nrow = 1)) + 
+  theme(legend.position = "bottom")
+```
+
+
+Population Density by County, binned
+
+`r chunq_reveal("reveal-choroblack",  lcolw="50", rcolw="50", smallcode = TRUE, title = "Same again for Percent Black")`
+
+```{r}
+#| label: "reveal-choroblack"
+#| include: FALSE
+county_full <- as_tibble(left_join(county_map, county_data, by = "id"))
+
+county_full |> 
+  ggplot(mapping = aes(x = long, y = lat,
+                       fill = pct_black,  
+                       group = group)) + 
+  geom_polygon(color = "gray70", 
+               size = 0.1) + 
+  coord_fixed() + 
+  scale_fill_brewer(palette="Greens",
+                    labels = c("0-2%", "2-5%", "5-10%",
+                               "10-15%", "15-25%",
+                               "25-50%", ">50%")) + 
+  labs(fill = "US Population, percent Black") + 
+  kjhslides::kjh_theme_map() + 
+  guides(fill = guide_legend(nrow = 1)) + 
+  theme(legend.position = "bottom")
+```
+
+---
+
+```{r}
+#| label: "07-make-maps-33"
+#| echo: FALSE
+#| fig.height: 8
+#| fig.width: 12
+county_full |> 
+  ggplot(mapping = aes(x = long, y = lat,
+                       fill = pct_black, #<< 
+                       group = group)) + 
+  geom_polygon(color = "gray70", 
+               size = 0.1) + 
+  coord_fixed() + 
+  scale_fill_brewer(palette="Greens",
+                    labels = c("0-2%", "2-5%", "5-10%",
+                               "10-15%", "15-25%",
+                               "25-50%", ">50%")) + 
+  labs(fill = "US Population, percent Black") + 
+  theme_map() + 
+  guides(fill = guide_legend(nrow = 1)) + 
+  theme(legend.position = "bottom")
+```
+
+
+Percent Black, by County, binned
+
+## [Big counties, few people,]{.fg-yellow} [rare events]{.fg-lblue}
+
+
+## Example: Reverse coding
+
+::: {.panel-tabset}
+
+### Code
+
+```{r }
+#| label: "07-make-maps-34"
+orange_pal <- RColorBrewer::brewer.pal(n = 6, 
+                                       name = "Oranges")
+orange_pal
+```
+
+```{r}
+#| label: "07-make-maps-35"
+#| echo: FALSE
+#| fig.height: 0.5
+#| fig.width: 5
+par(mar = c(0, 0, 0, 0))
+colorspace::swatchplot("Orange Palette" = orange_pal, nrow = 1)
+```
+
+### Reverse
+
+```{r }
+#| label: "07-make-maps-36"
+# Just reverse it
+orange_rev <- rev(orange_pal)
+orange_rev
+```
+
+```{r}
+#| label: "07-make-maps-37"
+#| echo: FALSE
+#| fig.height: 0.5
+#| fig.width: 5
+par(mar = c(0, 0, 0, 0))
+colorspace::swatchplot("Reverse Orange" = orange_rev, nrow = 1)
+```
+
+:::
+
+## Build a plot
+
+```{r }
+#| label: "07-make-maps-38"
+p_g1 <- county_full |> 
+  ggplot(mapping = aes(x = long, y = lat,
+                       fill = su_gun6, #<< 
+                       group = group)) + 
+  geom_polygon(color = "gray70", 
+               size = 0.1) + 
+  coord_fixed() + 
+  scale_fill_manual(values = orange_pal) + #<<
+  labs(title = "Gun-Related Suicides, 1999-2015",
+       fill = "Rate per 100,000 pop.") + 
+  theme_map() + 
+  guides(fill = guide_legend(nrow = 1)) + 
+  theme(legend.position = "bottom")
+```
+
+---
+
+```{r}
+#| label: "07-make-maps-39"
+#| echo: FALSE
+#| fig.height: 8
+#| fig.width: 12
+p_g1 
+```
+
+Regular palette
+
+## And another
+
+```{r }
+#| label: "07-make-maps-40"
+p_g2 <- county_full |> 
+  ggplot(mapping = aes(x = long, y = lat,
+                       fill = pop_dens6, #<< 
+                       group = group)) + 
+  geom_polygon(color = "gray70", 
+               size = 0.1) + 
+  coord_fixed() + 
+  scale_fill_manual(values = orange_rev) + #<<
+  labs(title = "Reverse-coded Population Density",
+       fill = "Persons per square mile") + 
+  theme_map() + 
+  guides(fill = guide_legend(nrow = 1)) + 
+  theme(legend.position = "bottom")
+```
+
+---
+
+```{r}
+#| label: "07-make-maps-41"
+#| echo: FALSE
+#| fig.height: 8
+#| fig.width: 12
+p_g2
+```
+
+Reverse-coded density
+
+## Comparison
+
+:::: {.columns}
+::: {.column width="50%"}
+```{r}
+#| label: "07-make-maps-42"
+#| echo: FALSE
+#| fig.height: 6
+#| fig.width: 8
+p_g1
+```
+
+:::
+
+::: {.column width="50%" .right}
+```{r}
+#| label: "07-make-maps-43"
+#| echo: FALSE
+#| fig.height: 6
+#| fig.width: 8
+p_g2
+```
+
+:::
+::::
+
+
+# [Small multiples]{.fg-yellow} [for maps]{.fg-lblue}
+
+## Opiate-related Mortality, 1999-2014
+
+```{r }
+#| label: "07-make-maps-44"
+opiates
+
+opiates$state <- tolower(opiates$state)
+us_states$state <- us_states$region
+opiates_map <- left_join(us_states, opiates, by = "state")
+```
+
+
+---
+
+```{r }
+#| label: "07-make-maps-45"
+p_out <- opiates_map |> 
+  ggplot(mapping = aes(x = long, y = lat,
+                       group = group,
+                       fill = cut_interval(adjusted, n = 5))) + 
+  geom_polygon(color = "lightblue", size = 0.2) +
+  coord_map(projection = "albers", lat0 = 39, lat1 = 45) +
+  scale_fill_brewer(type = "seq", palette = "Oranges") +
+  kjhslides::kjh_theme_map() + 
+  facet_wrap(~ year, ncol = 4) +
+  guides(fill = guide_legend(nrow = 1)) + 
+  theme(legend.position = "bottom",
+        strip.background = element_blank()) +
+  labs(fill = "Death rate per 100,000 population",
+       title = "Opiate-Related Deaths by State, 1999-2014")
+```
+
+---
+
+```{r}
+#| label: "07-make-maps-46"
+#| echo: FALSE
+#| fig.height: 8
+#| fig.width: 16
+p_out
+```
+
+
+Faceting works just as it would for any other kind of plot.
+
+# [Is your data<br/ >]{.fg-yellow} [really spatial?]{.fg-lblue}
+
+
+`r chunq_reveal("reveal-maxstates",  lcolw="50", rcolw="50", smallcode = TRUE, title = "The two leading states in each region in 2014")`
+
+```{r}
+#| label: "reveal-maxstates"
+#| include: FALSE
+## Put this in an object called `st_top`
+opiates |> 
+  filter(year == max(year), 
+         abbr != "DC") |> 
+  group_by(region) |> 
+  slice_max(order_by = adjusted, 
+            n = 2)
+
+```
+
+`r chunq_reveal("reveal-opiateline", lcolw="50", rcolw="50", smallcode = TRUE, title = "Opiates Time Series plot")`
+
+```{r}
+#| label: "reveal-opiateline"
+#| include: FALSE
+st_top <- opiates |>  filter(year == max(year), abbr != "DC") |> 
+  group_by(region) |> 
+  slice_max(order_by = adjusted, n = 2)
+ 
+opiates |> 
+  ggplot(aes(x = year, 
+             y = adjusted)) +
+  geom_line(aes(group = state),
+            color = "gray50") + 
+  geom_smooth(aes(group = region),
+              se = FALSE) + 
+  ggrepel::geom_text_repel(
+    data = st_top,
+    mapping = aes(x = year, 
+                  y = adjusted, 
+                  label = abbr), 
+    size = 3, 
+    segment.color = NA, 
+    nudge_x = 0.5) +
+  coord_cartesian(c(min(opiates$year), 
+                    max(opiates$year) + 1)) + 
+  labs(x = NULL, 
+       y = "Rate per 100,000 population",
+       title = "State-Level Opiate Death 
+          Rates by Region, 1999-2014") +
+  facet_wrap(~ reorder(region, adjusted, 
+                       na.rm = TRUE), 
+             nrow  = 1)
+  
+
+```
+
+---
+
+```{r}
+#| label: "07-make-maps-48"
+#| echo: FALSE
+#| fig.height: 6
+#| fig.width: 15
+p_out <- opiates |> 
+  ggplot(aes(x = year, 
+             y = adjusted)) +
+  geom_line(aes(group = state),
+            color = "gray50") + 
+  geom_smooth(aes(group = region),
+              se = FALSE) + 
+  ggrepel::geom_text_repel(
+    data = st_top,
+    mapping = aes(x = year, 
+                  y = adjusted, 
+                  label = abbr), 
+    size = 3, 
+    segment.color = NA, 
+    nudge_x = 0.5) +
+  coord_cartesian(c(min(opiates$year), 
+                    max(opiates$year) + 1)) + 
+  labs(x = NULL, 
+       y = "Rate per 100,000 population",
+       title = "State-Level Opiate Death 
+          Rates by Region, 1999-2014") +
+  facet_wrap(~ reorder(region, adjusted, 
+                       na.rm = TRUE), 
+             nrow  = 1)
+  
+p_out
+```
+
+
+Regional trends in opiate-related mortality.
+
+
+
+# Proper Maps with [Simple Features]{.fg-lblue}
+
+## [`geom_polygon()`]{.fg-green} is limiting
+
+- It's very useful to have the intuition that, when drawing maps, [we're just working with tables]{.fg-orange} of `x` and `y` coordinates, and [shapes represent quantities in our data]{.fg-orange}, in a way that's essentially the same as any other geom. This makes it worth getting comfortable with what  [`geom_polygon()`]{.fg-green} and [`coord_map()`]{.fg-green} are doing. But the business of having very large map tables and manually specifying projections is inefficient. 
+- In addition, sometimes our data _really is_ properly spatial, at which point we need a more rigorous and consistent way of specifying those elements. There's a whole world of Geodesic standards and methods devoted to specifying these things for GIS applications. R is not a dedicated GIS, but we can take advantage of these tools.
+
+::: {.incremental}
+- Enter [simple features]{.fg-pink}, the [`sf`]{.fg-lblue} package, and [`geom_sf()`]{.fg-green}
+:::
+
+
+
+## The Simple Features package
+
+```{r}
+#| label: "07-make-maps-49"
+#| echo: FALSE
+detach(package:sf)
+```
+
+- When we load [`sf`]{.fg-lblue} it creates a way to use several standard GIS concepts and tools, such as the [GEOS]{.fg-lblue} library for computational geometry, the [PROJ]{.fg-lblue} software that transforms spatial coordinates from one reference system to another, as in map projections, and the Simple Features standard for specifying the elements of spatial attributes. 
+
+```{r}
+#| label: "07-make-maps-50"
+#| message: TRUE
+library(sf)
+```
+
+Let's see the main upshot for us. 
+
+## The [`nycdogs`]{.fg-lblue} package
+::::: {.smallcode}
+:::: {.columns}
+::: {.column width="70%"}
+```{r }
+#| label: "07-make-maps-51"
+library(nycdogs)
+nyc_license
+```
+
+:::
+
+::: {.column width="30%" .right}
+![](img/09_nycdogs_hex.png)
+:::
+::::
+:::::
+
+## The [`nycdogs`]{.fg-lblue} package
+
+- The metadata tells you this is not a regular tibble.
+
+```{r }
+#| label: "07-make-maps-52"
+nyc_zips
+```
+
+## The [`nycdogs`]{.fg-lblue} package
+
+```{r }
+#| label: "07-make-maps-53"
+nyc_zips |> 
+  select(objectid:borough)
+```
+
+- The [`polygon`]{.fg-orange} column is a list of lat/lon points that, when joined, draw the outline of the zip code area. This is _much_ more compact than a big table where every row is a single point.
+
+
+`r chunq_reveal("reveal-nycfrench", lcolw="50", rcolw="50", title = "Let's make a summary table")`
+
+```{r}
+#| label: "reveal-nycfrench"
+#| include: FALSE
+nyc_license  |> 
+  filter(extract_year == 2018) |> 
+  group_by(breed_rc, zip_code) |> 
+  tally() |> 
+  mutate(freq = n / sum(n)) |> 
+  filter(breed_rc == "French Bulldog") ->
+  nyc_fb
+
+```
+
+```{r}
+#| label: "make_nyc_fb"
+#| echo: FALSE
+nyc_license  |> 
+  filter(extract_year == 2018) |> 
+  group_by(breed_rc, zip_code) |> 
+  tally() |> 
+  mutate(freq = n / sum(n)) |> 
+  filter(breed_rc == "French Bulldog") ->
+  nyc_fb
+```
+
+```{r}
+#| label: "save_nyc_fb"
+#| echo: FALSE
+save(nyc_fb, file = "nyc_fb.Rdata")
+```
+
+
+## Now we have two tables again
+
+::::: {.smallcode}
+
+:::: {.columns}
+::: {.column width="70%"}
+```{r }
+#| label: "07-make-maps-54"
+nyc_zips |> select(objectid:st_fips)
+```
+
+:::
+
+::: {.column width="30%" .right}
+```{r }
+#| label: "07-make-maps-55"
+nyc_fb |> select(breed_rc:n)
+```
+
+:::
+::::
+
+:::::
+
+- Join them:
+
+```{r }
+#| label: "07-make-maps-56"
+fb_map <- left_join(nyc_zips, nyc_fb, by = "zip_code")
+```
+
+## Ready to map
+
+```{r }
+#| label: "07-make-maps-57"
+fb_map |> select(zip_code, po_name, borough, breed_rc:freq, geometry)
+```
+
+```{r}
+#| label: "save_fb_map"
+#| echo: FALSE
+#| message: FALSE
+save(fb_map, file = "fb_map.Rdata")
+```
+
+
+## A NYC map theme
+
+- Just moving the legend, really.
+
+```{r }
+#| label: "07-make-maps-58"
+theme_nymap <- function(base_size=9, base_family="") {
+    require(grid)
+    theme_bw(base_size=base_size, base_family=base_family) %+replace%
+        theme(axis.line=element_blank(),
+              axis.text=element_blank(),
+              axis.ticks=element_blank(),
+              axis.title=element_blank(),
+              panel.background=element_blank(),
+              panel.border=element_blank(),
+              panel.grid=element_blank(),
+              panel.spacing=unit(0, "lines"),
+              plot.background=element_blank(),
+              legend.justification = c(0,0),
+              legend.position = c(0.05, 0.58), 
+              legend.direction = "horizontal"
+        )
+}
+
+```
+
+## First cut at a map
+
+```{r}
+#| label: bulldog-map-manual-1
+#| output-location: column
+
+fb_map |> 
+  ggplot(mapping = aes(fill = freq)) +
+  geom_sf(color = "gray30", size = 0.1)
+
+```
+
+## First cut at a map
+
+```{r}
+#| label: bulldog-map-manual-2
+#| output-location: column
+
+fb_map |> 
+  ggplot(mapping = aes(fill = freq)) +
+  geom_sf(color = "gray30", size = 0.1) + #<<
+  scale_fill_viridis_c(option = "A") +
+  labs(fill = "Percent of All French Bulldogs") 
+```
+
+## First cut at a map
+
+```{r}
+#| label: bulldog-map-manual-3
+#| output-location: column
+
+fb_map |> 
+  ggplot(mapping = aes(fill = freq)) +
+  geom_sf(color = "gray30", size = 0.1) + #<<
+  scale_fill_viridis_c(option = "A") +
+  labs(fill = "Percent of All French Bulldogs") +
+  annotate(geom = "text", 
+             x = -74.145 + 0.029, 
+             y = 40.82-0.012, 
+           label = "New York City's French Bulldogs", 
+           size = 6) + 
+    annotate(geom = "text", 
+             x = -74.1468 + 0.029, 
+             y = 40.8075-0.012, 
+           label = "By Zip Code. Based on Licensing Data", 
+           size = 5) 
+
+```
+
+## First cut at a map
+
+```{r}
+#| label: bulldog-map-manual-4
+#| output-location: column
+
+fb_map |> 
+  ggplot(mapping = aes(fill = freq)) +
+  geom_sf(color = "gray30", size = 0.1) + #<<
+  scale_fill_viridis_c(option = "A") +
+  labs(fill = "Percent of All French Bulldogs") +
+  annotate(geom = "text", 
+             x = -74.145 + 0.029, 
+             y = 40.82-0.012, 
+           label = "New York City's French Bulldogs", 
+           size = 6) + 
+  annotate(geom = "text", 
+             x = -74.1468 + 0.029, 
+             y = 40.8075-0.012, 
+           label = "By Zip Code. Based on Licensing Data", 
+           size = 5) + 
+  kjhslides::kjh_theme_nymap() + 
+  guides(fill = 
+           guide_legend(title.position = "top", 
+                label.position = "bottom",
+                keywidth = 1, 
+                nrow = 1))  
+
+```
+
+---
+
+```{r}
+#| label: "reveal-bulldogmap-slide"
+#| echo: false
+#| fig.width: 12
+#| fig.height: 8
+
+load("fb_map.Rdata")
+fb_map |> 
+    ggplot(mapping = aes(fill = freq)) +
+    geom_sf(color = "gray30", size = 0.1) + #<<
+    scale_fill_viridis_c(option = "A") +
+    labs(fill = "Percent of All French Bulldogs") +
+    annotate(geom = "text", 
+             x = -74.145 + 0.029, 
+             y = 40.82-0.012, 
+           label = "New York City's French Bulldogs", 
+           size = 6) + 
+    annotate(geom = "text", 
+             x = -74.1468 + 0.029, 
+             y = 40.8075-0.012, 
+           label = "By Zip Code. Based on Licensing Data", 
+           size = 5) + 
+    kjhslides::kjh_theme_nymap() + 
+   guides(fill = 
+           guide_legend(title.position = "top", 
+                label.position = "bottom",
+                keywidth = 1, 
+                nrow = 1))  
+ 
+```
+
+## Use a different palette
+
+```{r}
+#| label: "reveal-bulldogmap2-1"
+#| output-location: column
+library(colorspace)
+
+fb_map |> 
+  ggplot(mapping = aes(fill = freq)) + 
+  geom_sf(color = "gray30", size = 0.1) +
+  scale_fill_continuous_sequential(
+    palette = "Oranges",
+    labels = scales::label_percent()) +
+  labs(fill = "Percent of all French Bulldogs") 
+```
+
+## Use a different palette
+
+```{r}
+#| label: "reveal-bulldogmap2-2"
+#| output-location: column
+
+fb_map |> 
+  ggplot(mapping = aes(fill = freq)) + 
+  geom_sf(color = "gray30", size = 0.1) +
+  scale_fill_continuous_sequential(
+    palette = "Oranges",
+    labels = scales::label_percent()) +
+  labs(fill = "Percent of all French Bulldogs") +
+  annotate(geom = "text", 
+           x = -74.145 + 0.029, 
+           y = 40.82-0.012, 
+           label = "New York City's French Bulldogs", 
+           size = 6) + 
+  annotate(geom = "text", 
+           x = -74.1468 + 0.029, 
+           y = 40.7955, 
+           label = "By Zip Code. Based on Licensing Data", 
+           size = 5) + 
+  kjhslides::kjh_theme_nymap() + 
+  guides(fill = 
+           guide_legend(title.position = "top", 
+                label.position = "bottom",
+                keywidth = 1, 
+                nrow = 1))  
+
+```
+
+
+---
+
+
+```{r}
+#| label: "07-make-maps-59"
+#| echo: FALSE
+#| fig.width: 12
+#| fig.height: 8
+
+fb_map |> 
+  ggplot(mapping = aes(fill = freq)) + 
+  geom_sf(color = "gray30", size = 0.1) +
+  scale_fill_continuous_sequential(
+    palette = "Oranges",
+    labels = scales::label_percent()) +
+  labs(fill = "Percent of all French Bulldogs") +
+  annotate(geom = "text", 
+           x = -74.145 + 0.029, 
+           y = 40.82-0.012, 
+           label = "New York City's French Bulldogs", 
+           size = 6) + 
+  annotate(geom = "text", 
+           x = -74.1468 + 0.029, 
+           y = 40.7955, 
+           label = "By Zip Code. Based on Licensing Data", 
+           size = 5) + 
+  kjhslides::kjh_theme_nymap() + 
+  guides(fill = 
+           guide_legend(title.position = "top", 
+                label.position = "bottom",
+                keywidth = 1, 
+                nrow = 1))  
+
+```
+
+::: aside
+NYC Dogs Map mark 2  
+:::
+
+## Keep the Zero-count Zips
+
+```{r}
+#| label: "reveal-bulldogzeros"
+
+nyc_license  |> 
+  filter(extract_year == 2018) |> 
+  group_by(breed_rc, zip_code) |> 
+  tally() |> 
+  ungroup() |> 
+  complete(zip_code, breed_rc, 
+             fill = list(n = 0)) |> 
+  # Regroup to get the right denominator
+  group_by(breed_rc) |> 
+  mutate(freq = n / sum(n)) |> 
+  filter(breed_rc == "French Bulldog") ->
+  nyc_fb2
+
+fb_map2 <- left_join(nyc_zips, 
+                     nyc_fb2, 
+                     by = "zip_code")
+
+```
+
+```{r}
+#| echo: FALSE
+save(fb_map2, nyc_fb2, file = "fbnyc2.Rdata")
+```
+
+
+## Keep the Zero-count Zips
+
+```{r }
+#| label: "07-make-maps-60"
+fb_map2 |> select(zip_code, po_name, borough, breed_rc:freq, geometry)
+```
+
+- This time, a number of previous [NA]{.fg-red} rows are now zeroes instead.
+
+
+## Keep the Zero-count Zips
+
+```{r}
+#| label: "reveal-bulldogfb2-1"
+#| output-location: column
+
+fb_map2 |>
+  ggplot(mapping = aes(fill = freq)) + 
+  geom_sf(color = "gray30", size = 0.1) +
+  scale_fill_continuous_sequential(
+    palette = "Oranges", 
+    labels = scales::label_percent()) 
+```
+
+## Keep the Zero-count Zips
+
+```{r}
+#| label: "reveal-bulldogfb2-2"
+#| output-location: column
+
+fb_map2 |>
+  ggplot(mapping = aes(fill = freq)) + 
+  geom_sf(color = "gray30", size = 0.1) +
+  scale_fill_continuous_sequential(
+    palette = "Oranges", 
+    labels = scales::label_percent()) +
+  labs(fill = "Percent of all French Bulldogs") +
+  annotate(geom = "text", 
+           x = -74.145 + 0.029, 
+           y = 40.82-0.012, 
+           label = "New York City's French Bulldogs", 
+           size = 6) + 
+  annotate(geom = "text", 
+           x = -74.1468 + 0.029, 
+           y = 40.7955, 
+           label = "By Zip Code. Based on Licensing Data", 
+           size = 5) + 
+  kjhslides::kjh_theme_nymap() + 
+  guides(fill = 
+           guide_legend(title.position = "top", 
+                        label.position = "bottom",
+                        keywidth = 1, 
+                        nrow = 1))  
+
+```
+
+---
+
+```{r}
+#| label: "07-make-maps-61"
+#| echo: FALSE
+#| fig.width: 12
+#| fig.height: 8
+fb_map2 |> 
+  ggplot(mapping = aes(fill = freq)) +
+  geom_sf(color = "gray30", size = 0.1) +
+  scale_fill_continuous_sequential(
+    palette = "Oranges", 
+    labels = scales::label_percent()) +
+  labs(fill = "Percent of all French Bulldogs") +
+  annotate(geom = "text", 
+           x = -74.145 + 0.029, 
+           y = 40.808, 
+           label = "New York City's French Bulldogs", 
+           size = 6) + 
+  annotate(geom = "text", 
+           x = -74.145 + 0.028, 
+           y = 40.795, 
+           label = "By Zip Code. Based on Licensing Data", 
+           size = 5) + 
+  kjhslides::kjh_theme_nymap() + 
+  guides(fill = 
+           guide_legend(title.position = "top", 
+                        label.position = "bottom",
+                        keywidth = 1, 
+                        nrow = 1))  
+
+```
+
+::: aside
+Zero areas properly zero, missing areas properly missing.  
+:::
+
+
+## Care with Spatial Distribution
+
+![A random point-process](img/09_point_process_random.png)
+
+
+---
+
+## Care with Spatial Distribution
+
+![A heatmap derived from the random process](img/09_kde_heatmap.png)
+
+
+---
+
+## Care with Spatial Distribution
+
+![A formal test of significant hotspots](img/09_local_moran.png)
+
+
+
+# Example: Dorling Cartograms
+
+## Dorling Cartograms
+
+```{r}
+# install.packages("cartogram")
+library(cartogram)
+options(tigris_use_cache = TRUE)
+```
+
+## Dorling Cartograms
+
+```{r}
+pop_names <- tribble(
+    ~varname, ~clean,
+    "B01003_001", "pop",
+    "B01001B_001", "black",
+    "B01001A_001", "white",
+    "B01001H_001", "nh_white",
+    "B01001I_001", "hispanic",
+    "B01001D_001", "asian"
+  )
+  
+pop_names
+
+```
+
+## Dorling Cartograms
+
+```{r}
+fips_pop <- get_acs(geography = "county", 
+                    variables = pop_names$varname, 
+                    cache_table = TRUE) |>  
+  left_join(pop_names, join_by(variable == varname)) |> 
+  mutate(variable = clean) |> 
+  select(-clean, -moe) |>
+  pivot_wider(names_from = variable, values_from = estimate) |> 
+  rename(fips = GEOID, name = NAME) |> 
+  mutate(prop_pop = pop/sum(pop), 
+         prop_black = black/pop, 
+         prop_hisp = hispanic/pop, 
+         prop_white = white/pop, 
+         prop_nhwhite = nh_white/pop, 
+         prop_asian = asian/pop)
+
+fips_map <- get_acs(geography = "county", 
+                    variables = "B01001_001", 
+                    geometry = TRUE,
+                    shift_geo = FALSE,
+                    cache_table = TRUE) |> 
+  select(GEOID, NAME, geometry) |> 
+  rename(fips = GEOID, name = NAME)
+```
+
+## Dorling Cartograms
+
+```{r}
+pop_cat_labels <- c("<5", as.character(seq(10, 95, 5)), "100")
+
+counties_sf <- fips_map |>
+  left_join(fips_pop, by = c("fips", "name")) |> 
+  mutate(black_disc = cut(prop_black*100,
+                         breaks = seq(0, 100, 5),
+                         labels = pop_cat_labels,
+                         ordered_result = TRUE), 
+         hisp_disc = cut(prop_hisp*100,
+                         breaks = seq(0, 100, 5),
+                         labels = pop_cat_labels,
+                         ordered_result = TRUE), 
+         nhwhite_disc = cut(prop_nhwhite*100,
+                         breaks = seq(0, 100, 5),
+                         labels = pop_cat_labels,
+                         ordered_result = TRUE),
+        asian_disc = cut(prop_asian*100,
+                         breaks = seq(0, 100, 5),
+                         labels = pop_cat_labels,
+                         ordered_result = TRUE)) |>
+  sf::st_transform(crs = 2163)
+
+```
+
+## Dorling Cartograms
+
+```{r}
+counties_sf
+```
+
+## Dorling Cartograms
+
+```{r}
+## Be patient
+county_dorling <- cartogram_dorling(x = counties_sf,
+    weight = "prop_pop", 
+    k = 0.2, itermax = 100)
+
+out_black <- county_dorling |>
+  filter(!str_detect(name, "Alaska|Hawaii|Puerto|Guam")) |>
+  ggplot(aes(fill = black_disc)) +
+  geom_sf(color = "grey30", size = 0.1) +
+  coord_sf(crs = 2163, datum = NA) +
+  scale_fill_discrete_sequential(palette = "YlOrBr", 
+                                 na.translate=FALSE) +
+  guides(fill = guide_legend(title.position = "top",
+                             label.position = "bottom",
+                             nrow = 1)) + 
+  labs(
+     subtitle = "Bubble size corresponds to County Population",
+     caption = "Graph: @kjhealy. Source: Census Bureau / American Community Survey",
+       fill = "Percent Black by County") + 
+  theme(legend.position = "top", 
+        legend.spacing.x = unit(0, "cm"),
+        legend.title = element_text(size = rel(1.5), face = "bold"), 
+        legend.text = element_text(size = rel(0.7)),
+        plot.title = element_text(size = rel(1.4), hjust = 0.15))
+
+# ggsave("figures/dorling-bl.pdf", out_black, height = 10, width = 12)
+
+```
+
+## Dorling Cartograms
+
+```{r}
+#| echo: FALSE
+#| warning: FALSE
+#| message: FALSE
+out_hispanic <- county_dorling |>
+  filter(!str_detect(name, "Alaska|Hawaii|Puerto|Guam")) |>
+  ggplot(aes(fill = hisp_disc)) +
+  geom_sf(color = "grey30", size = 0.1) +
+  coord_sf(crs = 2163, datum = NA) +
+  scale_fill_discrete_sequential(palette = "SunsetDark", na.translate=FALSE) +
+  guides(fill = guide_legend(title.position = "top",
+                             label.position = "bottom",
+                             nrow = 1, 
+                             )) + 
+  labs(fill = "Percent Hispanic by County") + 
+  theme(legend.position = "top", 
+        legend.spacing.x = unit(0, "cm"),
+        legend.title = element_text(size = rel(1.5), face = "bold"), 
+        legend.text = element_text(size = rel(0.7)),
+        plot.title = element_text(size = rel(1.4), hjust = 0.15))
+
+# ggsave("figures/dorling-hs.pdf", out_hispanic, height = 10, width = 12)
+
+
+out_white <- county_dorling |>
+  filter(!str_detect(name, "Alaska|Hawaii|Puerto|Guam")) |>
+  ggplot(aes(fill = nhwhite_disc)) +
+  geom_sf(color = "grey30", size = 0.1) +
+  coord_sf(crs = 2163, datum = NA) +
+  scale_fill_discrete_sequential(palette = "BluYl", na.translate=FALSE) +
+  guides(fill = guide_legend(title.position = "top",
+                             label.position = "bottom",
+                             nrow = 1, 
+                             )) + 
+  labs(fill = "Percent Non-Hispanic White by County") + 
+  theme(legend.position = "top", 
+        legend.spacing.x = unit(0, "cm"),
+        legend.title = element_text(size = rel(1.5), face = "bold"), 
+        legend.text = element_text(size = rel(0.7)),
+        plot.title = element_text(size = rel(1.4), hjust = 0.15))
+
+# ggsave("figures/dorling-wh.pdf", out_white, height = 10, width = 12)
+
+out_asian <- county_dorling |>
+  filter(!str_detect(name, "Alaska|Hawaii|Puerto|Guam")) |>
+  ggplot(aes(fill = asian_disc)) +
+  geom_sf(color = "grey30", size = 0.1) +
+  coord_sf(crs = 2163, datum = NA) +
+  scale_fill_discrete_sequential(palette = "Purple-Ora", na.translate=FALSE) +
+  guides(fill = guide_legend(title.position = "top",
+                             label.position = "bottom",
+                             nrow = 1, 
+                             )) + 
+  labs(fill = "Percent Asian by County") + 
+  theme(legend.position = "top", 
+        legend.spacing.x = unit(0, "cm"),
+        legend.title = element_text(size = rel(1.5), face = "bold"), 
+        legend.text = element_text(size = rel(0.7)),
+        plot.title = element_text(size = rel(1.4), hjust = 0.15))
+
+# ggsave("figures/dorling-asian.pdf", out_asian, height = 10, width = 12)
+
+```
+
+---
+
+```{r}
+#| fig.width: 10
+#| fig.height: 8
+print(out_black)
+```
+
+---
+
+```{r}
+#| fig.width: 10
+#| fig.height: 8
+print(out_white)
+```
+
+---
+
+```{r}
+#| fig.width: 10
+#| fig.height: 8
+print(out_hispanic)
+```
+
+---
+
+```{r}
+#| fig.width: 10
+#| fig.height: 8
+print(out_asian)
+```
+
+```{r}
+#| echo: FALSE
+#| message: FALSE
+
+## Clean up. These files end up in different places conditional on 
+## whether we're running this standalone or in a targets pipeline
+if(fs::file_exists(here::here("slides", "fbnyc2.Rdata"))) fs::file_delete(here::here("slides", "fbnyc2.Rdata"))
+if(fs::file_exists(here::here("slides", "fb_map.Rdata"))) fs::file_delete(here::here("slides", "fb_map.Rdata"))
+if(fs::file_exists(here::here("slides", "nyc_fb.Rdata"))) fs::file_delete(here::here("slides", "nyc_fb.Rdata"))
+
+if(fs::file_exists(here::here("fbnyc2.Rdata"))) fs::file_delete(here::here("fbnyc2.Rdata"))
+if(fs::file_exists(here::here("fb_map.Rdata"))) fs::file_delete(here::here("fb_map.Rdata"))
+if(fs::file_exists(here::here("nyc_fb.Rdata"))) fs::file_delete(here::here("nyc_fb.Rdata"))
+
+
+```

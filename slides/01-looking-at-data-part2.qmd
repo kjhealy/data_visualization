@@ -1,0 +1,345 @@
+---
+title: "Data Visualization - 1. Looking at Data (part 2)"
+format: kjhslides-revealjs
+engine: knitr
+filters:
+  - invert-h1
+  - line-highlight
+  - include-code-files
+author:
+  - name: Kieran Healy
+    affiliation: "Code Horizons"
+date: last-modified
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| label: "packages"
+#| include: FALSE
+library(flipbookr)
+library(here)
+library(tidyverse)
+library(kjhslides)
+```
+
+
+```{r}
+#| label: "setup"
+#| include: FALSE
+
+kjh_register_tenso()
+kjh_set_knitr_opts()
+kjh_set_slide_theme()
+
+
+
+
+
+
+
+# Safe
+```
+
+
+
+# [Looking at Data (part 2)]{.fg-yellow}
+
+# [Pre-Attentive Processing]{.fg-lblue}
+
+
+---
+
+:::{.center}
+
+![](img/01_preattentive_col_20.png){width=65%}
+
+:::
+
+---
+
+:::{.center}
+  
+![](img/01_preattentive_col_100.png){width=65%}
+
+:::
+
+---
+
+:::{.center}
+  
+![](img/01_preattentive_shp_20.png){width=65%}
+
+:::
+
+---
+
+:::{.center}
+  
+![](img/01_preattentive_shp_100.png){width=65%}
+
+:::
+
+---
+
+:::{.center}
+  
+![](img/01_preattentive_col_shp_100.png){width=65%}
+
+:::
+
+---
+
+:::{.center}
+  
+![Colin Ware](img/01_preattentive_easy_hard_blank.png){width=85%}
+
+:::
+
+
+---
+
+:::{.center}
+  
+![Colin Ware](img/01_preattentive_easy_hard.png){width=85%}
+
+:::
+
+---
+
+:::{.center}
+  
+![Colin Ware](img/01_preattentive_easy_hard_labeled.png){width=90%}
+
+:::
+
+
+# [Gestalt Inferences and Design]{.fg-lblue}
+
+---
+
+:::{.center}
+  
+![George Cave](img/01_gestalt_cave_interfaces.png)
+
+:::
+
+---
+
+:::{.center}
+  
+![George Cave](img/01_gestalt_cave_codings.png)
+:::
+
+---
+
+:::{.center}
+  
+![George Cave](img/01_gestalt_cave_clarity.png)
+
+:::
+
+---
+
+![](img/01_gestalt_comparisons.png)
+
+
+# Encodings or [mappings]{.fg-lblue} for data
+
+---
+
+:::{.huge}
+  [What's a graph, anyway?]{.fg-orange}
+:::
+
+---
+
+:::{.center}
+  ![](img/01_cleveland_encode.png){width=75%}
+:::
+
+---
+
+:::{.center}
+![](img/01_cleveland_decode.png){width=55%}
+:::
+
+# [Visual tasks in decoding graphs]{.fg-yellow}
+
+---
+
+![](img/01_cleveland_stacked_column.png)
+
+---
+
+
+![William Cleveland](img/01_cleveland_length_baseline.png)
+
+---
+
+
+![William Cleveland](img/01_cleveland_curves_1.png)
+
+---
+
+
+![William Cleveland](img/01_cleveland_curves_2.png)
+
+---
+
+
+![William Cleveland](img/01_cleveland_tasks.png)
+
+---
+
+
+![William Cleveland](img/01_cleveland_pie_bar.png)
+
+---
+
+![William Cleveland and Michael Bostock](img/01_cleveland_bostock_summary.png)
+
+
+# [A rough hierarchy of mappings for data]{.fg-yellow}
+
+
+---
+
+![Tamara Munzner](img/01_munzer_mappings_continuous.png)
+
+---
+
+
+![Tamara Munzner](img/01_munzer_mappings_categorical.png)
+
+
+# Honesty & [judgment]{.fg-lblue}
+
+---
+
+
+![](img/01_honesty_bar_1.png)
+
+---
+
+
+![](img/01_honesty_bar_2.png)
+
+
+---
+
+
+![](img/01_honesty_law_1.png)
+
+
+---
+
+
+![](img/01_honesty_law_2.png)
+
+---
+
+:::{.huge}
+CLARITY
+:::
+
+---
+
+:::{.huge}
+CLARITY
+
+[HONESTY]{.fg-lblue}
+:::
+
+---
+
+:::{.huge}
+CLARITY
+
+[HONESTY]{.fg-lblue}
+
+[TRUTH]{.fg-pink}
+:::
+
+---
+
+:::{.huge}
+CONTEXT
+:::
+
+---
+
+:::{.huge}
+CONTEXT
+
+[CONVENTION]{.fg-lblue}
+:::
+
+---
+
+:::{.huge}
+CONTEXT
+
+[CONVENTION]{.fg-lblue}
+
+[MEANING]{.fg-pink}
+:::
+
+
+# [Graphing]{.fg-lblue} [in practice]{.fg-yellow}
+
+## [Workhorses]{.fg-yellow}
+
+![Histogram](img/01_workhorse_histogram.png)
+
+## [Workhorses]{.fg-yellow}
+
+![Scatterplot](img/01_workhorse_scatterplot.png)
+
+## [Workhorses]{.fg-yellow}
+
+![Trend](img/01_workhorse_trend.png)
+
+## [Workhorses]{.fg-yellow}
+
+![Point-and-range](img/01_workhorse_dot_range.png)
+
+## [Workhorses]{.fg-yellow}
+
+
+![Faceting](img/01_workhorse_facet_row_1.png)
+
+
+## [Show Ponies]{.fg-yellow}
+
+![Congressional comparison](img/01_show_pony_congress.png)
+
+## [Show Ponies]{.fg-yellow}
+
+![Several plots at once](img/01_show_pony_congress_zoom.png)
+
+## [Show Ponies]{.fg-yellow}
+
+![Beeswarm plot](img/01_show_pony_pbe_by_school_type_bee.png)
+
+## [Show Ponies]{.fg-yellow}
+
+![Lexis Surface](img/01_show_pony_france_blackposter.png)
+
+
+## [Show Ponies]{.fg-yellow}
+
+![Faceted maps](img/01_breedposter_display_top25_orange.png)
+
+## [Unicorns …]{.fg-yellow}
+
+![The inevitable Minard](img/01_unicorn_minard_lg.png)
+
+## [Unicorns …]{.fg-yellow}
+
+![Swedish mortality](img/01_unicorn_swedishmortality_mfratio.gif)
+
+## [… or monsters]{.fg-yellow}
+
+![Network chords](img/01_unicorn_synteny_map_of_the_pig_and_human_genomes.png)
+
