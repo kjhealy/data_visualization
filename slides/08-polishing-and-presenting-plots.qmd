@@ -130,7 +130,7 @@ asasec |>
 ```
 
 
-`r chunq_reveal("reveal-asasteps",  lcolw="40", rcolw="60", title = "## Build your plots a piece at a time")`
+`r chunq_reveal("reveal-asasteps",  lcolw="40", rcolw="60", title = "Build your plots a piece at a time")`
 
 ```{r}
 #| label: "reveal-asasteps"
@@ -180,7 +180,7 @@ kjh_set_classic_theme()
 
 - .large[[`ggplot`]{.fg-lblue} has several color palettes built in. A variety of packages provide others.] 
 
-`r chunq_reveal("reveal-scalemanual",  lcolw="40", rcolw="60", title = "## You can specify scales manually")`
+`r chunq_reveal("reveal-scalemanual",  lcolw="40", rcolw="60", title = "You can specify scales manually")`
 
 ```{r}
 #| label: "reveal-scalemanual"
@@ -205,7 +205,7 @@ p <- organdata |>
 ```
 
 
-`r chunq_reveal("reveal-scalemanual2",  lcolw="40", rcolw="60", title = "## You can always specify scales manually")`
+`r chunq_reveal("reveal-scalemanual2",  lcolw="40", rcolw="60", title = "You can always specify scales manually")`
 
 ```{r}
 #| label: "reveal-scalemanual2"
@@ -217,7 +217,7 @@ p +
 ```
 
 
-`r chunq_reveal("reveal-scalemanual3",  lcolw="40", rcolw="60", title = "## You can always specify scales manually")`
+`r chunq_reveal("reveal-scalemanual3",  lcolw="40", rcolw="60", title = "You can always specify scales manually")`
 
 ```{r}
 #| label: "reveal-scalemanual3"
@@ -229,7 +229,7 @@ p +
 ```
 
 
-`r chunq_reveal("reveal-scalemanual4",  lcolw="40", rcolw="60", title = "## You can specify scales manually")`
+`r chunq_reveal("reveal-scalemanual4",  lcolw="40", rcolw="60", title = "You can specify scales manually")`
 
 ```{r}
 #| label: "reveal-scalemanual4"
@@ -526,7 +526,7 @@ ggplot(data = subset(county_data,
 
 ```
 
-`r chunq_reveal("reveal-fliptrump",  lcolw="45", rcolw="55", title = "## We know how to build this")`
+`r chunq_reveal("reveal-fliptrump",  lcolw="45", rcolw="55", title = "We know how to build this")`
 
 ```{r}
 #| label: "reveal-fliptrump"

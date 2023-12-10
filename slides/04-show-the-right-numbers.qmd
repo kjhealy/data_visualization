@@ -71,7 +71,7 @@ library(socviz)         # Handy socviz functions
 
 ## A grammar of graphics 
 
-The grammar is a set of rules for how to .kjh-lblue[produce graphics from data]{.fg-blue}, by _[mapping]{.fg-green}_ data to or _[representing]{.fg-green}_ it by geometric [objects]{.fg-orange} (like points and lines) that have aesthetic [attributes]{.fg-orange} (like position, color, size, and shape), together with further rules for transforming data if needed, for adjusting scales and their guides, and for projecting results onto some coordinate system.
+The grammar is a set of rules for how to [produce graphics from data]{.fg-blue}, by _[mapping]{.fg-green}_ data to or _[representing]{.fg-green}_ it by geometric [objects]{.fg-orange} (like points and lines) that have aesthetic [attributes]{.fg-orange} (like position, color, size, and shape), together with further rules for transforming data if needed, for adjusting scales and their guides, and for projecting results onto some coordinate system.
 
 
 ## {background-image="img/04_chomsky.png" background-size="cover"}
@@ -370,7 +370,7 @@ df <- pmap_dfc(params, rnorm, n = N) |>
 
 ```
 
-# Compare .kjh-lblue[subgroups]{.fg-yellow} to a reference distribution
+# Compare [subgroups]{.fg-yellow} to a reference distribution
 
 ## Some made-up data
 
@@ -382,7 +382,7 @@ df
 ```
 
 
-`r chunq_reveal("reveal-pivlongex",  lcolw="35", rcolw="65", title = "## Get the data into long format!")`
+`r chunq_reveal("reveal-pivlongex",  lcolw="35", rcolw="65", title = "Get the data into long format!")`
 
 ```{r}
 #| label: "reveal-pivlongex"
@@ -417,7 +417,7 @@ df |>
 
 - Again, `after_stat(ncount)` is computed.
 
-`r chunq_reveal("reveal-pivottrick1",  lcolw="45", rcolw="55", title = "## A little pivot trick")`
+`r chunq_reveal("reveal-pivottrick1",  lcolw="45", rcolw="55", title = "A little pivot trick")`
 
 ```{r}
 #| label: "reveal-pivottrick1"
@@ -427,7 +427,7 @@ df |>
   pivot_longer(cols = pop_a:pop_total)
 ```
 
-`r chunq_reveal("reveal-pivottrick2",  lcolw="45", rcolw="55", title = "## A little pivot trick")`
+`r chunq_reveal("reveal-pivottrick2",  lcolw="45", rcolw="55", title = "A little pivot trick")`
 
 ```{r}
 #| label: "reveal-pivottrick2"
@@ -619,7 +619,7 @@ p <- ggplot(data = oecd_sum,
                           fill = hi_lo))
 
 p_out <- p + geom_col() + 
-  geom_hline(yintercept = 0, size = 1.2) + #<<
+  geom_hline(yintercept = 0, linewidth = 1.2) + #<<
   guides(fill = "none") + 
   labs(x = NULL, #<<
        y = "Difference in Years", 

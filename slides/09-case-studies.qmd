@@ -184,7 +184,7 @@ fredts <- as_tibble(fredts)
 fredts
 ```
 
-`r chunq_reveal("reveal-fredpivot",  lcolw="40", rcolw="60", title = "## Pivot the data")`
+`r chunq_reveal("reveal-fredpivot",  lcolw="40", rcolw="60", title = "Pivot the data")`
 
 ---
 
@@ -201,7 +201,7 @@ fredts |>
 
 ```
 
-`r chunq_reveal("reveal-fredts1",  lcolw="35", rcolw="65", title = "## Make two plots")`
+`r chunq_reveal("reveal-fredts1",  lcolw="35", rcolw="65", title = "Make two plots")`
 
 ```{r}
 #| label: "reveal-fredts1"
@@ -232,7 +232,7 @@ fredts |>
 
 ---
 
-`r chunq_reveal("reveal-patchwork",  lcolw="35", rcolw="65", title = "## Combine with patchwork")`
+`r chunq_reveal("reveal-patchwork",  lcolw="35", rcolw="65", title = "Combine with patchwork")`
 
 ```{r}
 #| label: "reveal-patchwork"
@@ -275,7 +275,7 @@ Patchwork plot.
 yahoo
 ```
 
-`r chunq_reveal("reveal-yahoo",  lcolw="35", rcolw="65", title = "## Option 1")`
+`r chunq_reveal("reveal-yahoo",  lcolw="35", rcolw="65", title = "Option 1")`
 
 ```{r}
 #| label: "reveal-yahoo"
@@ -316,7 +316,7 @@ Redrawn with `geom_path()`
 
 ---
 
-`r chunq_reveal("reveal-yahooalt",  lcolw="35", rcolw="65", title = "## Alternatively ...")`
+`r chunq_reveal("reveal-yahooalt",  lcolw="35", rcolw="65", title = "Alternatively ...")`
 
 ```{r}
 #| label: "reveal-yahooalt"
@@ -383,7 +383,7 @@ studebt
 ```
 
 
-`r chunq_reveal("reveal-debt",  lcolw="40", rcolw="60", title = "## Debt Plot 1")`
+`r chunq_reveal("reveal-debt",  lcolw="40", rcolw="60", title = "Debt Plot 1")`
 
 ```{r}
 #| label: "reveal-debt"
@@ -423,7 +423,7 @@ p1_debt
 
 Pies redrawn as facets
 
-`r chunq_reveal("reveal-debtalt",  lcolw="40", rcolw="60", title = "## Alternatively, a kind of stacked bar chart")`
+`r chunq_reveal("reveal-debtalt",  lcolw="40", rcolw="60", title = "Alternatively, a kind of stacked bar chart")`
 
 ```{r}
 #| label: "reveal-debtalt"
@@ -497,7 +497,7 @@ Pies redrawn as sideways-stacked columns
 okboomer
 ```
 
-`r chunq_reveal("reveal-lineboom",  lcolw="40", rcolw="60", title = "## Boomer Line Graph")`
+`r chunq_reveal("reveal-lineboom",  lcolw="40", rcolw="60", title = "Boomer Line Graph")`
 
 ```{r}
 #| label: "reveal-lineboom"
@@ -524,7 +524,7 @@ p_lineboom
 
 The Baby Boom.
 
-`r chunq_reveal("reveal-boomertile",  lcolw="60", rcolw="40", title = "## Tiled Heatmap")`
+`r chunq_reveal("reveal-boomertile",  lcolw="60", rcolw="40", title = "Tiled Heatmap")`
 
 ```{r}
 #| label: "reveal-boomertile"
@@ -587,7 +587,7 @@ cavax
 
 Here we will do some custom manual labeling. 
 
-`r chunq_reveal("reveal-auxinfo",  lcolw="50", rcolw="50", title = "## Aux Info Panel")`
+`r chunq_reveal("reveal-auxinfo",  lcolw="50", rcolw="50", title = "Aux Info Panel")`
 
 ```{r}
 #| label: "reveal-auxinfo"
@@ -607,7 +607,7 @@ cavax |>
   aux_info
 ```
 
-`r chunq_reveal("reveal-auxinfo2",  lcolw="50", rcolw="50", title = "## A little kludge")`
+`r chunq_reveal("reveal-auxinfo2",  lcolw="50", rcolw="50", title = "A little kludge")`
 
 ```{r}
 #| label: "reveal-auxinfo2"
@@ -640,7 +640,7 @@ kjh_set_classic_theme()
 theme_set(theme_minimal())
 ```
 
-`r chunq_reveal("reveal-beemain",  lcolw="50", rcolw="50", title = "## At last, the Beeplot")`
+`r chunq_reveal("reveal-beemain",  lcolw="50", rcolw="50", title = "At last, the Beeplot")`
 
 ```{r}
 #| label: "reveal-beemain"
