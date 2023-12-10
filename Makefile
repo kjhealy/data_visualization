@@ -6,7 +6,7 @@ PUBLIC_DIR = _site
 pdfs:
 	Rscript -e "suppressMessages(library(knitr));suppressMessages(library(tidyverse)); kjhslides::kjh_decktape_all_slides()"
 
-## Purl all Rmds
+## Purl all qmds
 code: .FORCE
 	Rscript -e "suppressMessages(library(knitr));suppressMessages(library(tidyverse)); kjhslides::kjh_purl_all_slides()"
 	find ./code -name '*.R' -type f | xargs gsed -i '1,20d'
