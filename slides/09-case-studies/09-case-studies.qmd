@@ -49,24 +49,7 @@ kjh_set_slide_theme()   # ggplot theme to go with slides. Set tenso = FALSE if n
 
 # Some Case Studies
 
-
-
-**Data Visualization: Session 9**
-
-.light[Kieran Healy<br>
-Code Horizons, April 2023
-]
-
-]
-
----
-
-
-
-
----
-
-# Load our libraries
+## Load our packages
 
 ```{r}
 #| label: "09-case-studies-1"
@@ -86,20 +69,9 @@ library(socviz)     # data and some useful functions
 ```
 
 
----
-
-
-
-# .huge[[Working and]{.fg-yellow}<br/>[Reworking]{.fg-lblue}]
+# [Two y-axes]{.fg-yellow}
 
 ---
-
-class: right bottom main-title section-title-1
-
-## .huge.right.bottom.squish4[[Two y-axes]{.fg-yellow}]
-
----
-layout: false
 
 ```{r}
 #| label: "09-case-studies-2"
@@ -166,10 +138,9 @@ two.y(x=fredts$date,
       ttxt = "")
 ```
 
-.right.w90.small[Have we found the secret key to the stock market?]
+Have we found the secret key to the stock market?
 
 ---
-layout: false
 
 ```{r}
 #| label: "09-case-studies-4"
@@ -186,12 +157,9 @@ two.y(x=fredts$date,
 
 ```
 
-
-
-.right.w90.small[No, no we have not.]
+No. No we have not.
 
 ---
-layout: false
 
 ```{r}
 #| label: "09-case-studies-5"
@@ -208,16 +176,7 @@ two.y(x=fredts$date,
 ```
 
 
-.right.w90.small[credit]
-
----
-
-
-
-
----
-
-# What to do instead?
+## What to do instead?
 
 ```{r }
 #| label: "09-case-studies-6"
@@ -225,8 +184,9 @@ fredts <- as_tibble(fredts)
 fredts
 ```
 
+`r chunq_reveal("reveal-fredpivot",  lcolw="40", rcolw="60", title = "## Pivot the data")`
+
 ---
-`r chunq_reveal("reveal-fredpivot",  lcolw="40", rcolw="60", title = "# Pivot the data")`
 
 ```{r}
 #| label: "reveal-fredpivot"
@@ -240,10 +200,8 @@ fredts |>
   fredts_m
 
 ```
----
 
----
-`r chunq_reveal("reveal-fredts1",  lcolw="35", rcolw="65", title = "# Make two plots")`
+`r chunq_reveal("reveal-fredts1",  lcolw="35", rcolw="65", title = "## Make two plots")`
 
 ```{r}
 #| label: "reveal-fredts1"
@@ -271,10 +229,10 @@ fredts |>
   p2
 
 ```
----
 
 ---
-`r chunq_reveal("reveal-patchwork",  lcolw="35", rcolw="65", title = "# Combine with patchwork")`
+
+`r chunq_reveal("reveal-patchwork",  lcolw="35", rcolw="65", title = "## Combine with patchwork")`
 
 ```{r}
 #| label: "reveal-patchwork"
@@ -288,7 +246,6 @@ library(patchwork)
 ```
 
 ---
-layout: false
 
 ```{r}
 #| label: "09-case-studies-7"
@@ -299,44 +256,26 @@ p_patch
 ```
 
 
-.right.w90.small[Patchwork plot.]
+Patchwork plot.
 
 ---
 
 
-
-
----
-
-class: right bottom main-title section-title-1
-
-## .huge.right.bottom.squish4[[Redrawing]{.fg-yellow} [a bad slide]{.fg-lblue}]
+# [Redrawing]{.fg-yellow} [a bad slide]{.fg-lblue}
 
 ---
 
-layout: false
-
-![](img/09_yahoo_headcount.png)
-
-.right.w90.small[What can one say, really]
-
----
+![What can one say, really](img/09_yahoo_headcount.png)
 
 
-
-
----
-
-# The data
+## The data
 
 ```{r }
 #| label: "09-case-studies-8"
 yahoo
 ```
 
-
----
-`r chunq_reveal("reveal-yahoo",  lcolw="35", rcolw="65", title = "# Option 1")`
+`r chunq_reveal("reveal-yahoo",  lcolw="35", rcolw="65", title = "## Option 1")`
 
 ```{r}
 #| label: "reveal-yahoo"
@@ -364,7 +303,6 @@ yahoo |>
 ```
 
 ---
-layout: false
 
 ```{r}
 #| label: "09-case-studies-9"
@@ -374,16 +312,11 @@ layout: false
 yahoo1
 ```
 
-
-.right.w90.small[Redrawn with `geom_path()`]
-
----
-
-
-
+Redrawn with `geom_path()`
 
 ---
-`r chunq_reveal("reveal-yahooalt",  lcolw="35", rcolw="65", title = "# Alternatively ...")`
+
+`r chunq_reveal("reveal-yahooalt",  lcolw="35", rcolw="65", title = "## Alternatively ...")`
 
 ```{r}
 #| label: "reveal-yahooalt"
@@ -405,7 +338,6 @@ yahoo |>
 ```
 
 ---
-layout: false
 
 ```{r}
 #| label: "09-case-studies-10"
@@ -415,30 +347,17 @@ layout: false
 yahoo2
 ```
 
-.right.w90.small[If you're interested in the ratio, just show the ratio.]
-
----
+If you're interested in the ratio, just show the ratio.
 
 
+# [Say no]{.fg-yellow} [to pie]{.fg-lblue}
+
+## Pie charts are easy to mess up
+
+![Federal Reserve Bank of New York.](img/09_student_debt_pie.png)
 
 
----
-
-class: right bottom main-title section-title-1
-
-## .huge.right.bottom.squish4[[Say no]{.fg-yellow} [to pie]{.fg-lblue}]
-
----
-
-# Pie charts are easy to mess up
-
-![](img/09_student_debt_pie.png)
-
-.right.w90.small[Federal Reserve Bank of New York.]
-
----
-
-# The data
+## The data
 
 ```{r }
 #| label: "09-case-studies-11"
@@ -447,9 +366,7 @@ studebt
 
 - `Debt` and `Debtrc` are both ordered factors.
 
----
-
-# A little prep work
+## A little prep work
 
 ```{r }
 #| label: "09-case-studies-12"
@@ -466,9 +383,7 @@ studebt
 ```
 
 
----
-
-`r chunq_reveal("reveal-debt",  lcolw="40", rcolw="60", title = "# Debt Plot 1")`
+`r chunq_reveal("reveal-debt",  lcolw="40", rcolw="60", title = "## Debt Plot 1")`
 
 ```{r}
 #| label: "reveal-debt"
@@ -497,8 +412,6 @@ studebt |>
 ```
 
 ---
-layout: false
-
 
 ```{r}
 #| label: "09-case-studies-13"
@@ -508,17 +421,9 @@ layout: false
 p1_debt
 ```
 
-.right.w90.small[Pies redrawn as facets]
+Pies redrawn as facets
 
----
-
-
- 
-
-
----
-
-`r chunq_reveal("reveal-debtalt",  lcolw="40", rcolw="60", title = "# Alternatively, as a kind of stacked bar chart")`
+`r chunq_reveal("reveal-debtalt",  lcolw="40", rcolw="60", title = "## Alternatively, a kind of stacked bar chart")`
 
 ```{r}
 #| label: "reveal-debtalt"
@@ -554,8 +459,6 @@ studebt |>
 ```
 
 ---
-layout: false
-class: middle
 
 ```{r}
 #| label: "09-case-studies-14"
@@ -565,55 +468,26 @@ class: middle
 p_debt2
 ```
 
-.right.w90.small[Pies redrawn as sideways-stacked columns]
+Pies redrawn as sideways-stacked columns
 
 
----
+# [But I want]{.fg-lblue}<br /> [a pony]{.fg-yellow}
 
+## Show ponies
 
+![Beeswarm plot](img/09_show_pony_pbe_by_school_type_bee.png)
 
-# .huge[[But I want]{.fg-lblue}<br /> [a pony]{.fg-yellow}]
+## Show ponies
 
----
+![Mortality in France](img/09_show_pony_france_blackposter.png)
 
+## Show ponies
 
+![The Baby Boom](img/09_okboomer2_composite_poster-200-01-2.png)
 
+# [OK]{.fg-yellow} [boomer]{.fg-lblue}
 
----
-
-
-# Show ponies
-
-![](img/09_show_pony_pbe_by_school_type_bee.png)
-
----
-
-# Show ponies
-
-![](img/09_show_pony_france_blackposter.png)
-
----
-
-
-# Show ponies
-
-![](img/09_okboomer2_composite_poster-200-01-2.png)
-
----
-
-
-class: right bottom main-title section-title-1
-
-## .huge.right.bottom.squish4[[OK]{.fg-yellow} [boomer]{.fg-lblue}]
-
----
-
-
-
-
----
-
-# The [`demog`]{.fg-lblue} package
+## The [`demog`]{.fg-lblue} package
 
 ```{r }
 #| label: "09-case-studies-15"
@@ -623,9 +497,7 @@ class: right bottom main-title section-title-1
 okboomer
 ```
 
-
----
-`r chunq_reveal("reveal-lineboom",  lcolw="40", rcolw="60", title = "# Boomer Line Graph")`
+`r chunq_reveal("reveal-lineboom",  lcolw="40", rcolw="60", title = "## Boomer Line Graph")`
 
 ```{r}
 #| label: "reveal-lineboom"
@@ -640,9 +512,6 @@ okboomer |>
 ```
 ---
 
----
-layout: false
-
 ```{r}
 #| label: "09-case-studies-16"
 #| echo: FALSE
@@ -653,17 +522,9 @@ p_lineboom
 ```
 
 
-.right.w90.small[The Baby Boom.]
+The Baby Boom.
 
----
-
-
-
-
----
-
----
-`r chunq_reveal("reveal-boomertile",  lcolw="60", rcolw="40", title = "# Tiled Heatmap")`
+`r chunq_reveal("reveal-boomertile",  lcolw="60", rcolw="40", title = "## Tiled Heatmap")`
 
 ```{r}
 #| label: "reveal-boomertile"
@@ -700,8 +561,6 @@ okboomer |>
 ```
 
 ---
-layout: false
-class: center
 
 ```{r}
 #| label: "09-case-studies-17"
@@ -712,29 +571,11 @@ p_tileboom
 ```
 
 
-.right.w90.small[The Baby Boom as a tiled temporal heatmap]
+The Baby Boom as a tiled temporal heatmap
 
+# [Beeswarms and]{.fg-yellow}<br />[bespoke labels]{.fg-lblue}
 
----
-
-
-
-
----
-
-class: right bottom main-title section-title-1
-
-## .huge.right.bottom.squish4[[Beeswarms and]{.fg-yellow}<br />[bespoke labels]{.fg-lblue}]
-
-
----
-
-
-
-
----
-
-# The [`cavax`]{.fg-lblue} package
+## The [`cavax`]{.fg-lblue} package
 
 ```{r }
 #| label: "09-case-studies-18"
@@ -746,8 +587,7 @@ cavax
 
 Here we will do some custom manual labeling. 
 
----
-`r chunq_reveal("reveal-auxinfo",  lcolw="50", rcolw="50", title = "# Aux Info Panel")`
+`r chunq_reveal("reveal-auxinfo",  lcolw="50", rcolw="50", title = "## Aux Info Panel")`
 
 ```{r}
 #| label: "reveal-auxinfo"
@@ -767,8 +607,7 @@ cavax |>
   aux_info
 ```
 
----
-`r chunq_reveal("reveal-auxinfo2",  lcolw="50", rcolw="50", title = "# A little kludge")`
+`r chunq_reveal("reveal-auxinfo2",  lcolw="50", rcolw="50", title = "## A little kludge")`
 
 ```{r}
 #| label: "reveal-auxinfo2"
@@ -792,8 +631,6 @@ aux_info |>
   special_x_labs 
  
 ```
----
-
 
  
 ```{r}
@@ -803,8 +640,7 @@ kjh_set_classic_theme()
 theme_set(theme_minimal())
 ```
 
----
-`r chunq_reveal("reveal-beemain",  lcolw="50", rcolw="50", title = "# At last, the Beeplot")`
+`r chunq_reveal("reveal-beemain",  lcolw="50", rcolw="50", title = "## At last, the Beeplot")`
 
 ```{r}
 #| label: "reveal-beemain"
@@ -843,7 +679,6 @@ cavax |>
 ```
 
 ---
-layout: false
 
 ```{r}
 #| label: "09-case-studies-20"
@@ -854,7 +689,7 @@ p_bee_main
 ```
 
 
-.right.w90.small[Vaccination Exemptions in California Kindergartens]
+Vaccination Exemptions in California Kindergartens
 
 
 

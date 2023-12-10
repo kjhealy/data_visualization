@@ -52,23 +52,7 @@ kjh_set_slide_theme()   # ggplot theme to go with slides. Set tenso = FALSE if n
 
 
 
-**Data Visualization: Session 8**
-
-.light[Kieran Healy<br>
-Code Horizons, April 2023
-]
-
-]
-
-
----
-
-
-
-
----
-
-# Load our libraries
+## Load our packages
 
 ```{r}
 #| label: "08-polishing-and-presenting-plots-1"
@@ -83,15 +67,9 @@ library(ggforce)    # useful enhancements to ggplot
 ```
 
 
----
+# [Piece by piece,]{.fg-yellow}<br/>[Layer by layer]{.fg-lblue}
 
-
-
-# .huge[[Piece by piece,]{.fg-yellow}<br/>[Layer by layer]{.fg-lblue}]
-
----
-
-# Build your plots a piece at a time
+## Build your plots a piece at a time
 
 ```{r }
 #| label: "08-polishing-and-presenting-plots-2"
@@ -99,9 +77,7 @@ asasec <- as_tibble(asasec)
 asasec
 ```
 
----
-
-# Build your plots a piece at a time
+## Build your plots a piece at a time
 
 ```{r}
 #| label: "08-polishing-and-presenting-plots-3"
@@ -118,9 +94,7 @@ asasec |>
 
 ```
 
----
-
-# Build your plots a piece at a time
+## Build your plots a piece at a time
 
 ```{r}
 #| label: "08-polishing-and-presenting-plots-4"
@@ -156,8 +130,7 @@ asasec |>
 ```
 
 
----
-`r chunq_reveal("reveal-asasteps",  lcolw="40", rcolw="60", title = "# Build your plots a piece at a time")`
+`r chunq_reveal("reveal-asasteps",  lcolw="40", rcolw="60", title = "## Build your plots a piece at a time")`
 
 ```{r}
 #| label: "reveal-asasteps"
@@ -188,30 +161,26 @@ asasec |>
   theme(legend.position = "bottom")
 
 ```
----
 
 
-
-# .huge[[More about Scales]{.fg-lblue}]
+# [More about Scales]{.fg-lblue}
 
 ```{r}
 #| label: "08-polishing-and-presenting-plots-5"
 #| echo: FALSE
 kjh_set_classic_theme()
 ```
+## Working with [`color`]{.fg-yellow} and [`fill`]{.fg-pink} scales
 
----
-
-# Working with [`color`]{.fg-yellow} and [`fill`]{.fg-pink} scales
-
-- .center.large[[`scale\\\_`]{.fg-green}[`<MAPPING>`]{.fg-orange}[`\\\_`]{.fg-green}[`<KIND>`]{.fg-lblue}[`()`]{.fg-green}]
+:::{.large}
+[scale_]{.fg-green}[\<MAPPING\>]{.fg-orange}[_]{.fg-green}[\<KIND\>]{.fg-lblue}[()]{.fg-green}  
+:::
 
 - .large[Scale functions control the display of the variables they map. So to change the colors for `color` or `fill` mappings, you adjust the corresponding [`scale_`]{.fg-green} function, not the [`theme()`]{.fg-green} function.] 
 
 - .large[[`ggplot`]{.fg-lblue} has several color palettes built in. A variety of packages provide others.] 
 
----
-`r chunq_reveal("reveal-scalemanual",  lcolw="40", rcolw="60", title = "# You can always specify scales manually")`
+`r chunq_reveal("reveal-scalemanual",  lcolw="40", rcolw="60", title = "## You can specify scales manually")`
 
 ```{r}
 #| label: "reveal-scalemanual"
@@ -236,8 +205,7 @@ p <- organdata |>
 ```
 
 
----
-`r chunq_reveal("reveal-scalemanual2",  lcolw="40", rcolw="60", title = "# You can always specify scales manually")`
+`r chunq_reveal("reveal-scalemanual2",  lcolw="40", rcolw="60", title = "## You can always specify scales manually")`
 
 ```{r}
 #| label: "reveal-scalemanual2"
@@ -249,8 +217,7 @@ p +
 ```
 
 
----
-`r chunq_reveal("reveal-scalemanual3",  lcolw="40", rcolw="60", title = "# You can always specify scales manually")`
+`r chunq_reveal("reveal-scalemanual3",  lcolw="40", rcolw="60", title = "## You can always specify scales manually")`
 
 ```{r}
 #| label: "reveal-scalemanual3"
@@ -262,8 +229,7 @@ p +
 ```
 
 
----
-`r chunq_reveal("reveal-scalemanual4",  lcolw="40", rcolw="60", title = "# You can always specify scales manually")`
+`r chunq_reveal("reveal-scalemanual4",  lcolw="40", rcolw="60", title = "## You can specify scales manually")`
 
 ```{r}
 #| label: "reveal-scalemanual4"
@@ -279,24 +245,17 @@ p + scale_color_manual(
 
 ```
 
----
+## But many balanced palettes are available
 
-# But many balanced palettes are available
-
-.pull-left[
-
-### E.g., the `RColorBrewer` Palettes
-
+:::: {.columns}
+::: {.column width="35%"}
+- E.g., the `RColorBrewer` Palettes
 - These are available through the [`scale_color-brewer()`]{.fg-green} and [`scale_fill_brewer()`]{.fg-green} functions, as well as independently.
-
 - See the palettes with [`RColorBrewer::display.brewer.all()`]{.fg-green}
 
-]
+:::
 
---
-
-.pull-right[
-
+::: {.column width="65%" .right}
 ### _Qualitative_ palettes
 
 ```{r}
@@ -310,26 +269,23 @@ RColorBrewer::display.brewer.all(type = "qual")
 par(opar)
 ```
 
+:::
+::::
 
-]
 
----
 
-# But many balanced palettes are available
+## But many balanced palettes are available
 
-.pull-left[
-
-### E.g., the `RColorBrewer` Palettes
-
+:::: {.columns}
+::: {.column width="35%"}
+- E.g., the `RColorBrewer` Palettes
 - These are available through the [`scale_color-brewer()`]{.fg-green} and [`scale_fill_brewer()`]{.fg-green} functions, as well as independently.
-
 - See the palettes with [`RColorBrewer::display.brewer.all()`]{.fg-green}
 
-]
+:::
 
---
-
-.pull-right[
+::: {.column width="65%" .right}
+### _Qualitative_ palettes
 
 ### _Sequential_ palettes
 
@@ -341,28 +297,26 @@ par(opar)
 par(mar=c(0,4,0,0))
 RColorBrewer::display.brewer.all(type = "seq")
 ```
+:::
+::::
+
+
+
 
 
 ]
 
----
+## But many balanced palettes are available
 
-# But many balanced palettes are available
-
-.pull-left[
-
-### E.g., the `RColorBrewer` Palettes
-
+:::: {.columns}
+::: {.column width="35%"}
+- E.g., the `RColorBrewer` Palettes
 - These are available through the [`scale_color-brewer()`]{.fg-green} and [`scale_fill_brewer()`]{.fg-green} functions, as well as independently.
-
 - See the palettes with [`RColorBrewer::display.brewer.all()`]{.fg-green}
 
-]
+:::
 
---
-
-.pull-right[
-
+::: {.column width="65%" .right}
 ### _Diverging_ palettes
 
 ```{r}
@@ -374,14 +328,11 @@ par(mar=c(0,4,0,0))
 RColorBrewer::display.brewer.all(type = "div")
 ```
 
+:::
+::::
 
-]
 
-
-
----
-
-# Qualitative Brewer Palettes
+## Qualitative Brewer Palettes
 
 
 ```{r}
@@ -406,10 +357,10 @@ p + geom_point(size = 2) +
   labs(title = "Accent")
 ```
 
----
-layout: false
+## Some color palettes
 
-.pull-left[
+:::: {.columns}
+::: {.column width="50%"}
 ```{r}
 #| label: "08-polishing-and-presenting-plots-10"
 #| echo: FALSE
@@ -429,9 +380,10 @@ p + geom_point(size = 3) +
   scale_color_brewer(palette = "Pastel2") +
   labs(title = "Pastel2")
 ```
-]
 
-.pull-right[
+:::
+
+::: {.column width="50%" .right}
 ```{r}
 #| label: "08-polishing-and-presenting-plots-12"
 #| echo: FALSE
@@ -451,23 +403,16 @@ p + geom_point(size = 3) +
   scale_color_brewer(palette = "Accent") +
   labs(title = "Accent")
 ```
-]
 
-.right.w90.small[Some color palettes]
-
----
+:::
+::::
 
 
+## The [`colorspace`]{.fg-lblue} package has even more
 
-
----
-
-# The [`colorspace`]{.fg-lblue} package has even more
-
-![](img/08_colorspace_package.png)
+![Many palettes](img/08_colorspace_package.png)
 
 ---
-layout: false
 
 ```{r}
 #| label: "08-polishing-and-presenting-plots-14"
@@ -478,20 +423,16 @@ colorspace::hcl_palettes(plot = TRUE)
 ```
 
 
-.right.w90.small[So many colors]
+So many colors
 
----
+## The [`colorspace`]{.fg-lblue} function convention
 
+:::{.large}
+[scale_]{.fg-green}[\<MAPPING\>]{.fg-orange}[_]{.fg-green}[\<KIND\>]{.fg-lblue}[\<COLORSCALE\>]{.fg-pink}[()]{.fg-green}  
+:::
 
-
-
----
-
-# The [`colorspace`]{.fg-lblue} function convention
-
-- - .center.large[[`scale\\\_`]{.fg-green}[`<MAPPING>`]{.fg-orange}[`\\\_`]{.fg-green}[`<KIND>`]{.fg-lblue}[`\\\_`]{.fg-green}[`<COLORSCALE>`]{.fg-pink}[`()`]{.fg-green}]
-
-.pull-left.small[
+:::: {.columns}
+::: {.column width="50%"}
 [`scale_color_binned_diverging()`]{.fg-green}
 
 [`scale_color_binned_qualitative()`]{.fg-green}
@@ -509,12 +450,9 @@ colorspace::hcl_palettes(plot = TRUE)
 [`scale_color_discrete_qualitative()`]{.fg-green}
 
 [`scale_color_discrete_sequential()`]{.fg-green}
+:::
 
-]
-
-
-.pull-right.small[
-
+::: {.column width="50%" .right}
 [`scale_fill_binned_diverging()`]{.fg-green}
 
 [`scale_fill_binned_divergingx()`]{.fg-green}
@@ -534,22 +472,11 @@ colorspace::hcl_palettes(plot = TRUE)
 [`scale_fill_discrete_qualitative()`]{.fg-green}
 
 [`scale_fill_discrete_sequential()`]{.fg-green}
-
-]
-
----
+:::
+::::
 
 
-
-
----
-
-class: right bottom main-title section-title-1
-
-## .huge.right.bottom.squish4[[Layer color and text<br />]{.fg-yellow}[to your advantage]{.fg-lblue}]
-
----
-layout: false
+# [Layer color and text<br />]{.fg-yellow}[to your advantage]{.fg-lblue}
 
 ```{r}
 #| label: "08-polishing-and-presenting-plots-15"
@@ -599,13 +526,7 @@ ggplot(data = subset(county_data,
 
 ```
 
----
-
-
-
-
----
-`r chunq_reveal("reveal-fliptrump",  lcolw="45", rcolw="55", title = "# We know how to build this")`
+`r chunq_reveal("reveal-fliptrump",  lcolw="45", rcolw="55", title = "## We know how to build this")`
 
 ```{r}
 #| label: "reveal-fliptrump"
@@ -641,15 +562,7 @@ ggplot(data = subset(county_data,
  
 ```
 
----
-layout: false
-class: main-title main-title-inv middle
-
-# .middle.squish4.large[[Leverage ggplot's]{.fg-orange}<br />[layered approach]{.fg-lblue}]
-
----
-layout: false
-
+# [Leverage ggplot's]{.fg-orange}<br />[layered approach]{.fg-lblue}
 
 ```{r}
 #| label: "08-polishing-and-presenting-plots-17"
@@ -819,6 +732,8 @@ p_layer_6 <- ggplot(data = subset(county_data,
 
 ```
 
+---
+
 ```{r}
 #| label: "08-polishing-and-presenting-plots-18"
 #| echo: FALSE
@@ -828,7 +743,7 @@ p_layer_1
 ```
 
 ---
-layout: false
+
 
 ```{r}
 #| label: "08-polishing-and-presenting-plots-19"
@@ -839,7 +754,6 @@ p_layer_2
 ```
 
 ---
-layout: false
 
 ```{r}
 #| label: "08-polishing-and-presenting-plots-20"
@@ -850,7 +764,6 @@ p_layer_3
 ```
 
 ---
-layout: false
 
 ```{r}
 #| label: "08-polishing-and-presenting-plots-21"
@@ -861,7 +774,7 @@ p_layer_4
 ```
 
 ---
-layout: false
+
 
 ```{r}
 #| label: "08-polishing-and-presenting-plots-22"
@@ -872,7 +785,6 @@ p_layer_5
 ```
 
 ---
-layout: false
 
 ```{r}
 #| label: "08-polishing-and-presenting-plots-23"
@@ -884,7 +796,6 @@ p_layer_6
 
 
 ---
-layout: false
 
 ```{r}
 #| label: "08-polishing-and-presenting-plots-24"
@@ -895,128 +806,79 @@ p_layer_5
 ```
 
 ---
-layout: false
-class: main-title main-title-inv middle
 
-# .middle.squish4.large[[Layer,]{.fg-lblue}<br />[Highlight,]{.fg-pink}<br />[Repeat]{.fg-lblue}]
+# [Layer,]{.fg-lblue}<br />[Highlight,]{.fg-pink}<br />[Repeat]{.fg-lblue}
 
----
+## Build from ideas to data
+
+![The relationship of interest](img/08_status_conceptual.png)
+
+## Build from ideas to data
+
+![Theory says ...](img/08_status_hypotheses.png)
 
 
+## Build from ideas to data
 
-
----
-
-# Build from ideas to data
-
-![](img/08_status_conceptual.png)
-
----
-
-# Build from ideas to data
-
-![](img/08_status_hypotheses.png)
-
+![Data suggests ...](img/08_status_results.png)
 
 ---
 
-# Build from ideas to data
+## Repeat to [differentiate]{.fg-lblue}
 
-![](img/08_status_results.png)
-
----
-
-# Repeat to [differentiate]{.fg-lblue}
-
-![](img/08_model_controls_pointrange_IRRs_MASSnb.png)
+![Pointrange](img/08_model_controls_pointrange_IRRs_MASSnb.png)
 
 
----
+## Repeat to [differentiate]{.fg-lblue}
 
-# Repeat to [differentiate]{.fg-lblue}
+![Add a comparison group](img/08_mode_lsm_nb_gender_journal.png)
 
-![](img/08_mode_lsm_nb_gender_journal.png)
+## Layer and repeat with [facets]{.fg-lblue}
 
----
+![Compare across facets](img/08_growth_curve_quantile_quantreg_gender.png)
 
-# Layer and repeat with [facets]{.fg-lblue}
+## Layer and repeat [across]{.fg-lblue} facets
 
-![](img/08_growth_curve_quantile_quantreg_gender.png)
+![Layer to compare](img/08_altservices.png)
 
 ---
 
-# Layer and repeat [across]{.fg-lblue} facets
+## Layer and repeat [across]{.fg-lblue} facets
 
-![](img/08_altservices.png)
-
----
-
-# Layer and repeat [across]{.fg-lblue} facets
-
-![](img/08_altservices2.png)
+![Layer to copmare](img/08_altservices2.png)
 
 
----
+## X-Ray Vision
 
-# X-Ray Vision
+![Seeing through it](img/08_layers_all_labeled.png)
 
-![](img/08_layers_all_labeled.png)
+## .huge[[T]{.fg-lblue}[h]{.fg-yellow}[e]{.fg-pink}[m]{.fg-green}[e]{.fg-orange}.kjh-grey[s]]
 
----
+## Themes ...
 
-
-
-# .huge[[T]{.fg-lblue}[h]{.fg-yellow}[e]{.fg-pink}[m]{.fg-green}[e]{.fg-orange}.kjh-grey[s]]
+- are controlled by the [`theme()`]{.fg-green} function
+- can be bundled into functions of their own, like [`theme_bw()`]{.fg-green} or [`theme_minimal()`]{.fg-green}
+- can be set for the duration of a file or project with [`theme_set()`]{.fg-green}
+- make changes that are applied _additively_
+- and most importantly ...
 
 ---
 
+# [Thematic elements do not represent data directly]{.fg-orange}
 
-
-
----
-
-# Themes ...
-
-
-- .medium[are controlled by the [`theme()`]{.fg-green} function]
-
-- .medium[can be bundled into functions of their own, like [`theme_bw()`]{.fg-green} or [`theme_minimal()`]{.fg-green}]
-
-- .medium[can be set for the duration of a file or project with [`theme_set()`]{.fg-green}]
-
-- .medium[make changes that are applied _additively_]
-
-- .medium[and most importantly ...]
-
----
-layout: false
-class: main-title main-title-inv
-
-# .middle.squish4.large[Thematic elements do not represent data directly]{.fg-orange}
-
----
-
-
-
-
----
-
-
-# Make a plot
+## Make a plot
 
 ```{r }
 #| label: "08-polishing-and-presenting-plots-25"
 kjh_set_classic_theme(3)
 ```
 
-
-.pull-left.w45[
 ```{r}
 #| label: "codefig-themes1"
 #| message: FALSE
-#| fig.show: "hide"
 #| fig.width: 4.8
 #| fig.height: 4.5
+#| output-location: column
 
 p <- organdata |> 
   drop_na(world) |> 
@@ -1030,112 +892,50 @@ p <- organdata |>
 p 
 
 ```
-]
-
---
-
-.pull-right.w55[
-```{r}
-#| label: "08-polishing-and-presenting-plots-26"
-#| echo: FALSE
-  knitr::include_graphics(
-  knitr::fig_chunk("codefig-themes1", "png"))
-```
-]
-
----
-
-# Add a theme ... [`theme_bw()`]{.fg-green}
 
 
-.pull-left.w45[
+## Add a theme ... [`theme_bw()`]{.fg-green}
+
 ```{r}
 #| label: "codefig-theme2"
 #| message: FALSE
-#| fig.show: "hide"
 #| fig.width: 4.8
 #| fig.height: 4.5
+#| output-location: column
 p + theme_bw()
 ```
-]
 
---
-
-.pull-right.w55[
-```{r}
-#| label: "08-polishing-and-presenting-plots-27"
-#| echo: FALSE
-  knitr::include_graphics(
-  knitr::fig_chunk("codefig-theme2", "png"))
-```
-]
+## Add a theme ... [`theme_minimal()`]{.fg-green}
 
 
----
-
-# Add a theme ... [`theme_minimal()`]{.fg-green}
-
-
-.pull-left.w45[
 ```{r}
 #| label: "codefig-theme3"
 #| message: FALSE
-#| fig.show: "hide"
 #| fig.width: 4.8
 #| fig.height: 4.5
+#| output-location: column
 p + theme_minimal()
 ```
-]
 
---
+## Add a theme ... [`theme_dark()`]{.fg-green}
 
-.pull-right.w55[
-```{r}
-#| label: "08-polishing-and-presenting-plots-28"
-#| echo: FALSE
-  knitr::include_graphics(
-  knitr::fig_chunk("codefig-theme3", "png"))
-```
-]
-
----
-
-# Add a theme ... [`theme_dark()`]{.fg-green}
-
-
-.pull-left.w45[
 ```{r}
 #| label: "codefig-themedark"
 #| message: FALSE
-#| fig.show: "hide"
 #| fig.width: 4.8
 #| fig.height: 4.5
+#| output-location: column
 p + theme_dark()
 ```
-]
 
---
+## Adjustments with the [`theme()`]{.fg-green} function
 
-.pull-right.w55[
-```{r}
-#| label: "08-polishing-and-presenting-plots-29"
-#| echo: FALSE
-  knitr::include_graphics(
-  knitr::fig_chunk("codefig-themedark", "png"))
-```
-]
-
----
-
-# Adjustments with the [`theme()`]{.fg-green} function
-
-.pull-left.w45[
 ```{r}
 #| label: "codefig-themeadditive"
 #| message: FALSE
-#| fig.show: "hide"
 #| fig.width: 4.8
 #| fig.height: 4.5
+#| output-location: column
 
 p + theme_bw() +
   theme(legend.position = "top")
@@ -1144,180 +944,124 @@ p + theme_bw() +
 
 - None of this directly touches the parts of the plot that are representing your data---i.e. the visual parts that are mapped to a variable, and thus have a scale. Adjusting those is the job of the [`scale_`]{.fg-green} and [`guide()`]{.fg-green} functions.
 
+## There are _many_ adjustable theme elements
+
+:::: {.columns}
+::: {.column width="50%"}
+[line]{.fg-orange}  [rect]{.fg-orange} [text]{.fg-orange} [title]{.fg-orange} [aspect.ratio]{.fg-orange}
+
+[axis.title]{.fg-orange} [axis.title.x]{.fg-orange} [axis.title.x.top]{.fg-orange} [axis.title.x.bottom]{.fg-orange} [axis.title.y]{.fg-orange} [axis.title.y.left]{.fg-orange} [axis.title.y.right]{.fg-orange} [axis.text]{.fg-orange} [axis.text.x]{.fg-orange} [axis.text.x.top]{.fg-orange} [axis.text.x.bottom]{.fg-orange} [axis.text.y]{.fg-orange} [axis.text.y.left]{.fg-orange} [axis.text.y.right]{.fg-orange} [axis.ticks]{.fg-orange} [axis.ticks.x]{.fg-orange} [axis.ticks.x.top]{.fg-orange} [axis.ticks.x.bottom]{.fg-orange} [axis.ticks.y]{.fg-orange} [axis.ticks.y.left]{.fg-orange} [axis.ticks.y.right]{.fg-orange} [axis.ticks.length]{.fg-orange} [axis.ticks.length.x]{.fg-orange} [axis.ticks.length.x.top]{.fg-orange} [axis.ticks.length.x.bottom]{.fg-orange} [axis.ticks.length.y]{.fg-orange} [axis.ticks.length.y.left]{.fg-orange} [axis.ticks.length.y.right]{.fg-orange} [axis.line]{.fg-orange} [axis.line.x]{.fg-orange} [axis.line.x.top]{.fg-orange} [axis.line.x.bottom]{.fg-orange} [axis.line.y]{.fg-orange} [axis.line.y.left]{.fg-orange} [axis.line.y.right]{.fg-orange}
+
+:::
+
+::: {.column width="50%" .right}
+[legend.background]{.fg-orange} [legend.margin]{.fg-orange} [legend.spacing]{.fg-orange} [legend.spacing.x]{.fg-orange} [legend.spacing.y]{.fg-orange} [legend.key]{.fg-orange} [legend.key.size]{.fg-orange} [legend.key.height]{.fg-orange} [legend.key.width]{.fg-orange} [legend.text]{.fg-orange} [legend.text.align]{.fg-orange} [legend.title]{.fg-orange} [legend.title.align]{.fg-orange} [legend.position]{.fg-orange} [legend.direction]{.fg-orange} [legend.justification]{.fg-orange} [legend.box]{.fg-orange} [legend.box.just]{.fg-orange} [legend.box.margin]{.fg-orange} [legend.box.background]{.fg-orange} [legend.box.spacing]{.fg-orange}
+
+[panel.background]{.fg-orange} [panel.border]{.fg-orange} [panel.spacing]{.fg-orange} [panel.spacing.x]{.fg-orange} [panel.spacing.y]{.fg-orange} [panel.grid]{.fg-orange} [panel.grid.major]{.fg-orange} [panel.grid.minor]{.fg-orange} [panel.grid.major.x]{.fg-orange} [panel.grid.major.y]{.fg-orange} [panel.grid.minor.x]{.fg-orange} [panel.grid.minor.y]{.fg-orange} [panel.ontop]{.fg-orange} [plot.background]{.fg-orange} 
+
+[plot.title]{.fg-orange} [plot.title.position]{.fg-orange} [plot.subtitle]{.fg-orange} [plot.caption]{.fg-orange} [plot.caption.position]{.fg-orange} [plot.tag]{.fg-orange} [plot.tag.position]{.fg-orange} [plot.margin]{.fg-orange}
+
+[strip.background]{.fg-orange} [strip.background.x]{.fg-orange} [strip.background.y]{.fg-orange} [strip.placement]{.fg-orange} [strip.text]{.fg-orange} [strip.text.x]{.fg-orange} [strip.text.y]{.fg-orange} [strip.switch.pad.grid]{.fg-orange} [strip.switch.pad.wrap]{.fg-orange}
+:::
+::::
+
+## But they are structured 
+
+:::: {.columns}
+::: {.column width="50%"}
+[line]{.fg-pink}  [rect]{.fg-pink} [text]{.fg-pink} [title]{.fg-pink} [aspect.ratio]{.fg-pink}
+
+[axis.title]{.fg-lblue} [axis.title.x]{.fg-lblue} [axis.title.x.top]{.fg-lblue} [axis.title.x.bottom]{.fg-lblue} [axis.title.y]{.fg-lblue} [axis.title.y.left]{.fg-lblue} [axis.title.y.right]{.fg-lblue} [axis.text]{.fg-lblue} [axis.text.x]{.fg-lblue} [axis.text.x.top]{.fg-lblue} [axis.text.x.bottom]{.fg-lblue} [axis.text.y]{.fg-lblue} [axis.text.y.left]{.fg-lblue} [axis.text.y.right]{.fg-lblue} [axis.ticks]{.fg-lblue} [axis.ticks.x]{.fg-lblue} [axis.ticks.x.top]{.fg-lblue} [axis.ticks.x.bottom]{.fg-lblue} [axis.ticks.y]{.fg-lblue} [axis.ticks.y.left]{.fg-lblue} [axis.ticks.y.right]{.fg-lblue} [axis.ticks.length]{.fg-lblue} [axis.ticks.length.x]{.fg-lblue} [axis.ticks.length.x.top]{.fg-lblue} [axis.ticks.length.x.bottom]{.fg-lblue} [axis.ticks.length.y]{.fg-lblue} [axis.ticks.length.y.left]{.fg-lblue} [axis.ticks.length.y.right]{.fg-lblue} [axis.line]{.fg-lblue} [axis.line.x]{.fg-lblue} [axis.line.x.top]{.fg-lblue} [axis.line.x.bottom]{.fg-lblue} [axis.line.y]{.fg-lblue} [axis.line.y.left]{.fg-lblue} [axis.line.y.right]{.fg-lblue}
+:::
+
+::: {.column width="50%" .right}
+[legend.background]{.fg-green} [legend.margin]{.fg-green} [legend.spacing]{.fg-green} [legend.spacing.x]{.fg-green} [legend.spacing.y]{.fg-green} [legend.key]{.fg-green} [legend.key.size]{.fg-green} [legend.key.height]{.fg-green} [legend.key.width]{.fg-green} [legend.text]{.fg-green} [legend.text.align]{.fg-green} [legend.title]{.fg-green} [legend.title.align]{.fg-green} [legend.position]{.fg-green} [legend.direction]{.fg-green} [legend.justification]{.fg-green} [legend.box]{.fg-green} [legend.box.just]{.fg-green} [legend.box.margin]{.fg-green} [legend.box.background]{.fg-green} [legend.box.spacing]{.fg-green}
+
+[panel.background]{.fg-orange} [panel.border]{.fg-orange} [panel.spacing]{.fg-orange} [panel.spacing.x]{.fg-orange} [panel.spacing.y]{.fg-orange} [panel.grid]{.fg-orange} [panel.grid.major]{.fg-orange} [panel.grid.minor]{.fg-orange} [panel.grid.major.x]{.fg-orange} [panel.grid.major.y]{.fg-orange} [panel.grid.minor.x]{.fg-orange} [panel.grid.minor.y]{.fg-orange} [panel.ontop]{.fg-orange} 
+
+[plot.background]{.fg-orange} [plot.title]{.fg-orange} [plot.title.position]{.fg-orange} [plot.subtitle]{.fg-orange} [plot.caption]{.fg-orange} [plot.caption.position]{.fg-orange} [plot.tag]{.fg-orange} [plot.tag.position]{.fg-orange} [plot.margin]{.fg-orange}
+
+[strip.background]{.fg-blue} [strip.background.x]{.fg-blue} [strip.background.y]{.fg-blue} [strip.placement]{.fg-blue} [strip.text]{.fg-blue} [strip.text.x]{.fg-blue} [strip.text.y]{.fg-blue} [strip.switch.pad.grid]{.fg-blue} [strip.switch.pad.wrap]{.fg-blue}
+:::
+::::
+
+## And _inherit_  
+
+:::: {.columns}
+::: {.column width="50%"}
+**[line]{.fg-pink}**  **[rect]{.fg-pink}** **[text]{.fg-pink}** **[title]{.fg-pink}** **[aspect.ratio]{.fg-pink}**
+
+**[axis.title]{.fg-lblue}** .tiny[[axis.title.x]{.fg-lblue} [axis.title.x.top]{.fg-lblue} [axis.title.x.bottom]{.fg-lblue} [axis.title.y]{.fg-lblue} [axis.title.y.left]{.fg-lblue} [axis.title.y.right]{.fg-lblue}] **[axis.text]{.fg-lblue}** .tiny[[axis.text.x]{.fg-lblue} [axis.text.x.top]{.fg-lblue} [axis.text.x.bottom]{.fg-lblue} [axis.text.y]{.fg-lblue} [axis.text.y.left]{.fg-lblue} [axis.text.y.right]{.fg-lblue}] **[axis.ticks]{.fg-lblue}** .tiny[[axis.ticks.x]{.fg-lblue} [axis.ticks.x.top]{.fg-lblue} [axis.ticks.x.bottom]{.fg-lblue} [axis.ticks.y]{.fg-lblue} [axis.ticks.y.left]{.fg-lblue} [axis.ticks.y.right]{.fg-lblue} [axis.ticks.length]{.fg-lblue} [axis.ticks.length.x]{.fg-lblue} [axis.ticks.length.x.top]{.fg-lblue} [axis.ticks.length.x.bottom]{.fg-lblue} [axis.ticks.length.y]{.fg-lblue} [axis.ticks.length.y.left]{.fg-lblue} [axis.ticks.length.y.right]{.fg-lblue}] **[axis.line]{.fg-lblue}** .tiny[[axis.line.x]{.fg-lblue} [axis.line.x.top]{.fg-lblue} [axis.line.x.bottom]{.fg-lblue} [axis.line.y]{.fg-lblue} [axis.line.y.left]{.fg-lblue} [axis.line.y.right]{.fg-lblue}]
+:::
+
+::: {.column width="50%" .right}
+**[legend.background]{.fg-green}** **[legend.margin]{.fg-green}** **[legend.spacing]{.fg-green}** .tiny[[legend.spacing.x]{.fg-green} [legend.spacing.y]{.fg-green}] **[legend.key]{.fg-green}** .tiny[[legend.key.size]{.fg-green} [legend.key.height]{.fg-green} [legend.key.width]{.fg-green}] **[legend.text]{.fg-green}** **[legend.text.align]{.fg-green}** **[legend.title]{.fg-green}** **[legend.title.align]{.fg-green}** **[legend.position]{.fg-green}** **[legend.direction]{.fg-green}** **[legend.justification]{.fg-green}** **[legend.box]{.fg-green}** .tiny[[legend.box.just]{.fg-green} [legend.box.margin]{.fg-green} [legend.box.background]{.fg-green} [legend.box.spacing]{.fg-green}]
+
+**[panel.background]{.fg-orange}** **[panel.border]{.fg-orange}** **[panel.spacing]{.fg-orange}** .tiny[[panel.spacing.x]{.fg-orange} [panel.spacing.y]{.fg-orange}] **[panel.grid]{.fg-orange}** .tiny[[panel.grid.major]{.fg-orange} [panel.grid.minor]{.fg-orange} [panel.grid.major.x]{.fg-orange} [panel.grid.major.y]{.fg-orange} [panel.grid.minor.x]{.fg-orange} [panel.grid.minor.y]{.fg-orange}] **[panel.ontop]{.fg-orange}**
+
+**[plot.background]{.fg-orange}** **[plot.title]{.fg-orange}** **[plot.title.position]{.fg-orange}** **[plot.subtitle]{.fg-orange}** **[plot.caption]{.fg-orange}** **[plot.caption.position]{.fg-orange}** **[plot.tag]{.fg-orange}** **[plot.tag.position]{.fg-orange}** **[plot.margin]{.fg-orange}**
+
+**[strip.background]{.fg-blue}** .tiny[[strip.background.x]{.fg-blue} [strip.background.y]{.fg-blue}] **[strip.placement]{.fg-blue}** **[strip.text]{.fg-blue}** .tiny[[strip.text.x]{.fg-blue} [strip.text.y]{.fg-blue}] **[strip.switch.pad.grid]{.fg-blue}** **[strip.switch.pad.wrap]{.fg-blue}**
 ]
 
---
+:::
+::::
 
-.pull-right.w55[
-```{r}
-#| label: "08-polishing-and-presenting-plots-30"
-#| echo: FALSE
-  knitr::include_graphics(
-  knitr::fig_chunk("codefig-themeadditive", "png"))
-```
-]
+## Two kinds of adjustment
 
----
+### It's a single setting. E.g, `legend.position` can be `"none"`, `"left"`, `"right"`, `"bottom"`, or `"top"`
 
-# There are _many_ adjustable theme elements
+- Hence, e.g., [`theme(`]{.fg-green}[`legend.position = "top"`]{.fg-orange}[`)`]{.fg-green}, which we have seen several times. Similarly for e.g. [`legend.direction`]{.fg-orange} (can be "horizontal" or "vertical").
 
-.small.pull-left.w45[
-[`line`]{.fg-orange}  [`rect`]{.fg-orange} [`text`]{.fg-orange} [`title`]{.fg-orange} [`aspect.ratio`]{.fg-orange}
-
-[`axis.title`]{.fg-orange} [`axis.title.x`]{.fg-orange} [`axis.title.x.top`]{.fg-orange} [`axis.title.x.bottom`]{.fg-orange} [`axis.title.y`]{.fg-orange} [`axis.title.y.left`]{.fg-orange} [`axis.title.y.right`]{.fg-orange} [`axis.text`]{.fg-orange} [`axis.text.x`]{.fg-orange} [`axis.text.x.top`]{.fg-orange} [`axis.text.x.bottom`]{.fg-orange} [`axis.text.y`]{.fg-orange} [`axis.text.y.left`]{.fg-orange} [`axis.text.y.right`]{.fg-orange} [`axis.ticks`]{.fg-orange} [`axis.ticks.x`]{.fg-orange} [`axis.ticks.x.top`]{.fg-orange} [`axis.ticks.x.bottom`]{.fg-orange} [`axis.ticks.y`]{.fg-orange} [`axis.ticks.y.left`]{.fg-orange} [`axis.ticks.y.right`]{.fg-orange} [`axis.ticks.length`]{.fg-orange} [`axis.ticks.length.x`]{.fg-orange} [`axis.ticks.length.x.top`]{.fg-orange} [`axis.ticks.length.x.bottom`]{.fg-orange} [`axis.ticks.length.y`]{.fg-orange} [`axis.ticks.length.y.left`]{.fg-orange} [`axis.ticks.length.y.right`]{.fg-orange} [`axis.line`]{.fg-orange} [`axis.line.x`]{.fg-orange} [`axis.line.x.top`]{.fg-orange} [`axis.line.x.bottom`]{.fg-orange} [`axis.line.y`]{.fg-orange} [`axis.line.y.left`]{.fg-orange} [`axis.line.y.right`]{.fg-orange}
-
-]
-
-.small.pull-right.w55[
-
-[`legend.background`]{.fg-orange} [`legend.margin`]{.fg-orange} [`legend.spacing`]{.fg-orange} [`legend.spacing.x`]{.fg-orange} [`legend.spacing.y`]{.fg-orange} [`legend.key`]{.fg-orange} [`legend.key.size`]{.fg-orange} [`legend.key.height`]{.fg-orange} [`legend.key.width`]{.fg-orange} [`legend.text`]{.fg-orange} [`legend.text.align`]{.fg-orange} [`legend.title`]{.fg-orange} [`legend.title.align`]{.fg-orange} [`legend.position`]{.fg-orange} [`legend.direction`]{.fg-orange} [`legend.justification`]{.fg-orange} [`legend.box`]{.fg-orange} [`legend.box.just`]{.fg-orange} [`legend.box.margin`]{.fg-orange} [`legend.box.background`]{.fg-orange} [`legend.box.spacing`]{.fg-orange}
-
-[`panel.background`]{.fg-orange} [`panel.border`]{.fg-orange} [`panel.spacing`]{.fg-orange} [`panel.spacing.x`]{.fg-orange} [`panel.spacing.y`]{.fg-orange} [`panel.grid`]{.fg-orange} [`panel.grid.major`]{.fg-orange} [`panel.grid.minor`]{.fg-orange} [`panel.grid.major.x`]{.fg-orange} [`panel.grid.major.y`]{.fg-orange} [`panel.grid.minor.x`]{.fg-orange} [`panel.grid.minor.y`]{.fg-orange} [`panel.ontop`]{.fg-orange} [`plot.background`]{.fg-orange} 
-
-[`plot.title`]{.fg-orange} [`plot.title.position`]{.fg-orange} [`plot.subtitle`]{.fg-orange} [`plot.caption`]{.fg-orange} [`plot.caption.position`]{.fg-orange} [`plot.tag`]{.fg-orange} [`plot.tag.position`]{.fg-orange} [`plot.margin`]{.fg-orange}
-
-[`strip.background`]{.fg-orange} [`strip.background.x`]{.fg-orange} [`strip.background.y`]{.fg-orange} [`strip.placement`]{.fg-orange} [`strip.text`]{.fg-orange} [`strip.text.x`]{.fg-orange} [`strip.text.y`]{.fg-orange} [`strip.switch.pad.grid`]{.fg-orange} [`strip.switch.pad.wrap`]{.fg-orange}
-]
-
----
-
-# But they are structured 
-
-.small.pull-left.w45[
-
-[`line`]{.fg-pink}  [`rect`]{.fg-pink} [`text`]{.fg-pink} [`title`]{.fg-pink} [`aspect.ratio`]{.fg-pink}
-
-[`axis.title`]{.fg-lblue} [`axis.title.x`]{.fg-lblue} [`axis.title.x.top`]{.fg-lblue} [`axis.title.x.bottom`]{.fg-lblue} [`axis.title.y`]{.fg-lblue} [`axis.title.y.left`]{.fg-lblue} [`axis.title.y.right`]{.fg-lblue} [`axis.text`]{.fg-lblue} [`axis.text.x`]{.fg-lblue} [`axis.text.x.top`]{.fg-lblue} [`axis.text.x.bottom`]{.fg-lblue} [`axis.text.y`]{.fg-lblue} [`axis.text.y.left`]{.fg-lblue} [`axis.text.y.right`]{.fg-lblue} [`axis.ticks`]{.fg-lblue} [`axis.ticks.x`]{.fg-lblue} [`axis.ticks.x.top`]{.fg-lblue} [`axis.ticks.x.bottom`]{.fg-lblue} [`axis.ticks.y`]{.fg-lblue} [`axis.ticks.y.left`]{.fg-lblue} [`axis.ticks.y.right`]{.fg-lblue} [`axis.ticks.length`]{.fg-lblue} [`axis.ticks.length.x`]{.fg-lblue} [`axis.ticks.length.x.top`]{.fg-lblue} [`axis.ticks.length.x.bottom`]{.fg-lblue} [`axis.ticks.length.y`]{.fg-lblue} [`axis.ticks.length.y.left`]{.fg-lblue} [`axis.ticks.length.y.right`]{.fg-lblue} [`axis.line`]{.fg-lblue} [`axis.line.x`]{.fg-lblue} [`axis.line.x.top`]{.fg-lblue} [`axis.line.x.bottom`]{.fg-lblue} [`axis.line.y`]{.fg-lblue} [`axis.line.y.left`]{.fg-lblue} [`axis.line.y.right`]{.fg-lblue}
-]
-
-.small.pull-right.w55[
-
-[`legend.background`]{.fg-green} [`legend.margin`]{.fg-green} [`legend.spacing`]{.fg-green} [`legend.spacing.x`]{.fg-green} [`legend.spacing.y`]{.fg-green} [`legend.key`]{.fg-green} [`legend.key.size`]{.fg-green} [`legend.key.height`]{.fg-green} [`legend.key.width`]{.fg-green} [`legend.text`]{.fg-green} [`legend.text.align`]{.fg-green} [`legend.title`]{.fg-green} [`legend.title.align`]{.fg-green} [`legend.position`]{.fg-green} [`legend.direction`]{.fg-green} [`legend.justification`]{.fg-green} [`legend.box`]{.fg-green} [`legend.box.just`]{.fg-green} [`legend.box.margin`]{.fg-green} [`legend.box.background`]{.fg-green} [`legend.box.spacing`]{.fg-green}
-
-[`panel.background`]{.fg-orange} [`panel.border`]{.fg-orange} [`panel.spacing`]{.fg-orange} [`panel.spacing.x`]{.fg-orange} [`panel.spacing.y`]{.fg-orange} [`panel.grid`]{.fg-orange} [`panel.grid.major`]{.fg-orange} [`panel.grid.minor`]{.fg-orange} [`panel.grid.major.x`]{.fg-orange} [`panel.grid.major.y`]{.fg-orange} [`panel.grid.minor.x`]{.fg-orange} [`panel.grid.minor.y`]{.fg-orange} [`panel.ontop`]{.fg-orange} 
-
-[`plot.background`]{.fg-orange} [`plot.title`]{.fg-orange} [`plot.title.position`]{.fg-orange} [`plot.subtitle`]{.fg-orange} [`plot.caption`]{.fg-orange} [`plot.caption.position`]{.fg-orange} [`plot.tag`]{.fg-orange} [`plot.tag.position`]{.fg-orange} [`plot.margin`]{.fg-orange}
-
-[`strip.background`]{.fg-blue} [`strip.background.x`]{.fg-blue} [`strip.background.y`]{.fg-blue} [`strip.placement`]{.fg-blue} [`strip.text`]{.fg-blue} [`strip.text.x`]{.fg-blue} [`strip.text.y`]{.fg-blue} [`strip.switch.pad.grid`]{.fg-blue} [`strip.switch.pad.wrap`]{.fg-blue}
-]
-
-
----
-
-# And _inherit_  
-
-.small.pull-left.w45[
-
-**[`line`]{.fg-pink}**  **[`rect`]{.fg-pink}** **[`text`]{.fg-pink}** **[`title`]{.fg-pink}** **[`aspect.ratio`]{.fg-pink}**
-
-**[`axis.title`]{.fg-lblue}** .tiny[[`axis.title.x`]{.fg-lblue} [`axis.title.x.top`]{.fg-lblue} [`axis.title.x.bottom`]{.fg-lblue} [`axis.title.y`]{.fg-lblue} [`axis.title.y.left`]{.fg-lblue} [`axis.title.y.right`]{.fg-lblue}] **[`axis.text`]{.fg-lblue}** .tiny[[`axis.text.x`]{.fg-lblue} [`axis.text.x.top`]{.fg-lblue} [`axis.text.x.bottom`]{.fg-lblue} [`axis.text.y`]{.fg-lblue} [`axis.text.y.left`]{.fg-lblue} [`axis.text.y.right`]{.fg-lblue}] **[`axis.ticks`]{.fg-lblue}** .tiny[[`axis.ticks.x`]{.fg-lblue} [`axis.ticks.x.top`]{.fg-lblue} [`axis.ticks.x.bottom`]{.fg-lblue} [`axis.ticks.y`]{.fg-lblue} [`axis.ticks.y.left`]{.fg-lblue} [`axis.ticks.y.right`]{.fg-lblue} [`axis.ticks.length`]{.fg-lblue} [`axis.ticks.length.x`]{.fg-lblue} [`axis.ticks.length.x.top`]{.fg-lblue} [`axis.ticks.length.x.bottom`]{.fg-lblue} [`axis.ticks.length.y`]{.fg-lblue} [`axis.ticks.length.y.left`]{.fg-lblue} [`axis.ticks.length.y.right`]{.fg-lblue}] **[`axis.line`]{.fg-lblue}** .tiny[[`axis.line.x`]{.fg-lblue} [`axis.line.x.top`]{.fg-lblue} [`axis.line.x.bottom`]{.fg-lblue} [`axis.line.y`]{.fg-lblue} [`axis.line.y.left`]{.fg-lblue} [`axis.line.y.right`]{.fg-lblue}]
-]
-
-.small.pull-right.w55[
-
-**[`legend.background`]{.fg-green}** **[`legend.margin`]{.fg-green}** **[`legend.spacing`]{.fg-green}** .tiny[[`legend.spacing.x`]{.fg-green} [`legend.spacing.y`]{.fg-green}] **[`legend.key`]{.fg-green}** .tiny[[`legend.key.size`]{.fg-green} [`legend.key.height`]{.fg-green} [`legend.key.width`]{.fg-green}] **[`legend.text`]{.fg-green}** **[`legend.text.align`]{.fg-green}** **[`legend.title`]{.fg-green}** **[`legend.title.align`]{.fg-green}** **[`legend.position`]{.fg-green}** **[`legend.direction`]{.fg-green}** **[`legend.justification`]{.fg-green}** **[`legend.box`]{.fg-green}** .tiny[[`legend.box.just`]{.fg-green} [`legend.box.margin`]{.fg-green} [`legend.box.background`]{.fg-green} [`legend.box.spacing`]{.fg-green}]
-
-**[`panel.background`]{.fg-orange}** **[`panel.border`]{.fg-orange}** **[`panel.spacing`]{.fg-orange}** .tiny[[`panel.spacing.x`]{.fg-orange} [`panel.spacing.y`]{.fg-orange}] **[`panel.grid`]{.fg-orange}** .tiny[[`panel.grid.major`]{.fg-orange} [`panel.grid.minor`]{.fg-orange} [`panel.grid.major.x`]{.fg-orange} [`panel.grid.major.y`]{.fg-orange} [`panel.grid.minor.x`]{.fg-orange} [`panel.grid.minor.y`]{.fg-orange}] **[`panel.ontop`]{.fg-orange}**
-
-**[`plot.background`]{.fg-orange}** **[`plot.title`]{.fg-orange}** **[`plot.title.position`]{.fg-orange}** **[`plot.subtitle`]{.fg-orange}** **[`plot.caption`]{.fg-orange}** **[`plot.caption.position`]{.fg-orange}** **[`plot.tag`]{.fg-orange}** **[`plot.tag.position`]{.fg-orange}** **[`plot.margin`]{.fg-orange}**
-
-**[`strip.background`]{.fg-blue}** .tiny[[`strip.background.x`]{.fg-blue} [`strip.background.y`]{.fg-blue}] **[`strip.placement`]{.fg-blue}** **[`strip.text`]{.fg-blue}** .tiny[[`strip.text.x`]{.fg-blue} [`strip.text.y`]{.fg-blue}] **[`strip.switch.pad.grid`]{.fg-blue}** **[`strip.switch.pad.wrap`]{.fg-blue}**
-]
-
----
-
-# Two kinds of adjustment
-
-.medium[It's a single setting. E.g, `legend.position` can be `"none"`, `"left"`, `"right"`, `"bottom"`, or `"top"`]
-
-Hence, e.g., [`theme(`]{.fg-green}[`legend.position = "top"`]{.fg-orange}[`)`]{.fg-green}, which we have seen several times. Similarly for e.g. [`legend.direction`]{.fg-orange} (can be "horizontal" or "vertical").
-
---
-
-.medium[It's a component of the plot that might be styled in several ways. E.g., The text on the axes, or the lines in the plot panel.]
+- It's a component of the plot that might be styled in several ways. E.g., The text on the axes, or the lines in the plot panel.
 
 If the latter ...
 
----
+## If adjusting a thematic element, first ask ...
 
-# If adjusting a thematic element, first ask ...
-
-.medium[_Where_ on the plot is it?]
-
-Is it part of an _axis_, part of the _panel_, the _strip_ (facet title) box, or the _legend_? This will help you find the name of the thing you want to adjust. 
-
---
-
-E.g. "I want to adjust the text for the markings on the x-axis"
-
-You want [axis.ticks.x]{.fg-orange}
-
---
-
-E.g. "I want to adjust the styling of the main y-axis grid lines inside the plot" 
-
-You want [panel.grid.major.y]{.fg-orange}
+::: {.incremental}
+- _Where_ on the plot is it?
+- Is it part of an _axis_, part of the _panel_, the _strip_ (facet title) box, or the _legend_? This will help you find the name of the thing you want to adjust. 
+- E.g. "I want to adjust the text for the markings on the x-axis"
+- You want [axis.ticks.x]{.fg-orange}
+- E.g. "I want to adjust the styling of the main y-axis grid lines inside the plot" 
+- You want [panel.grid.major.y]{.fg-orange}
+:::
 
 
----
+## If adjusting a thematic element, then ask ...
 
-# If adjusting a thematic element, then ask ...
+::: {.incremental}
+- What _kind_ of element is it?
+- Is it _text_, or a _line_, or a _rectangle_?
+- This will tell you what function to use to make the adjustment to the named element. 
+- If it's text, adjust the element with [`element_text()`]{.fg-green} 
+- If it's a line, adjust it with [`element_line()`]{.fg-green}
+- If it's a rectangle, with [`element_rect()`]{.fg-green}
+- If you want to _fully turn off_ an element, use [`element_blank()`]{.fg-green}
+:::
 
-.medium[What _kind_ of element is it?]
+## For example ...
 
-Is it _text_, or a _line_, or a _rectangle_?
-
---
-
-This will tell you what function to use to make the adjustment to the named element. 
-
---
-
-If it's text, adjust the element with [`element_text()`]{.fg-green} 
-
---
-
-If it's a line, adjust it with [`element_line()`]{.fg-green}
-
---
-
-If it's a rectangle, with [`element_rect()`]{.fg-green}.
-
---
-
-If you want to _fully turn off_ an element, use [`element_blank()`]{.fg-green}
-
----
-
-# For example ...
-
-.medium["I want to adjust the styling of the plot title"]
+.large["I want to adjust the styling of the plot title"]
 
 
---
-
+::: {.incremental}
 - The relevant element is [`plot.title`]{.fg-orange}. 
-
---
-
 - It's _text_.
-
---
-
 - Inside the theme function, adjust it with [`element_text()`]{.fg-green}. 
 
+:::
 
----
 
-# For example ...
+## For example ...
 
-.pull-left.w45[
 ```{r}
 #| label: "codefig-elementtext"
 #| message: FALSE
-#| fig.show: "hide"
 #| fig.width: 4.8
 #| fig.height: 4.5
+#| output-location: column
 
 p + theme(plot.title = 
             element_text(size = rel(3),
@@ -1325,50 +1069,27 @@ p + theme(plot.title =
                          color = "orange"))
 
 ```
-]
 
---
+## For example ...
 
-.pull-right.w55[
-```{r}
-#| label: "08-polishing-and-presenting-plots-31"
-#| echo: FALSE
-  knitr::include_graphics(
-  knitr::fig_chunk("codefig-elementtext", "png"))
-```
-]
+.large["I want to adjust y axis grid lines on the plot"]
 
-
----
-
-# For example ...
-
-.medium["I want to adjust y axis grid lines on the plot"]
-
---
-
+::: {.incremental}
 - The relevant elements are [`panel.grid.major.y`]{.fg-orange} and [`panel.grid.minor.y`]{.fg-orange}. 
-
---
-
 - These are _lines_.
-
---
-
 - Inside the theme function, adjust it with [`element_line()`]{.fg-green}. 
 
+:::
 
----
+## For example ...
 
-# For example ...
 
-.pull-left.w45[
 ```{r}
 #| label: "codefig-elementline"
 #| message: FALSE
-#| fig.show: "hide"
 #| fig.width: 4.8
 #| fig.height: 4.5
+#| output-location: column
 
 p + theme(panel.grid.major.y = 
             element_line(color = "red"),
@@ -1377,29 +1098,12 @@ p + theme(panel.grid.major.y =
                          linetype = "dotted"))
 
 ```
-]
 
---
 
-.pull-right.w55[
-```{r}
-#| label: "08-polishing-and-presenting-plots-32"
-#| echo: FALSE
-  knitr::include_graphics(
-  knitr::fig_chunk("codefig-elementline", "png"))
-```
-]
+# [The]{.fg-yellow} [`ggthemes`]{.fg-lblue} [package]{.fg-yellow}
 
 
 ---
-
-class: right bottom main-title section-title-1
-
-## .huge.right.bottom.squish4[[The]{.fg-yellow} [`ggthemes`]{.fg-lblue} [package]{.fg-yellow}]
-
-
----
-layout: false
 
 ```{r}
 #| label: "08-polishing-and-presenting-plots-33"
@@ -1409,16 +1113,9 @@ layout: false
 p_layer_4
 ```
 
-.right.w90.small[We made this earlier. Here it is in a default theme.]
+We made this earlier. Here it is in a default theme.
 
----
-
-
-
-
----
-
-# Theming a plot
+## Theming a plot
 
 ```{r }
 #| label: "08-polishing-and-presenting-plots-34"
@@ -1427,11 +1124,10 @@ theme_set(theme_fivethirtyeight())
 
 ```
 
-.medium[See how the full function call goes inside [`theme_set()`]{.fg-green}, including the parentheses, because we are actually running that function to set all the elements.] 
+See how the full function call goes inside [`theme_set()`]{.fg-green}, including the parentheses, because we are actually running that function to set all the elements.
 
 
 ---
-layout: false
 
 ```{r}
 #| label: "08-polishing-and-presenting-plots-35"
@@ -1441,16 +1137,9 @@ layout: false
 p_layer_4
 ```
 
-.right.w90.small[Calling the object now draws the plot with the thematic elements added.]
+Calling the object now draws the plot with the thematic elements added.
 
----
-
-
-
-
----
-
-# Theming a plot
+## Theming a plot
 
 ```{r }
 #| label: "08-polishing-and-presenting-plots-36"
@@ -1459,7 +1148,7 @@ theme_set(theme_economist())
 ```
 
 ---
-layout: false
+
 
 ```{r}
 #| label: "08-polishing-and-presenting-plots-37"
@@ -1469,17 +1158,10 @@ layout: false
 p_layer_4
 ```
 
-.right.w90.small[Calling the object now draws the plot with the thematic elements added.]
+Calling the object now draws the plot with the thematic elements added.
 
 
----
-
-
-
-
----
-
-# This seems morally wrong
+## This seems morally wrong
 
 ```{r }
 #| label: "08-polishing-and-presenting-plots-38"
@@ -1488,7 +1170,6 @@ theme_set(theme_stata())
 ```
 
 ---
-layout: false
 
 ```{r}
 #| label: "08-polishing-and-presenting-plots-39"
@@ -1498,14 +1179,10 @@ layout: false
 p_layer_4
 ```
 
-.right.w90.small[Why would you do this to yourself?]
+Why would you do this to yourself?
 
 
----
-layout: false
-class: main-title main-title-inv middle
-
-# .middle.squish4.large[[Pick a theme]{.fg-lblue}<br/> [and stick with it]{.fg-orange}]
+# [Pick a theme]{.fg-lblue}<br/> [and stick with it]{.fg-orange}
 
 
 
