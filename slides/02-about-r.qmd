@@ -1448,14 +1448,14 @@ result1 <- my_numbers + 1
 
 
 ```{r }
-#| label: "02-about-r-68"
+#| label: "02-about-r-68-2"
 result1
 ```
 
 ## 6. [Arithmetic on vectors]{.fg-yellow}
 
 ```{r }
-#| label: "02-about-r-69"
+#| label: "02-about-r-69-2"
 result2 <- my_numbers + my_numbers
 
 ```
@@ -1552,7 +1552,7 @@ Note that you get a _warning_ here. It'll still do it, though! Don't ignore warn
 Like before:
 
 ```{r }
-#| label: "02-about-r-66"
+#| label: "02-about-r-66-2"
 gapminder
 ```
 
@@ -1608,7 +1608,7 @@ p <- ggplot(data = gapminder,
 ## What we did
 
 ```{r}
-#| label: "02-about-r-70"
+#| label: "02-about-r-70-2"
 #| message: FALSE
 #| eval: FALSE
 #| echo: TRUE

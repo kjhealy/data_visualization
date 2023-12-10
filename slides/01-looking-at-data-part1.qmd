@@ -117,7 +117,7 @@ p + geom_point()
 Write this out inside the "code chunk" in your notes.
 
 ```{r}
-#| label: "codefig-first-plot"
+#| label: "codefig-first-plot-2"
 #| message: FALSE
 #| fig.width: 5.8
 #| fig.height: 5.5

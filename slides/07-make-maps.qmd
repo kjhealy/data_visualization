@@ -1626,6 +1626,7 @@ pop_names
 ## Dorling Cartograms
 
 ```{r}
+library(tidycensus)
 fips_pop <- get_acs(geography = "county", 
                     variables = pop_names$varname, 
                     cache_table = TRUE) |>  

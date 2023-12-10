@@ -1730,7 +1730,7 @@ organdata |>
 
 
 ```{r}
-#| label: "05-work-with-dplyr-and-geoms-83"
+#| label: "05-work-with-dplyr-and-geoms-83-2"
 #| echo: FALSE
 kjhslides::kjh_set_slide_theme()
 ```
