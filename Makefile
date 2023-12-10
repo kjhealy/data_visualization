@@ -1,17 +1,19 @@
 SSH_USER = kjhealy@kjhealy.co
 DOCUMENT_ROOT = ~/public/kjhealy.co/public_html/dv
-PUBLIC_DIR = slides/
+PUBLIC_DIR = _site
 
-
+## Make all pdfs
 pdfs:
 	Rscript -e "suppressMessages(library(knitr));suppressMessages(library(tidyverse)); kjhslides::kjh_decktape_all_slides()"
 
+## Purl all Rmds
 code: .FORCE
 	Rscript -e "suppressMessages(library(knitr));suppressMessages(library(tidyverse)); kjhslides::kjh_purl_all_slides()"
 	find ./code -name '*.R' -type f | xargs gsed -i '1,20d'
 
+## Make the site
 slides: .FORCE
-	Rscript -e "suppressMessages(library(knitr));suppressMessages(library(tidyverse)); kjhslides::kjh_render_all_slides()"
+	quarto render
 
 clean:
 	find slides -type d -name '*_files' -prune -print -exec rm -rf {} +
