@@ -1,0 +1,35 @@
+version: 1.3
+author: Kieran Healy
+
+instructor:
+  name: Kieran Healy
+  name_no_title: Kieran Healy
+  email: kieran.healy@duke.edu
+  url: "https://www.kieranhealy.org"
+  mastodon: kjhealy
+  github: kjhealy
+  office: "268 Reuben-Cooke"
+
+course:
+  number: ""
+  title: "Data Visualization"
+  semester: "Fall 2023"
+  days: ""
+  time: ""
+  location: ""
+  dates: ""
+  github: ""
+  url: ""
+  copyright_year: "2023"
+
+university:
+  name: Duke University
+  url: "https://www.duke.edu"
+
+school:
+  name: Sociology Department
+  url: "https://sociology.duke.edu/"
+
+deploy:
+  user: "kjhealy"
+  site: false
