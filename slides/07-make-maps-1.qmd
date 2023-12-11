@@ -252,12 +252,12 @@ us_states |>
 
 ## U.S. Map Projections
 
-![A selection of projections](img/09_four_us_projections.png)
+![A selection of projections](img/07_four_us_projections.png)
 
 
 ## U.S. Map Projections
 
-![Albers is the standard](img/09_us_albers.png)
+![Albers is the standard](img/07_us_albers.png)
 
 ---
 

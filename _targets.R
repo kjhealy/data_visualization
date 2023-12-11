@@ -8,8 +8,8 @@ suppressPackageStartupMessages(library(tidyverse))
 Sys.setenv(DEPLOY_VSD = FALSE)
 
 
-## Parallelize things --- when we build the PDFs
-## it'll take forever otherwise
+# Parallelize things --- when we build the PDFs
+# it'll take forever otherwise
 library(crew)
 tar_option_set(
  controller = crew_controller_local(workers = 15)
@@ -26,19 +26,24 @@ library(usethis)
 # the HTML file instead.
 render_quarto <- function(slide_path) {
   quarto::quarto_render(slide_path, quiet = FALSE)
+
   #return(paste0(tools::file_path_sans_ext(slide_path), ".html"))
 }
 
 
-## Use decktape (via kjhslides) to convert xaringan HTML slides to PDF.
+## Use decktape (via kjhslides) to convert quarto HTML slides to PDF.
 ## Return a relative path to the PDF to keep targets happy.
 
 html_to_pdf <- function(slide_path) {
-  path_sans_ext <- tools::file_path_sans_ext(slide_path)
-  outdir_path <- fs::path_real(dirname(slide_path))
+  outdir_path <- fs::path_real("pdf_slides")
   kjhslides::kjh_decktape_one_slide(infile = slide_path,
                                     outdir = outdir_path)
-  return(paste0(tools::file_path_sans_ext(slide_path), ".pdf"))
+
+  fl <- list.files(here_rel("slides"),
+                   pattern = "\\.qmd", full.names = TRUE)
+  paste0("_site/", stringr::str_replace(fl, "qmd", "html"))
+
+  return(paste0("pdf_slides/", basename(tools::file_path_sans_ext(slide_path)), ".pdf"))
 }
 
 # There's no way to get a relative path directly out of here::here(), but
@@ -46,6 +51,27 @@ html_to_pdf <- function(slide_path) {
 # https://github.com/r-lib/here/issues/36#issuecomment-530894167)
 here_rel <- function(...) {fs::path_rel(here::here(...))}
 
+
+get_flipbookr_orphans <- function() {
+  all_candidates <- fs::dir_ls(glob = "*_files/figure-revealjs/*.png", recurse = TRUE)
+  all_candidates[stringr::str_detect(all_candidates, "_site", negate = TRUE)]
+}
+
+relocate_orphans <- function(file) {
+  if(is.null(file)) { return(character(0))}
+  fs::file_move(file, paste0("_site/slides/", file))
+}
+
+get_leftover_dirs <- function() {
+  # the figure-revealjs subdirs will all have been moved
+  deletion_candidates <- fs::dir_ls(glob = "*_files", recurse = TRUE)
+  deletion_candidates[stringr::str_detect(deletion_candidates, "_site", negate = TRUE)]
+}
+
+remove_leftover_dirs <- function (dirs) {
+  if(is.null(dirs)) { return(character(0))}
+  fs::dir_delete(dirs)
+}
 
 ## Variables and options
 page_suffix <- ".html"
@@ -82,6 +108,37 @@ list(
     },
     pattern = map(rendered_slides),
     format = "file"),
+
+  ## Fix any flipbookr leftover files
+  tar_files(flipbookr_orphans, {
+   # Force dependencies
+   rendered_slides
+   # Flipbooks created in the top level
+   get_flipbookr_orphans()
+  }
+  ),
+
+  tar_target(move_orphans, {
+    relocate_orphans(flipbookr_orphans)
+  },
+  pattern = map(flipbookr_orphans),
+  format = "file"),
+
+  ## Remove any flipbookr leftover dirs
+  # tar_files(flipbookr_dirs, {
+  #   # Force dependencies
+  #   flipbookr_orphans
+  #   # Top-level flipbookr dirs now empty
+  #   get_leftover_dirs()
+  # }
+  # ),
+  #
+  # tar_target(empty_dirs, {
+  #   remove_leftover_dirs(flipbookr_dirs)
+  # },
+  # pattern = map(flipbookr_dirs),
+  # format = "file"),
+  #
 
   ## Upload site ----
   tar_target(deploy_script, here_rel("deploy.sh"), format = "file"),

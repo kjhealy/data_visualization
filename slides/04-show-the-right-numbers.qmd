@@ -502,7 +502,9 @@ titanic
 
 - Here we just have a summary table and want to plot a few numbers directly in a bar chart.
 
-## [geom_bar()]{.fg-green} wants to count up
+## [`geom_bar()`]{.fg-green} wants to count up
+
+- By default [`geom_bar()`]{.fg-green} tries to count up data by category. (Really it's the [`stat_count()`]{.fg-green} function that does this behind the scenes.) By saying `stat="identity"` we explicitly tell it not to do that. This also allows us to use a `y` mapping. Normally this would be the result of the counting up.
 
 
 ```{r}
@@ -519,10 +521,9 @@ p <- ggplot(data = titanic,
 p + geom_bar(stat = "identity") #<<
 ```
 
-- By default [`geom_bar()`]{.fg-green} tries to count up data by category. (Really it's the [`stat_count()`]{.fg-green} function that does this behind the scenes.) By saying `stat="identity"` we explicitly tell it not to do that. This also allows us to use a `y` mapping. Normally this would be the result of the counting up.
 
 
-## [geom_bar()]{.fg-green} stacks bars by default
+## [`geom_bar()`]{.fg-green} stacks by default
 
 ```{r}
 #| label: "codefig-titanic2"
@@ -541,7 +542,9 @@ p + geom_bar(stat = "identity",
 - Position arguments adjust whether the things drawn are placed on top of one another (`"stack"`), side-by-side (`"dodge"`), or taken as-is (`"identity"`).
   
 
-## A quick [theme()]{.fg-green} adjustment
+## A quick [`theme()`]{.fg-green} adjustment
+
+The [`theme()`]{.fg-green} function controls the styling of parts of the plot that don't belong to its "grammatical" structure. That is, that are not contributing to directly representing data.
 
 ```{r}
 #| label: "codefig-titanic3"
@@ -558,7 +561,7 @@ p + geom_bar(stat = "identity",
   theme(legend.position = "top") #<<
 ```
 
-- The [`theme()`]{.fg-green} function controls the styling of parts of the plot that don't belong to its "grammatical" structure. That is, that are not contributing to directly representing data.
+
 
 
 ## For convenience, use [`geom_col()`]{.fg-green}

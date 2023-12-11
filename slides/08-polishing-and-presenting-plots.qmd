@@ -130,7 +130,7 @@ asasec |>
 ```
 
 
-`r chunq_reveal("reveal-asasteps",  lcolw="40", rcolw="60", title = "Build your plots a piece at a time")`
+`r chunq_reveal("reveal-asasteps",  lcolw="60", rcolw="40", smallcode = TRUE, title = "Build your plots a piece at a time")`
 
 ```{r}
 #| label: "reveal-asasteps"
@@ -180,7 +180,7 @@ kjh_set_classic_theme()
 
 - .large[[`ggplot`]{.fg-lblue} has several color palettes built in. A variety of packages provide others.] 
 
-`r chunq_reveal("reveal-scalemanual",  lcolw="40", rcolw="60", title = "You can specify scales manually")`
+`r chunq_reveal("reveal-scalemanual",  lcolw="60", rcolw="40", smallcode = TRUE, title = "You can specify scales manually")`
 
 ```{r}
 #| label: "reveal-scalemanual"
@@ -205,7 +205,7 @@ p <- organdata |>
 ```
 
 
-`r chunq_reveal("reveal-scalemanual2",  lcolw="40", rcolw="60", title = "You can always specify scales manually")`
+`r chunq_reveal("reveal-scalemanual2",  lcolw="60", rcolw="40", smallcode = TRUE, title = "You can always specify scales manually")`
 
 ```{r}
 #| label: "reveal-scalemanual2"
@@ -217,7 +217,7 @@ p +
 ```
 
 
-`r chunq_reveal("reveal-scalemanual3",  lcolw="40", rcolw="60", title = "You can always specify scales manually")`
+`r chunq_reveal("reveal-scalemanual3",  lcolw="60", rcolw="40", smallcode = TRUE, title = "You can always specify scales manually")`
 
 ```{r}
 #| label: "reveal-scalemanual3"
@@ -229,7 +229,7 @@ p +
 ```
 
 
-`r chunq_reveal("reveal-scalemanual4",  lcolw="40", rcolw="60", title = "You can specify scales manually")`
+`r chunq_reveal("reveal-scalemanual4",  lcolw="60", rcolw="40", smallcode = TRUE, title = "You can specify scales manually")`
 
 ```{r}
 #| label: "reveal-scalemanual4"
@@ -245,7 +245,7 @@ p + scale_color_manual(
 
 ```
 
-## But many balanced palettes are available
+## Use balanced palettes
 
 :::: {.columns}
 ::: {.column width="35%"}
@@ -261,8 +261,6 @@ p + scale_color_manual(
 ```{r}
 #| label: "08-polishing-and-presenting-plots-6"
 #| echo: FALSE
-#| fig.height: 5.5
-#| fig.width: 7
 opar <- par(mar = c(5.1, 4.1, 4.1, 2.1))
 par(mar=c(0,4,0,0))
 RColorBrewer::display.brewer.all(type = "qual")
@@ -274,7 +272,7 @@ par(opar)
 
 
 
-## But many balanced palettes are available
+## Use balanced palettes
 
 :::: {.columns}
 ::: {.column width="35%"}
@@ -285,15 +283,11 @@ par(opar)
 :::
 
 ::: {.column width="65%" .right}
-### _Qualitative_ palettes
-
 ### _Sequential_ palettes
 
 ```{r}
 #| label: "08-polishing-and-presenting-plots-7"
 #| echo: FALSE
-#| fig.height: 5.5
-#| fig.width: 4
 par(mar=c(0,4,0,0))
 RColorBrewer::display.brewer.all(type = "seq")
 ```
@@ -301,12 +295,7 @@ RColorBrewer::display.brewer.all(type = "seq")
 ::::
 
 
-
-
-
-]
-
-## But many balanced palettes are available
+## Use balanced palettes
 
 :::: {.columns}
 ::: {.column width="35%"}
@@ -322,8 +311,6 @@ RColorBrewer::display.brewer.all(type = "seq")
 ```{r}
 #| label: "08-polishing-and-presenting-plots-8"
 #| echo: FALSE
-#| fig.height: 5.5
-#| fig.width: 6
 par(mar=c(0,4,0,0))
 RColorBrewer::display.brewer.all(type = "div")
 ```
@@ -364,8 +351,6 @@ p + geom_point(size = 2) +
 ```{r}
 #| label: "08-polishing-and-presenting-plots-10"
 #| echo: FALSE
-#| fig.height: 4
-#| fig.width: 6
 p + geom_point(size = 3) + 
   scale_color_brewer(palette = "Set2") +
   labs(title = "Set2")
@@ -374,8 +359,6 @@ p + geom_point(size = 3) +
 ```{r}
 #| label: "08-polishing-and-presenting-plots-11"
 #| echo: FALSE
-#| fig.height: 4
-#| fig.width: 6
 p + geom_point(size = 3) + 
   scale_color_brewer(palette = "Pastel2") +
   labs(title = "Pastel2")
@@ -387,8 +370,6 @@ p + geom_point(size = 3) +
 ```{r}
 #| label: "08-polishing-and-presenting-plots-12"
 #| echo: FALSE
-#| fig.height: 4
-#| fig.width: 6
 p + geom_point(size = 3) + 
   scale_color_brewer(palette = "Dark2") +
   labs(title = "Dark2")
@@ -397,8 +378,6 @@ p + geom_point(size = 3) +
 ```{r}
 #| label: "08-polishing-and-presenting-plots-13"
 #| echo: FALSE
-#| fig.height: 4
-#| fig.width: 6
 p + geom_point(size = 3) + 
   scale_color_brewer(palette = "Accent") +
   labs(title = "Accent")
@@ -408,7 +387,7 @@ p + geom_point(size = 3) +
 ::::
 
 
-## The [`colorspace`]{.fg-lblue} package has even more
+## The [`colorspace`]{.fg-lblue} package has more
 
 ![Many palettes](img/08_colorspace_package.png)
 
@@ -423,13 +402,13 @@ colorspace::hcl_palettes(plot = TRUE)
 ```
 
 
-So many colors
+So many colors 
 
 ## The [`colorspace`]{.fg-lblue} function convention
 
-:::{.large}
 [scale_]{.fg-green}[\<MAPPING\>]{.fg-orange}[_]{.fg-green}[\<KIND\>]{.fg-lblue}[\<COLORSCALE\>]{.fg-pink}[()]{.fg-green}  
-:::
+
+::::: {.small}
 
 :::: {.columns}
 ::: {.column width="50%"}
@@ -475,8 +454,11 @@ So many colors
 :::
 ::::
 
+:::::
 
 # [Layer color and text<br />]{.fg-yellow}[to your advantage]{.fg-lblue}
+
+---
 
 ```{r}
 #| label: "08-polishing-and-presenting-plots-15"
@@ -526,7 +508,7 @@ ggplot(data = subset(county_data,
 
 ```
 
-`r chunq_reveal("reveal-fliptrump",  lcolw="45", rcolw="55", title = "We know how to build this")`
+`r chunq_reveal("reveal-fliptrump",  lcolw="60", rcolw="40", smallcode = TRUE, title = "We know how to build this")`
 
 ```{r}
 #| label: "reveal-fliptrump"
@@ -805,9 +787,7 @@ p_layer_6
 p_layer_5
 ```
 
----
-
-# [Layer,]{.fg-lblue}<br />[Highlight,]{.fg-pink}<br />[Repeat]{.fg-lblue}
+# [Layer,]{.fg-lblue}<br />[Highlight,]{.fg-pink}<br />[Repeat]{.fg-yellow}
 
 ## Build from ideas to data
 
@@ -852,7 +832,7 @@ p_layer_5
 
 ![Seeing through it](img/08_layers_all_labeled.png)
 
-## .huge[[T]{.fg-lblue}[h]{.fg-yellow}[e]{.fg-pink}[m]{.fg-green}[e]{.fg-orange}.kjh-grey[s]]
+# [T]{.fg-lblue}[h]{.fg-yellow}[e]{.fg-pink}[m]{.fg-green}[e]{.fg-orange}.kjh-grey[s]
 
 ## Themes ...
 
@@ -864,7 +844,9 @@ p_layer_5
 
 ---
 
-# [Thematic elements do not represent data directly]{.fg-orange}
+:::{.huge}
+  [Thematic elements do not represent data directly]{.fg-pink}
+:::
 
 ## Make a plot
 
@@ -928,7 +910,10 @@ p + theme_minimal()
 p + theme_dark()
 ```
 
-## Adjustments with the [`theme()`]{.fg-green} function
+## Adjust with the [`theme()`]{.fg-green} function
+
+- None of this directly touches the parts of the plot that are representing your data---i.e. the visual parts that are mapped to a variable, and thus have a scale. Adjusting those is the job of the [`scale_`]{.fg-green} and [`guide()`]{.fg-green} functions.
+
 
 ```{r}
 #| label: "codefig-themeadditive"
@@ -942,9 +927,10 @@ p + theme_bw() +
 
 ```
 
-- None of this directly touches the parts of the plot that are representing your data---i.e. the visual parts that are mapped to a variable, and thus have a scale. Adjusting those is the job of the [`scale_`]{.fg-green} and [`guide()`]{.fg-green} functions.
 
-## There are _many_ adjustable theme elements
+## There are _many_ theme elements
+
+::::: {.small}
 
 :::: {.columns}
 ::: {.column width="50%"}
@@ -964,9 +950,11 @@ p + theme_bw() +
 [strip.background]{.fg-orange} [strip.background.x]{.fg-orange} [strip.background.y]{.fg-orange} [strip.placement]{.fg-orange} [strip.text]{.fg-orange} [strip.text.x]{.fg-orange} [strip.text.y]{.fg-orange} [strip.switch.pad.grid]{.fg-orange} [strip.switch.pad.wrap]{.fg-orange}
 :::
 ::::
+:::::
 
 ## But they are structured 
 
+::::: {.small}
 :::: {.columns}
 ::: {.column width="50%"}
 [line]{.fg-pink}  [rect]{.fg-pink} [text]{.fg-pink} [title]{.fg-pink} [aspect.ratio]{.fg-pink}
@@ -984,32 +972,36 @@ p + theme_bw() +
 [strip.background]{.fg-blue} [strip.background.x]{.fg-blue} [strip.background.y]{.fg-blue} [strip.placement]{.fg-blue} [strip.text]{.fg-blue} [strip.text.x]{.fg-blue} [strip.text.y]{.fg-blue} [strip.switch.pad.grid]{.fg-blue} [strip.switch.pad.wrap]{.fg-blue}
 :::
 ::::
+:::::
 
 ## And _inherit_  
-
+::::: {.small}
 :::: {.columns}
 ::: {.column width="50%"}
 **[line]{.fg-pink}**  **[rect]{.fg-pink}** **[text]{.fg-pink}** **[title]{.fg-pink}** **[aspect.ratio]{.fg-pink}**
 
-**[axis.title]{.fg-lblue}** .tiny[[axis.title.x]{.fg-lblue} [axis.title.x.top]{.fg-lblue} [axis.title.x.bottom]{.fg-lblue} [axis.title.y]{.fg-lblue} [axis.title.y.left]{.fg-lblue} [axis.title.y.right]{.fg-lblue}] **[axis.text]{.fg-lblue}** .tiny[[axis.text.x]{.fg-lblue} [axis.text.x.top]{.fg-lblue} [axis.text.x.bottom]{.fg-lblue} [axis.text.y]{.fg-lblue} [axis.text.y.left]{.fg-lblue} [axis.text.y.right]{.fg-lblue}] **[axis.ticks]{.fg-lblue}** .tiny[[axis.ticks.x]{.fg-lblue} [axis.ticks.x.top]{.fg-lblue} [axis.ticks.x.bottom]{.fg-lblue} [axis.ticks.y]{.fg-lblue} [axis.ticks.y.left]{.fg-lblue} [axis.ticks.y.right]{.fg-lblue} [axis.ticks.length]{.fg-lblue} [axis.ticks.length.x]{.fg-lblue} [axis.ticks.length.x.top]{.fg-lblue} [axis.ticks.length.x.bottom]{.fg-lblue} [axis.ticks.length.y]{.fg-lblue} [axis.ticks.length.y.left]{.fg-lblue} [axis.ticks.length.y.right]{.fg-lblue}] **[axis.line]{.fg-lblue}** .tiny[[axis.line.x]{.fg-lblue} [axis.line.x.top]{.fg-lblue} [axis.line.x.bottom]{.fg-lblue} [axis.line.y]{.fg-lblue} [axis.line.y.left]{.fg-lblue} [axis.line.y.right]{.fg-lblue}]
+**[axis.title]{.fg-lblue}** [axis.title.x]{.fg-lblue} [axis.title.x.top]{.fg-lblue} [axis.title.x.bottom]{.fg-lblue} [axis.title.y]{.fg-lblue} [axis.title.y.left]{.fg-lblue} [axis.title.y.right]{.fg-lblue} **[axis.text]{.fg-lblue}** [axis.text.x]{.fg-lblue} [axis.text.x.top]{.fg-lblue} [axis.text.x.bottom]{.fg-lblue} [axis.text.y]{.fg-lblue} [axis.text.y.left]{.fg-lblue} [axis.text.y.right]{.fg-lblue} **[axis.ticks]{.fg-lblue}** [axis.ticks.x]{.fg-lblue} [axis.ticks.x.top]{.fg-lblue} [axis.ticks.x.bottom]{.fg-lblue} [axis.ticks.y]{.fg-lblue} [axis.ticks.y.left]{.fg-lblue} [axis.ticks.y.right]{.fg-lblue} [axis.ticks.length]{.fg-lblue} [axis.ticks.length.x]{.fg-lblue} [axis.ticks.length.x.top]{.fg-lblue} [axis.ticks.length.x.bottom]{.fg-lblue} [axis.ticks.length.y]{.fg-lblue} [axis.ticks.length.y.left]{.fg-lblue} [axis.ticks.length.y.right]{.fg-lblue} **[axis.line]{.fg-lblue}** [axis.line.x]{.fg-lblue} [axis.line.x.top]{.fg-lblue} [axis.line.x.bottom]{.fg-lblue} [axis.line.y]{.fg-lblue} [axis.line.y.left]{.fg-lblue} [axis.line.y.right]{.fg-lblue}
 :::
 
 ::: {.column width="50%" .right}
-**[legend.background]{.fg-green}** **[legend.margin]{.fg-green}** **[legend.spacing]{.fg-green}** .tiny[[legend.spacing.x]{.fg-green} [legend.spacing.y]{.fg-green}] **[legend.key]{.fg-green}** .tiny[[legend.key.size]{.fg-green} [legend.key.height]{.fg-green} [legend.key.width]{.fg-green}] **[legend.text]{.fg-green}** **[legend.text.align]{.fg-green}** **[legend.title]{.fg-green}** **[legend.title.align]{.fg-green}** **[legend.position]{.fg-green}** **[legend.direction]{.fg-green}** **[legend.justification]{.fg-green}** **[legend.box]{.fg-green}** .tiny[[legend.box.just]{.fg-green} [legend.box.margin]{.fg-green} [legend.box.background]{.fg-green} [legend.box.spacing]{.fg-green}]
+**[legend.background]{.fg-green}** **[legend.margin]{.fg-green}** **[legend.spacing]{.fg-green}** [legend.spacing.x]{.fg-green} [legend.spacing.y]{.fg-green} **[legend.key]{.fg-green}** [legend.key.size]{.fg-green} [legend.key.height]{.fg-green} [legend.key.width]{.fg-green} **[legend.text]{.fg-green}** **[legend.text.align]{.fg-green}** **[legend.title]{.fg-green}** **[legend.title.align]{.fg-green}** **[legend.position]{.fg-green}** **[legend.direction]{.fg-green}** **[legend.justification]{.fg-green}** **[legend.box]{.fg-green}** [legend.box.just]{.fg-green} [legend.box.margin]{.fg-green} [legend.box.background]{.fg-green} [legend.box.spacing]{.fg-green}
 
-**[panel.background]{.fg-orange}** **[panel.border]{.fg-orange}** **[panel.spacing]{.fg-orange}** .tiny[[panel.spacing.x]{.fg-orange} [panel.spacing.y]{.fg-orange}] **[panel.grid]{.fg-orange}** .tiny[[panel.grid.major]{.fg-orange} [panel.grid.minor]{.fg-orange} [panel.grid.major.x]{.fg-orange} [panel.grid.major.y]{.fg-orange} [panel.grid.minor.x]{.fg-orange} [panel.grid.minor.y]{.fg-orange}] **[panel.ontop]{.fg-orange}**
+**[panel.background]{.fg-orange}** **[panel.border]{.fg-orange}** **[panel.spacing]{.fg-orange}** [panel.spacing.x]{.fg-orange} [panel.spacing.y]{.fg-orange} **[panel.grid]{.fg-orange}** [panel.grid.major]{.fg-orange} [panel.grid.minor]{.fg-orange} [panel.grid.major.x]{.fg-orange} [panel.grid.major.y]{.fg-orange} [panel.grid.minor.x]{.fg-orange} [panel.grid.minor.y]{.fg-orange} **[panel.ontop]{.fg-orange}**
 
 **[plot.background]{.fg-orange}** **[plot.title]{.fg-orange}** **[plot.title.position]{.fg-orange}** **[plot.subtitle]{.fg-orange}** **[plot.caption]{.fg-orange}** **[plot.caption.position]{.fg-orange}** **[plot.tag]{.fg-orange}** **[plot.tag.position]{.fg-orange}** **[plot.margin]{.fg-orange}**
 
-**[strip.background]{.fg-blue}** .tiny[[strip.background.x]{.fg-blue} [strip.background.y]{.fg-blue}] **[strip.placement]{.fg-blue}** **[strip.text]{.fg-blue}** .tiny[[strip.text.x]{.fg-blue} [strip.text.y]{.fg-blue}] **[strip.switch.pad.grid]{.fg-blue}** **[strip.switch.pad.wrap]{.fg-blue}**
+**[strip.background]{.fg-blue}** [strip.background.x]{.fg-blue} [strip.background.y]{.fg-blue} **[strip.placement]{.fg-blue}** **[strip.text]{.fg-blue}** [strip.text.x]{.fg-blue} [strip.text.y]{.fg-blue} **[strip.switch.pad.grid]{.fg-blue}** **[strip.switch.pad.wrap]{.fg-blue}**
 ]
 
 :::
 ::::
+:::::
 
 ## Two kinds of adjustment
 
-### It's a single setting. E.g, `legend.position` can be `"none"`, `"left"`, `"right"`, `"bottom"`, or `"top"`
+### It's a single setting. 
+
+- E.g, `legend.position` can be `"none"`, `"left"`, `"right"`, `"bottom"`, or `"top"`
 
 - Hence, e.g., [`theme(`]{.fg-green}[`legend.position = "top"`]{.fg-orange}[`)`]{.fg-green}, which we have seen several times. Similarly for e.g. [`legend.direction`]{.fg-orange} (can be "horizontal" or "vertical").
 
@@ -1017,7 +1009,7 @@ p + theme_bw() +
 
 If the latter ...
 
-## If adjusting a thematic element, first ask ...
+## If adjusting a thematic element ask…
 
 ::: {.incremental}
 - _Where_ on the plot is it?
@@ -1029,7 +1021,7 @@ If the latter ...
 :::
 
 
-## If adjusting a thematic element, then ask ...
+## If adjusting a thematic element, ask…
 
 ::: {.incremental}
 - What _kind_ of element is it?
@@ -1043,7 +1035,7 @@ If the latter ...
 
 ## For example ...
 
-.large["I want to adjust the styling of the plot title"]
+["I want to adjust the styling of the plot title"]{.large}
 
 
 ::: {.incremental}
@@ -1072,7 +1064,7 @@ p + theme(plot.title =
 
 ## For example ...
 
-.large["I want to adjust y axis grid lines on the plot"]
+["I want to adjust y axis grid lines on the plot"]{.large}
 
 ::: {.incremental}
 - The relevant elements are [`panel.grid.major.y`]{.fg-orange} and [`panel.grid.minor.y`]{.fg-orange}. 
