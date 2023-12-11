@@ -52,7 +52,7 @@ kjh_set_slide_theme()
 
 :::{.center}
 
-![](img/01_preattentive_col_20.png){width=65%}
+![Color only, N = 20](img/01_preattentive_col_20.png){width=65%}
 
 :::
 
@@ -60,7 +60,7 @@ kjh_set_slide_theme()
 
 :::{.center}
   
-![](img/01_preattentive_col_100.png){width=65%}
+![Color only, N = 100](img/01_preattentive_col_100.png){width=65%}
 
 :::
 
@@ -68,7 +68,7 @@ kjh_set_slide_theme()
 
 :::{.center}
   
-![](img/01_preattentive_shp_20.png){width=65%}
+![Shape only, N = 20](img/01_preattentive_shp_20.png){width=65%}
 
 :::
 
@@ -76,7 +76,7 @@ kjh_set_slide_theme()
 
 :::{.center}
   
-![](img/01_preattentive_shp_100.png){width=65%}
+![Shape only, N = 100](img/01_preattentive_shp_100.png){width=65%}
 
 :::
 
@@ -84,7 +84,7 @@ kjh_set_slide_theme()
 
 :::{.center}
   
-![](img/01_preattentive_col_shp_100.png){width=65%}
+![Color and Shape, N=100](img/01_preattentive_col_shp_100.png){width=65%}
 
 :::
 
