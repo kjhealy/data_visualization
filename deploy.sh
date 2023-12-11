@@ -2,7 +2,7 @@
 ## Requires if (Sys.info()["user"] == "kjhealy") to be TRUE in _targets.R
 PUBLIC_DIR='_site/'
 SSH_USER='kjhealy@kjhealy.co'
-DOCUMENT_ROOT='~/public/vsd/public_html'
+DOCUMENT_ROOT='~/public/socviz880.co/public_html'
 
 echo "Uploading changes to remote server..."
 cp html/htaccess $PUBLIC_DIR/.htaccess
