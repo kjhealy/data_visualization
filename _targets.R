@@ -67,7 +67,9 @@ get_flipbookr_orphans <- function() {
 
 relocate_orphans <- function(file) {
   if(length(file) == 0) { return(character(0))}
-  if(is.null(file)) { return(character(0))}
+  if(is.null(file)) {return(character(0))}
+  destdir <- paste0("_site/slides/", fs::path_dir(file))
+  if(!fs::dir_exists(here::here(destdir))) {fs::dir_create(here::here(destdir))}
   fs::file_move(file, paste0("_site/slides/", file))
 }
 
