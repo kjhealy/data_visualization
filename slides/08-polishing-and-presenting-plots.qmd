@@ -130,7 +130,7 @@ asasec |>
 ```
 
 
-`r chunq_reveal("reveal-asasteps",  lcolw="60", rcolw="40", smallcode = TRUE, title = "Build your plots a piece at a time")`
+`r chunq_reveal("reveal-asasteps",  lcolw="40", rcolw="60", smallcode = TRUE, title = "Build your plots a piece at a time")`
 
 ```{r}
 #| label: "reveal-asasteps"
@@ -176,11 +176,11 @@ kjh_set_classic_theme()
 [scale_]{.fg-green}[\<MAPPING\>]{.fg-orange}[_]{.fg-green}[\<KIND\>]{.fg-lblue}[()]{.fg-green}  
 :::
 
-- .large[Scale functions control the display of the variables they map. So to change the colors for `color` or `fill` mappings, you adjust the corresponding [`scale_`]{.fg-green} function, not the [`theme()`]{.fg-green} function.] 
+- [Scale functions control the display of the variables they map. So to change the colors for `color` or `fill` mappings, you adjust the corresponding [`scale_`]{.fg-green} function, not the [`theme()`]{.fg-green} function.]{.large}
 
-- .large[[`ggplot`]{.fg-lblue} has several color palettes built in. A variety of packages provide others.] 
+- [[`ggplot`]{.fg-lblue} has several color palettes built in. A variety of packages provide others.]{.large} 
 
-`r chunq_reveal("reveal-scalemanual",  lcolw="60", rcolw="40", smallcode = TRUE, title = "You can specify scales manually")`
+`r chunq_reveal("reveal-scalemanual",  lcolw="40", rcolw="60", smallcode = TRUE, title = "You can specify scales manually")`
 
 ```{r}
 #| label: "reveal-scalemanual"
@@ -205,7 +205,7 @@ p <- organdata |>
 ```
 
 
-`r chunq_reveal("reveal-scalemanual2",  lcolw="60", rcolw="40", smallcode = TRUE, title = "You can always specify scales manually")`
+`r chunq_reveal("reveal-scalemanual2",  lcolw="40", rcolw="60", smallcode = TRUE, title = "You can specify scales manually")`
 
 ```{r}
 #| label: "reveal-scalemanual2"
@@ -217,7 +217,7 @@ p +
 ```
 
 
-`r chunq_reveal("reveal-scalemanual3",  lcolw="60", rcolw="40", smallcode = TRUE, title = "You can always specify scales manually")`
+`r chunq_reveal("reveal-scalemanual3",  lcolw="40", rcolw="60", smallcode = TRUE, title = "You can specify scales manually")`
 
 ```{r}
 #| label: "reveal-scalemanual3"
@@ -229,7 +229,7 @@ p +
 ```
 
 
-`r chunq_reveal("reveal-scalemanual4",  lcolw="60", rcolw="40", smallcode = TRUE, title = "You can specify scales manually")`
+`r chunq_reveal("reveal-scalemanual4",  lcolw="40", rcolw="60", smallcode = TRUE, title = "You can specify scales manually")`
 
 ```{r}
 #| label: "reveal-scalemanual4"
@@ -248,14 +248,14 @@ p + scale_color_manual(
 ## Use balanced palettes
 
 :::: {.columns}
-::: {.column width="35%"}
+::: {.column width="50%"}
 - E.g., the `RColorBrewer` Palettes
 - These are available through the [`scale_color-brewer()`]{.fg-green} and [`scale_fill_brewer()`]{.fg-green} functions, as well as independently.
 - See the palettes with [`RColorBrewer::display.brewer.all()`]{.fg-green}
 
 :::
 
-::: {.column width="65%" .right}
+::: {.column width="50%" .right}
 ### _Qualitative_ palettes
 
 ```{r}
@@ -275,14 +275,14 @@ par(opar)
 ## Use balanced palettes
 
 :::: {.columns}
-::: {.column width="35%"}
+::: {.column width="50%"}
 - E.g., the `RColorBrewer` Palettes
 - These are available through the [`scale_color-brewer()`]{.fg-green} and [`scale_fill_brewer()`]{.fg-green} functions, as well as independently.
 - See the palettes with [`RColorBrewer::display.brewer.all()`]{.fg-green}
 
 :::
 
-::: {.column width="65%" .right}
+::: {.column width="50%" .right}
 ### _Sequential_ palettes
 
 ```{r}
@@ -298,14 +298,14 @@ RColorBrewer::display.brewer.all(type = "seq")
 ## Use balanced palettes
 
 :::: {.columns}
-::: {.column width="35%"}
+::: {.column width="50%"}
 - E.g., the `RColorBrewer` Palettes
 - These are available through the [`scale_color-brewer()`]{.fg-green} and [`scale_fill_brewer()`]{.fg-green} functions, as well as independently.
 - See the palettes with [`RColorBrewer::display.brewer.all()`]{.fg-green}
 
 :::
 
-::: {.column width="65%" .right}
+::: {.column width="50%" .right}
 ### _Diverging_ palettes
 
 ```{r}
@@ -408,7 +408,7 @@ So many colors
 
 [scale_]{.fg-green}[\<MAPPING\>]{.fg-orange}[_]{.fg-green}[\<KIND\>]{.fg-lblue}[\<COLORSCALE\>]{.fg-pink}[()]{.fg-green}  
 
-::::: {.small}
+::::: {.tiny}
 
 :::: {.columns}
 ::: {.column width="50%"}
@@ -508,7 +508,7 @@ ggplot(data = subset(county_data,
 
 ```
 
-`r chunq_reveal("reveal-fliptrump",  lcolw="60", rcolw="40", smallcode = TRUE, title = "We know how to build this")`
+`r chunq_reveal("reveal-fliptrump",  lcolw="40", rcolw="60", smallcode = TRUE, title = "We know how to build this")`
 
 ```{r}
 #| label: "reveal-fliptrump"
@@ -930,17 +930,21 @@ p + theme_bw() +
 
 ## There are _many_ theme elements
 
-::::: {.small}
+
 
 :::: {.columns}
 ::: {.column width="50%"}
+
+::::: {.tiny}
 [line]{.fg-orange}  [rect]{.fg-orange} [text]{.fg-orange} [title]{.fg-orange} [aspect.ratio]{.fg-orange}
 
 [axis.title]{.fg-orange} [axis.title.x]{.fg-orange} [axis.title.x.top]{.fg-orange} [axis.title.x.bottom]{.fg-orange} [axis.title.y]{.fg-orange} [axis.title.y.left]{.fg-orange} [axis.title.y.right]{.fg-orange} [axis.text]{.fg-orange} [axis.text.x]{.fg-orange} [axis.text.x.top]{.fg-orange} [axis.text.x.bottom]{.fg-orange} [axis.text.y]{.fg-orange} [axis.text.y.left]{.fg-orange} [axis.text.y.right]{.fg-orange} [axis.ticks]{.fg-orange} [axis.ticks.x]{.fg-orange} [axis.ticks.x.top]{.fg-orange} [axis.ticks.x.bottom]{.fg-orange} [axis.ticks.y]{.fg-orange} [axis.ticks.y.left]{.fg-orange} [axis.ticks.y.right]{.fg-orange} [axis.ticks.length]{.fg-orange} [axis.ticks.length.x]{.fg-orange} [axis.ticks.length.x.top]{.fg-orange} [axis.ticks.length.x.bottom]{.fg-orange} [axis.ticks.length.y]{.fg-orange} [axis.ticks.length.y.left]{.fg-orange} [axis.ticks.length.y.right]{.fg-orange} [axis.line]{.fg-orange} [axis.line.x]{.fg-orange} [axis.line.x.top]{.fg-orange} [axis.line.x.bottom]{.fg-orange} [axis.line.y]{.fg-orange} [axis.line.y.left]{.fg-orange} [axis.line.y.right]{.fg-orange}
+:::::
 
 :::
 
 ::: {.column width="50%" .right}
+::::: {.tiny}
 [legend.background]{.fg-orange} [legend.margin]{.fg-orange} [legend.spacing]{.fg-orange} [legend.spacing.x]{.fg-orange} [legend.spacing.y]{.fg-orange} [legend.key]{.fg-orange} [legend.key.size]{.fg-orange} [legend.key.height]{.fg-orange} [legend.key.width]{.fg-orange} [legend.text]{.fg-orange} [legend.text.align]{.fg-orange} [legend.title]{.fg-orange} [legend.title.align]{.fg-orange} [legend.position]{.fg-orange} [legend.direction]{.fg-orange} [legend.justification]{.fg-orange} [legend.box]{.fg-orange} [legend.box.just]{.fg-orange} [legend.box.margin]{.fg-orange} [legend.box.background]{.fg-orange} [legend.box.spacing]{.fg-orange}
 
 [panel.background]{.fg-orange} [panel.border]{.fg-orange} [panel.spacing]{.fg-orange} [panel.spacing.x]{.fg-orange} [panel.spacing.y]{.fg-orange} [panel.grid]{.fg-orange} [panel.grid.major]{.fg-orange} [panel.grid.minor]{.fg-orange} [panel.grid.major.x]{.fg-orange} [panel.grid.major.y]{.fg-orange} [panel.grid.minor.x]{.fg-orange} [panel.grid.minor.y]{.fg-orange} [panel.ontop]{.fg-orange} [plot.background]{.fg-orange} 
@@ -948,21 +952,24 @@ p + theme_bw() +
 [plot.title]{.fg-orange} [plot.title.position]{.fg-orange} [plot.subtitle]{.fg-orange} [plot.caption]{.fg-orange} [plot.caption.position]{.fg-orange} [plot.tag]{.fg-orange} [plot.tag.position]{.fg-orange} [plot.margin]{.fg-orange}
 
 [strip.background]{.fg-orange} [strip.background.x]{.fg-orange} [strip.background.y]{.fg-orange} [strip.placement]{.fg-orange} [strip.text]{.fg-orange} [strip.text.x]{.fg-orange} [strip.text.y]{.fg-orange} [strip.switch.pad.grid]{.fg-orange} [strip.switch.pad.wrap]{.fg-orange}
+:::::
 :::
 ::::
-:::::
+
 
 ## But they are structured 
 
-::::: {.small}
 :::: {.columns}
 ::: {.column width="50%"}
+::::: {.tiny}
 [line]{.fg-pink}  [rect]{.fg-pink} [text]{.fg-pink} [title]{.fg-pink} [aspect.ratio]{.fg-pink}
 
 [axis.title]{.fg-lblue} [axis.title.x]{.fg-lblue} [axis.title.x.top]{.fg-lblue} [axis.title.x.bottom]{.fg-lblue} [axis.title.y]{.fg-lblue} [axis.title.y.left]{.fg-lblue} [axis.title.y.right]{.fg-lblue} [axis.text]{.fg-lblue} [axis.text.x]{.fg-lblue} [axis.text.x.top]{.fg-lblue} [axis.text.x.bottom]{.fg-lblue} [axis.text.y]{.fg-lblue} [axis.text.y.left]{.fg-lblue} [axis.text.y.right]{.fg-lblue} [axis.ticks]{.fg-lblue} [axis.ticks.x]{.fg-lblue} [axis.ticks.x.top]{.fg-lblue} [axis.ticks.x.bottom]{.fg-lblue} [axis.ticks.y]{.fg-lblue} [axis.ticks.y.left]{.fg-lblue} [axis.ticks.y.right]{.fg-lblue} [axis.ticks.length]{.fg-lblue} [axis.ticks.length.x]{.fg-lblue} [axis.ticks.length.x.top]{.fg-lblue} [axis.ticks.length.x.bottom]{.fg-lblue} [axis.ticks.length.y]{.fg-lblue} [axis.ticks.length.y.left]{.fg-lblue} [axis.ticks.length.y.right]{.fg-lblue} [axis.line]{.fg-lblue} [axis.line.x]{.fg-lblue} [axis.line.x.top]{.fg-lblue} [axis.line.x.bottom]{.fg-lblue} [axis.line.y]{.fg-lblue} [axis.line.y.left]{.fg-lblue} [axis.line.y.right]{.fg-lblue}
+:::::
 :::
 
 ::: {.column width="50%" .right}
+::::: {.tiny}
 [legend.background]{.fg-green} [legend.margin]{.fg-green} [legend.spacing]{.fg-green} [legend.spacing.x]{.fg-green} [legend.spacing.y]{.fg-green} [legend.key]{.fg-green} [legend.key.size]{.fg-green} [legend.key.height]{.fg-green} [legend.key.width]{.fg-green} [legend.text]{.fg-green} [legend.text.align]{.fg-green} [legend.title]{.fg-green} [legend.title.align]{.fg-green} [legend.position]{.fg-green} [legend.direction]{.fg-green} [legend.justification]{.fg-green} [legend.box]{.fg-green} [legend.box.just]{.fg-green} [legend.box.margin]{.fg-green} [legend.box.background]{.fg-green} [legend.box.spacing]{.fg-green}
 
 [panel.background]{.fg-orange} [panel.border]{.fg-orange} [panel.spacing]{.fg-orange} [panel.spacing.x]{.fg-orange} [panel.spacing.y]{.fg-orange} [panel.grid]{.fg-orange} [panel.grid.major]{.fg-orange} [panel.grid.minor]{.fg-orange} [panel.grid.major.x]{.fg-orange} [panel.grid.major.y]{.fg-orange} [panel.grid.minor.x]{.fg-orange} [panel.grid.minor.y]{.fg-orange} [panel.ontop]{.fg-orange} 
@@ -970,12 +977,13 @@ p + theme_bw() +
 [plot.background]{.fg-orange} [plot.title]{.fg-orange} [plot.title.position]{.fg-orange} [plot.subtitle]{.fg-orange} [plot.caption]{.fg-orange} [plot.caption.position]{.fg-orange} [plot.tag]{.fg-orange} [plot.tag.position]{.fg-orange} [plot.margin]{.fg-orange}
 
 [strip.background]{.fg-blue} [strip.background.x]{.fg-blue} [strip.background.y]{.fg-blue} [strip.placement]{.fg-blue} [strip.text]{.fg-blue} [strip.text.x]{.fg-blue} [strip.text.y]{.fg-blue} [strip.switch.pad.grid]{.fg-blue} [strip.switch.pad.wrap]{.fg-blue}
+:::::
 :::
 ::::
-:::::
+
 
 ## And _inherit_  
-::::: {.small}
+::::: {.tiny}
 :::: {.columns}
 ::: {.column width="50%"}
 **[line]{.fg-pink}**  **[rect]{.fg-pink}** **[text]{.fg-pink}** **[title]{.fg-pink}** **[aspect.ratio]{.fg-pink}**
@@ -984,14 +992,14 @@ p + theme_bw() +
 :::
 
 ::: {.column width="50%" .right}
-**[legend.background]{.fg-green}** **[legend.margin]{.fg-green}** **[legend.spacing]{.fg-green}** [legend.spacing.x]{.fg-green} [legend.spacing.y]{.fg-green} **[legend.key]{.fg-green}** [legend.key.size]{.fg-green} [legend.key.height]{.fg-green} [legend.key.width]{.fg-green} **[legend.text]{.fg-green}** **[legend.text.align]{.fg-green}** **[legend.title]{.fg-green}** **[legend.title.align]{.fg-green}** **[legend.position]{.fg-green}** **[legend.direction]{.fg-green}** **[legend.justification]{.fg-green}** **[legend.box]{.fg-green}** [legend.box.just]{.fg-green} [legend.box.margin]{.fg-green} [legend.box.background]{.fg-green} [legend.box.spacing]{.fg-green}
+**[legend.background]{.fg-green}** **[legend.margin]{.fg-green}** **[legend.spacing]{.fg-green}** [legend.spacing.x]{.fg-green} [legend.spacing.y]{.fg-green} **[legend.key]{.fg-green}** [legend.key.size]{.fg-green} [legend.key.height]{.fg-green} [legend.key.width]{.fg-green} **[legend.text]{.fg-green}** [legend.text.align]{.fg-green} **[legend.title]{.fg-green}** [legend.title.align]{.fg-green} **[legend.position]{.fg-green}** **[legend.direction]{.fg-green}** **[legend.justification]{.fg-green}** **[legend.box]{.fg-green}** [legend.box.just]{.fg-green} [legend.box.margin]{.fg-green} [legend.box.background]{.fg-green} [legend.box.spacing]{.fg-green}
 
 **[panel.background]{.fg-orange}** **[panel.border]{.fg-orange}** **[panel.spacing]{.fg-orange}** [panel.spacing.x]{.fg-orange} [panel.spacing.y]{.fg-orange} **[panel.grid]{.fg-orange}** [panel.grid.major]{.fg-orange} [panel.grid.minor]{.fg-orange} [panel.grid.major.x]{.fg-orange} [panel.grid.major.y]{.fg-orange} [panel.grid.minor.x]{.fg-orange} [panel.grid.minor.y]{.fg-orange} **[panel.ontop]{.fg-orange}**
 
-**[plot.background]{.fg-orange}** **[plot.title]{.fg-orange}** **[plot.title.position]{.fg-orange}** **[plot.subtitle]{.fg-orange}** **[plot.caption]{.fg-orange}** **[plot.caption.position]{.fg-orange}** **[plot.tag]{.fg-orange}** **[plot.tag.position]{.fg-orange}** **[plot.margin]{.fg-orange}**
+**[plot.background]{.fg-orange}** **[plot.title]{.fg-orange}** [plot.title.position]{.fg-orange} **[plot.subtitle]{.fg-orange}** **[plot.caption]{.fg-orange}** [plot.caption.position]{.fg-orange} **[plot.tag]{.fg-orange}** [plot.tag.position]{.fg-orange} **[plot.margin]{.fg-orange}**
 
 **[strip.background]{.fg-blue}** [strip.background.x]{.fg-blue} [strip.background.y]{.fg-blue} **[strip.placement]{.fg-blue}** **[strip.text]{.fg-blue}** [strip.text.x]{.fg-blue} [strip.text.y]{.fg-blue} **[strip.switch.pad.grid]{.fg-blue}** **[strip.switch.pad.wrap]{.fg-blue}**
-]
+
 
 :::
 ::::
