@@ -195,6 +195,8 @@ organdata |>
 
 ```
 
+::: {.smallcode}
+
 ```{r}
 #| eval: FALSE
 p <- organdata |> 
@@ -204,6 +206,7 @@ p <- organdata |>
   geom_point(size = 4)
 ```
 
+:::
 
 `r chunq_reveal("reveal-scalemanual2",  lcolw="40", rcolw="60", smallcode = TRUE, title = "You can specify scales manually")`
 
@@ -832,7 +835,7 @@ p_layer_5
 
 ![Seeing through it](img/08_layers_all_labeled.png)
 
-# [T]{.fg-lblue}[h]{.fg-yellow}[e]{.fg-pink}[m]{.fg-green}[e]{.fg-orange}.kjh-grey[s]
+# [T]{.fg-lblue}[h]{.fg-yellow}[e]{.fg-pink}[m]{.fg-green}[e]{.fg-orange}[s]{.fg-offwhite}
 
 ## Themes ...
 
