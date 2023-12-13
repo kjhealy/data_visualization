@@ -1080,15 +1080,17 @@ fs::dir_ls(here("figures")) |>
 ---
 
 :::{.huge}
-- [Present findings in substantive terms]{.fg-green}
-- [Show degrees of confidence or uncertainty]{.fg-lblue}
-- [Show the data when you can]{.fg-pink}
+ [Present findings in substantive terms]{.fg-green}
+
+ [Show degrees of confidence or uncertainty]{.fg-lblue}
+
+ [Show the data when you can]{.fg-pink}
 :::
 
 ---
 
 :::{.huge}
-[But these points apply .kjh-orange[just as well]{.fg-blue} to  presenting data in _any_ format: tables, models, text, whatever. [Graphs are not special here!]{.fg-pink}]
+[But these points apply just as well]{.fg-blue} to  presenting data in _any_ format: tables, models, text, whatever. [Graphs are not special here!]{.fg-pink}
   
 :::
 
