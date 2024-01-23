@@ -783,7 +783,7 @@ county_full |>
 #| fig.width: 12
 county_full |> 
   ggplot(mapping = aes(x = long, y = lat,
-                       fill = pct_black, #<< 
+                       fill = pct_black, #<<
                        group = group)) + 
   geom_polygon(color = "gray70", 
                size = 0.1) + 
@@ -852,7 +852,7 @@ colorspace::swatchplot("Reverse Orange" = orange_rev, nrow = 1)
 #| label: "07-make-maps-38"
 p_g1 <- county_full |> 
   ggplot(mapping = aes(x = long, y = lat,
-                       fill = su_gun6, #<< 
+                       fill = su_gun6, #<<
                        group = group)) + 
   geom_polygon(color = "gray70", 
                size = 0.1) + 
@@ -883,7 +883,7 @@ Regular palette
 #| label: "07-make-maps-40"
 p_g2 <- county_full |> 
   ggplot(mapping = aes(x = long, y = lat,
-                       fill = pop_dens6, #<< 
+                       fill = pop_dens6, #<<
                        group = group)) + 
   geom_polygon(color = "gray70", 
                size = 0.1) + 
