@@ -725,7 +725,7 @@ p + geom_point() +
 
 ```{r}
 #| label: "reveal-pergeom2"
-#| include: FALSE
+  #| include: FALSE
 p <- ggplot(data = gapminder,
             mapping = aes(x = gdpPercap,
                           y = lifeExp))

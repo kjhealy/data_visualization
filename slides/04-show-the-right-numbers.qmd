@@ -90,6 +90,8 @@ The grammar is a set of rules for how to [produce graphics from data]{.fg-blue},
 ```{r}
 #| label: "reveal-groupline"
 #| include: FALSE
+#| output-location: column
+
 p <- ggplot(data = gapminder, 
             mapping = aes(x = year,
                        y = gdpPercap)) + 
@@ -103,6 +105,7 @@ p
 ```{r}
 #| label: "reveal-groupline2"
 #| include: FALSE
+#| output-location: column
 p <- ggplot(data = gapminder, 
             mapping = aes(x = year,
                        y = gdpPercap)) + 
@@ -117,6 +120,7 @@ p
 ```{r}
 #| label: "reveal-facet"
 #| include: FALSE
+#| output-location: column
 gapminder |> 
   ggplot(mapping = 
            aes(x = year,
