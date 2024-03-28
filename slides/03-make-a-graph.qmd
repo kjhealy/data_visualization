@@ -502,22 +502,6 @@ p + geom_smooth()
 
 ```
 
-
-## This process is additive
-
-```{r}
-#| label: "03-make-a-graph-20"
-#| fig.cap: "Life Expectancy vs GDP, using a smoother."
-#| fig.width: 8
-#| fig.height: 5
-
-p <- ggplot(data = gapminder,
-            mapping = aes(x = gdpPercap,
-                          y=lifeExp))
-p + geom_point() + geom_smooth()
-
-```
-
 ---
 
 `r chunq_reveal("reveal-additive1",  lcolw="55", rcolw="45", title = "This process is additive")`
@@ -531,6 +515,7 @@ p <- ggplot(data = gapminder,
 p + geom_smooth() + 
   geom_point() 
 ```
+
 ---
 
 ## Every [`geom`]{.fg-green} is a [function]{.fg-green} 
@@ -551,6 +536,7 @@ p + geom_point() +
 ```
 
 ---
+
 `r chunq_reveal("reveal-logtrans",  lcolw="55", rcolw="45", title = "Keep Layering")`
 
 ```{r}
@@ -584,7 +570,6 @@ p + geom_point() +
 ```{r}
 #| label: "codefig-logtranslab"
 #| message: FALSE
-#| fig.show: "hide"
 #| fig.width: 5
 #| fig.height: 4.5
 #| output-location: column
@@ -687,6 +672,8 @@ p_out
 
 ## [`alpha`]{.fg-orange} for overplotting 
 
+::: {.smallcode}
+
 ```{r}
 #| label: "codefig-alphapoints"
 #| message: FALSE
@@ -706,6 +693,8 @@ p + geom_point(alpha = 0.3) + #<<
          subtitle = "Data points are country-years",
          caption = "Source: Gapminder.")
 ```
+
+:::
 
 ---
 
