@@ -516,7 +516,8 @@ ggplot(data = subset(county_data,
 ```{r}
 #| label: "reveal-fliptrump"
 #| include: FALSE
-# Brighter Blue and Red
+
+## Brighter Blue and Red
 party_colors <- c("royalblue1", "red2")
 
 ggplot(data = subset(county_data,
