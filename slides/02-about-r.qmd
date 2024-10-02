@@ -987,7 +987,7 @@ serve(
 - Much nicer:
 
 
-```r
+```{.r}
 eggs |> 
   get_from_fridge() |> 
   crack_eggs(into = "bowl") |> 
@@ -1064,29 +1064,17 @@ penguins
 ```
 
 
-
-## Grabbing a single function with [`::`]{.fg-yellow}
-
-"Reach in" to an unloaded package and grab a function directly, using `<package>::<function>`
-
-```{r}
-#| label: "02-about-r-51"
-#| message: FALSE
-#| echo: FALSE
-gtsummary::theme_gtsummary_journal(journal = "jama")
-#gtsummary::theme_gtsummary_compact()
-```
-
 ## Grabbing a single function with [`::`]{.fg-yellow}
 
 ```{r }
 #| label: "02-about-r-52"
-## A little glimpse of what we'll do soon
-penguins |> 
-  select(species, body_mass_g, sex) |> 
-  gtsummary::tbl_summary(by = species) #<<
-```
 
+# A little glimpse of what we'll do soon
+penguins |> 
+  count(species, sex, year) |> 
+  pivot_wider(names_from = year, values_from = n) |> 
+  tinytable::tt()
+```
 
 ## Remember those conflicts?
 
@@ -1163,7 +1151,7 @@ class(summary(my_numbers)) # functions can be nested, and are evaluated from the
 class(my_smry) # equivalent to the previous line
 ```
 
-## 5. Objects come in [types]{.fg-yellow} and [classes]{.fg-yellow}
+## 5. Vectors come in [types]{.fg-yellow}; Objects in [classes]{.fg-yellow}
 
 
 ```{r }
@@ -1176,7 +1164,7 @@ class(my_smry)
 names(my_smry)
 ```
 
-## Kinds of [vector]{.fg-green}
+## Types of [vector]{.fg-green}
 
 :::: {.columns}
 ::: {.column width="40%"}
@@ -1194,7 +1182,7 @@ Hadley Wickham, _Advanced R_
 ::::
 
 
-## Kinds of [vector]{.fg-green}
+## Types of [vector]{.fg-green}
 
 :::: {.columns}
 ::: {.column width="40%"}
@@ -1227,7 +1215,7 @@ is.logical(my_lgl)
 :::
 ::::
 
-## Kinds of [vector]{.fg-green} 
+## Types of [vector]{.fg-green} 
 
 
 :::: {.columns}
@@ -1316,7 +1304,7 @@ typeof(gapminder) # hmm
 
 ## A table of data is a kind of [list]{.fg-yellow}
 
-- Lists _can_ be heterogenous. Underneath, most complex R objects are some kind of list with different components.
+- Lists can be internally heterogenous. Underneath, most complex R objects are some kind of list with different components.
 
 - A _data frame_ is a list of vectors of the same length, where the vectors can be of different types (e.g. numeric, character, logical, etc)
 
@@ -1642,5 +1630,6 @@ R objects are just lists of [stuff to use]{.fg-orange} or [things to do]{.fg-gre
 ---
 
 ![Peek in with the object inspector](img/02_r_ide_object_inspector.png)
+
 
 

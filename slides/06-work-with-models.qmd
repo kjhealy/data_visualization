@@ -1118,26 +1118,16 @@ tidy(out_bo)
 
 ```
 
-## Calculate the Marginal Effects
+## Calculate the Average Marginal Effects
 
 ```{r }
 #| label: "06-work-with-models-63"
 library(marginaleffects)
 
-bo_mfx <- marginaleffects(out_bo)
+bo_mfx <- avg_slopes(out_bo)
 
 ## This gives us the marginal effects at the unit level 
 as_tibble(bo_mfx)
-```
-
-## Calculate the AMEs
-
-- And this gives us the Average Marginal Effects
-
-```{r }
-#| label: "06-work-with-models-64"
-summary(bo_mfx) |> 
-  as_tibble()
 ```
 
 ## Alternatively, do it with [`broom`]{.fg-lblue}

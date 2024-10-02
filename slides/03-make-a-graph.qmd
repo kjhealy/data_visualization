@@ -133,6 +133,7 @@ Storing and printing data in long format entails a lot of _repetition_:
 
 ```{r }
 #| label: "03-make-a-graph-1"
+
 library(palmerpenguins)
 penguins |> 
   group_by(species, island, year) |> 
@@ -709,6 +710,7 @@ Map or Set values<br /> [per geom]{.fg-pink}
 ```{r}
 #| label: "reveal-pergeom1"
 #| include: FALSE
+
 p <- ggplot(data = gapminder,
             mapping = aes(x = gdpPercap,
                           y = lifeExp,
@@ -725,7 +727,8 @@ p + geom_point() +
 
 ```{r}
 #| label: "reveal-pergeom2"
-  #| include: FALSE
+#| include: FALSE
+
 p <- ggplot(data = gapminder,
             mapping = aes(x = gdpPercap,
                           y = lifeExp))
