@@ -60,11 +60,11 @@ library(gapminder) # Everyone's favorite dataset
 library(broom)     # Tidy model output
 library(marginaleffects) # Tidy marginal effects
 library(modelsummary) # Tidy summary tables and graphs
-library(scales)    # Format our axes and guides 
+library(scales)    # Format our axes and guides
 ```
-]
 
-## We know [`ggplot`]{.fg-lblue} can work with models
+
+## [`ggplot`]{.fg-lblue} can work with models
 
 - We know because `geoms` often do calculations in the background, via their `stat` functions.
 
@@ -88,7 +88,7 @@ p + geom_point(alpha=0.1) +
   labs(title = "Robust and OLS fits")
 ```
 
-## And these can be complex ...
+## These can be complex ...
 
 ```{r}
 #| label: "codefig-model2"
@@ -99,10 +99,10 @@ p + geom_point(alpha=0.1) +
 
 p + geom_point(alpha=0.1) +
     geom_smooth(color = "tomato", 
-                method = "lm", 
-                size = 1.2, 
-                formula = y ~ splines::bs(x, 3), 
-                se = FALSE)
+        method = "lm", 
+        size = 1.2, 
+        formula = y ~ splines::bs(x, 3), 
+        se = FALSE)
 
 ```
 
@@ -117,10 +117,10 @@ p + geom_point(alpha=0.1) +
 
 p + geom_point(alpha=0.1) +
     geom_quantile(color = "tomato", 
-                  size = 1.2, 
-                  method = "rqss",
-                  lambda = 1, 
-                  quantiles = c(0.20, 0.5, 0.85))
+        size = 1.2, 
+        method = "rqss",
+        lambda = 1, 
+        quantiles = c(0.20, 0.5, 0.85))
 
 ```
 
@@ -324,8 +324,6 @@ out_conf |>
 ## Three ways to tidy
 
 - [Component level]{.fg-lblue}: [`tidy()`]{.fg-green}
-- [Observation level]{.fg-orange}: [`augment()`]{.fg-green}
-- [Model level]{.fg-pink}: [`glance()`]{.fg-green}
 
 
 ## Three ways to tidy
@@ -354,8 +352,7 @@ Residuals:
 -47.490  -4.614   0.250   5.293  26.094 
 ```
 
-.kjh-lblue[
-```text
+```R
 Coefficients:
                    Estimate Std. Error t value Pr(>|t|)    
 (Intercept)       3.816e+01  2.050e+00  18.618  < 2e-16 ***
@@ -368,7 +365,6 @@ continentOceania  1.764e+01  1.779e+00   9.916  < 2e-16 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 ```
-]
 
 ```text
 Residual standard error: 8.336 on 1697 degrees of freedom
@@ -386,14 +382,13 @@ Call:
 lm(formula = lifeExp ~ gdpPercap + log(pop) + continent, data = gapminder)
 ```
 
-.kjh-orange[
-
-```text
+```R
 Residuals:
     Min      1Q  Median      3Q     Max 
 -47.490  -4.614   0.250   5.293  26.094 
 ```
-]
+
+:::
 
 ```text
 Coefficients:
@@ -497,13 +492,11 @@ continentOceania  1.764e+01  1.779e+00   9.916  < 2e-16 ***
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 ```
 
-.kjh-pink[
-```text
+```R
 Residual standard error: 8.336 on 1697 degrees of freedom
 Multiple R-squared:  0.585,	Adjusted R-squared:  0.5835 
 F-statistic: 398.7 on 6 and 1697 DF,  p-value: < 2.2e-16
 ```
-]
 
 ## [Model]{.fg-pink} level
 
@@ -830,7 +823,7 @@ The thing about the [**`map()`**]{.fg-green} family is that it can deal with all
 
 ## Grouped analysis and [list columns]{.fg-orange}
 
-Let's say I want to fit a simple model to data for all countries in Europe in 1977.
+Let's say I want to fit a model to data for all countries in Europe in 1977.
 
 ```{r }
 #| label: "06-work-with-models-43"
@@ -848,13 +841,12 @@ summary(fit)
 
 ## Grouped analysis and [list columns]{.fg-orange}
 
-What if I want to do that for all Continent-Year combinations? I'm not going to write a loop!
+What if I want to do that for all Continent-Year combinations? 
 
 ```{r }
 #| label: "06-work-with-models-45"
 
-out_le <- gapminder |>
-    group_by(continent, year) |>
+out_le <- gapminder |> group_by(continent, year) |>
     nest() #<<
 
 out_le
@@ -1018,24 +1010,20 @@ mod_plot <- function(data,
 
 ## Add it using [`map2()`]{.fg-green} or [`pmap()`]{.fg-green}
 
-- When we have two arguments to feed a function we can use [`map2()`]{.fg-green}. The general case is [`pmap()`]{.fg-green}, for passing along any number of arguments in a list.
+- When we have two arguments to feed a function we can use [`map2()`]{.fg-green}. The general case is [`pmap()`]{.fg-green}, for passing any number of arguments in a list.
 
 ```{r }
 #| label: "06-work-with-models-56"
-out_tidy <- gapminder |>
-    group_by(continent, year) |>
-    nest() |> 
+out_tidy <- gapminder |> group_by(continent, year) |> nest() |> 
     mutate(title = paste(continent, year),
            model = map(data, fit_ols2),#<<
            tidied = map(model, tidy), 
-           ggout = pmap(list(tidied, #<<
-                             title), #<<
+           ggout = pmap(list(tidied, title), #<<
                         mod_plot)) #<<
 
 out_tidy
 ```
-
-- Now, every element of [`ggout`]{.fg-orange} is ...
+Now, every element of [`ggout`]{.fg-orange} is ...
 
 ## A plot!
 
@@ -1102,16 +1090,24 @@ fs::dir_ls(here("figures")) |>
 
 :::{.huge}
  [Present findings in substantive terms]{.fg-green}
+:::
 
+---
+
+:::{.huge}
  [Show degrees of confidence or uncertainty]{.fg-lblue}
+:::
 
+---
+
+:::{.huge}
  [Show the data when you can]{.fg-pink}
 :::
 
 ---
 
 :::{.huge}
-[But these points apply just as well]{.fg-blue} to  presenting data in _any_ format: tables, models, text, whatever. [Graphs are not special here!]{.fg-pink}
+[But these points apply just as well]{.fg-blue} to  presenting data in _any_ format. [Graphs are not special here!]{.fg-pink}
   
 :::
 
@@ -1189,11 +1185,11 @@ tidy(bo_mfx) |>
 
 ## [`marginaleffects`]{.fg-lblue} can do a lot more
 
-- .medium[It includes a range of plotting methods, to produce graphics directly.] 
+- [It includes a range of plotting methods, to produce graphics directly.]{.medium}
 
-- .medium[These are built on [`ggplot`]{.fg-lblue}. Similarly integration with [`broom`]{.fg-lblue} means that you can use the package-specific plotting functions take the tidy output and adapt it to your own needs.]
+- [These are built on [`ggplot`]{.fg-lblue}. Similarly integration with [`broom`]{.fg-lblue} means that you can use the package-specific plotting functions take the tidy output and adapt it to your own needs.]{.medium}
 
-- .medium[Also check out [`modelsummary`]{.fg-lblue}, by the same author, for quick and flexible summaries of models and datasets. Again, this sort of package is very convenient to use directly. But with just a little facility with R and tidyverse-style idioms and patterns, you'll get even more out of it. You'll better understand how to adapt it and why its functions work as they do.] 
+- [Also check out [`modelsummary`]{.fg-lblue}, by the same author, for quick and flexible summaries of models and datasets. Again, this sort of package is very convenient to use directly. But with just a little facility with R and tidyverse-style idioms and patterns, you'll get even more out of it. You'll better understand how to adapt it and why its functions work as they do.]{.medium}
 
 # [Complex Surveys]{.fg-lblue} with the [`survey`]{.fg-lblue} [and]{.fg-yellow} [`srvyr`]{.fg-lblue} packages
 
@@ -1458,13 +1454,4 @@ p_out <- p +
 #| fig.height: 8
 p_out
 ```
-
-## Two other good packages: [`ggeffects`]{.fg-lblue}
-
-![](img/06_ggeffects_package.png)
-
-## Two other good packages: [`interactions`]{.fg-lblue}
-
-![](img/06_ggeffects_package.png)
-
 
