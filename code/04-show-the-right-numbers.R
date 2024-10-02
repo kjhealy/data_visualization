@@ -1,30 +1,52 @@
+kjh_register_tenso()    # Default fonts. Comment out if you don't have Tenso and Berkeley fonts.
+kjh_set_knitr_opts()    
+kjh_set_slide_theme()   # ggplot theme to go with slides. Set tenso = FALSE if necessary.
+
+
+
 
 
 # Safe
 
 
-## ----04-show-the-right-numbers-1----------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: "04-show-the-right-numbers-1"
 library(tidyverse)      # Your friend and mine
 library(gapminder)      # Gapminder data
 library(here)           # Portable file paths
 library(socviz)         # Handy socviz functions
 
 
-## ----reveal-groupline, include = FALSE----------------------------------------
-gapminder |> 
-  ggplot(mapping = aes(x = year,
+## -----------------------------------------------------------------------------
+#| label: "reveal-groupline"
+#| include: FALSE
+#| output-location: column
+
+p <- ggplot(data = gapminder, 
+            mapping = aes(x = year,
                        y = gdpPercap)) + 
-  geom_line()        
+  geom_line()
+
+p
 
 
-## ----reveal-groupline2, include = FALSE---------------------------------------
-gapminder |> 
-  ggplot(mapping = aes(x = year,
+## -----------------------------------------------------------------------------
+#| label: "reveal-groupline2"
+#| include: FALSE
+#| output-location: column
+p <- ggplot(data = gapminder, 
+            mapping = aes(x = year,
                        y = gdpPercap)) + 
-  geom_line(mapping = aes(group = country))        
+  geom_line(mapping = aes(group = country)) 
+
+p
 
 
-## ----reveal-facet, include = FALSE--------------------------------------------
+
+## -----------------------------------------------------------------------------
+#| label: "reveal-facet"
+#| include: FALSE
+#| output-location: column
 gapminder |> 
   ggplot(mapping = 
            aes(x = year,
@@ -33,14 +55,15 @@ gapminder |>
   facet_wrap(~ continent)
 
 
-## ----04-show-the-right-numbers-2----------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: "04-show-the-right-numbers-2"
 p <- ggplot(data = gapminder,
             mapping = aes(x = year,
                           y = gdpPercap))
 
 p_out <- p + geom_line(color="gray70", 
               mapping=aes(group = country)) +
-    geom_smooth(linewidth = 1.1,
+    geom_smooth(size = 1.1,
                 method = "loess",
                 se = FALSE) +
     scale_y_log10(labels=scales::label_dollar()) +
@@ -51,15 +74,26 @@ p_out <- p + geom_line(color="gray70",
          caption = "Data: Gapminder")    
 
 
-## ----04-show-the-right-numbers-3, echo=FALSE, fig.width=18, fig.height=5------
+## -----------------------------------------------------------------------------
+#| label: "04-show-the-right-numbers-3"
+#| echo: FALSE
+#| fig.width: 18
+#| fig.height: 5
 p_out
 
 
-## ----04-show-the-right-numbers-4----------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: "04-show-the-right-numbers-4"
 midwest
 
 
-## ----codefig-histogram, message = TRUE, fig.show="hide", fig.width=4.8, fig.height=4.5----
+## -----------------------------------------------------------------------------
+#| label: "codefig-histogram"
+#| message: TRUE
+#| fig.width: 4.8
+#| fig.height: 4.5
+#| output-location: column
+
 p <- ggplot(data = midwest, 
             mapping = aes(x = area))
 
@@ -67,12 +101,13 @@ p + geom_histogram()
 
 
 
-## ----04-show-the-right-numbers-5, echo=FALSE----------------------------------
-  knitr::include_graphics(
-  knitr::fig_chunk("codefig-histogram", "png"))
+## -----------------------------------------------------------------------------
+#| label: "codefig-histogram2"
+#| message: TRUE
+#| fig.width: 4.8
+#| fig.height: 4.5
+#| output-location: column
 
-
-## ----codefig-histogram2, message=TRUE, fig.show="hide", fig.width=4.8, fig.height=4.5----
 p <- ggplot(data = midwest, 
             mapping = aes(x = area))
 
@@ -80,12 +115,13 @@ p + geom_histogram(bins = 10)
 
 
 
-## ----04-show-the-right-numbers-6, echo=FALSE----------------------------------
-  knitr::include_graphics(
-  knitr::fig_chunk("codefig-histogram2", "png"))
-
-
-## ----codefig-subset, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5----
+## -----------------------------------------------------------------------------
+#| label: "codefig-subset"
+#| message: FALSE
+#| fig.width: 4.8
+#| fig.height: 4.5
+#| output-location: column
+#|
 
 ## Two state codes
 oh_wi <- c("OH", "WI")
@@ -99,24 +135,26 @@ midwest |>
 
 
 
-## ----04-show-the-right-numbers-7, echo=FALSE----------------------------------
-  knitr::include_graphics(
-  knitr::fig_chunk("codefig-subset", "png"))
+## -----------------------------------------------------------------------------
+#| label: "codefig-density1"
+#| message: FALSE
+#| fig.width: 4.8
+#| fig.height: 4.5
+#| output-location: column
 
-
-## ----codefig-density1, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5----
 p <- ggplot(data = midwest, 
             mapping = aes(x = area))
 
 p + geom_density()
 
 
-## ----04-show-the-right-numbers-8, echo=FALSE----------------------------------
-  knitr::include_graphics(
-  knitr::fig_chunk("codefig-density1", "png"))
+## -----------------------------------------------------------------------------
+#| label: "codefig-density2"
+#| message: FALSE
+#| fig.width: 4.8
+#| fig.height: 4.5
+#| output-location: column
 
-
-## ----codefig-density2, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5----
 p <- ggplot(data = midwest,
             mapping = aes(x = area, 
                           fill = state, 
@@ -124,12 +162,12 @@ p <- ggplot(data = midwest,
 p + geom_density(alpha = 0.3)
 
 
-## ----04-show-the-right-numbers-9, echo=FALSE----------------------------------
-  knitr::include_graphics(
-  knitr::fig_chunk("codefig-density2", "png"))
-
-
-## ----codefig-density3, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5----
+## -----------------------------------------------------------------------------
+#| label: "codefig-density3"
+#| message: FALSE
+#| fig.width: 4.8
+#| fig.height: 4.5
+#| output-location: column
 
 midwest |>
   filter(state %in% oh_wi) |> 
@@ -141,12 +179,10 @@ midwest |>
 
 
 
-## ----04-show-the-right-numbers-10, echo=FALSE---------------------------------
-  knitr::include_graphics(
-  knitr::fig_chunk("codefig-density3", "png"))
-
-
-## ----04-show-the-right-numbers-11, echo = FALSE, message = FALSE--------------
+## -----------------------------------------------------------------------------
+#| label: "04-show-the-right-numbers-11"
+#| echo: FALSE
+#| message: FALSE
 ## Generate some fake data
 
 ## Keep track of labels for as_labeller() functions in plots later.
@@ -205,16 +241,24 @@ df <- pmap_dfc(params, rnorm, n = N) |>
 
 
 
-## ----04-show-the-right-numbers-12---------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: "04-show-the-right-numbers-12"
 df
 
 
-## ----reveal-pivlongex, include = FALSE----------------------------------------
+## -----------------------------------------------------------------------------
+#| label: "reveal-pivlongex"
+#| include: FALSE
  df |> 
   pivot_longer(cols = pop_a:pop_total)
 
 
-## ----codefig-refdist1, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5----
+## -----------------------------------------------------------------------------
+#| label: "codefig-refdist1"
+#| message: FALSE
+#| fig.width: 4.8
+#| fig.height: 4.5
+#| output-location: column
 df |> 
   pivot_longer(cols = pop_a:pop_total)  |> 
   ggplot() + 
@@ -229,25 +273,25 @@ df |>
        title = "Comparing Subgroups: Histograms")
 
 
-## ----04-show-the-right-numbers-13, echo=FALSE---------------------------------
-  knitr::include_graphics(
-  knitr::fig_chunk("codefig-refdist1", "png"))
-
-
-## ----reveal-pivottrick1, include = FALSE--------------------------------------
+## -----------------------------------------------------------------------------
+#| label: "reveal-pivottrick1"
+#| include: FALSE
 # Treat pop_a to pop_total as a single variable
 df |>
   pivot_longer(cols = pop_a:pop_total)
 
 
-## ----reveal-pivottrick2, include = FALSE--------------------------------------
+## -----------------------------------------------------------------------------
+#| label: "reveal-pivottrick2"
+#| include: FALSE
 # Just treat pop_a to pop_c as the single variable.
 # Notice that pop_total just gets repeated.
  df |>
   pivot_longer(cols = pop_a:pop_c)
 
 
-## ----04-show-the-right-numbers-14---------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: "04-show-the-right-numbers-14"
 p_out <- df |>
   pivot_longer(cols = pop_a:pop_c) |>
   ggplot() + 
@@ -267,19 +311,32 @@ p_out <- df |>
   facet_wrap(~ name, nrow = 1) 
 
 
-## ----04-show-the-right-numbers-15, echo = FALSE, fig.width=15, fig.height=5----
+## -----------------------------------------------------------------------------
+#| label: "04-show-the-right-numbers-15"
+#| echo: FALSE
+#| fig.width: 15
+#| fig.height: 5
 p_out
 
 
-## ----04-show-the-right-numbers-16, echo = FALSE-------------------------------
+## -----------------------------------------------------------------------------
+#| label: "04-show-the-right-numbers-16"
+#| echo: FALSE
 ggplot2::theme_set(ggplot2::theme_classic())
 
 
-## ----04-show-the-right-numbers-17---------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: "04-show-the-right-numbers-17"
 titanic
 
 
-## ----codefig-titanic1, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5----
+## -----------------------------------------------------------------------------
+#| label: "codefig-titanic1"
+#| message: FALSE
+#| fig.width: 4.8
+#| fig.height: 4.5
+#| output-location: column
+
 p <- ggplot(data = titanic,
             mapping = aes(x = fate, 
                           y = percent, 
@@ -287,12 +344,12 @@ p <- ggplot(data = titanic,
 p + geom_bar(stat = "identity") #<<
 
 
-## ----04-show-the-right-numbers-18, echo=FALSE---------------------------------
-  knitr::include_graphics(
-  knitr::fig_chunk("codefig-titanic1", "png"))
-
-
-## ----codefig-titanic2, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5----
+## -----------------------------------------------------------------------------
+#| label: "codefig-titanic2"
+#| message: FALSE
+#| fig.width: 4.8
+#| fig.height: 4.5
+#| output-location: column
 p <- ggplot(data = titanic,
             mapping = aes(x = fate, 
                           y = percent, 
@@ -301,12 +358,12 @@ p + geom_bar(stat = "identity",
              position = "dodge") #<<
 
 
-## ----04-show-the-right-numbers-19, echo=FALSE---------------------------------
-  knitr::include_graphics(
-  knitr::fig_chunk("codefig-titanic2", "png"))
-
-
-## ----codefig-titanic3, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5----
+## -----------------------------------------------------------------------------
+#| label: "codefig-titanic3"
+#| message: FALSE
+#| fig.width: 4.8
+#| fig.height: 4.5
+#| output-location: column
 p <- ggplot(data = titanic,
             mapping = aes(x = fate, 
                           y = percent, 
@@ -316,12 +373,12 @@ p + geom_bar(stat = "identity",
   theme(legend.position = "top") #<<
 
 
-## ----04-show-the-right-numbers-20, echo=FALSE---------------------------------
-  knitr::include_graphics(
-  knitr::fig_chunk("codefig-titanic3", "png"))
-
-
-## ----codefig-geomcol, message=FALSE, fig.show="hide", fig.width=4.8, fig.height=4.5----
+## -----------------------------------------------------------------------------
+#| label: "codefig-geomcol"
+#| message: FALSE
+#| fig.width: 4.8
+#| fig.height: 4.5
+#| output-location: column
 p <- ggplot(data = titanic,
             mapping = aes(x = fate, 
                           y = percent, 
@@ -330,20 +387,20 @@ p + geom_col(position = "dodge") + #<<
   theme(legend.position = "top")
 
 
-## ----04-show-the-right-numbers-21, echo=FALSE---------------------------------
-  knitr::include_graphics(
-  knitr::fig_chunk("codefig-geomcol", "png"))
-
-
-## ----04-show-the-right-numbers-22, echo = FALSE, message=FALSE----------------
+## -----------------------------------------------------------------------------
+#| label: "04-show-the-right-numbers-22"
+#| echo: FALSE
+#| message: FALSE
 kjhslides::kjh_set_slide_theme()
 
 
-## ----04-show-the-right-numbers-23---------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: "04-show-the-right-numbers-23"
 oecd_sum
 
 
-## ----04-show-the-right-numbers-24---------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: "04-show-the-right-numbers-24"
 p <- ggplot(data = oecd_sum, 
             mapping = aes(x = year, 
                           y = diff, 
@@ -360,6 +417,10 @@ p_out <- p + geom_col() +
        caption = "Data: OECD.")
 
 
-## ----04-show-the-right-numbers-25, echo = FALSE, fig.width=15, fig.height=4----
+## -----------------------------------------------------------------------------
+#| label: "04-show-the-right-numbers-25"
+#| echo: FALSE
+#| fig.width: 15
+#| fig.height: 4
 p_out
 
