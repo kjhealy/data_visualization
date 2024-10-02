@@ -1023,19 +1023,61 @@ If the latter ...
 
 ## If adjusting a thematic element ask…
 
-::: {.incremental}
+- _Where_ on the plot is it?
+
+## If adjusting a thematic element ask…
+
+- _Where_ on the plot is it?
+- Is it part of an _axis_, part of the _panel_, the _strip_ (facet title) box, or the _legend_? This will help you find the name of the thing you want to adjust. 
+
+## If adjusting a thematic element ask…
+
 - _Where_ on the plot is it?
 - Is it part of an _axis_, part of the _panel_, the _strip_ (facet title) box, or the _legend_? This will help you find the name of the thing you want to adjust. 
 - E.g. "I want to adjust the text for the markings on the x-axis"
 - You want [axis.ticks.x]{.fg-orange}
 - E.g. "I want to adjust the styling of the main y-axis grid lines inside the plot" 
 - You want [panel.grid.major.y]{.fg-orange}
-:::
 
 
 ## If adjusting a thematic element, ask…
 
-::: {.incremental}
+- What _kind_ of element is it?
+
+
+## If adjusting a thematic element, ask…
+
+- What _kind_ of element is it?
+- Is it _text_, or a _line_, or a _rectangle_?
+- This will tell you what function to use to make the adjustment to the named element. 
+
+
+## If adjusting a thematic element, ask…
+
+- What _kind_ of element is it?
+- Is it _text_, or a _line_, or a _rectangle_?
+- This will tell you what function to use to make the adjustment to the named element. 
+- If it's text, adjust the element with [`element_text()`]{.fg-green} 
+
+## If adjusting a thematic element, ask…
+
+- What _kind_ of element is it?
+- Is it _text_, or a _line_, or a _rectangle_?
+- This will tell you what function to use to make the adjustment to the named element. 
+- If it's text, adjust the element with [`element_text()`]{.fg-green} 
+- If it's a line, adjust it with [`element_line()`]{.fg-green}
+
+## If adjusting a thematic element, ask…
+
+- What _kind_ of element is it?
+- Is it _text_, or a _line_, or a _rectangle_?
+- This will tell you what function to use to make the adjustment to the named element. 
+- If it's text, adjust the element with [`element_text()`]{.fg-green} 
+- If it's a line, adjust it with [`element_line()`]{.fg-green}
+- If it's a rectangle, with [`element_rect()`]{.fg-green}
+
+## If adjusting a thematic element, ask…
+
 - What _kind_ of element is it?
 - Is it _text_, or a _line_, or a _rectangle_?
 - This will tell you what function to use to make the adjustment to the named element. 
@@ -1043,19 +1085,19 @@ If the latter ...
 - If it's a line, adjust it with [`element_line()`]{.fg-green}
 - If it's a rectangle, with [`element_rect()`]{.fg-green}
 - If you want to _fully turn off_ an element, use [`element_blank()`]{.fg-green}
-:::
+
 
 ## For example ...
 
 ["I want to adjust the styling of the plot title"]{.large}
 
+## For example ...
 
-::: {.incremental}
+["I want to adjust the styling of the plot title"]{.large}
+
 - The relevant element is [`plot.title`]{.fg-orange}. 
 - It's _text_.
 - Inside the theme function, adjust it with [`element_text()`]{.fg-green}. 
-
-:::
 
 
 ## For example ...
@@ -1078,12 +1120,13 @@ p + theme(plot.title =
 
 ["I want to adjust y axis grid lines on the plot"]{.large}
 
-::: {.incremental}
+## For example ...
+
+["I want to adjust y axis grid lines on the plot"]{.large}
+
 - The relevant elements are [`panel.grid.major.y`]{.fg-orange} and [`panel.grid.minor.y`]{.fg-orange}. 
 - These are _lines_.
 - Inside the theme function, adjust it with [`element_line()`]{.fg-green}. 
-
-:::
 
 ## For example ...
 

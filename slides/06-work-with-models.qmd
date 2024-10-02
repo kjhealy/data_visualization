@@ -127,7 +127,7 @@ p + geom_point(alpha=0.1) +
 ---
 
 :::{.huge}
-Transform and summarize first.]{.fg-orange}<br />Then send your clean tables to ggplot.  
+[Transform and summarize first.]{.fg-orange}<br />Then send your clean tables to ggplot.  
 :::
 
 
@@ -323,11 +323,21 @@ out_conf |>
 
 ## Three ways to tidy
 
-::: {.incremental}
 - [Component level]{.fg-lblue}: [`tidy()`]{.fg-green}
 - [Observation level]{.fg-orange}: [`augment()`]{.fg-green}
 - [Model level]{.fg-pink}: [`glance()`]{.fg-green}
-:::
+
+
+## Three ways to tidy
+
+- [Component level]{.fg-lblue}: [`tidy()`]{.fg-green}
+- [Observation level]{.fg-orange}: [`augment()`]{.fg-green}
+
+## Three ways to tidy
+
+- [Component level]{.fg-lblue}: [`tidy()`]{.fg-green}
+- [Observation level]{.fg-orange}: [`augment()`]{.fg-green}
+- [Model level]{.fg-pink}: [`glance()`]{.fg-green}
 
 
 ## [Component]{.fg-lblue} level
@@ -651,12 +661,23 @@ a + b
 
 ```
 
+## Isn't this like ... Vectorized arithmetic?
 
-::::: {.fragment fragment-index=2}
+- The simplest cases are not that different from the vectorized arithmetic we saw before. 
+
+```{r }
+#| label: "06-work-with-models-31a"
+a <- c(1:10)
+
+b <- 1
+
+# You know what R will do here
+a + b
+
+```
+
 R's vectorized rules add `b` to every element of `a`. In a sense, the [**`+`**]{.fg-green} operation can be thought of as a function that takes each element of `a` and does something with it. In this case "add `b`".  
     
-:::::
-
 ## Repeatedly applying a function 
 
 We can make this explicit by writing a function:

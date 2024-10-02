@@ -68,9 +68,13 @@ library(ggforce)   # Useful enhancements to ggplot
 - It's very useful to have the intuition that, when drawing maps, [we're just working with tables]{.fg-orange} of `x` and `y` coordinates, and [shapes represent quantities in our data]{.fg-orange}, in a way that's essentially the same as any other geom. This makes it worth getting comfortable with what  [`geom_polygon()`]{.fg-green} and [`coord_map()`]{.fg-green} are doing. But the business of having very large map tables and manually specifying projections is inefficient. 
 - In addition, sometimes our data _really is_ properly spatial, at which point we need a more rigorous and consistent way of specifying those elements. There's a whole world of Geodesic standards and methods devoted to specifying these things for GIS applications. R is not a dedicated GIS, but we can take advantage of these tools.
 
-::: {.incremental}
+
+## [`geom_polygon()`]{.fg-green} is limiting
+
+- It's very useful to have the intuition that, when drawing maps, [we're just working with tables]{.fg-orange} of `x` and `y` coordinates, and [shapes represent quantities in our data]{.fg-orange}, in a way that's essentially the same as any other geom. This makes it worth getting comfortable with what  [`geom_polygon()`]{.fg-green} and [`coord_map()`]{.fg-green} are doing. But the business of having very large map tables and manually specifying projections is inefficient. 
+- In addition, sometimes our data _really is_ properly spatial, at which point we need a more rigorous and consistent way of specifying those elements. There's a whole world of Geodesic standards and methods devoted to specifying these things for GIS applications. R is not a dedicated GIS, but we can take advantage of these tools.
+
 - Enter [simple features]{.fg-pink}, the [`sf`]{.fg-lblue} package, and [`geom_sf()`]{.fg-green}
-:::
 
 
 

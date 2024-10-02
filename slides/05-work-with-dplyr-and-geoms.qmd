@@ -113,9 +113,7 @@ library(tidyverse) # your friend and mine
 ::::
 
 
-::::: {.fragment fragment-index=1}
 Not all of these are attached when we do `library(tidyverse)`    
-:::::
 
 
 ---
@@ -208,17 +206,15 @@ gss_sm |>
 
 ## [dplyr]{.fg-yellow} lets you work with tibbles
 
-
-::::: {.fragment fragment-index=1}
 - Remember, tibbles are tables of data where the columns can be of different types, such as numeric, logical, character, factor, etc.
 - We'll use dplyr to _transform_ and _summarize_ our data.
 
-:::::
 
+## [dplyr]{.fg-yellow} lets you work with tibbles
 
-::::: {.fragment fragment-index=2}
+- Remember, tibbles are tables of data where the columns can be of different types, such as numeric, logical, character, factor, etc.
+- We'll use dplyr to _transform_ and _summarize_ our data.
 - We'll use the pipe operator, [**`|>`**]{.fg-pink}, to chain together sequences of actions on our tables.
-:::::
 
 
 # dplyr's core verbs
@@ -234,7 +230,6 @@ gss_sm |>
 
 ## Some [actions]{.fg-orange} to take on a single table 
 
-::: {.incremental}
 - [**Group**]{.fg-orange} the data at the level we want, such as “_Religion by Region_” or “_Children by School_”.
 
 - [**Subset**]{.fg-orange} either the rows or columns of or table—i.e. remove them before doing anything.
@@ -242,17 +237,14 @@ gss_sm |>
 - [**Mutate**]{.fg-orange} the data. That is, change something at the _current_ level of grouping.  Mutating adds new columns to the table, or changes the content of an existing column. It never changes the number of rows.
 
 - [**Summarize**]{.fg-orange} or aggregate the data. That is, make something new at a _higher_ level of grouping. E.g., calculate means or counts by some grouping variable. This will generally result in a smaller, _summary_ table. Usually this will have the same number of _rows_ as there are _groups_ being summarized.
-:::
 
 
 ## For each [action]{.fg-orange} there's a [function]{.fg-green} 
 
-::: {.incremental}
 - [**Group**]{.fg-orange} using  **`group_by()`**.
 - [**Subset**]{.fg-orange} has one action for rows and one for columns. We **`filter()`** rows and **`select()`** columns.
 - [**Mutate**]{.fg-orange} tables (i.e. add new columns, or re-make existing ones) using **`mutate()`**.
 - [**Summarize**]{.fg-orange} tables (i.e. perform aggregating calculations) using **`summarize()`**.
-:::
 
 # Group and Summarize
 
@@ -264,9 +256,7 @@ gss_sm |>
 gss_sm
 ```
 
-::::: {.fragment fragment-index=1}
 Notice how the tibble already tells us a lot.    
-:::::
 
 ## Summarizing a Table
 
@@ -308,11 +298,9 @@ gss_sm |>
   summarize(total = n())
 ```
 
-::: {.incremental}
 - The function [**`n()`**]{.fg-green} counts up the rows within each group.    
 - All the other columns are dropped in the summary operation
 - Your original [`gss_sm`]{.fg-pink} table is untouched
-:::
 
 
 ---
@@ -328,9 +316,7 @@ gss_sm |>
   summarize(total = n())
 ```
 
-::: {.incremental}
 - The function [**`n()`**]{.fg-green} counts up the rows within the _innermost_ (i.e. the rightmost) group.
-:::
 
 
 ---
@@ -348,11 +334,9 @@ gss_sm |>
 ```
 
 
-::: {.incremental}
 - The function [**`n()`**]{.fg-green} counts up the rows 
 - Which rows? The ones fed down the pipeline
 - The _innermost_ (i.e. the rightmost) group.
-:::
 
 ## Pipelines carry assumptions forward
 
@@ -641,23 +625,18 @@ rel_by_region |>
 
 ### Check your tables!
 
-::: {.incremental}
 - Pipelines feed their content forward, so you need to make sure your results are not incorrect.
 - Often, complex tables and graphs can be disturbingly plausible even when wrong.
 - So, figure out what the result should be and test it!
 - Starting with simple or toy cases can help with this process.
-
-:::
 
 
 ## Two lessons
 
 ### Inspect your pipes!
 
-::: {.incremental}
 - Understand pipelines by running them forward or peeling them back a step at a time.
 - This is a _very_ effective way to understand your own and other people's code.
-:::
 
 ---
 
@@ -1113,8 +1092,7 @@ by_country |>
 
 ## Again, these methods are general
 
-:::: {.columns}
-::: {.column width="50%"}
+
 ```{r}
 #| label: "codefig-consent4"
 #| message: FALSE
@@ -1137,7 +1115,6 @@ by_country |>
        y = NULL, 
        color = "Consent Law")
 ```
-
 
 
 

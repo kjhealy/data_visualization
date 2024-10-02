@@ -47,12 +47,10 @@ kjh_set_slide_theme()
 
 ## Housekeeping
 
-::: {.incremental}
 - 10:00am to 12:30pm US EST
 - Break from 12:30:pm to 1:30pm
 - 1:30pm to 3:30pm 
 - Use the Zoom chat to ask questions, or raise a hand with ![](img/01_stock_zoom_raise_hand.png){width=5%}
-:::
 
 ## In between class sessions
 
@@ -60,11 +58,9 @@ kjh_set_slide_theme()
 
 ## My Setup and Yours
 
-::: {.incremental}
 - Talking, Slides, and Live-Coding in RStudio 
 - Follow along and take notes in RStudio yourself    
 - The course packet is also an RStudio project 
-:::
 
 
 
