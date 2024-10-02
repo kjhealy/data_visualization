@@ -1,11 +1,11 @@
 ---
 title: "Data Visualization"
 description: |
-  A Remote Seminar at [Code Horizons](https://codehorizons.com/Seminars/data-visualization/)
+  A Short Course using R and the Tidyverse suite of tools.
 author:
 - name: Kieran Healy
   url: https://kieranhealy.org
-date: "Code Horizons, April 2023"
+date: "`r Sys.Date()`"
 output: distill::distill_article
 ---
 
@@ -30,7 +30,7 @@ This page contains information for seminar participants. Please read it and foll
 
 # The Course Packet
 
-[Click here to download the course packet as a zip file.](https://github.com/kjhealy/data_visualization/archive/refs/heads/main.zip) See below for more details.
+[Click here to download the course packet as a zip file.](https://github.com/kjhealy/data_visualization_notes/archive/refs/heads/main.zip) See below for more details.
 
 # Course Overview
 
@@ -59,11 +59,11 @@ We will be working with the most recent stable versions of R and RStudio, as wel
 ### Install R and RStudio on your Laptop
 
 - Begin by installing R (<http://cloud.r-project.org>). Choose the version appropriate for your computing platform:
-  - [macOS with an Apple Silicon (M1 or M2) processor](https://cran.r-project.org/bin/macosx/big-sur-arm64/base/R-4.2.3-arm64.pkg)
-  - [macOS with an Intel processor](https://cran.r-project.org/bin/macosx/base/R-4.2.3.pkg)
-  - [Windows](https://cran.r-project.org/bin/windows/base/R-4.2.3-win.exe), 
+  - [macOS with an Apple Silicon (M-series) processor](https://cran.r-project.org/bin/macosx/big-sur-arm64/base/R-4.4.1-arm64.pkg)
+  - [macOS with an Intel processor](https://cran.r-project.org/bin/macosx/big-sur-x86_64/base/R-4.4.1-x86_64.pkg)
+  - [Windows](https://cran.r-project.org/bin/windows/base/R-4.4.1-win.exe), 
   - [Linux](https://cloud.r-project.org/bin/linux/).
-- Next, install RStudio (<http://rstudio.com>). Follow the links to download the [free RStudio Desktop edition](https://rstudio.com/products/rstudio/download/#download) recommended for your system.
+- Next, install RStudio (<https://posit.co/download/rstudio-desktop/>). Follow the links to download the [free RStudio Desktop edition]() recommended for your system.
 
 ### Install the required additional Packages
 
@@ -75,7 +75,7 @@ We will be working with the most recent stable versions of R and RStudio, as wel
 my_packages <- c("tidyverse", "broom", "cowplot", 
                   "drat", "gapminder", "GGally", "ggforce", 
                   "ggrepel", "ggraph", "ggridges", "graphlayouts", 
-                  "here", "marginaleffects", "margins", "maps", "mapproj", 
+                  "here", "marginaleffects", "maps", "mapproj", 
                   "mapdata", "MASS", "modelsummary", "naniar", "palmerpenguins", 
                   "patchwork", "prismatic", "quantreg", "remotes", 
                   "scales", "sf", "socviz", "survey", "srvyr", 
@@ -83,23 +83,31 @@ my_packages <- c("tidyverse", "broom", "cowplot",
 
 install.packages(my_packages, repos = "http://cran.rstudio.com")
 
-data_packages <- c("covdata", "congress", "kjhnet", "nycdogs")
-
-drat::addRepo("kjhealy")
-install.packages(data_packages, repos = "https://kjhealy.github.io/drat/")
+data_packages <- c("covdata", "congress", "kjhnet", "nycdogs", "uscenpops")
+remotes::install_github(data_packages)
 
 ## Code to run ends here
 
 ```
 
-If you do not have one already, over the longer term as an R user it will be useful to create a GitHub account and obtain a GitHub Personal Access Token. (This is not required for the course, it will just be helpful to have one.) To get set up, read and _carefully follow_ the instructions in Parts I and II of [Happy Git With R](https://happygitwithr.com), and then also the instructions in [Appendix B](https://happygitwithr.com/github-pat.html) of the same document. Again, this is an optional step only.
+GitHub is a software development platform and service that is widely used by R Developers. You can [read some background on it from an R user's point of view here](https://happygitwithr.com/big-picture.html).
+
+If you do not have one already, it will be useful to create a GitHub account and obtain a GitHub Personal Access Token. This is _not required_ for the course, but would be helpful to have. After you have installed R and RStudio, to get set up, read and _carefully follow_ the instructions here:
+
+- Register a [GitHub Account](https://happygitwithr.com/github-acct.html)
+- Install [Git](https://happygitwithr.com/install-git) and a [Git Client](https://happygitwithr.com/git-client.html)
+- Get a [Personal Access Token](https://happygitwithr.com/https-pat)
+- Connect to [GitHub](https://happygitwithr.com/push-pull-github.html)
+
+Again, setting up a GitHub account is _not required_ to fully participate in the course.
+
 
 
 ### Download the Course Packet
 
-The [course packet](https://github.com/kjhealy/data_visualization/archive/refs/heads/main.zip) can be downloaded as a zip file: [click here to download it](https://github.com/kjhealy/data_visualization/archive/refs/heads/main.zip). It is an RStudio project containing PDFs of the slides for the course together with code for almost all of the graphs we will draw, along with a starter file for your course notes, some additional datasets we may use, and other material. After you have installed R and RStudio, download the course packet and uncompress it on your computer. Once the packet is uncompressed into a folder named `data_visualization`, double-clicking the file inside that folder named `dataviz.Rproj` should launch the project in RStudio.
+The [course packet](https://github.com/kjhealy/data_visualization_notes/archive/refs/heads/main.zip) can be downloaded as a zip file: [click here to download it](https://github.com/kjhealy/data_visualization_notes/archive/refs/heads/main.zip). It is an RStudio project containing PDFs of the slides for the course together with code for almost all of the graphs we will draw, along with a starter file for your course notes, some additional datasets we may use, and other material. After you have installed R and RStudio, download the course packet and uncompress it on your computer. (If you are on Windows _make sure the zip file is actually uncompressed_ by right-clicking on it and selecting "Extract All".) Once the packet is uncompressed into a folder named `data_visualization`, double-clicking the file inside that folder named `data_visualization_notes.Rproj` should launch the project in RStudio.
 
-# About the Instructor
+# The Course Slack
 
-[Kieran Healy](https://kieranhealy.org) is Professor of Sociology at Duke University. He is the author of [Data Visualization: A Practical Introduction](http://socviz.co) (Princeton University Press). Much of his research has been about the social organization of exchange in human blood and organs, cultural goods, software, and ideas. His current work focuses on the moral order of market society, the effect of models and measurement on social classification, and the link between those two topics, especially in the consumer credit market. You can learn more at [https://kieranhealy.org](https://kieranhealy.org).
+During the seminar we will use a [Slack](https://slack.com) to provide an additional channel of communication outside the lectures. You will recieve details about how to sign up prior to the course. I encourage you to use the Slack to ask questions, share code snippets, and discuss matters arising in the seminar, from "I can't get this to work" troubleshooting on up to any other more general comments or queries about the material we are covering.
 

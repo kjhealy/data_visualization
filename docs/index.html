@@ -21,7 +21,7 @@ visibility: hidden;
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -32,7 +32,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
 { counter-reset: source-line 0; }
@@ -90,30 +90,30 @@ code span.wa { color: #5e5e5e; font-style: italic; }
   <!--radix_placeholder_meta_tags-->
   <title>Data Visualization</title>
 
-  <meta property="description" itemprop="description" content="A Remote Seminar at [Code Horizons](https://codehorizons.com/Seminars/data-visualization/)" />
+  <meta property="description" itemprop="description" content="A Short Course using R and the Tidyverse suite of tools." />
 
 
   <!--  https://schema.org/Article -->
-  <meta property="article:published" itemprop="datePublished" content="2023-04-20" />
-  <meta property="article:created" itemprop="dateCreated" content="2023-04-20" />
+  <meta property="article:published" itemprop="datePublished" content="2024-10-02" />
+  <meta property="article:created" itemprop="dateCreated" content="2024-10-02" />
   <meta name="article:author" content="Kieran Healy" />
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
   <meta property="og:title" content="Data Visualization" />
   <meta property="og:type" content="article" />
-  <meta property="og:description" content="A Remote Seminar at [Code Horizons](https://codehorizons.com/Seminars/data-visualization/)" />
+  <meta property="og:description" content="A Short Course using R and the Tidyverse suite of tools." />
   <meta property="og:locale" content="en_US" />
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary" />
   <meta property="twitter:title" content="Data Visualization" />
-  <meta property="twitter:description" content="A Remote Seminar at [Code Horizons](https://codehorizons.com/Seminars/data-visualization/)" />
+  <meta property="twitter:description" content="A Short Course using R and the Tidyverse suite of tools." />
 
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Data Visualization"]},{"type":"character","attributes":{},"value":["A Remote Seminar at [Code Horizons](https://codehorizons.com/Seminars/data-visualization/)\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Kieran Healy"]},{"type":"character","attributes":{},"value":["https://kieranhealy.org"]}]}]},{"type":"character","attributes":{},"value":["Code Horizons, April 2023"]},{"type":"character","attributes":{},"value":["distill::distill_article"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Data Visualization"]},{"type":"character","attributes":{},"value":["A Short Course using R and the Tidyverse suite of tools.\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Kieran Healy"]},{"type":"character","attributes":{},"value":["https://kieranhealy.org"]}]}]},{"type":"character","attributes":{},"value":["2024-10-02"]},{"type":"character","attributes":{},"value":["distill::distill_article"]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   
@@ -209,9 +209,18 @@ line-height: 1.5em;
 .hidden {
 display: none !important;
 }
+hr.section-separator {
+border: none;
+border-top: 1px solid rgba(0, 0, 0, 0.1);
+margin: 0px;
+}
+d-byline {
+border-top: none;
+}
 d-article {
 padding-top: 2.5rem;
 padding-bottom: 30px;
+border-top: none;
 }
 d-appendix {
 padding-top: 30px;
@@ -287,6 +296,10 @@ overflow: visible !important;
 d-article div.sourceCode pre {
 padding-left: 18px;
 font-size: 14px;
+}
+
+d-article pre.numberSource code > span {
+left: -2em;
 }
 d-article pre {
 font-size: 14px;
@@ -917,6 +930,12 @@ color: inherit;
     // create d-title
     $('.d-title').changeElementType('d-title');
 
+    // separator
+    var separator = '<hr class="section-separator" style="clear: both"/>';
+    // prepend separator above appendix
+    $('.d-byline').before(separator);
+    $('.d-article').before(separator);
+
     // create d-byline
     var byline = $('<d-byline></d-byline>');
     $('.d-byline').replaceWith(byline);
@@ -994,8 +1013,9 @@ color: inherit;
     $('.distill-force-highlighting-css').parent().remove();
 
     // remove empty line numbers inserted by pandoc when using a
-    // custom syntax highlighting theme
-    $('code.sourceCode a:empty').remove();
+    // custom syntax highlighting theme, except when numbering line
+    // in code chunk
+    $('pre:not(.numberLines) code.sourceCode a:empty').remove();
 
     // load distill framework
     load_distill_framework();
@@ -1021,12 +1041,13 @@ color: inherit;
       // add orcid ids
       $('.authors-affiliations').find('.author').each(function(i, el) {
         var orcid_id = front_matter.authors[i].orcidID;
+        var author_name = front_matter.authors[i].author
         if (orcid_id) {
           var a = $('<a></a>');
           a.attr('href', 'https://orcid.org/' + orcid_id);
           var img = $('<img></img>');
           img.addClass('orcid-id');
-          img.attr('alt', 'ORCID ID');
+          img.attr('alt', author_name ? 'ORCID ID for ' + author_name : 'ORCID ID');
           img.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==');
           a.append(img);
           $(this).append(a);
@@ -2340,7 +2361,7 @@ distill-header .nav a {
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Data Visualization","description":"A Remote Seminar at [Code Horizons](https://codehorizons.com/Seminars/data-visualization/)","authors":[{"author":"Kieran Healy","authorURL":"https://kieranhealy.org","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2023-04-20T00:00:00.000-04:00","citationText":"Healy, 2023"}
+{"title":"Data Visualization","description":"A Short Course using R and the Tidyverse suite of tools.","authors":[{"author":"Kieran Healy","authorURL":"https://kieranhealy.org","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2024-10-02T00:00:00.000-04:00","citationText":"Healy, 2024"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2351,15 +2372,16 @@ distill-header .nav a {
 
 <div class="d-title">
 <h1>Data Visualization</h1>
+
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
-<p><p>A Remote Seminar at <a href="https://codehorizons.com/Seminars/data-visualization/">Code Horizons</a></p></p>
+<p><p>A Short Course using R and the Tidyverse suite of tools.</p></p>
 </div>
 
 <div class="d-byline">
   Kieran Healy <a href="https://kieranhealy.org" class="uri">https://kieranhealy.org</a> 
   
-<br />Code Horizons, April 2023
+<br />2024-10-02
 </div>
 
 <div class="d-article">
@@ -2368,7 +2390,7 @@ distill-header .nav a {
 <h1 id="information-for-participants">Information for Participants</h1>
 <p>This page contains information for seminar participants. Please read it and follow the instructions below to download and install the necessary software and course materials.</p>
 <h1 id="the-course-packet">The Course Packet</h1>
-<p><a href="https://github.com/kjhealy/data_visualization/archive/refs/heads/main.zip">Click here to download the course packet as a zip file.</a> See below for more details.</p>
+<p><a href="https://github.com/kjhealy/data_visualization_notes/archive/refs/heads/main.zip">Click here to download the course packet as a zip file.</a> See below for more details.</p>
 <h1 id="course-overview">Course Overview</h1>
 <h3 id="sign-up-and-registration">Sign-up and Registration</h3>
 <ul>
@@ -2390,12 +2412,12 @@ distill-header .nav a {
 <ul>
 <li>Begin by installing R (<a href="http://cloud.r-project.org" class="uri">http://cloud.r-project.org</a>). Choose the version appropriate for your computing platform:
 <ul>
-<li><a href="https://cran.r-project.org/bin/macosx/big-sur-arm64/base/R-4.2.3-arm64.pkg">macOS with an Apple Silicon (M1 or M2) processor</a></li>
-<li><a href="https://cran.r-project.org/bin/macosx/base/R-4.2.3.pkg">macOS with an Intel processor</a></li>
-<li><a href="https://cran.r-project.org/bin/windows/base/R-4.2.3-win.exe">Windows</a>,</li>
+<li><a href="https://cran.r-project.org/bin/macosx/big-sur-arm64/base/R-4.4.1-arm64.pkg">macOS with an Apple Silicon (M-series) processor</a></li>
+<li><a href="https://cran.r-project.org/bin/macosx/big-sur-x86_64/base/R-4.4.1-x86_64.pkg">macOS with an Intel processor</a></li>
+<li><a href="https://cran.r-project.org/bin/windows/base/R-4.4.1-win.exe">Windows</a>,</li>
 <li><a href="https://cloud.r-project.org/bin/linux/">Linux</a>.</li>
 </ul></li>
-<li>Next, install RStudio (<a href="http://rstudio.com" class="uri">http://rstudio.com</a>). Follow the links to download the <a href="https://rstudio.com/products/rstudio/download/#download">free RStudio Desktop edition</a> recommended for your system.</li>
+<li>Next, install RStudio (<a href="https://posit.co/download/rstudio-desktop/" class="uri">https://posit.co/download/rstudio-desktop/</a>). Follow the links to download the <a href>free RStudio Desktop edition</a> recommended for your system.</li>
 </ul>
 <h3 id="install-the-required-additional-packages">Install the required additional Packages</h3>
 <ul>
@@ -2406,7 +2428,7 @@ distill-header .nav a {
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>my_packages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;tidyverse&quot;</span>, <span class="st">&quot;broom&quot;</span>, <span class="st">&quot;cowplot&quot;</span>, </span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;drat&quot;</span>, <span class="st">&quot;gapminder&quot;</span>, <span class="st">&quot;GGally&quot;</span>, <span class="st">&quot;ggforce&quot;</span>, </span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;ggrepel&quot;</span>, <span class="st">&quot;ggraph&quot;</span>, <span class="st">&quot;ggridges&quot;</span>, <span class="st">&quot;graphlayouts&quot;</span>, </span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;here&quot;</span>, <span class="st">&quot;marginaleffects&quot;</span>, <span class="st">&quot;margins&quot;</span>, <span class="st">&quot;maps&quot;</span>, <span class="st">&quot;mapproj&quot;</span>, </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;here&quot;</span>, <span class="st">&quot;marginaleffects&quot;</span>, <span class="st">&quot;maps&quot;</span>, <span class="st">&quot;mapproj&quot;</span>, </span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;mapdata&quot;</span>, <span class="st">&quot;MASS&quot;</span>, <span class="st">&quot;modelsummary&quot;</span>, <span class="st">&quot;naniar&quot;</span>, <span class="st">&quot;palmerpenguins&quot;</span>, </span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;patchwork&quot;</span>, <span class="st">&quot;prismatic&quot;</span>, <span class="st">&quot;quantreg&quot;</span>, <span class="st">&quot;remotes&quot;</span>, </span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;scales&quot;</span>, <span class="st">&quot;sf&quot;</span>, <span class="st">&quot;socviz&quot;</span>, <span class="st">&quot;survey&quot;</span>, <span class="st">&quot;srvyr&quot;</span>, </span>
@@ -2414,17 +2436,23 @@ distill-header .nav a {
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(my_packages, <span class="at">repos =</span> <span class="st">&quot;http://cran.rstudio.com&quot;</span>)</span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>data_packages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;covdata&quot;</span>, <span class="st">&quot;congress&quot;</span>, <span class="st">&quot;kjhnet&quot;</span>, <span class="st">&quot;nycdogs&quot;</span>)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>drat<span class="sc">::</span><span class="fu">addRepo</span>(<span class="st">&quot;kjhealy&quot;</span>)</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(data_packages, <span class="at">repos =</span> <span class="st">&quot;https://kjhealy.github.io/drat/&quot;</span>)</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="do">## Code to run ends here</span></span></code></pre></div>
-<p>If you do not have one already, over the longer term as an R user it will be useful to create a GitHub account and obtain a GitHub Personal Access Token. (This is not required for the course, it will just be helpful to have one.) To get set up, read and <em>carefully follow</em> the instructions in Parts I and II of <a href="https://happygitwithr.com">Happy Git With R</a>, and then also the instructions in <a href="https://happygitwithr.com/github-pat.html">Appendix B</a> of the same document. Again, this is an optional step only.</p>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>data_packages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;covdata&quot;</span>, <span class="st">&quot;congress&quot;</span>, <span class="st">&quot;kjhnet&quot;</span>, <span class="st">&quot;nycdogs&quot;</span>, <span class="st">&quot;uscenpops&quot;</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(data_packages)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Code to run ends here</span></span></code></pre></div>
+<p>GitHub is a software development platform and service that is widely used by R Developers. You can <a href="https://happygitwithr.com/big-picture.html">read some background on it from an R user’s point of view here</a>.</p>
+<p>If you do not have one already, it will be useful to create a GitHub account and obtain a GitHub Personal Access Token. This is <em>not required</em> for the course, but would be helpful to have. After you have installed R and RStudio, to get set up, read and <em>carefully follow</em> the instructions here:</p>
+<ul>
+<li>Register a <a href="https://happygitwithr.com/github-acct.html">GitHub Account</a></li>
+<li>Install <a href="https://happygitwithr.com/install-git">Git</a> and a <a href="https://happygitwithr.com/git-client.html">Git Client</a></li>
+<li>Get a <a href="https://happygitwithr.com/https-pat">Personal Access Token</a></li>
+<li>Connect to <a href="https://happygitwithr.com/push-pull-github.html">GitHub</a></li>
+</ul>
+<p>Again, setting up a GitHub account is <em>not required</em> to fully participate in the course.</p>
 <h3 id="download-the-course-packet">Download the Course Packet</h3>
-<p>The <a href="https://github.com/kjhealy/data_visualization/archive/refs/heads/main.zip">course packet</a> can be downloaded as a zip file: <a href="https://github.com/kjhealy/data_visualization/archive/refs/heads/main.zip">click here to download it</a>. It is an RStudio project containing PDFs of the slides for the course together with code for almost all of the graphs we will draw, along with a starter file for your course notes, some additional datasets we may use, and other material. After you have installed R and RStudio, download the course packet and uncompress it on your computer. Once the packet is uncompressed into a folder named <code>data_visualization</code>, double-clicking the file inside that folder named <code>dataviz.Rproj</code> should launch the project in RStudio.</p>
-<h1 id="about-the-instructor">About the Instructor</h1>
-<p><a href="https://kieranhealy.org">Kieran Healy</a> is Professor of Sociology at Duke University. He is the author of <a href="http://socviz.co">Data Visualization: A Practical Introduction</a> (Princeton University Press). Much of his research has been about the social organization of exchange in human blood and organs, cultural goods, software, and ideas. His current work focuses on the moral order of market society, the effect of models and measurement on social classification, and the link between those two topics, especially in the consumer credit market. You can learn more at <a href="https://kieranhealy.org">https://kieranhealy.org</a>.</p>
+<p>The <a href="https://github.com/kjhealy/data_visualization_notes/archive/refs/heads/main.zip">course packet</a> can be downloaded as a zip file: <a href="https://github.com/kjhealy/data_visualization_notes/archive/refs/heads/main.zip">click here to download it</a>. It is an RStudio project containing PDFs of the slides for the course together with code for almost all of the graphs we will draw, along with a starter file for your course notes, some additional datasets we may use, and other material. After you have installed R and RStudio, download the course packet and uncompress it on your computer. (If you are on Windows <em>make sure the zip file is actually uncompressed</em> by right-clicking on it and selecting “Extract All”.) Once the packet is uncompressed into a folder named <code>data_visualization</code>, double-clicking the file inside that folder named <code>data_visualization_notes.Rproj</code> should launch the project in RStudio.</p>
+<h1 id="the-course-slack">The Course Slack</h1>
+<p>During the seminar we will use a <a href="https://slack.com">Slack</a> to provide an additional channel of communication outside the lectures. You will recieve details about how to sign up prior to the course. I encourage you to use the Slack to ask questions, share code snippets, and discuss matters arising in the seminar, from “I can’t get this to work” troubleshooting on up to any other more general comments or queries about the material we are covering.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
