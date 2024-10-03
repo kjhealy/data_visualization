@@ -205,7 +205,7 @@ edu |>
   pivot_longer(elem4:coll4, names_to = "education")
 ```
 
-## Wide to long with [`pivot_longer()`]{.fg-green}
+## Wide to long with [`pivot_longer()`]{.fg-green} 
 
 We can name the value column to whatever we like. Here it's a number of people.
 

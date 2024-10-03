@@ -1,6 +1,6 @@
 SSH_USER = kjhealy@kjhealy.co
 DOCUMENT_ROOT = ~/public/kjhealy.co/public_html/dv
-PUBLIC_DIR = _site
+PUBLIC_DIR = _site/
 
 ## Make all pdfs
 pdfs:
