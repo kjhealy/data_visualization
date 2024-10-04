@@ -1,6 +1,7 @@
 SSH_USER = kjhealy@kjhealy.co
 DOCUMENT_ROOT = ~/public/kjhealy.co/public_html/dv
 PUBLIC_DIR = _site/
+COURSEPACKET = ~/Documents/courses/data_visualization_notes
 
 ## Make all pdfs
 pdfs:
@@ -21,6 +22,15 @@ clean:
 	find slides -type f -name '*.html' -prune -print -exec rm -f {} +
 	find code -type f -name '*.R' -prune -print -exec rm -f {} +
 	find pdf_slides -type f -name '*.pdf' -prune -print -exec rm -f {} +
+
+coursepacket:	code
+	rm -rf $(COURSEPACKET)/code
+	rm -rf $(COURSEPACKET)/html_slides
+	rm -rf $(COURSEPACKET)/pdf_slides
+	cp -r code $(COURSEPACKET)/code
+	cp -r _site $(COURSEPACKET)/html_slides
+	cp -r pdf_slides $(COURSEPACKET)/pdf_slides
+	rm -f $(COURSEPACKET)/html_slides/course_notes.html
 
 deploy:
 	rsync --exclude='.DS_Store' -Prvzce 'ssh -p 22' --delete-after $(PUBLIC_DIR) $(SSH_USER):$(DOCUMENT_ROOT)

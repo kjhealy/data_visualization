@@ -15,7 +15,7 @@ library(gapminder) # Everyone's favorite dataset
 library(broom)     # Tidy model output
 library(marginaleffects) # Tidy marginal effects
 library(modelsummary) # Tidy summary tables and graphs
-library(scales)    # Format our axes and guides 
+library(scales)    # Format our axes and guides
 
 
 ## -----------------------------------------------------------------------------
@@ -47,10 +47,10 @@ p + geom_point(alpha=0.1) +
 
 p + geom_point(alpha=0.1) +
     geom_smooth(color = "tomato", 
-                method = "lm", 
-                size = 1.2, 
-                formula = y ~ splines::bs(x, 3), 
-                se = FALSE)
+        method = "lm", 
+        size = 1.2, 
+        formula = y ~ splines::bs(x, 3), 
+        se = FALSE)
 
 
 
@@ -63,10 +63,10 @@ p + geom_point(alpha=0.1) +
 
 p + geom_point(alpha=0.1) +
     geom_quantile(color = "tomato", 
-                  size = 1.2, 
-                  method = "rqss",
-                  lambda = 1, 
-                  quantiles = c(0.20, 0.5, 0.85))
+        size = 1.2, 
+        method = "rqss",
+        lambda = 1, 
+        quantiles = c(0.20, 0.5, 0.85))
 
 
 
@@ -332,6 +332,17 @@ a + b
 
 
 ## -----------------------------------------------------------------------------
+#| label: "06-work-with-models-31a"
+a <- c(1:10)
+
+b <- 1
+
+# You know what R will do here
+a + b
+
+
+
+## -----------------------------------------------------------------------------
 #| label: "06-work-with-models-32"
 a <- c(1:10)
 
@@ -430,8 +441,7 @@ summary(fit)
 ## -----------------------------------------------------------------------------
 #| label: "06-work-with-models-45"
 
-out_le <- gapminder |>
-    group_by(continent, year) |>
+out_le <- gapminder |> group_by(continent, year) |>
     nest() #<<
 
 out_le
@@ -557,14 +567,11 @@ mod_plot <- function(data,
 
 ## -----------------------------------------------------------------------------
 #| label: "06-work-with-models-56"
-out_tidy <- gapminder |>
-    group_by(continent, year) |>
-    nest() |> 
+out_tidy <- gapminder |> group_by(continent, year) |> nest() |> 
     mutate(title = paste(continent, year),
            model = map(data, fit_ols2),#<<
            tidied = map(model, tidy), 
-           ggout = pmap(list(tidied, #<<
-                             title), #<<
+           ggout = pmap(list(tidied, title), #<<
                         mod_plot)) #<<
 
 out_tidy

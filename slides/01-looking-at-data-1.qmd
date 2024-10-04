@@ -20,6 +20,7 @@ editor_options:
 library(flipbookr)
 library(here)
 library(tidyverse)
+library(gapminder)
 library(kjhslides)
 ```
 
@@ -78,7 +79,7 @@ kjh_set_slide_theme()
 
 ---
 
-## Try [rendering]{.fg-yellow} your notes
+## Try [rendering]{.fg-yellow} your notes 
 
 ![](img/01_up_and_running_03.png)
 
@@ -95,8 +96,6 @@ Write this out inside the "code chunk" in your notes.
 #| fig.show: "hide"
 #| fig.width: 5.8
 #| fig.height: 5.5
-library(tidyverse)
-library(gapminder)
 
 p <- ggplot(data = gapminder, 
             mapping = aes(x = gdpPercap, 
@@ -106,7 +105,7 @@ p <- ggplot(data = gapminder,
 p + geom_point()
 ```
 
-... And knit your document again.
+... And Render your document again.
 
 ## Now write the following code
 
@@ -118,8 +117,6 @@ Write this out inside the "code chunk" in your notes.
 #| fig.width: 5.8
 #| fig.height: 5.5
 #| output-location: column
-library(tidyverse)
-library(gapminder)
 
 p <- ggplot(data = gapminder, 
             mapping = aes(x = gdpPercap, 
@@ -129,10 +126,10 @@ p <- ggplot(data = gapminder,
 p + geom_point()
 ```
 
-... And knit your document again.
+... And Render your document again.
 
 
-# You should<br />.kjh-yellow[look at]{.fg-lblue}<br />your data
+# You should<br />[look at]{.fg-lblue}<br />your data
 
 # [Seeing things]{.fg-yellow}
 

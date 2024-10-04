@@ -1,6 +1,7 @@
 
 
 
+
 # Safe
 
 
@@ -10,8 +11,6 @@
 #| fig.show: "hide"
 #| fig.width: 5.8
 #| fig.height: 5.5
-library(tidyverse)
-library(gapminder)
 
 p <- ggplot(data = gapminder, 
             mapping = aes(x = gdpPercap, 
@@ -27,8 +26,6 @@ p + geom_point()
 #| fig.width: 5.8
 #| fig.height: 5.5
 #| output-location: column
-library(tidyverse)
-library(gapminder)
 
 p <- ggplot(data = gapminder, 
             mapping = aes(x = gdpPercap, 
