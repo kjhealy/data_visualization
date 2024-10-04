@@ -1,0 +1,17 @@
+---
+title: "Slides"
+---
+
+
+
+- [01 Looking at Data (1)](/slides/01-looking-at-data-1.qmd)
+- [01 Looking at Data (2)](/slides/01-looking-at-data-2.qmd)
+- [02 About R](/slides/02-about-r.qmd)
+- [03 Make a Graph](/slides/03-make-a-graph.qmd)
+- [04 Show the Right Numbers](/slides/04-show-the-right-numbers.qmd)
+- [05 Work with dplyr and Geoms](/slides/05-work-with-dplyr-and-geoms.qmd)
+- [06 Work with Models](/slides/06-work-with-models.qmd)
+- [07 Make Maps (1)](/slides/07-make-maps-1.qmd)
+- [07 Make Maps (2)](/slides/07-make-maps-2.qmd)
+- [08 Polishing and Presenting Plots](/slides/08-polishing-and-presenting-plots.qmd)
+- [09 Case Studies](/slides/09-case-studies.qmd)
