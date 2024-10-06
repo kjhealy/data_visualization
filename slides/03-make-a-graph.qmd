@@ -2,6 +2,8 @@
 title: "Data Visualization - 3. Make Some Graphs"
 format: kjhslides-revealjs
 engine: knitr
+revealjs-plugins:
+  - spotlight
 filters:
   - invert-h1
   - line-highlight
