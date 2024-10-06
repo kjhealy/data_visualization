@@ -643,7 +643,7 @@ rel_by_region |>
 ---
 
 :::{.huge}
-[Use `dplyr` to make summary tables.]{.fg-orange}<br />[Then send your clean tables to `ggplot`.]{.fg-lblue}
+[Use `dplyr` to make summary tables.]{.fg-orange} [Then send your clean tables to `ggplot`.]{.fg-lblue}
 :::
 
 
@@ -1650,9 +1650,7 @@ organdata |>
 
 ## The [`guides()`]{.fg-green} function
 
-- Control overall properties of the guide labels.
-- Common use: turning it off.
-- We'll see more advanced uses later.
+- Controls overall properties of the guide labels. Common use: turning it off. We'll see more advanced uses later.
 
 ```{r}
 #| label: "codefig-guidesfn"

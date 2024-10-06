@@ -760,9 +760,7 @@ gapminder |>
 
 ## [Iterating]{.fg-green} in a pipeline
 
-But you could also say "Feed each column of [`gapminder`]{.fg-pink} in turn to the [`n_distinct()`]{.fg-green} function". 
-
-This is what the [`map()`]{.fg-green} function is for.
+But you could also say "Feed each column of [`gapminder`]{.fg-pink} in turn to the [`n_distinct()`]{.fg-green} function". This is what [`map()`]{.fg-green} is for.
 
 ```{r }
 #| label: "06-work-with-models-39"
@@ -1109,7 +1107,7 @@ fs::dir_ls(here("figures")) |>
 ---
 
 :::{.huge}
-[But these points apply just as well]{.fg-blue} to  presenting data in _any_ format. [Graphs are not special here!]{.fg-pink}
+[But all this applies]{.fg-blue} to data in _any_ format. [Graphs are not special here!]{.fg-pink}
   
 :::
 
@@ -1242,7 +1240,7 @@ gss_svy # Now it's no longer simply a tibble
 ```{r }
 #| label: "06-work-with-models-70"
 out_hap <- gss_svy |> 
-    group_by(year, sex, happy)  |> 
+    group_by(year, happy)  |> 
     summarize(prop = survey_mean(na.rm = TRUE, vartype = "ci"))
 
 out_hap
@@ -1278,13 +1276,13 @@ out_hap |>
 
 ```
 
-## With a proper aspect ratio
+## With a better aspect ratio
 
 ```{r}
 #| label: "06-work-with-models-72"
 #| echo: FALSE
 #| fig.width: 11
-#| fig.height: 6
+#| fig.height: 5
 out_hap |>
   filter(happy == "Not Too Happy") |> 
   ggplot(mapping = aes(x = year, 

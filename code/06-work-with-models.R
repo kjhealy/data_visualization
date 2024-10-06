@@ -701,7 +701,7 @@ gss_svy # Now it's no longer simply a tibble
 ## -----------------------------------------------------------------------------
 #| label: "06-work-with-models-70"
 out_hap <- gss_svy |> 
-    group_by(year, sex, happy)  |> 
+    group_by(year, happy)  |> 
     summarize(prop = survey_mean(na.rm = TRUE, vartype = "ci"))
 
 out_hap
@@ -737,7 +737,7 @@ out_hap |>
 #| label: "06-work-with-models-72"
 #| echo: FALSE
 #| fig.width: 11
-#| fig.height: 6
+#| fig.height: 5
 out_hap |>
   filter(happy == "Not Too Happy") |> 
   ggplot(mapping = aes(x = year, 
