@@ -63,7 +63,7 @@ We will be working with the most recent stable versions of R and RStudio, as wel
   - [macOS with an Intel processor](https://cran.r-project.org/bin/macosx/big-sur-x86_64/base/R-4.4.1-x86_64.pkg)
   - [Windows](https://cran.r-project.org/bin/windows/base/R-4.4.1-win.exe), 
   - [Linux](https://cloud.r-project.org/bin/linux/).
-- Next, install RStudio (<https://posit.co/download/rstudio-desktop/>). Follow the links to download the [free RStudio Desktop edition]() recommended for your system.
+- Next, install RStudio (<https://posit.co/download/rstudio-desktop/>). Follow the links under "2: Install RStudio" to download the free RStudio Desktop edition recommended for your system.
 
 ### Install the required additional Packages
 
