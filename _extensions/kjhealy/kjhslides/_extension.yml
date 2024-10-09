@@ -11,7 +11,7 @@ contributes:
       menu:
         side: left
       slide-number: false
-      date-format: long
+      date-format: "MMMM YYYY"
       highlight-style: catppuccin-macchiato.theme
       title-slide-attributes:
         data-background-color: "#252F3E"
