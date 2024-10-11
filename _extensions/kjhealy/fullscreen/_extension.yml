@@ -1,0 +1,12 @@
+title: Fullscreen
+author: Kieran Healy (Asvin Goel)
+version: 1.0.0
+quarto-required: ">=1.5.0"
+contributes:
+  revealjs-plugins:
+    - name: RevealFullscreen
+      script:
+        - fullscreen.js
+      stylesheet:
+        - fullscreen.css
+
