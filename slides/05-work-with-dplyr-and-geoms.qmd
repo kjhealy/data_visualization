@@ -349,9 +349,8 @@ gss_sm |>
            pct = round((freq*100), 1))
 ```
 
-:::{.small}
-- Groups are carried forward till summarized or explicitly ungrouped
-- Summary calculations are done on the innermost group, which then "disappears".
+:::{.smallkh}
+Groups are carried forward till summarized or explicitly ungrouped. Summary calculations are done on the innermost group, which then "disappears"---i.e. it becomes the rows of in the summary table.
 :::
 
 
@@ -1648,8 +1647,6 @@ organdata |>
 
 ## The [`guides()`]{.fg-green} function
 
-- Controls overall properties of the guide labels. Common use: turning it off. We'll see more advanced uses later.
-
 ```{r}
 #| label: "codefig-guidesfn"
 #| message: FALSE
@@ -1669,6 +1666,7 @@ organdata |>
 
 ```
 
+Controls overall properties of the guide labels. Common use: turning it off. We'll see more advanced uses later.
 
 ## The [`theme()`]{.fg-green} function
 
@@ -1677,9 +1675,6 @@ organdata |>
 #| echo: FALSE
 kjhslides::kjh_set_classic_theme(4)
 ```
-
-[`theme()`]{.fg-green} styles parts of your plot that are _not_ directly representing your data. Often the first thing people want to adjust; but logically it's the _last_ thing. 
-
 
 ```{r}
 #| label: "codefig-themefn"
@@ -1709,3 +1704,5 @@ organdata |>
 #| echo: FALSE
 kjhslides::kjh_set_slide_theme()
 ```
+
+[`theme()`]{.fg-green} styles parts of your plot that do _not_ direct represent data. Often the first thing people want to adjust; but logically it's the _last_ thing. 

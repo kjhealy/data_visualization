@@ -247,13 +247,12 @@ midwest |>
   filter(state %in% oh_wi) |> 
   ggplot(mapping = aes(x = percollege, 
                        fill = state)) + 
-  geom_histogram(alpha = 0.5, 
-                 position = "identity")
+  geom_histogram()
 
 ```
 
 - Here we do the whole thing in a [pipeline]{.fg-red} using the pipe and the `dplyr` verb [`filter()`]{.fg-green} to subset rows of the data by some condition.
-- Experiment with leaving the `position` argument out, or changing it to `"dodge"`.
+- Experiment with changing the `position` argument to `"dodge"`.
 
 
 
@@ -309,7 +308,7 @@ midwest |>
 
 ```
 
-- `ndensity` here is not in our data! It's _computed_. Histogram and density geoms have default statistics, but you can ask them to do more. The `after_stat` functions can do this work for us.
+- `ndensity` here is _computed_. Histogram and density geoms have default statistics, but you can ask them to do more. The `after_stat` functions can do this work for us.
 
 
 ```{r}
@@ -339,20 +338,26 @@ N <- 3e3
 
 ## "County" populations
 grp_ns <- c("size_a", "size_b", "size_c")
-a_range <- c(1e5:5e5)
-b_range <- c(3e5:7e5)
-c_range <- c(4e5:5e5)
+a_range <- c(1e0:5e1)
+b_range <- c(3e0:7e3)
+c_range <- c(4e1:5e2)
 
 df_ns <- tibble(
-  a_n = sample(a_range, N),
-  b_n = sample(a_range, N),
-  c_n = sample(a_range, N),
+  a_n = sample(a_range, N, replace=TRUE),
+  b_n = sample(a_range, N, replace=TRUE),
+  c_n = sample(a_range, N, replace=TRUE),
 )
 
 
+rtnorm <- function(n, mean = 0, sd = 1, min = 0, max = 1) {
+  bounds <- pnorm(c(min, max), mean, sd)
+  u <- runif(n, bounds[1], bounds[2])
+  qnorm(u, mean, sd)
+}
+
 # Means and standard deviations of groups
-mus <- c(0.2, 1, -0.1)
-sds <- c(1.1, 0.9, 1)
+mus <- c(0.3, 0.5, 0.6)
+sds <- c(0.1, 0.15, 0.2)
 grp <- c("pop_a", "pop_b", "pop_c")
 
 # Make the parameters into a list
@@ -362,15 +367,14 @@ params <- list(mean = mus,
 # Feed the parameters to rnorm() to make three columns, 
 # switch to rowwise() to take the weighted average of 
 ## the columns for each row.
-df <- pmap_dfc(params, rnorm, n = N) |>  
+df <- pmap_dfc(params, rtnorm, n = N) |>  
   rename_with(~ grp) |> 
   rowid_to_column("unit") |> 
   bind_cols(df_ns) |> 
   rowwise() |>  
   mutate(pop_total = weighted.mean(c(pop_a, pop_b, pop_c), 
                                    w = c(a_n, b_n, c_n))) |>  
-  ungroup() |> 
-  select(unit:pop_c, pop_total)
+  ungroup() 
 
 ```
 
@@ -378,7 +382,7 @@ df <- pmap_dfc(params, rnorm, n = N) |>
 
 ## Some made-up data
 
-- Consider 3,000 observations of some unit (e.g., a county) with summary measures for each group, and the population average.
+- Consider 3,000 observations of some unit (e.g., a county) with summary measures for each group, and the mean weighted by subgroup population within unit.
 
 ```{r }
 #| label: "04-show-the-right-numbers-12"
@@ -392,7 +396,8 @@ df
 #| label: "reveal-pivlongex"
 #| include: FALSE
  df |> 
-  pivot_longer(cols = pop_a:pop_total)
+  select(unit:pop_c, pop_total) |> 
+  pivot_longer(cols = pop_a:pop_total) 
 ```
 
 
@@ -405,7 +410,8 @@ df
 #| fig.width: 4.8
 #| fig.height: 4.5
 #| output-location: column
-df |> 
+ df |> 
+  select(unit:pop_c, pop_total) |> 
   pivot_longer(cols = pop_a:pop_total)  |> 
   ggplot() + 
   geom_histogram(mapping = aes(x = value, 
@@ -428,6 +434,7 @@ df |>
 #| include: FALSE
 # Treat pop_a to pop_total as a single variable
 df |>
+  select(unit:pop_c, pop_total) |> 
   pivot_longer(cols = pop_a:pop_total)
 ```
 
@@ -439,6 +446,7 @@ df |>
 # Just treat pop_a to pop_c as the single variable.
 # Notice that pop_total just gets repeated.
  df |>
+  select(unit, pop_a:pop_c, pop_total) |> 
   pivot_longer(cols = pop_a:pop_c)
 ```
 
@@ -450,7 +458,8 @@ df |>
 ```{r }
 #| label: "04-show-the-right-numbers-14"
 p_out <- df |>
-  pivot_longer(cols = pop_a:pop_c) |>
+  select(unit, pop_a:pop_c, pop_total) |> 
+  pivot_longer(pop_a:pop_c) |>
   ggplot() + 
   geom_histogram(mapping = aes(x = pop_total, #<<
                                y = after_stat(ncount)), 
@@ -508,14 +517,12 @@ titanic
 
 ## [`geom_bar()`]{.fg-green} wants to count up
 
-- By default [`geom_bar()`]{.fg-green} tries to count up data by category. (Really it's the [`stat_count()`]{.fg-green} function that does this behind the scenes.) By saying `stat="identity"` we explicitly tell it not to do that. This also allows us to use a `y` mapping. Normally this would be the result of the counting up.
-
 
 ```{r}
 #| label: "codefig-titanic1"
 #| message: FALSE
-#| fig.width: 4.8
-#| fig.height: 4.5
+#| fig.width: 2.8
+#| fig.height: 2.5
 #| output-location: column
 
 p <- ggplot(data = titanic,
@@ -525,6 +532,7 @@ p <- ggplot(data = titanic,
 p + geom_bar(stat = "identity") #<<
 ```
 
+By default [`geom_bar()`]{.fg-green} tries to count up data by category. (Really it's the [`stat_count()`]{.fg-green} function that does this behind the scenes.) By saying `stat="identity"` we explicitly tell it not to do that. This also allows us to use a `y` mapping. Normally this would be the result of the counting up.
 
 
 ## [`geom_bar()`]{.fg-green} stacks by default
@@ -548,8 +556,6 @@ p + geom_bar(stat = "identity",
 
 ## A quick [`theme()`]{.fg-green} adjustment
 
-The [`theme()`]{.fg-green} function controls the styling of parts of the plot that don't belong to its "grammatical" structure. That is, that are not contributing to directly representing data.
-
 ```{r}
 #| label: "codefig-titanic3"
 #| message: FALSE
@@ -566,6 +572,7 @@ p + geom_bar(stat = "identity",
 ```
 
 
+The [`theme()`]{.fg-green} function controls the styling of parts of the plot that don't belong to its "grammatical" structure. That is, that are not contributing to directly representing data.
 
 
 ## For convenience, use [`geom_col()`]{.fg-green}
@@ -616,8 +623,6 @@ oecd_sum
 
 ## Using [geom_col()]{.fg-green} for thresholds
 
-:::: {.columns}
-::: {.column width="45%"}
 ```{r }
 #| label: "04-show-the-right-numbers-24"
 p <- ggplot(data = oecd_sum, 
@@ -636,14 +641,8 @@ p_out <- p + geom_col() +
        caption = "Data: OECD.")
 ```
 
-:::
-
-::: {.column width="55%" .right}
 - [`geom_hline()`]{.fg-green} doesn't take any data argument. It just draws a horizontal line with a given y-intercept.
 - `x = NULL` means "Don't label the x-axis (not even with the default value, the variable name).
-
-:::
-::::
 
 ## Using [`geom_col()`]{.fg-green} for thresholds
 
