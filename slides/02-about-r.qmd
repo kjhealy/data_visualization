@@ -1029,7 +1029,7 @@ I'm going to speak somewhat loosely here for now, and gloss over some distinctio
 
 ## 5. Vector [types]{.fg-yellow}; Object [classes]{.fg-yellow}
 
-Objects are made of one or more vectors. A vector can, in effect, have a single type: integer, double, logical, character, factor, date, etc. That is, vectors are "atomic".  Complex objects are mostly lists of vectors of different sorts, or nested lists of other simpler objects that are themselves ultimately made up of vectors of
+Objects are made of one or more **vectors**. A vector can, in effect, only have a single type: [integer]{.fg-lblue}, [double]{.fg-green}, [logical]{.fg-orange}, [character]{.fg-pink}, [factor]{.fg-blue}, date, etc. That is, vectors are "atomic".  Complex objects are mostly made of lists of vectors of different sorts. Or they are made of _nested_ lists of other simpler objects that are themselves ultimately made up of vectors.
 
 ## 5. Vector [types]{.fg-yellow}; Object [classes]{.fg-yellow}
 
@@ -1429,7 +1429,7 @@ Like before:
 gapminder
 ```
 
-# Like before
+## Like before
 
 ```{r}
 #| label: "codefig-plot-2"
@@ -1473,7 +1473,7 @@ p <- ggplot(data = gapminder,
             mapping = aes(x = gdpPercap, 
                           y = lifeExp)) 
 ```
-]
+
 
 - New object named [**`p`**]{.fg-lblue} [`gets`]{.fg-pink} the output of the [`ggplot()` _function_]{.fg-green}, given these [_arguments_]{.fg-orange}
 - Notice how one of the arguments, [`mapping`]{.fg-orange}, is itself taking the output of a function named [`aes()`]{.fg-green}
