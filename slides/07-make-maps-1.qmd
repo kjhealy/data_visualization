@@ -1009,31 +1009,32 @@ st_top <- opiates |>  filter(year == max(year), abbr != "DC") |>
   group_by(region) |> 
   slice_max(order_by = adjusted, n = 2)
  
-opiates |> 
-  ggplot(aes(x = year, 
+opiates |>
+  mutate(top = state %in% st_top$state) |> 
+  ggplot(aes(x = year,
              y = adjusted)) +
-  geom_line(aes(group = state),
-            color = "gray50") + 
+  geom_line(aes(group = state, color = top)) +
   geom_smooth(aes(group = region),
-              se = FALSE) + 
+              se = FALSE) +
   ggrepel::geom_text_repel(
     data = st_top,
-    mapping = aes(x = year, 
-                  y = adjusted, 
-                  label = abbr), 
-    size = 3, 
-    segment.color = NA, 
+    mapping = aes(x = year,
+                  y = adjusted,
+                  label = abbr),
+    size = 3,
+    color = "firebrick",
+    segment.color = NA,
     nudge_x = 0.5) +
-  coord_cartesian(c(min(opiates$year), 
-                    max(opiates$year) + 1)) + 
-  labs(x = NULL, 
+  coord_cartesian(c(min(opiates$year),
+                    max(opiates$year) + 1)) +
+  scale_color_manual(values = c("gray50", "firebrick")) + 
+  guides(color = FALSE) + 
+  labs(x = NULL,
        y = "Rate per 100,000 population",
-       title = "State-Level Opiate Death 
-          Rates by Region, 1999-2014") +
-  facet_wrap(~ reorder(region, adjusted, 
-                       na.rm = TRUE), 
+       title = "State-Level Opiate Death Rates by Region, 1999-2014") +
+  facet_wrap(~ reorder(region, adjusted,
+                       na.rm = TRUE),
              nrow  = 1)
-  
 
 ```
 
@@ -1045,28 +1046,30 @@ opiates |>
 #| fig.height: 6
 #| fig.width: 15
 p_out <- opiates |> 
-  ggplot(aes(x = year, 
+  mutate(top = state %in% st_top$state) |> 
+  ggplot(aes(x = year,
              y = adjusted)) +
-  geom_line(aes(group = state),
-            color = "gray50") + 
+  geom_line(aes(group = state, color = top)) +
   geom_smooth(aes(group = region),
-              se = FALSE) + 
+              se = FALSE) +
   ggrepel::geom_text_repel(
     data = st_top,
-    mapping = aes(x = year, 
-                  y = adjusted, 
-                  label = abbr), 
-    size = 3, 
-    segment.color = NA, 
+    mapping = aes(x = year,
+                  y = adjusted,
+                  label = abbr),
+    size = 3,
+    color = "firebrick",
+    segment.color = NA,
     nudge_x = 0.5) +
-  coord_cartesian(c(min(opiates$year), 
-                    max(opiates$year) + 1)) + 
-  labs(x = NULL, 
+  coord_cartesian(c(min(opiates$year),
+                    max(opiates$year) + 1)) +
+  scale_color_manual(values = c("gray50", "firebrick")) + 
+  guides(color = FALSE) + 
+  labs(x = NULL,
        y = "Rate per 100,000 population",
-       title = "State-Level Opiate Death 
-          Rates by Region, 1999-2014") +
-  facet_wrap(~ reorder(region, adjusted, 
-                       na.rm = TRUE), 
+       title = "State-Level Opiate Death Rates by Region, 1999-2014") +
+  facet_wrap(~ reorder(region, adjusted,
+                       na.rm = TRUE),
              nrow  = 1)
   
 p_out

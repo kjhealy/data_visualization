@@ -1,5 +1,5 @@
 ---
-title: "Data Visualization - 1. Looking at Data (part 2)"
+title: "Data Visualization - 1. Looking at Data (b)"
 format: kjhslides-revealjs
 engine: knitr
 filters:

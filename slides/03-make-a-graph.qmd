@@ -138,7 +138,7 @@ library(palmerpenguins)
 penguins |> 
   group_by(species, island, year) |> 
   summarize(bill = round(mean(bill_length_mm, na.rm = TRUE),2)) |> 
-  knitr::kable()
+  tinytable::tt()
 ```
 
 ## Untidy data exists for good reasons
@@ -151,7 +151,7 @@ penguins |>
   group_by(species, island, year) |> 
   summarize(bill = round(mean(bill_length_mm, na.rm = TRUE), 2)) |> 
   pivot_wider(names_from = year, values_from = bill) |> 
-  knitr::kable()
+  tinytable::tt()
 ```
 
 ## But also for [less]{.fg-orange} good reasons
@@ -818,18 +818,33 @@ ggsave(here("figures", "lifexp_vs_gdp_gradient.png"),
 Set options in any chunk:
 
 ### RMarkdown Style
+````{verbatim}
 
-`{r, fig.height=8, fig.width=5, fig.show = "hold", fig.cap="A caption"}`  
+```{r, fig.height=8, fig.width=5, fig.show="hold", fig.cap="A caption"}
+gapminder |> 
+  ggplot(mapping = aes(x = gdpPercap, y = lifeExp)) + 
+  geom_point()
+```
+
+````
 
 ### Quarto Style
 
-```{.r}
+````{verbatim}
+
+```{r}
 #| fig.height=8 
 #| fig.width=5
 #| fig.show: "hold" 
 #| fig.cap="A caption"
+
+gapminder |> 
+  ggplot(mapping = aes(x = gdpPercap, y = lifeExp)) + 
+  geom_point()
+
 ```
 
+````
 
 ## Or for the whole document:
 
