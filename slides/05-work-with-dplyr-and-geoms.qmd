@@ -479,10 +479,6 @@ gss_sm |>
 ```
 
 
-- More on [**`pivot_wider()`**]{.fg-green} and soon ...
-
-
-
 ## Pass results on to ... a [graph]{.fg-yellow}
 
 ```{r}

@@ -26,7 +26,7 @@ gss_sm |>
   janitor::adorn_totals(where = "col") |> 
   janitor::adorn_percentages() |> 
   janitor::adorn_pct_formatting(affix_sign = FALSE) |> 
-  knitr::kable()  
+  tinytable::tt()  
 
 
 
@@ -41,7 +41,7 @@ gss_sm |>
   janitor::adorn_totals(where = "row") |> 
   janitor::adorn_percentages(denominator = "col") |> 
   janitor::adorn_pct_formatting(affix_sign = FALSE) |> 
-  knitr::kable()  
+  tinytable::tt()  
 
 
 ## -----------------------------------------------------------------------------
@@ -54,7 +54,32 @@ gss_sm |>
   janitor::tabyl(bigregion, religion) |> 
   janitor::adorn_percentages(denominator = "all") |> 
   janitor::adorn_pct_formatting(affix_sign = FALSE) |> 
-  knitr::kable()  
+  tinytable::tt()  
+
+
+## -----------------------------------------------------------------------------
+#| label: "05-work-with-dplyr-and-geoms-5a"
+#| echo: FALSE
+
+unfill <- function(x, blank = "") {
+  x <- as.character({{x}})
+  x.pos <- which(c(TRUE, x[-1]!=x[-length(x)]))
+  new <- rep(blank, length(x))
+  new[x.pos] <- rle(as.character(x))$values
+  new
+}
+
+gss_sm |> 
+  select(bigregion, race, religion) |> 
+  mutate(across(where(is.factor), \(x) fct_na_value_to_level(x, level = "(Missing)"))) |> 
+  count(bigregion, race, religion) |> 
+  pivot_wider(names_from = bigregion, values_from = n) |> 
+  mutate(across(where(is.integer), as.character)) |> 
+  mutate(across(where(is.character), \(x) replace_na(x, "-"))) |> 
+  mutate(race = unfill(race)) |> 
+  rename_with(\(x) str_to_sentence(x)) |> 
+  tinytable::tt() 
+
 
 
 ## -----------------------------------------------------------------------------
@@ -155,7 +180,7 @@ gss_sm |>
 ## gss_sm |>
 ##   count(bigregion, religion) |>
 ##   pivot_wider(names_from = bigregion, values_from = n) |>  #<<
-##   knitr::kable()
+##   tinytable::tt()
 
 
 ## -----------------------------------------------------------------------------
@@ -164,7 +189,7 @@ gss_sm |>
 gss_sm |> 
   count(bigregion, religion) |> 
   pivot_wider(names_from = bigregion, values_from = n) |> 
-  knitr::kable()  
+  tinytable::tt()  
 
 
 ## -----------------------------------------------------------------------------
@@ -513,8 +538,8 @@ by_country |>
 ## -----------------------------------------------------------------------------
 #| label: "codefig-consent2"
 #| message: FALSE
-#| fig.width: 8
-#| fig.height: 5
+#| fig.width: 7
+#| fig.height: 7
 #| output-location: column
 by_country |> 
   ggplot(mapping = 
@@ -533,7 +558,7 @@ by_country |>
 #| label: "codefig-consent2a"
 #| message: FALSE
 #| fig.width: 5
-#| fig.height: 9
+#| fig.height: 7
 #| output-location: column
 by_country |> 
   ggplot(mapping = 
@@ -551,8 +576,8 @@ by_country |>
 ## -----------------------------------------------------------------------------
 #| label: "codefig-consent3"
 #| message: FALSE
-#| fig.width: 8
-#| fig.height: 6
+#| fig.width: 7
+#| fig.height: 7
 #| output-location: column
 by_country |> 
   ggplot(mapping = 
@@ -572,8 +597,8 @@ by_country |>
 ## -----------------------------------------------------------------------------
 #| label: "codefig-consent4"
 #| message: FALSE
-#| fig.width: 8
-#| fig.height: 6
+#| fig.width: 7
+#| fig.height: 7
 #| output-location: column
 by_country |> 
   ggplot(mapping = 

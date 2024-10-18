@@ -26,7 +26,7 @@ library(palmerpenguins)
 penguins |> 
   group_by(species, island, year) |> 
   summarize(bill = round(mean(bill_length_mm, na.rm = TRUE),2)) |> 
-  knitr::kable()
+  tinytable::tt()
 
 
 ## -----------------------------------------------------------------------------
@@ -35,7 +35,7 @@ penguins |>
   group_by(species, island, year) |> 
   summarize(bill = round(mean(bill_length_mm, na.rm = TRUE), 2)) |> 
   pivot_wider(names_from = year, values_from = bill) |> 
-  knitr::kable()
+  tinytable::tt()
 
 
 ## -----------------------------------------------------------------------------
@@ -343,6 +343,28 @@ p + geom_point(mapping = aes(color = continent)) +
 ##        width = 8,
 ##        height = 5)
 
+
+## 
+## ```{r, fig.height=8, fig.width=5, fig.show="hold", fig.cap="A caption"}
+## gapminder |>
+##   ggplot(mapping = aes(x = gdpPercap, y = lifeExp)) +
+##   geom_point()
+## ```
+## 
+
+## 
+## ```{r}
+## #| fig.height=8
+## #| fig.width=5
+## #| fig.show: "hold"
+## #| fig.cap="A caption"
+## 
+## gapminder |>
+##   ggplot(mapping = aes(x = gdpPercap, y = lifeExp)) +
+##   geom_point()
+## 
+## ```
+## 
 
 ## -----------------------------------------------------------------------------
 #| label: "03-make-a-graph-30"

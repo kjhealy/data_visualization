@@ -317,7 +317,7 @@ p_out <- df |>
   labs(x = "Measure", y = "Scaled Count", 
        title = "Comparing Subgroups: Histograms", 
        subtitle = "Reference distribution shown in gray") + 
-  facet_wrap(~ name, nrow = 1) 
+  facet_wrap(~ name, nrow = 1) #<<
 
 
 ## -----------------------------------------------------------------------------
