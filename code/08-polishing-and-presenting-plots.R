@@ -122,11 +122,11 @@ organdata |>
 
 ## -----------------------------------------------------------------------------
 #| eval: FALSE
-## p <- organdata |>
-##   ggplot(mapping = aes(x = roads,
-##                        y = donors,
-##                        color = world)) +
-##   geom_point(size = 4)
+# p <- organdata |>
+#   ggplot(mapping = aes(x = roads,
+#                        y = donors,
+#                        color = world)) +
+#   geom_point(size = 4)
 
 
 ## -----------------------------------------------------------------------------
@@ -189,21 +189,21 @@ RColorBrewer::display.brewer.all(type = "div")
 #| eval: FALSE
 #| fig.show: "hold"
 #| out.width: "50%"
-## p + geom_point(size = 2) +
-##   scale_color_brewer(palette = "Set2") +
-##   labs(title = "Set2")
-## 
-## p + geom_point(size = 2) +
-##   scale_color_brewer(palette = "Pastel2") +
-##   labs(title = "Pastel2")
-## 
-## p + geom_point(size = 2) +
-##   scale_color_brewer(palette = "Dark2") +
-##   labs(title = "Dark2")
-## 
-## p + geom_point(size = 2) +
-##   scale_color_brewer(palette = "Accent") +
-##   labs(title = "Accent")
+# p + geom_point(size = 2) +
+#   scale_color_brewer(palette = "Set2") +
+#   labs(title = "Set2")
+# 
+# p + geom_point(size = 2) +
+#   scale_color_brewer(palette = "Pastel2") +
+#   labs(title = "Pastel2")
+# 
+# p + geom_point(size = 2) +
+#   scale_color_brewer(palette = "Dark2") +
+#   labs(title = "Dark2")
+# 
+# p + geom_point(size = 2) +
+#   scale_color_brewer(palette = "Accent") +
+#   labs(title = "Accent")
 
 
 ## -----------------------------------------------------------------------------

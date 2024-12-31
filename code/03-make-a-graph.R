@@ -325,23 +325,23 @@ p + geom_point(mapping = aes(color = continent)) +
 #| echo: TRUE
 #| eval: FALSE
 
-## ## Save the most recent plot
-## ggsave(filename = "figures/my_figure.png")
-## 
-## ## Use here() for more robust file paths
-## ggsave(filename = here("figures", "my_figure.png"))
-## 
-## ## A plot object
-## p_out <- p + geom_point(mapping = aes(color = log(pop))) +
-##     scale_x_log10()
-## 
-## ggsave(filename = here("figures", "lifexp_vs_gdp_gradient.pdf"),
-##        plot = p_out)
-## 
-## ggsave(here("figures", "lifexp_vs_gdp_gradient.png"),
-##        plot = p_out,
-##        width = 8,
-##        height = 5)
+# ## Save the most recent plot
+# ggsave(filename = "figures/my_figure.png")
+# 
+# ## Use here() for more robust file paths
+# ggsave(filename = here("figures", "my_figure.png"))
+# 
+# ## A plot object
+# p_out <- p + geom_point(mapping = aes(color = log(pop))) +
+#     scale_x_log10()
+# 
+# ggsave(filename = here("figures", "lifexp_vs_gdp_gradient.pdf"),
+#        plot = p_out)
+# 
+# ggsave(here("figures", "lifexp_vs_gdp_gradient.png"),
+#        plot = p_out,
+#        width = 8,
+#        height = 5)
 
 
 ## 
@@ -370,10 +370,10 @@ p + geom_point(mapping = aes(color = continent)) +
 #| label: "03-make-a-graph-30"
 #| eval: FALSE
 #| echo: TRUE
-## knitr::opts_chunk$set(warning = TRUE,
-##                         message = TRUE,
-##                         fig.retina = 3,
-##                         fig.align = "center",
-##                         fig.asp = 0.7,
-##                         dev = c("png", "pdf"))
+# knitr::opts_chunk$set(warning = TRUE,
+#                         message = TRUE,
+#                         fig.retina = 3,
+#                         fig.align = "center",
+#                         fig.asp = 0.7,
+#                         dev = c("png", "pdf"))
 

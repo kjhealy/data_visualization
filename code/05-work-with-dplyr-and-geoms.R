@@ -177,10 +177,10 @@ gss_sm |>
 ## -----------------------------------------------------------------------------
 #| label: "03a-dplyr-basics-15"
 #| eval: FALSE
-## gss_sm |>
-##   count(bigregion, religion) |>
-##   pivot_wider(names_from = bigregion, values_from = n) |>  #<<
-##   tinytable::tt()
+# gss_sm |>
+#   count(bigregion, religion) |>
+#   pivot_wider(names_from = bigregion, values_from = n) |>  #<<
+#   tinytable::tt()
 
 
 ## -----------------------------------------------------------------------------
