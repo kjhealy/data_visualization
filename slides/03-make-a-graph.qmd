@@ -833,10 +833,10 @@ gapminder |>
 ````{verbatim}
 
 ```{r}
-#| fig.height=8 
-#| fig.width=5
-#| fig.show: "hold" 
-#| fig.cap="A caption"
+#| fig-height: 8 
+#| fig-width: 5
+#| fig-show: "hold" 
+#| fig-cap: "A caption"
 
 gapminder |> 
   ggplot(mapping = aes(x = gdpPercap, y = lifeExp)) + 
@@ -846,7 +846,7 @@ gapminder |>
 
 ````
 
-## Or for the whole document:
+## Or for the whole Rmd document:
 
 ```{r}
 #| label: "03-make-a-graph-30"
