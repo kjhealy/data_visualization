@@ -373,6 +373,7 @@ p_lineboom
 #| label: "reveal-boomertile"
 #| include: FALSE
 okboomer |>
+  filter(country == "United States") |>
     mutate(year_fct = 
              factor(year,  
                     levels = unique(year),
@@ -384,7 +385,6 @@ okboomer |>
                                   "Sep", "Oct", "Nov", "Dec")),
                               ordered = TRUE)) |>
     select(year, month, year_fct, month_fct, everything()) |> 
-  filter(country == "United States") |>
     ggplot(aes(x = year_fct, y = month_fct)) +
     geom_tile(mapping = aes(fill = births_pct_day), 
               color = "white") + 

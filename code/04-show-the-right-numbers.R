@@ -63,7 +63,7 @@ p <- ggplot(data = gapminder,
 
 p_out <- p + geom_line(color="gray70", 
               mapping=aes(group = country)) +
-    geom_smooth(size = 1.1,
+    geom_smooth(linewidth = 1.1,
                 method = "loess",
                 se = FALSE) +
     scale_y_log10(labels=scales::label_dollar()) +
@@ -121,7 +121,7 @@ p + geom_histogram(bins = 10)
 #| fig.width: 4.8
 #| fig.height: 4.5
 #| output-location: column
-#|
+#| 
 
 ## Two state codes
 oh_wi <- c("OH", "WI")

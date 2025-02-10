@@ -23,7 +23,7 @@ library(scales)    # Format our axes and guides
 #| message: FALSE
 #| fig.width: 4.8
 #| fig.height: 4.5
-#| output-location: column
+#| output-location: column 
 p <- gapminder |> 
   ggplot(mapping = aes(x = log(gdpPercap), 
                        y = lifeExp))  
