@@ -388,7 +388,6 @@ Residuals:
 -47.490  -4.614   0.250   5.293  26.094 
 ```
 
-:::
 
 ```text
 Coefficients:
