@@ -197,10 +197,13 @@ Our starting [data]{.fg-orange} + our [code]{.fg-green} is what's "real" in our 
 
 ![](img/02_rstudio_dont_restore.png)
 
+Go to Tools > Global Options > General and (1) _Uncheck_ the box labeled "Restore .RData into workspace at startup", (2) Select "never" for "Save workspace to .RData on exit"
 
 ## Consider not showing output inline
 
 ![](img/02_rstudio_uncheck_inline.png)
+
+Go to Tools > Global Options > R Markdown and _uncheck_ the box labeled "Show output inline for all R Markdown Documents"
 
 # Writing documents
 
@@ -268,11 +271,11 @@ This way of doing things is called a _Literate Programming_ or _Notebook_ approa
 
 ---
 
-![Markdown document](img/02_lorem_covid_quarto_qmd.png){fig-align="center" width=90%}
+![Quarto document](img/02_lorem_covid_quarto_qmd.png){fig-align="center" width=90%}
 
 ---
 
-![Markdown document annotated](img/02_lorem_covid_quarto_qmd_annotated.png){fig-align="center" width=90%}  
+![Quarto document annotated](img/02_lorem_covid_quarto_qmd_annotated.png){fig-align="center" width=90%}  
 
 ---
 
@@ -327,7 +330,7 @@ Notebook-style documents like Quarto files are great as part of larger projects.
 
 :::{.custom-small-table}
 
-| Desired style  | Use the following Markdown annotation | 
+| To get this  | You write this  | 
 | -------------- | ------------------------------------- | 
 | **Heading 1**  | `# Heading 1`                                    |
 | **Heading 2**  | `## Heading 2`                                   |
@@ -848,6 +851,11 @@ c(1:20) |> mean() |> summary() |> names() |>  length()
 
 Read this operator as "_[**and then**]{.fg-green}_"
 
+Like the assignment operator, this is two characters. To write it, type the pipe character `|` and then the `>` character. Better, use a keyboard shortcut. On a Mac, **Command Shift M**. On a Windows PC, **Ctrl Shift M**. 
+
+If the pipe looks like this, `%>%` (the [Magrittr pipe](https://r4ds.hadley.nz/data-transform.html#sec-the-pipe)) don't worry, it will work the same as the one shown here, `|>`. But to change it, go to Global Options > Code and _check_ the "Use native pipe operator" box.
+
+
 ## Use the pipe operator: [|>]{.fg-green}
 
 
@@ -949,7 +957,7 @@ But you must _load_ the package in each R session before you can access its cont
 
 ```{r }
 #| label: "02-about-r-50"
-## To load a package, usually at the start of your RMarkdown document or script file
+## To load a package, usually at the start of your Quarto document or script file
 library(palmerpenguins)
 penguins
 ```
