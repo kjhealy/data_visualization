@@ -59,9 +59,9 @@ We will be working with the most recent stable versions of R and RStudio, as wel
 ### Install R and RStudio on your Laptop
 
 - Begin by installing R (<http://cloud.r-project.org>). Choose the version appropriate for your computing platform:
-  - [macOS with an Apple Silicon (M-series) processor](https://cran.r-project.org/bin/macosx/big-sur-arm64/base/R-4.4.1-arm64.pkg)
-  - [macOS with an Intel processor](https://cran.r-project.org/bin/macosx/big-sur-x86_64/base/R-4.4.1-x86_64.pkg)
-  - [Windows](https://cran.r-project.org/bin/windows/base/R-4.4.1-win.exe), 
+  - [macOS with an Apple Silicon (M-series) processor](https://cran.r-project.org/bin/macosx/big-sur-arm64/base/R-4.5.0-arm64.pkg)
+  - [macOS with an Intel processor](https://cran.r-project.org/bin/macosx/big-sur-x86_64/base/R-4.5.0-x86_64.pkg)
+  - [Windows](https://cran.r-project.org/bin/windows/base/R-4.5.0-win.exe), 
   - [Linux](https://cloud.r-project.org/bin/linux/).
 - Next, install RStudio (<https://posit.co/download/rstudio-desktop/>). Follow the links under "2: Install RStudio" to download the free RStudio Desktop edition recommended for your system.
 
